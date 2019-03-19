@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {TokenService} from "../authentication/token.service";
 
 @Component({
   selector: 'app-navigation',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavigationComponent implements OnInit {
 
-  constructor() { }
+  isLoggedIn = false;
+
+  constructor(private tokenStorage: TokenService) { }
 
   ngOnInit() {
+
+    if (this.tokenStorage.getToken()) {
+      this.isLoggedIn = true;
+    }
+
   }
 
 }

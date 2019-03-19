@@ -9,6 +9,10 @@ import { RegistrationComponent } from './registration/registration.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { NavigationComponent } from './navigation/navigation.component';
 
+import { httpInterceptorProviders } from './authentication/interceptor';
+import {HttpClientModule} from "@angular/common/http";
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,8 +26,9 @@ import { NavigationComponent } from './navigation/navigation.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
