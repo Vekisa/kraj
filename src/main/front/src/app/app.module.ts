@@ -11,6 +11,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 
 import { httpInterceptorProviders } from './authentication/interceptor';
 import {HttpClientModule} from "@angular/common/http";
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {HttpClientModule} from "@angular/common/http";
     LoginComponent,
     RegistrationComponent,
     WelcomeComponent,
-    NavigationComponent
+    NavigationComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
