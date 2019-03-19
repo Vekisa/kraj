@@ -10,6 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import xmlb.services.CertificateService;
 
+import java.security.KeyPair;
+import java.security.cert.X509Certificate;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -42,4 +47,13 @@ public class CertificateController {
         return new ResponseEntity<>(certificateService.check(id),HttpStatus.OK);
     }
 
+
+    @RequestMapping(value= "/createSS",method = RequestMethod.POST)
+    @ApiOperation(value="Kreira novi samopotpisani sertifikat", httpMethod = "POST")
+    public ResponseEntity<String> createNewSSCertificate() {
+        System.out.println("USLO ");
+
+        return new ResponseEntity<String>(certificateService.createNewSelfSignedCertificate(),HttpStatus.OK);
+
+    }
 }
