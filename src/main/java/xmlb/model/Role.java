@@ -2,21 +2,25 @@ package xmlb.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="roles")
 public class Role implements GrantedAuthority {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    @Column(name="name")
-    String name;
+    @Column
+    private String name;
 
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<User> users;
 
     public Role() {
         super();
@@ -28,7 +32,6 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
-    @JsonIgnore
     public Long getId() {
         return id;
     }
@@ -37,7 +40,6 @@ public class Role implements GrantedAuthority {
         this.id = id;
     }
 
-    @JsonIgnore
     public String getName() {
         return name;
     }
@@ -50,5 +52,13 @@ public class Role implements GrantedAuthority {
     @Override
     public String getAuthority() {
         return name;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }

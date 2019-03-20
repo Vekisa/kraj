@@ -9,8 +9,6 @@ public class XmlbApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(XmlbApplication.class, args);
-		EmailSenderService em = new EmailSenderService();
-		em.sendCompleteRegistration();
 	}
 
 }
