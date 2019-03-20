@@ -34,10 +34,13 @@ public class CertificateService {
             System.out.println("USLO S");
             KeyPair keyPairSubject = generateKeyPair();
 
+            System.out.println("Privatni "+keyPairSubject.getPrivate().getEncoded());
+            System.out.println("Public "+keyPairSubject.getPublic().getEncoded());
+
             //Datumi od kad do kad vazi sertifikat
             SimpleDateFormat iso8601Formater = new SimpleDateFormat("yyyy-MM-dd");
-            Date startDate = iso8601Formater.parse("2019-03-12");
-            Date endDate = iso8601Formater.parse("2022-03-12");
+            Date startDate = new Date();
+            Date endDate = iso8601Formater.parse("2022-04-01");
 
             //Serijski broj sertifikata
             String sn="1";
@@ -61,16 +64,14 @@ public class CertificateService {
             CertificateGenerator certificateGenerator = new CertificateGenerator();
             X509Certificate cert = certificateGenerator.generateCertificate(subjectData,issuerData);
 
-            KeyPair keyPair = generateKeyPair();
-
 
             KeyStoreWriter keyStoreWriter = new KeyStoreWriter();
 
             keyStoreWriter.loadKeyStore(null,"test".toCharArray());
 
-            keyStoreWriter.write("self",keyPair.getPrivate(),"test".toCharArray(),cert);
+            keyStoreWriter.write("self",keyPairSubject.getPrivate(),"test".toCharArray(),cert);
 
-            keyStoreWriter.saveKeyStore("selfsigned"+".jks","test".toCharArray());
+            keyStoreWriter.saveKeyStore("noviKeyStr"+".p12","test".toCharArray());
             return "kreirano";
         } catch (ParseException e) {
             e.printStackTrace();

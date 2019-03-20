@@ -46,6 +46,7 @@ public class UserService {
 
     public void createVerificationToken(User user, String token) {
         VerificationToken myToken = new VerificationToken(token, user);
+        user.setVerificationToken(myToken);
         tokenRepository.save(myToken);
     }
 

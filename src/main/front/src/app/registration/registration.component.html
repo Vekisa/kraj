@@ -4,45 +4,52 @@
       <div class="card card-signin my-5">
         <div class="card-body">
           <h5 class="card-title text-center">Sign Up</h5>
-          <form class="form-signin">
+          <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
 
             <div class="form-label-group">
               <label for="firstName">First Name</label>
-              <input type="text" id="firstName" class="form-control" placeholder="First Name" required autofocus>
+              <input type="text" id="firstName" class="form-control" [formControlName]="'firstName'" required autofocus >
             </div>
 
             <div class="form-label-group">
               <label for="lastName">Last Name</label>
-              <input type="text" id="lastName" class="form-control" placeholder="Last Name" required>
+              <input type="text" id="lastName" class="form-control" [formControlName]="'lastName'" required>
             </div>
 
             <div class="form-label-group">
               <label for="userName">Username</label>
-              <input type="text" id="userName" class="form-control" placeholder="Username" required>
+              <input type="text" id="userName" class="form-control" [formControlName]="'username'" required>
             </div>
 
             <div class="form-label-group">
               <label for="inputEmail">Email address</label>
-              <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required>
+              <input type="email" id="inputEmail" class="form-control" [formControlName]="'email'" required>
             </div>
 
             <div class="form-label-group">
               <label for="inputPassword">Password</label>
-              <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+              <input type="password" id="inputPassword" class="form-control" [formControlName]="'password'" required>
             </div>
 
             <div class="form-label-group">
               <label for="confirmedPassword">Confirmed Password</label>
-              <input type="password" id="confirmedPassword" class="form-control" placeholder="Confirmed Password" required>
+              <input type="password" id="confirmedPassword" class="form-control" [formControlName]="'passwordConfirm'" required>
             </div>
+
+            <div class="mt-2"></div>
+
+            <div class="alert alert-danger" *ngIf="signUpForm.controls.passwordConfirm.errors?.required && signUpForm.controls.passwordConfirm.touched">Confirm password !</div>
+            <div class="alert alert-danger" *ngIf="signUpForm.errors?.doesMatchPassword">Password does not match</div>
 
             <hr class="my-4">
 
-            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign Up</button>
+            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" [disabled]="!signUpForm.valid" >Sign Up </button>
             <hr class="my-4">
             <div class="form-group">
               <label>Already have account?</label>&nbsp;<a [routerLink]="['/sign_in']">Sign in</a>
             </div>
+
+
 
           </form>
         </div>

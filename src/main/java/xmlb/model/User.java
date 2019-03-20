@@ -41,6 +41,9 @@ public class User implements UserDetails {
     @Column
     private Date lastPasswordResetDate;
 
+    @Column
+    private boolean isVerified;
+
     @JsonIgnore
     @ManyToMany(mappedBy = "users",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Role> roles;
@@ -48,6 +51,20 @@ public class User implements UserDetails {
     @JsonIgnore
     @OneToOne
     private VerificationToken verificationToken;
+
+    public User() {
+        super();
+    }
+
+    public User(String username, String password, String firstName, String lastName, String email) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
+
+
 
     public Long getId() {
         return id;
@@ -102,6 +119,14 @@ public class User implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean isVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(boolean verified) {
+        isVerified = verified;
     }
 
     @Override

@@ -30,7 +30,8 @@ public class EmailSenderService {
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject("Complete Registration!");
         mailMessage.setFrom("bezbednostprojekat@gmail.com");
-        mailMessage.setText("http://localhost:8080/users/registered/"+ user.getVerificationToken() + "/confirm-account");
+        mailMessage.setText("To confirm your account, please click here : "
+                + "https://localhost:8443/api/auth/confirmReg?token=" + user.getVerificationToken().getVerificationToken());
         this.sendEmail(mailMessage);
     }
 

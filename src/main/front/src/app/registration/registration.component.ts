@@ -51,7 +51,7 @@ export class RegistrationComponent implements OnInit {
 
     );
 
-    this.reloadPage();
+
 
   }
 

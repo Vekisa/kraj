@@ -16,7 +16,7 @@ const httpOptions = {
 export class AuthService {
 
   private loginUrl = 'https://localhost:8443/api/auth/signin';
-  private signupUrl = 'https://localhost:8443/api/auth/signup';
+  private signUpUrl = 'https://localhost:8443/api/auth/signup';
 
   constructor(private http: HttpClient) { }
 
@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   signUp(user: User): Observable<JwtResponse> {
-    return this.http.post<JwtResponse>(this.signupUrl, user, httpOptions);
+    return this.http.post<JwtResponse>(this.signUpUrl, user, httpOptions);
   }
 
 
