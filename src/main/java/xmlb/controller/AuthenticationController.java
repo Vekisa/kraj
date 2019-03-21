@@ -3,7 +3,6 @@ package xmlb.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,11 +16,14 @@ import xmlb.model.VerificationToken;
 import xmlb.repository.RoleRepository;
 import xmlb.repository.UserRepository;
 import xmlb.security.*;
+import xmlb.service.PasswordHashingService;
 import xmlb.service.UserDetailsCustomService;
 import xmlb.service.UserService;
-import xmlb.services.EmailSenderService;
+import xmlb.service.EmailSenderService;
 
 import javax.validation.Valid;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -78,8 +80,17 @@ public class AuthenticationController {
             return new ResponseEntity<>(new ResponseMessage("Email is already in use!"), HttpStatus.BAD_REQUEST);
         }
 
+        String passwordHash = "";
+        try {
+            passwordHash = PasswordHashingService.generateStrongPasswordHash(signUpRequest.getPassword());
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        }
+
         // Creating user's account
-        User user = new User( signUpRequest.getUsername(), encoder.encode(signUpRequest.getPassword()),
+        User user = new User( signUpRequest.getUsername(), passwordHash,
                 signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getEmail());
 
         List<Role> tempRoles = new ArrayList<Role>();

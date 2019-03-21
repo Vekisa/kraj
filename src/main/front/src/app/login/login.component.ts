@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
   }
 
   reloadPage() {
-    window.location.href = "http://localhost:4200/"
+    window.location.href = "http://localhost:4200/home"
   }
 
 

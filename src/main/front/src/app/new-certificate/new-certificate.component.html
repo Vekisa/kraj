@@ -1,3 +1,55 @@
-<p>
-  new-certificate works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card card-signin my-5">
+        <div class="card-body">
+          <h5 class="card-title text-center">Create Certificate</h5>
+          <form class="form-signin">
+            <div class="form-label-group">
+              <label for="country">Country</label>
+              <input type="text" id="country" class="form-control" required autofocus>
+            </div>
+
+            <div class="form-label-group">
+              <label for="state">State/Province</label>
+              <input type="text" id="state" class="form-control" required >
+            </div>
+
+            <div class="form-label-group">
+              <label for="locality">Locality</label>
+              <input type="text" id="locality" class="form-control" required >
+            </div>
+
+            <div class="form-label-group">
+              <label for="organization">Organization</label>
+              <input type="text" id="organization" class="form-control" required >
+            </div>
+
+            <div class="form-label-group">
+              <label for="organizationalUnit">Organizational Unit</label>
+              <input type="text" id="organizationalUnit" class="form-control" required >
+            </div>
+
+            <div class="form-label-group">
+              <label for="commonName">Common Name</label>
+              <input type="text" id="commonName" class="form-control" required >
+            </div>
+
+            <div class="form-label-group">
+              <label for="startDate">Not Valid Before</label>
+              <input type="date" id="startDate" class="form-control" required >
+            </div>
+
+            <div class="form-label-group">
+              <label for="endDate">Not Valid After</label>
+              <input type="date" id="endDate" class="form-control" required >
+            </div>
+
+            <hr class="my-4">
+            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Create</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
