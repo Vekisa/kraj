@@ -8,11 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import xmlb.model.CertificateInfo;
 import xmlb.service.CertificateService;
 
 import java.util.List;
 
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/certificates")
 public class CertificateController {
@@ -45,10 +46,10 @@ public class CertificateController {
 
     @RequestMapping(value= "/createSS",method = RequestMethod.POST)
     @ApiOperation(value="Kreira novi samopotpisani sertifikat", httpMethod = "POST")
-    public ResponseEntity<String> createNewSSCertificate() {
-        System.out.println("USLO ");
-
-        return new ResponseEntity<String>(certificateService.createNewSelfSignedCertificate(),HttpStatus.OK);
+    public ResponseEntity<String> createNewSSCertificate(@RequestBody CertificateInfo certificateInfo) {
+        System.out.println("Create new certificate!");
+        certificateService.createNewSelfSignedCertificate(certificateInfo);
+        return new ResponseEntity<>(HttpStatus.OK);
 
     }
 }

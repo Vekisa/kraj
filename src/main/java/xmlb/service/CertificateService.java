@@ -4,9 +4,11 @@ import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import xmlb.CertificateGenerator;
 import xmlb.KeyStoreWriter;
+import xmlb.model.CertificateInfo;
 import xmlb.model.SubjectData;
 import xmlb.model.IssuerData;
 import java.security.*;
@@ -19,6 +21,9 @@ import java.util.List;
 @Service
 public class CertificateService {
 
+    @Value("Xmlsecuritypass")
+    private String secret;
+
     public List<String> search(Long id, String name){
 
         return null;
@@ -29,29 +34,40 @@ public class CertificateService {
         return null;
     }
 
-    public String createNewSelfSignedCertificate() {
-        try {
-            System.out.println("USLO S");
-            KeyPair keyPairSubject = generateKeyPair();
+    public String createNewSelfSignedCertificate(CertificateInfo certificateInfo) {
 
-            System.out.println("Privatni "+keyPairSubject.getPrivate().getEncoded());
-            System.out.println("Public "+keyPairSubject.getPublic().getEncoded());
+        try {
+            System.out.println("Create SS Service!");
+
+            KeyPair keyPairSubject = generateKeyPair();
 
             //Datumi od kad do kad vazi sertifikat
             SimpleDateFormat iso8601Formater = new SimpleDateFormat("yyyy-MM-dd");
-            Date startDate = new Date();
-            Date endDate = iso8601Formater.parse("2022-04-01");
+            Date startDate =  certificateInfo.getStartDate();
+            Date endDate = certificateInfo.getEndDate();
+
+            System.out.println(startDate);
+            System.out.println(endDate);
+
+            System.out.println(certificateInfo.getCommName());
+            System.out.println( certificateInfo.getOrg());
+            System.out.println(certificateInfo.getOrgUnit());
+            System.out.println(certificateInfo.getCountry());
+            System.out.println(certificateInfo.getLoc());
+            System.out.println(certificateInfo.getState());
+
 
             //Serijski broj sertifikata
             String sn="1";
             //klasa X500NameBuilder pravi X500Name objekat koji predstavlja podatke o vlasniku
             X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);
-            builder.addRDN(BCStyle.CN, "localhost:8080");
-            builder.addRDN(BCStyle.O, "Megatravel");
-            builder.addRDN(BCStyle.C, "RS");
-            builder.addRDN(BCStyle.L, "Novi Sad");
-            builder.addRDN(BCStyle.ST, "Serbia");
-            builder.addRDN(BCStyle.E, "megatravel@email.com");
+            builder.addRDN(BCStyle.CN, certificateInfo.getCommName());
+            builder.addRDN(BCStyle.O, certificateInfo.getOrg());
+            builder.addRDN(BCStyle.OU, certificateInfo.getOrgUnit());
+            builder.addRDN(BCStyle.C, certificateInfo.getCountry());
+            builder.addRDN(BCStyle.L, certificateInfo.getLoc());
+            builder.addRDN(BCStyle.ST, certificateInfo.getState());
+
 
             //Kreiraju se podaci za sertifikat, sto ukljucuje:
             // - javni kljuc koji se vezuje za sertifikat
@@ -64,20 +80,20 @@ public class CertificateService {
             CertificateGenerator certificateGenerator = new CertificateGenerator();
             X509Certificate cert = certificateGenerator.generateCertificate(subjectData,issuerData);
 
-
             KeyStoreWriter keyStoreWriter = new KeyStoreWriter();
 
-            keyStoreWriter.loadKeyStore(null,"test".toCharArray());
+            keyStoreWriter.loadKeyStore(null,secret.toCharArray());
 
-            keyStoreWriter.write("self",keyPairSubject.getPrivate(),"test".toCharArray(),cert);
+            keyStoreWriter.write(certificateInfo.getAlias(),keyPairSubject.getPrivate(),secret.toCharArray(),cert);
 
-            keyStoreWriter.saveKeyStore("noviKeyStr"+".p12","test".toCharArray());
-            return "kreirano";
-        } catch (ParseException e) {
-            e.printStackTrace();
+            keyStoreWriter.saveKeyStore("SecurityKeyStore"+".p12",secret.toCharArray());
+
+            return "Successful";
+
+        } catch (Exception e) {
+            return e.getMessage();
         }
 
-        return "nije";
 
     }
 

@@ -1,3 +1,4 @@
+
 export class User {
   firstName: string;
   lastName: string;
@@ -23,6 +24,34 @@ export class UserLogin {
     this.username = username;
     this.password = password;
 
+  }
+
+}
+
+export class CertInfo {
+
+  country: string;
+  state:string;
+  loc: string;
+  org: string;
+  orgUnit: string;
+  commName: string;
+  startDate: Date;
+  endDate: Date;
+  alias: string;
+  password: string;
+
+  constructor(country: string, state:string, loc: string, org: string, orgUnit: string, commName: string, startDate: Date, endDate: Date, alias: string, password: string) {
+    this.country = country;
+    this.state = state;
+    this.loc = loc;
+    this.org = org;
+    this.orgUnit = orgUnit;
+    this.commName = commName;
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.alias = alias;
+    this.password = password;
   }
 
 }
