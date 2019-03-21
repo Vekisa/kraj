@@ -1,4 +1,4 @@
-package xmlb;
+package xmlb.service;
 
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.X509v3CertificateBuilder;

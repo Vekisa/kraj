@@ -2,19 +2,14 @@ package xmlb.service;
 
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import xmlb.CertificateGenerator;
 import xmlb.KeyStoreReader;
-import xmlb.KeyStoreWriter;
 import xmlb.model.CertificateInfo;
-import xmlb.model.SubjectData;
 import xmlb.model.IssuerData;
+import xmlb.model.SubjectData;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.security.*;
 import java.security.cert.Certificate;
@@ -118,7 +113,7 @@ public class CertificateService {
         return null;
     }
 
-    public X509Certificate showKeyStoreContent(String alias) {
+    public String showKeyStoreContent(String alias) {
         //TODO: Upotrebom klasa iz primeri/pki paketa, prikazati sadrzaj keystore-a, gde korisnik unosi ime i lozinku
         //Dozvoljeno je menjati klase iz primeri/pki paketa
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -135,7 +130,7 @@ public class CertificateService {
 
         X509Certificate certi = (X509Certificate) cert;
 
-        return certi;
+        return "Imam GA";
 
     }
 

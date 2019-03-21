@@ -80,6 +80,16 @@ public class AuthenticationController {
             return new ResponseEntity<>(new ResponseMessage("Email is already in use!"), HttpStatus.BAD_REQUEST);
         }
 
+        /*String proba = "";
+        try {
+            proba = PasswordHashingService.generateStrongPasswordHash("adminadmin");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        }
+        System.out.println(proba);*/
+
         String passwordHash = "";
         try {
             passwordHash = PasswordHashingService.generateStrongPasswordHash(signUpRequest.getPassword());
@@ -111,7 +121,6 @@ public class AuthenticationController {
         return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.OK);
     }
 
-
     @RequestMapping(value = "/confirmReg")
     public ResponseEntity<?> confirmReg(@RequestParam("token") String token) {
 
@@ -132,9 +141,4 @@ public class AuthenticationController {
         return new ResponseEntity<>(new ResponseMessage("Account verified successfully!"), HttpStatus.OK);
 
     }
-
-
-
-
-
 }

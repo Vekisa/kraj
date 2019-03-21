@@ -54,14 +54,14 @@ public class CertificateController {
 
     }
 
-    @RequestMapping(value= "/show/{alias}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value= "/show/{alias}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Prikaz sertifikata", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = List.class),
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<X509Certificate> show(@PathVariable(value="alias") String alias) {
+    public ResponseEntity<String> show(@PathVariable(value="alias") String alias) {
         return new ResponseEntity<>(certificateService.showKeyStoreContent(alias),HttpStatus.OK);
     }
 }

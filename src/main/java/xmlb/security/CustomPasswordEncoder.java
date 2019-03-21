@@ -25,9 +25,6 @@ public class CustomPasswordEncoder implements PasswordEncoder {
 
     @Override
     public boolean matches(CharSequence charSequence, String s) {
-        System.out.println("USAO U MATCHES");
-        System.out.println("A" + charSequence.toString());
-        System.out.println("B" + s);
         String storedPassword = s;
         String password = charSequence.toString();
         String[] parts = storedPassword.split(":");
@@ -40,7 +37,6 @@ public class CustomPasswordEncoder implements PasswordEncoder {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-
 
         PBEKeySpec spec = new PBEKeySpec(password.toCharArray(), salt, iterations, hash.length * 8);
 

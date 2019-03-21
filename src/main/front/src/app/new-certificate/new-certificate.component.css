@@ -1,0 +1,23 @@
+.my-custom-scrollbar {
+  position: relative;
+  height: 200px;
+  overflow: auto;
+}
+.table-wrapper-scroll-y {
+  display: block;
+}
+
+#certs{
+  margin: 2%;
+}
+
+#certs:hover{
+  cursor: pointer;
+}
+
+#search{
+  position: relative;
+  left: 33%;
+  width: 30%;
+  margin: 2%;
+}
