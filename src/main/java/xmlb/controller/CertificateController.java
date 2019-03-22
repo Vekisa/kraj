@@ -99,6 +99,7 @@ public class CertificateController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<String> revoke(@PathVariable(value="alias") String alias) {
+        System.out.println("USAOOOOOOOOO");
         Revoke revoke=new Revoke();
         revoke.setAlias(alias);
         revokeService.newRevoke(revoke);

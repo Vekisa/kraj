@@ -26,6 +26,6 @@ export class CertificateService {
   }
 
   revokeCertificate(alias): Promise<JwtResponse> {
-    return this.http.get<JwtResponse>(this.certUrl+"/revoke/"+ alias).toPromise();
+    return this.http.post<JwtResponse>(this.certUrl+"/revoke/"+ alias,alias).toPromise();
   }
 }

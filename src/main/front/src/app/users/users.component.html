@@ -1,0 +1,28 @@
+<app-navigation></app-navigation>
+
+<div class="table-wrapper-scroll-y my-custom-scrollbar" id ="certs">
+
+  <table class="table table-bordered mb-0 table-hover">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Username</th>
+      <th scope="col">Email</th>
+      <th scope="col">Enabled</th>
+      <th scope="col">Email</th>
+      <th scope="col">Last Password Reset Date</th>
+      <th scope="col">Is Verified</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users| async; let i = index" >
+      <td>{{i}}</td>
+      <td>{{cert.}}</td>
+      <td><button (click)="revoke(cert.alias)"> Revoke </button></td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>

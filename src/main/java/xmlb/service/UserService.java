@@ -8,6 +8,7 @@ import xmlb.repository.UserRepository;
 import xmlb.repository.VerificationTokenRepository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -60,6 +61,8 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-
-
+    public List<User> getAll(){
+        List<User> users = userRepository.findAll();
+        return users;
+    }
 }

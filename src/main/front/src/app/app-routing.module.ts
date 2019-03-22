@@ -5,6 +5,7 @@ import {RegistrationComponent} from './registration/registration.component';
 import {WelcomeComponent} from './welcome/welcome.component';
 import {HomeComponent} from "./home/home.component";
 import {NewCertificateComponent} from "./new-certificate/new-certificate.component";
+import {UsersComponent} from "./users/users.component"
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path: 'certificate_new',
     component: NewCertificateComponent
+  },
+  {
+    path: 'users',
+    component: UsersComponent
   }
 
 ];
