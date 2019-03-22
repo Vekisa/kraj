@@ -7,6 +7,7 @@ import xmlb.repository.RevokeRepository;
 
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -22,5 +23,14 @@ public class RevokeService {
     }
 
     public List<Revoke> getAll(){ return revokeRepository.findAll();}
-    public Collection<Revoke> findByAlias(String alias){ return revokeRepository.findByAlias(alias);}
+
+    public List<String> getAliase(){
+        List<Revoke> lista= this.getAll();
+        List<String> aliasi= new ArrayList<String>();
+        for(Revoke r: lista){
+            aliasi.add(r.getAlias());
+        }
+        return aliasi;
+    }
+   // public Collection<Revoke> findByAlias(String alias){ //return revokeRepository.findByAlias(alias);}
 }

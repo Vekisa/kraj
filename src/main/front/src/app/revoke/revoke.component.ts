@@ -20,6 +20,7 @@ export class RevokeComponent implements OnInit {
   }
 
   revoke(alias: string){
+    console.log("OVO " + alias);
     this.certificateService.revokeCertificate(alias);
   }
 }

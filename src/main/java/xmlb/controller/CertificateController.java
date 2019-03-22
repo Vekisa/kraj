@@ -91,9 +91,9 @@ public class CertificateController {
     public ResponseEntity<List<CertificateInfo>> allCertificates() {
         ArrayList<CertificateInfo> ci=(ArrayList<CertificateInfo>) certificateService.allCertificates();
         ArrayList<CertificateInfo> pom= new ArrayList<>();
-        ArrayList<Revoke> revoke= (ArrayList<Revoke>) revokeService.getAll();
+        ArrayList<String> lista= (ArrayList<String>) revokeService.getAliase();
         for(CertificateInfo c:ci){
-            if(!revoke.contains(c.getAlias()))
+            if(!lista.contains(c.getAlias()))
                 pom.add(c);
         }
 
@@ -112,8 +112,8 @@ public class CertificateController {
 
         Revoke revoke=new Revoke();
         revoke.setAlias(alias);
-        ArrayList<Revoke> lista= (ArrayList<Revoke>) revokeService.getAll();
-        if(!lista.contains(revoke)) {
+        ArrayList<String> lista= (ArrayList<String>) revokeService.getAliase();
+        if(!lista.contains(revoke.getAlias())) {
             revokeService.newRevoke(revoke);
             return new ResponseEntity<>(HttpStatus.OK);
         }

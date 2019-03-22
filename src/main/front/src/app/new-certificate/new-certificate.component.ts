@@ -85,9 +85,7 @@ export class NewCertificateComponent implements OnInit {
   }
 
 
-  revoke(alias: string){
-    this.certificateService.revokeCertificate(alias);
-  }
+
 
   mySelectHandler(){
 
