@@ -13,7 +13,7 @@
     <tr *ngFor="let cert of certificates| async; let i = index"   >
       <td >{{i}}</td>
       <td >{{cert.alias}}</td>
-      <td ><button (click)="revoke(cert.alias)"> Revoke </button></td>
+      <td ><button (click)="revoke(cert.alias)" class="btn btn-danger"> Revoke </button></td>
     </tr>
     </tbody>
   </table>

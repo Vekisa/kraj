@@ -8,7 +8,4 @@ import xmlb.model.Revoke;
 
 import java.util.Collection;
 public interface RevokeRepository extends JpaRepository<Revoke, Long> {
-   // @Modifying
-    //@Query(value = "select * from revokes where alias= ?1", nativeQuery = true)
-    //Collection<Revoke> findByAlias(String aliasString);
 }

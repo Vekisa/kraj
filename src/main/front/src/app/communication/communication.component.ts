@@ -30,8 +30,6 @@ export class CommunicationComponent implements OnInit {
   }
 
   rowSelected(cert:any){
-    //this.comForm.value.parent = cert;
-    console.log("selektovan red " + cert);
     if(this.fS==1){
       this.comForm.value.first = cert;
       this.first=cert;
@@ -43,8 +41,12 @@ export class CommunicationComponent implements OnInit {
   }
 
   buttonR(broj: number){
-    console.log("selektovano " + broj);
     this.fS=broj;
+  }
+
+  enableCommunication(){
+    console.log(this.first + " " + this.second);
+    this.certificateService.enableCommunication(this.first,this.second);
   }
 
 }

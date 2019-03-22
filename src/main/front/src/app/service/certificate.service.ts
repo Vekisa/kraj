@@ -11,6 +11,7 @@ export class CertificateService {
 
   private certUrl = 'https://localhost:8443/certificates';
   private userUrl = 'https://localhost:8443/users';
+  private commUrl = 'https://localhost:8443/communication';
 
   constructor(private http: HttpClient) { }
 
@@ -44,5 +45,10 @@ export class CertificateService {
 
   disable(id: number): Promise<JwtResponse>{
     return this.http.post<JwtResponse>(this.userUrl + "/" + id + "/disable",id).toPromise();
+  }
+
+  enableCommunication(first: string, second: string){
+    console.log("url: " + this.commUrl + "/" + first + "/" + second);
+    return this.http.post<JwtResponse>(this.commUrl + "/" + first + "/" + second,first);
   }
 }
