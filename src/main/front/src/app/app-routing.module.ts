@@ -5,7 +5,8 @@ import {RegistrationComponent} from './registration/registration.component';
 import {WelcomeComponent} from './welcome/welcome.component';
 import {HomeComponent} from "./home/home.component";
 import {NewCertificateComponent} from "./new-certificate/new-certificate.component";
-import {UsersComponent} from "./users/users.component"
+import {UsersComponent} from "./users/users.component";
+import {RevokeComponent } from "./revoke/revoke.component";
 
 const routes: Routes = [
   {
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path: 'certificate_new',
     component: NewCertificateComponent
+  },
+  {
+    path: 'revoke',
+    component: RevokeComponent
   },
   {
     path: 'users',

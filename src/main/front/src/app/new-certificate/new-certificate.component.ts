@@ -61,7 +61,6 @@ export class NewCertificateComponent implements OnInit {
   }
 
   revoke(alias: string){
-    console.log(alias);
     this.certificateService.revokeCertificate(alias);
   }
 }

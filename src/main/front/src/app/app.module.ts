@@ -13,6 +13,7 @@ import { httpInterceptorProviders } from './authentication/interceptor';
 import {HttpClientModule} from "@angular/common/http";
 import { HomeComponent } from './home/home.component';
 import { NewCertificateComponent } from './new-certificate/new-certificate.component';
+import { RevokeComponent } from './revoke/revoke.component';
 import { UsersComponent } from './users/users.component';
 
 
@@ -25,6 +26,7 @@ import { UsersComponent } from './users/users.component';
     NavigationComponent,
     HomeComponent,
     NewCertificateComponent,
+    RevokeComponent,
     UsersComponent
   ],
   imports: [

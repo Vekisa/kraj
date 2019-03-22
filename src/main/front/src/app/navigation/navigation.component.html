@@ -6,7 +6,7 @@
           <a class="nav-link" [routerLink]="['certificate_new']">New Certificate</a>
         </li>
         <li class="nav-item" *ngIf="isLoggedIn">
-          <a class="nav-link" href="">Search</a>
+          <a class="nav-link" [routerLink]="['revoke']">Search</a>
         </li>
         <li class="nav-item" *ngIf="isLoggedIn">
           <a class="nav-link" href="" [routerLink]="['users']">Users</a>
