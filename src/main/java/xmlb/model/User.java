@@ -36,13 +36,13 @@ public class User implements UserDetails {
     private String email;
 
     @Column
-    private boolean enabled;
+    private Boolean enabled;
 
     @Column
     private Date lastPasswordResetDate;
 
     @Column
-    private boolean isVerified;
+    private Boolean isVerified;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "users",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -56,12 +56,15 @@ public class User implements UserDetails {
         super();
     }
 
-    public User(String username, String password, String firstName, String lastName, String email) {
+    public User(String username, String password, String firstName, String lastName, String email, boolean enabled, Date lastPasswordResetDate, boolean isVerified) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.enabled = enabled;
+        this.lastPasswordResetDate = lastPasswordResetDate;
+        this.isVerified = isVerified;
     }
 
 

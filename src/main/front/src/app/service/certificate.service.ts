@@ -33,4 +33,12 @@ export class CertificateService {
   allUsers(): Observable<any> {
     return this.http.get<JwtResponse>(this.userUrl);
   }
+
+  enable(id: number): Promise<JwtResponse>{
+    return this.http.post<JwtResponse>(this.userUrl + "/" + id + "/enable",id).toPromise();
+  }
+
+  disable(id: number): Promise<JwtResponse>{
+    return this.http.post<JwtResponse>(this.userUrl + "/" + id + "/disable",id).toPromise();
+  }
 }

@@ -1,7 +1,9 @@
 package xmlb.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import xmlb.model.User;
 import xmlb.model.VerificationToken;
 import xmlb.repository.UserRepository;
@@ -72,6 +74,26 @@ public class UserService {
         }
 
         users.remove(user);
+        System.out.println("AAA: " + users.get(0).isVerified());
         return users;
+    }
+
+    public User enableUser(Long id){
+        System.out.println("BBB");
+        Optional<User> user = userRepository.findById(id);
+        if(!user.isPresent())
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Requested user does not exist");
+        user.get().setEnabled(true);
+        userRepository.save(user.get());
+        return user.get();
+    }
+
+    public User disableUser(Long id){
+        Optional<User> user = userRepository.findById(id);
+        if(!user.isPresent())
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Requested user does not exist");
+        user.get().setEnabled(false);
+        userRepository.save(user.get());
+        return user.get();
     }
 }

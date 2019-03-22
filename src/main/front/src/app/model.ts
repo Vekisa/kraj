@@ -1,5 +1,6 @@
 
 export class User {
+  id: number;
   username: string;
   firstName: string;
   lastName: string;
@@ -9,7 +10,8 @@ export class User {
   lastPasswordResetDate: Date;
   isVerified: boolean;
 
-  constructor(username: string, firstName: string, lastName: string,  email: string, password: string, enabled: boolean, lastPasswordResetDate: Date, isVerified: boolean) {
+  constructor(id: number, username: string, firstName: string, lastName: string,  email: string, password: string, enabled: boolean, lastPasswordResetDate: Date, isVerified: boolean) {
+    this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.username = username;

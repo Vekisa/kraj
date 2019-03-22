@@ -25,7 +25,8 @@
       <td>{{user.enabled}}</td>
       <td>{{user.lastPasswordResetDate}}</td>
       <td>{{user.isVerified}}</td>
-      <td><button (click)="revoke(cert.alias)"> Revoke </button></td>
+      <td *ngIf="!user.isVerified" (click)="enable(user.id);"><button class="btn btn-success">Enable</button></td>
+      <td *ngIf="user.isVerified" (click)="disable(user.id);"><button class="btn btn-danger">Disable</button></td>
     </tr>
     </tbody>
   </table>

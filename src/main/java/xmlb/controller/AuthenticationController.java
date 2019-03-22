@@ -101,7 +101,7 @@ public class AuthenticationController {
 
         // Creating user's account
         User user = new User( signUpRequest.getUsername(), passwordHash,
-                signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getEmail());
+                signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getEmail(),false,null,false);
 
         List<Role> tempRoles = new ArrayList<Role>();
 

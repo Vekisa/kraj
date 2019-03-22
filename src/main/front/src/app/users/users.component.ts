@@ -18,4 +18,11 @@ export class UsersComponent implements OnInit {
     this.certificateService.allUsers().subscribe(data=>{this.users = data;})
   }
 
+  enable(id : number){
+    this.certificateService.enable(id);
+  }
+
+  disable(id: number){
+    this.certificateService.disable(id);
+  }
 }
