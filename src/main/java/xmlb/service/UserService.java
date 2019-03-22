@@ -74,7 +74,6 @@ public class UserService {
         }
 
         users.remove(user);
-        System.out.println("AAA: " + users.get(0).isVerified());
         return users;
     }
 
