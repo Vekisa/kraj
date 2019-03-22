@@ -30,6 +30,7 @@ export class UserLogin {
 
 export class CertInfo {
 
+  parent: string;
   country: string;
   state:string;
   loc: string;
@@ -41,7 +42,7 @@ export class CertInfo {
   alias: string;
   password: string;
 
-  constructor(country: string, state:string, loc: string, org: string, orgUnit: string, commName: string, startDate: Date, endDate: Date, alias: string, password: string) {
+  constructor(parent: string, country: string, state:string, loc: string, org: string, orgUnit: string, commName: string, startDate: Date, endDate: Date, alias: string, password: string) {
     this.country = country;
     this.state = state;
     this.loc = loc;
@@ -52,6 +53,7 @@ export class CertInfo {
     this.endDate = endDate;
     this.alias = alias;
     this.password = password;
+    this.parent = parent;
   }
 
 }

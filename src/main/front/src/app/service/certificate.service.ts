@@ -14,6 +14,10 @@ export class CertificateService {
   constructor(private http: HttpClient) { }
 
   newCertificate(certInfo: CertInfo): Promise<JwtResponse> {
-    return this.http.post<JwtResponse>(this.certUrl+"/createSS", certInfo).toPromise();
+    return this.http.post<JwtResponse>(this.certUrl+"/create_new_certificate", certInfo).toPromise();
+  }
+
+  allCertificates(): Observable<any>{
+    return this.http.get<any>(this.certUrl+"/all");
   }
 }

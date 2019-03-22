@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class CertificateInfo {
 
+    private String parent;
     private String country;
     private String state;
     private String loc;
@@ -20,7 +21,8 @@ public class CertificateInfo {
         super();
     }
 
-    public CertificateInfo(String country, String state, String loc, String org, String orgUnit, String commName, Date startDate, Date endDate,String alias,String password) {
+    public CertificateInfo(String parent, String country, String state, String loc, String org, String orgUnit, String commName, Date startDate, Date endDate,String alias,String password) {
+        this.parent = parent;
         this.country = country;
         this.state = state;
         this.loc = loc;
@@ -112,4 +114,8 @@ public class CertificateInfo {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getParent() { return parent; }
+
+    public void setParent(String parent) { this.parent = parent; }
 }

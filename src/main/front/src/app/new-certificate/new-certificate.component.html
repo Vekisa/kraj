@@ -1,7 +1,7 @@
 <app-navigation></app-navigation>
 
 <div class="form-label-group" id="search">
-  <input type="text" class="form-control" placeholder="Search">
+  <input type="text" class="form-control" placeholder="Search" (input)="onSearchChange($event.target.value)">
 </div>
 
 <div class="table-wrapper-scroll-y my-custom-scrollbar" id ="certs">
@@ -10,17 +10,13 @@
     <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Name</th>
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+    <tr *ngFor="let cert of certificates| async; let i = index"  (click)="rowSelected(cert.alias);" >
+      <td>{{i}}</td>
+      <td>{{cert.alias}}</td>
     </tr>
     </tbody>
   </table>
@@ -37,8 +33,14 @@
           <form [formGroup]="certForm" (ngSubmit)="onSubmit()">
             <div class="form-label-group">
               <label for="parent">Parent</label>
-              <input type="text" id="parent" class="form-control" required readonly>
+              <input type="text" id="parent" class="form-control" [formControlName]="'parent'" [(ngModel)]="inputVar" required readonly>
             </div>
+
+            <div class="form-label-group">
+              <label for="passwordParent">Password</label>
+              <input type="password" id="passwordParent" class="form-control" [formControlName]="'password'" placeholder="Password Parent" required >
+            </div>
+
             <div class="form-label-group">
               <label for="country">Country</label>
               <input type="text" id="country" class="form-control" [formControlName]="'country'" required autofocus>
@@ -82,11 +84,6 @@
             <div class="form-label-group">
               <label for="alias">Alias</label>
               <input type="text" id="alias" class="form-control" [formControlName]="'alias'" required >
-            </div>
-
-            <div class="form-label-group">
-              <label for="password">Password</label>
-              <input type="password" id="Password" class="form-control" [formControlName]="'password'" required >
             </div>
 
             <hr class="my-4">
