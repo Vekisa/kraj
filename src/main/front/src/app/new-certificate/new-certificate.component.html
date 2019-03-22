@@ -14,7 +14,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let cert of cert ; let i = index "  (click)="rowSelected(cert.alias);" >
+    <tr *ngFor="let cert of cert | filter : searchText ; let i = index "  (click)="rowSelected(cert.alias);" >
       <td>{{i+1}}</td>
       <td>{{cert.alias}}</td>
     </tr>
