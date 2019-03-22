@@ -2,6 +2,7 @@ package xmlb.service;
 
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
+import org.bouncycastle.crypto.generators.PKCS12ParametersGenerator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import xmlb.KeyStoreReader;
@@ -163,7 +164,6 @@ public class CertificateService {
         IssuerData issuerData = keyStoreReader.readIssuerFromStore(name,alias,secret.toCharArray(),password.toCharArray());
 
         X509Certificate certi = (X509Certificate) cert;
-
         return "Imam GA";
 
     }

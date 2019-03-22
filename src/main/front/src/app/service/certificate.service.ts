@@ -20,4 +20,12 @@ export class CertificateService {
   allCertificates(): Observable<any>{
     return this.http.get<any>(this.certUrl+"/all");
   }
+
+  showCertificate(alias): Promise<JwtResponse> {
+    return this.http.get<JwtResponse>(this.certUrl+"/show/"+ alias).toPromise();
+  }
+
+  revokeCertificate(alias): Promise<JwtResponse> {
+    return this.http.get<JwtResponse>(this.certUrl+"/revoke/"+ alias).toPromise();
+  }
 }

@@ -43,8 +43,8 @@ export class NewCertificateComponent implements OnInit {
 
     console.log(this.certForm.value);
 
-    this.certificateService.newCertificate(this.certForm.value);
-
+    //this.certificateService.newCertificate(this.certForm.value);
+    this.certificateService.showCertificate("self");
   }
 
   rowSelected(cert:any){
@@ -60,4 +60,7 @@ export class NewCertificateComponent implements OnInit {
 
   }
 
+  revoke(alias: string){
+    this.certificateService.revokeCertificate(alias);
+  }
 }

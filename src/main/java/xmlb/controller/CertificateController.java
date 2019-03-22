@@ -9,8 +9,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import xmlb.model.CertificateInfo;
+import xmlb.model.Revoke;
+import xmlb.security.SignUpRequest;
 import xmlb.service.CertificateService;
+import xmlb.service.RevokeService;
 
+import javax.validation.Valid;
 import java.security.cert.X509Certificate;
 import java.util.List;
 
@@ -21,6 +25,9 @@ public class CertificateController {
 
     @Autowired
     private CertificateService certificateService;
+
+    @Autowired
+    private RevokeService revokeService;
 
     @RequestMapping(value= "/search/{id}/{name}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Pretrazuje sertifikate", httpMethod = "GET", produces = "application/json")
@@ -82,5 +89,19 @@ public class CertificateController {
     })
     public ResponseEntity<List<CertificateInfo>> allCertificates() {
         return new ResponseEntity<>(certificateService.allCertificates(),HttpStatus.OK);
+    }
+
+    @RequestMapping(value= "/revoke/{alias}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value="Povlacenje sertifikata", httpMethod = "POST", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = List.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<String> revoke(@PathVariable(value="alias") String alias) {
+        Revoke revoke=new Revoke();
+        revoke.setAlias(alias);
+        revokeService.newRevoke(revoke);
+        return new ResponseEntity<>( HttpStatus.OK);
     }
 }
