@@ -16,6 +16,7 @@ import { NewCertificateComponent } from './new-certificate/new-certificate.compo
 import { RevokeComponent } from './revoke/revoke.component';
 import { UsersComponent } from './users/users.component';
 import {FilterPipe} from "./additional/filter.pipe";
+import { CommunicationComponent } from './communication/communication.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {FilterPipe} from "./additional/filter.pipe";
     NewCertificateComponent,
     RevokeComponent,
     UsersComponent,
-    FilterPipe
+    FilterPipe,
+    CommunicationComponent
   ],
   imports: [
     BrowserModule,

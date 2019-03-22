@@ -7,6 +7,7 @@ import {HomeComponent} from "./home/home.component";
 import {NewCertificateComponent} from "./new-certificate/new-certificate.component";
 import {UsersComponent} from "./users/users.component";
 import {RevokeComponent } from "./revoke/revoke.component";
+import {CommunicationComponent} from "./communication/communication.component";
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
   {
     path: 'users',
     component: UsersComponent
+  },
+  {
+    path: 'communication',
+    component: CommunicationComponent
   }
 
 ];

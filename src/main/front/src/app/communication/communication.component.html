@@ -1,0 +1,72 @@
+<app-navigation></app-navigation>
+
+<div id = "forma">
+  <form>
+    <div class="form-label-group" class="element">
+      <label for="first">First Certificate</label>
+      <input type="text" id="first" class="form-control" placeholder="First certificate" readonly>
+    </div>
+
+    <div class="form-label-group" class="element">
+      <label for="first">Second Certificate</label>
+      <input type="text" id="second" class="form-control" placeholder="Second certificate" readonly>
+    </div>
+  </form>
+
+
+  <div class="btn-group" role="group" aria-label="Basic example" id="radio">
+    <button type="button" class="btn btn-secondary">First</button>
+    <button type="button" class="btn btn-secondary">Second</button>
+  </div>
+
+  <div class="btn-group" role="group" aria-label="Basic example" id="btn">
+    <button class="btn btn-success" type="submit">Enable</button>
+  </div>
+</div>
+
+<hr class="my-4">
+
+
+<div>
+  <div id="firstDiv">
+    <div class="form-label-group" class="search">
+      <input type="text" class="form-control" placeholder="Search">
+    </div>
+    <div class="table-wrapper-scroll-y my-custom-scrollbar" id ="certs">
+      <table class="table table-bordered mb-0 table-hover">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="secondDiv">
+    <div class="form-label-group" class = "search">
+      <input type="text" class="form-control" placeholder="Search">
+    </div>
+    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+      <table class="table table-bordered mb-0 table-hover ">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cert of cert; let i = index" (click)="rowSelected(cert.alias);" >
+            <td>{{i+1}}</td>
+            <td>{{cert.alias}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
