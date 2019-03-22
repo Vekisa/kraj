@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import xmlb.KeyStoreReader;
 import xmlb.model.CertificateInfo;
 import xmlb.model.IssuerData;
+import xmlb.model.Revoke;
 import xmlb.model.SubjectData;
 
 import java.io.BufferedReader;
@@ -48,6 +49,7 @@ public class CertificateService {
         File[] listOfFiles = folder.listFiles();
 
         List<CertificateInfo> list = new ArrayList<>();
+
         CertificateInfo cInfo = new CertificateInfo();
 
         for (File file : listOfFiles) {

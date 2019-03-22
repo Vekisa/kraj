@@ -21,4 +21,5 @@ public class RevokeService {
     }
 
     public List<Revoke> getAll(){ return revokeRepository.findAll();}
+    public Revoke findByAlias(String alias){ return revokeRepository.findByAlias(alias);}
 }

@@ -16,6 +16,7 @@ import xmlb.service.RevokeService;
 
 import javax.validation.Valid;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -88,21 +89,33 @@ public class CertificateController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<List<CertificateInfo>> allCertificates() {
-        return new ResponseEntity<>(certificateService.allCertificates(),HttpStatus.OK);
+        ArrayList<CertificateInfo> ci=(ArrayList<CertificateInfo>) certificateService.allCertificates();
+        ArrayList<CertificateInfo> pom= new ArrayList<>();
+        for(CertificateInfo c:ci){
+            if(revokeService.findByAlias(c.getAlias())!=null)
+                pom.add(c);
+        }
+
+        return new ResponseEntity<>(pom,HttpStatus.OK);
     }
 
-    @RequestMapping(value= "/revoke/{alias}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+
+    @RequestMapping(value= "/revoke", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Povlacenje sertifikata", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = List.class),
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<String> revoke(@PathVariable(value="alias") String alias) {
-        System.out.println("USAOOOOOOOOO");
+    public ResponseEntity<String> revoke(@RequestParam String alias) {
+
         Revoke revoke=new Revoke();
         revoke.setAlias(alias);
-        revokeService.newRevoke(revoke);
-        return new ResponseEntity<>( HttpStatus.OK);
+        ArrayList<Revoke> lista= (ArrayList<Revoke>) revokeService.getAll();
+        if(!lista.contains(revoke)) {
+            revokeService.newRevoke(revoke);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }
