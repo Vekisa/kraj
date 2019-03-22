@@ -33,7 +33,8 @@ export class NewCertificateComponent implements OnInit {
 
   ngOnInit() {
 
-    this.roott= true;
+    this.roott= false;
+    this.leaf = false;
     this.selectType = "Root";
 
     this.certForm = this.formBuilder.group({
@@ -60,7 +61,12 @@ export class NewCertificateComponent implements OnInit {
 
     console.log(this.certForm.value);
 
+
+
     this.certificateService.newCertificate(this.certForm.value);
+
+
+
   }
 
   rowSelected(cert:any){
@@ -89,8 +95,15 @@ export class NewCertificateComponent implements OnInit {
 
   if (this.selectType==="Root") {
     this.roott = true;
-  }else
+    this.leaf = false;
+  }else if (this.selectType==="Leaf"){
     this.roott = false;
+    this.leaf = true;
+  }else{
+    this.roott = false;
+    this.leaf = false;
+  }
+
 
   }
 

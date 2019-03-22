@@ -33,21 +33,20 @@
 
           <div class="form-group"  >
             <label for="typeCert">Type</label>
-            <select class="form-control" id="typeCert" (ngModelChange)="mySelectHandler($event)"  [(ngModel)]="selectType">
-              <option selected value="Root">Root</option>
-              <option value="Intermediate">Intermediate</option>
+            <select class="form-control" id="typeCert"  (change)="mySelectHandler($event)" [(ngModel)]="selectType">
+              <option selected value="Intermediate">Intermediate</option>
               <option value="Leaf">Leaf</option>
             </select>
           </div>
 
           <form [formGroup]="certForm" (ngSubmit)="onSubmit()">
 
-            <div *ngIf="roott" class="form-label-group">
+            <div *ngIf="!roott" class="form-label-group">
               <label for="parent">Parent</label>
               <input type="text" id="parent" class="form-control" [formControlName]="'parent'" [(ngModel)]="inputVar" required readonly>
             </div>
 
-            <div *ngIf="roott" class="form-label-group">
+            <div *ngIf="!roott" class="form-label-group">
               <label for="passwordParent">Password</label>
               <input type="password" id="passwordParent" class="form-control" [formControlName]="'password'" placeholder="Password Parent" required >
             </div>
