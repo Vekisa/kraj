@@ -48,15 +48,12 @@ public class CertificateService {
 
         List<CertificateInfo> list = new ArrayList<>();
         CertificateInfo cInfo = new CertificateInfo();
-        cInfo.setAlias("ROOT");
-        list.add(cInfo);
 
         for (File file : listOfFiles) {
             if (file.isFile()) {
                 cInfo = new CertificateInfo();
                 cInfo.setAlias(file.getName().substring(0,file.getName().length()-4));
-                if(!file.getName().substring(0,file.getName().length()-4).equals("keyStore"))
-                    list.add(cInfo);
+                list.add(cInfo);
             }
         }
         return list;
@@ -189,12 +186,14 @@ public class CertificateService {
         System.out.println("TRAZIM ISSUERA ROOTA " + pass);
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
-        String name = "keystores/keyStore.p12";
+        String name = "keystores/root.p12";
 
         KeyStoreReader keyStoreReader = new KeyStoreReader();
-        Certificate cert = keyStoreReader.readCertificate(name,pass,"1");
+        Certificate cert = keyStoreReader.readCertificate(name,pass,"root");
+        if(cert == null)
+            System.out.println("PUKAO SAM");
 
-        IssuerData issuerData = keyStoreReader.readIssuerFromStore(name,"1",pass.toCharArray(),pass.toCharArray());
+        IssuerData issuerData = keyStoreReader.readIssuerFromStore(name,"root",pass.toCharArray(),pass.toCharArray());
 
         return issuerData;
     }
@@ -234,11 +233,11 @@ public class CertificateService {
 
         KeyStoreWriter keyStoreWriter = new KeyStoreWriter();
 
-        keyStoreWriter.loadKeyStore(null,"test".toCharArray());
+        keyStoreWriter.loadKeyStore(null,password.toCharArray());
 
-        keyStoreWriter.write("new",keyPairSubject.getPrivate(),"test".toCharArray(),cert);
+        keyStoreWriter.write(certificateInfo.getAlias(),keyPairSubject.getPrivate(),password.toCharArray(),cert);
 
-        keyStoreWriter.saveKeyStore("keystores/"+certificateInfo.getAlias()+".p12","test".toCharArray());
+        keyStoreWriter.saveKeyStore("keystores/"+certificateInfo.getAlias()+".p12",password.toCharArray());
 
         System.out.println("NAPRAVIO CERT");
     }
