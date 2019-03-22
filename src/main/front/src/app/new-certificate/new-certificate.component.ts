@@ -52,8 +52,7 @@ export class NewCertificateComponent implements OnInit {
 
     console.log(this.certForm.value);
 
-    //this.certificateService.newCertificate(this.certForm.value);
-    this.certificateService.showCertificate("self");
+    this.certificateService.newCertificate(this.certForm.value);
   }
 
   rowSelected(cert:any){
