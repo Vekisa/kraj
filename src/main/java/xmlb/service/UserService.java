@@ -63,6 +63,15 @@ public class UserService {
 
     public List<User> getAll(){
         List<User> users = userRepository.findAll();
+        User user = null;
+        for(User usr : users){
+            if(usr.getId() == 1) {
+                user = usr;
+                break;
+            }
+        }
+
+        users.remove(user);
         return users;
     }
 }

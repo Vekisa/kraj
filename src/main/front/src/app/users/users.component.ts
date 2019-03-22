@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {User} from "../model";
+import {CertificateService} from "../service/certificate.service";
+import {FormBuilder} from "@angular/forms";
 
 @Component({
   selector: 'app-users',
@@ -7,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsersComponent implements OnInit {
 
-  constructor() { }
+  users: User[];
+  constructor(private formBuilder: FormBuilder, private certificateService: CertificateService) { }
 
   ngOnInit() {
+
+    this.certificateService.allUsers().subscribe(data=>{this.users = data;})
   }
 
 }

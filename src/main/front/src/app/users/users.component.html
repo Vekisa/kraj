@@ -11,15 +11,20 @@
       <th scope="col">Username</th>
       <th scope="col">Email</th>
       <th scope="col">Enabled</th>
-      <th scope="col">Email</th>
       <th scope="col">Last Password Reset Date</th>
       <th scope="col">Is Verified</th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let user of users| async; let i = index" >
+    <tr *ngFor="let user of users; let i = index" >
       <td>{{i}}</td>
-      <td>{{cert.}}</td>
+      <td>{{user.firstName}}</td>
+      <td>{{user.lastName}}</td>
+      <td>{{user.username}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.enabled}}</td>
+      <td>{{user.lastPasswordResetDate}}</td>
+      <td>{{user.isVerified}}</td>
       <td><button (click)="revoke(cert.alias)"> Revoke </button></td>
     </tr>
     </tbody>

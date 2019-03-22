@@ -10,6 +10,7 @@ import {HttpClient} from "@angular/common/http";
 export class CertificateService {
 
   private certUrl = 'https://localhost:8443/certificates';
+  private userUrl = 'https://localhost:8443/users';
 
   constructor(private http: HttpClient) { }
 
@@ -27,5 +28,9 @@ export class CertificateService {
 
   revokeCertificate(alias): Promise<JwtResponse> {
     return this.http.post<JwtResponse>(this.certUrl+"/revoke/"+ alias,alias).toPromise();
+  }
+
+  allUsers(): Observable<any> {
+    return this.http.get<JwtResponse>(this.userUrl);
   }
 }

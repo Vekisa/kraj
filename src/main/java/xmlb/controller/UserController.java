@@ -11,11 +11,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import xmlb.model.CertificateInfo;
 import xmlb.model.User;
 import xmlb.service.UserService;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
