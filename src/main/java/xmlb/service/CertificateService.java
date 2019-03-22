@@ -14,9 +14,7 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.security.*;
 import java.security.cert.Certificate;
-import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,7 +55,8 @@ public class CertificateService {
             if (file.isFile()) {
                 cInfo = new CertificateInfo();
                 cInfo.setAlias(file.getName().substring(0,file.getName().length()-4));
-                list.add(cInfo);
+                if(!file.getName().substring(0,file.getName().length()-4).equals("keyStore"))
+                    list.add(cInfo);
             }
         }
         return list;
@@ -176,7 +175,6 @@ public class CertificateService {
         System.out.println("TRAZIM ISSUERA");
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
-
         String name = "keystores/"+ alias +".p12";
 
         KeyStoreReader keyStoreReader = new KeyStoreReader();
@@ -187,17 +185,16 @@ public class CertificateService {
         return issuerData;
     }
 
-    public IssuerData getIssuerFromRootCertificate(String password){
-        System.out.println("TRAZIM ISSUERA ROOTA");
+    public IssuerData getIssuerFromRootCertificate(String pass){
+        System.out.println("TRAZIM ISSUERA ROOTA " + pass);
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
-
-        String name = "keyStore.p12";
+        String name = "keystores/keyStore.p12";
 
         KeyStoreReader keyStoreReader = new KeyStoreReader();
-        Certificate cert = keyStoreReader.readCertificate(name,password,"self");
+        Certificate cert = keyStoreReader.readCertificate(name,pass,"1");
 
-        IssuerData issuerData = keyStoreReader.readIssuerFromStore(name,"self",password.toCharArray(),password.toCharArray());
+        IssuerData issuerData = keyStoreReader.readIssuerFromStore(name,"1",pass.toCharArray(),pass.toCharArray());
 
         return issuerData;
     }
@@ -208,12 +205,10 @@ public class CertificateService {
         System.out.println("PASS "  + password);
         IssuerData issuer;
         if(certificateInfo.getParent().equals("ROOT")){
-            issuer = this.getIssuerFromCertificate(certificateInfo.getParent(),password);
+            issuer = this.getIssuerFromRootCertificate(certificateInfo.getPassword());
         }else{
-            issuer = this.getIssuerFromRootCertificate(password);
+            issuer = this.getIssuerFromCertificate(certificateInfo.getParent(),certificateInfo.getPassword());
         }
-
-
         System.out.println("NASAO ISSUERA");
 
         KeyPair keyPairSubject = generateKeyPair();
