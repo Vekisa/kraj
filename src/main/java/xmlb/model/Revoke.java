@@ -13,6 +13,9 @@ public class Revoke {
     @Column
     private String alias;
 
+    @Column
+    private Boolean leaf; //true list je, false povucen je
+
     public Revoke(){}
 
     public String getAlias() {
@@ -21,5 +24,13 @@ public class Revoke {
 
     public void setAlias(String alias) {
         this.alias = alias;
+    }
+
+    public Boolean getLeaf() {
+        return leaf;
+    }
+
+    public void setLeaf(Boolean leaf) {
+        this.leaf = leaf;
     }
 }

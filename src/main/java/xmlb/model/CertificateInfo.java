@@ -15,7 +15,7 @@ public class CertificateInfo {
     private Date endDate;
     private String alias;
     private String password;
-
+    private Boolean leaf;
 
     public CertificateInfo() {
         super();
@@ -118,4 +118,12 @@ public class CertificateInfo {
     public String getParent() { return parent; }
 
     public void setParent(String parent) { this.parent = parent; }
+
+    public Boolean getLeaf() {
+        return leaf;
+    }
+
+    public void setLeaf(Boolean leaf) {
+        this.leaf = leaf;
+    }
 }

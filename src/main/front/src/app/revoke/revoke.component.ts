@@ -16,11 +16,13 @@ export class RevokeComponent implements OnInit {
   certificates: Observable<CertInfo[]>;
 
   ngOnInit() {
-    this.certificates = this.certificateService.allCertificates();
+    this.certificates = this.certificateService.allCertificatesL();
   }
 
   revoke(alias: string){
-    console.log("OVO " + alias);
-    this.certificateService.revokeCertificate(alias);
+    this.certificateService.revokeCertificate(alias).then(value => {
+      this.certificates = this.certificateService.allCertificatesL();
+    });
+
   }
 }

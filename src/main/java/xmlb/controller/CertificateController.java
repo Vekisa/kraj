@@ -66,6 +66,12 @@ public class CertificateController {
     @ApiOperation(value="Kreira novi samopotpisani sertifikat", httpMethod = "POST")
     public ResponseEntity<String> createNewCertificate(@RequestBody CertificateInfo certificateInfo) {
         certificateService.createNewIssuedCertificate(certificateInfo);
+        if(certificateInfo.getLeaf()){
+            Revoke leaf=new Revoke();
+            leaf.setLeaf(true);
+            leaf.setAlias(certificateInfo.getAlias());
+            revokeService.newRevoke(leaf);
+        }
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
@@ -101,6 +107,25 @@ public class CertificateController {
     }
 
 
+    @RequestMapping(value= "/allL", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value="Prikaz sertifikata koji nisu povuceni", httpMethod = "GET", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = List.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<List<CertificateInfo>> certificatesL() {
+        ArrayList<CertificateInfo> ci=(ArrayList<CertificateInfo>) certificateService.allCertificates();
+        ArrayList<CertificateInfo> pom= new ArrayList<>();
+        ArrayList<String> lista= (ArrayList<String>) revokeService.getPovuceneAliasi();
+        for(CertificateInfo c:ci){
+            if(!lista.contains(c.getAlias()))
+                pom.add(c);
+        }
+
+        return new ResponseEntity<>(pom,HttpStatus.OK);
+    }
+
     @RequestMapping(value= "/revoke", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Povlacenje sertifikata", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {
@@ -112,7 +137,8 @@ public class CertificateController {
 
         Revoke revoke=new Revoke();
         revoke.setAlias(alias);
-        ArrayList<String> lista= (ArrayList<String>) revokeService.getAliase();
+        revoke.setLeaf(false);
+        ArrayList<String> lista= (ArrayList<String>) revokeService.getPovuceneAliasi();
         if(!lista.contains(revoke.getAlias())) {
             revokeService.newRevoke(revoke);
             return new ResponseEntity<>(HttpStatus.OK);

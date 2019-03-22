@@ -48,6 +48,7 @@ export class CertInfo {
   endDate: Date;
   alias: string;
   password: string;
+  leaf: boolean;
 
   constructor(parent: string, country: string, state:string, loc: string, org: string, orgUnit: string, commName: string, startDate: Date, endDate: Date, alias: string, password: string) {
     this.country = country;

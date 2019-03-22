@@ -32,5 +32,25 @@ public class RevokeService {
         }
         return aliasi;
     }
+
+    public List<String> getPovuceneAliasi(){
+        List<Revoke> lista= this.getAll();
+        List<String> aliasi= new ArrayList<String>();
+        for(Revoke r: lista){
+            if(!r.getLeaf())
+                aliasi.add(r.getAlias());
+        }
+        return aliasi;
+    }
+
+    public List<String> getLeafAliasi(){
+        List<Revoke> lista= this.getAll();
+        List<String> aliasi= new ArrayList<String>();
+        for(Revoke r: lista){
+            if(r.getLeaf())
+                aliasi.add(r.getAlias());
+        }
+        return aliasi;
+    }
    // public Collection<Revoke> findByAlias(String alias){ //return revokeRepository.findByAlias(alias);}
 }

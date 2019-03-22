@@ -48,7 +48,8 @@ export class NewCertificateComponent implements OnInit {
       startDate: null,
       endDate: null,
       alias:[''],
-      password: ['']
+      password: [''],
+      leaf:['']
     });
 
     this.certificateService.allCertificates().subscribe(data=>{
@@ -61,7 +62,7 @@ export class NewCertificateComponent implements OnInit {
 
     console.log(this.certForm.value);
 
-
+    this.certForm.value.leaf=this.leaf;
 
     this.certificateService.newCertificate(this.certForm.value);
 
