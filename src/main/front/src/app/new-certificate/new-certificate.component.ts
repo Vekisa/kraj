@@ -20,6 +20,11 @@ export class NewCertificateComponent implements OnInit {
   certTemp: CertInfo[];
   par: any;
   inputVar: string;
+  selectType: string;
+
+  roott: boolean;
+  leaf: boolean;
+
 
   searchText:any;
 
@@ -27,6 +32,9 @@ export class NewCertificateComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private certificateService: CertificateService) { }
 
   ngOnInit() {
+
+    this.roott= true;
+    this.selectType = "Root";
 
     this.certForm = this.formBuilder.group({
       parent: [''],
@@ -73,6 +81,17 @@ export class NewCertificateComponent implements OnInit {
 
   revoke(alias: string){
     this.certificateService.revokeCertificate(alias);
+  }
+
+  mySelectHandler(){
+
+  console.log(this.selectType);
+
+  if (this.selectType==="Root") {
+    this.roott = true;
+  }else
+    this.roott = false;
+
   }
 
 

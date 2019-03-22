@@ -108,7 +108,7 @@ public class CertificateController {
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<String> revoke(@RequestParam String alias) {
+    public ResponseEntity<String> revoke(@RequestBody String alias) {
 
         Revoke revoke=new Revoke();
         revoke.setAlias(alias);

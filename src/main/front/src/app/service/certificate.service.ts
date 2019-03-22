@@ -27,7 +27,7 @@ export class CertificateService {
   }
 
   revokeCertificate(alias): Promise<JwtResponse> {
-    return this.http.post<JwtResponse>(this.certUrl+"/revoke/"+ alias,alias).toPromise();
+    return this.http.post<JwtResponse>(this.certUrl+"/revoke",alias).toPromise();
   }
 
   allUsers(): Observable<any> {

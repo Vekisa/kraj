@@ -76,6 +76,8 @@ public class CertificateService {
     }
 
     public String createNewSelfSignedCertificate(CertificateInfo certificateInfo) {
+        if(ifAliasExist(certificateInfo.getAlias()))
+            return "Alias exists";
 
         try {
             System.out.println("Create SS Service!");
@@ -100,7 +102,7 @@ public class CertificateService {
 
 
             //Serijski broj sertifikata
-            String sn="1";
+            ++serialNumber;
             //klasa X500NameBuilder pravi X500Name objekat koji predstavlja podatke o vlasniku
             X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);
             builder.addRDN(BCStyle.CN, certificateInfo.getCommName());
@@ -116,7 +118,7 @@ public class CertificateService {
             // - podatke o vlasniku
             // - serijski broj sertifikata
             // - od kada do kada vazi sertifikat
-            SubjectData subjectData = new SubjectData(keyPairSubject.getPublic(), builder.build(), sn, startDate, endDate);
+            SubjectData subjectData = new SubjectData(keyPairSubject.getPublic(), builder.build(), String.valueOf(serialNumber), startDate, endDate);
             IssuerData issuerData = new IssuerData(keyPairSubject.getPrivate(),builder.build());
 
             CertificateGenerator certificateGenerator = new CertificateGenerator();
@@ -124,11 +126,11 @@ public class CertificateService {
 
             KeyStoreWriter keyStoreWriter = new KeyStoreWriter();
 
-            keyStoreWriter.loadKeyStore(null,secret.toCharArray());
+            keyStoreWriter.loadKeyStore(null,password.toCharArray());
 
-            keyStoreWriter.write(certificateInfo.getAlias(),keyPairSubject.getPrivate(),secret.toCharArray(),cert);
+            keyStoreWriter.write(certificateInfo.getAlias(),keyPairSubject.getPrivate(),password.toCharArray(),cert);
 
-            keyStoreWriter.saveKeyStore("keystores/"+certificateInfo.getAlias()+".p12",secret.toCharArray());
+            keyStoreWriter.saveKeyStore("keystores/"+certificateInfo.getAlias()+".p12",password.toCharArray());
 
             return "Successful";
 
