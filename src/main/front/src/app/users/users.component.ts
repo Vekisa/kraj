@@ -15,7 +15,11 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
 
-    this.certificateService.allUsers().subscribe(data=>{this.users = data;})
+    this.certificateService.allUsers().subscribe(data=>{
+      this.users = data;
+      console.log(data);
+
+    })
   }
 
   enable(id : number){

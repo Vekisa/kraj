@@ -3,13 +3,13 @@
   <div  class="collapse navbar-collapse">
     <ul class="navbar-nav mr-auto">
         <li class="nav-item" *ngIf="isLoggedIn">
-          <a class="nav-link" [routerLink]="['certificate_new']">New Certificate</a>
+          <a class="nav-link" [href]="['certificate_new']">New Certificate</a>
         </li>
         <li class="nav-item" *ngIf="isLoggedIn">
-          <a class="nav-link" [routerLink]="['revoke']">Search</a>
+          <a class="nav-link" [href]="['revoke']">Revoke</a>
         </li>
         <li class="nav-item" *ngIf="isLoggedIn">
-          <a class="nav-link" href="" [routerLink]="['users']">Users</a>
+          <a class="nav-link" href="" [href]="['users']">Users</a>
         </li>
     </ul>
     <div *ngIf="!isLoggedIn">

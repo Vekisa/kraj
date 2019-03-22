@@ -1,21 +1,27 @@
-import {Component, NgModule, OnInit} from '@angular/core';
+import {Component, NgModule, OnInit, Pipe} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {CertificateService} from "../service/certificate.service";
+import {FilterPipe} from "../additional/filter.pipe";
 
 import {Observable} from "rxjs";
 import {CertInfo} from "../model";
+
 
 @Component({
   selector: 'app-new-certificate',
   templateUrl: './new-certificate.component.html',
   styleUrls: ['./new-certificate.component.css']
+
 })
 export class NewCertificateComponent implements OnInit {
 
   certForm: FormGroup;
-  certificates: Observable<CertInfo[]>;
+  cert: CertInfo[];
+  certTemp: CertInfo[];
   par: any;
   inputVar: string;
+
+  searchText:any;
 
 
   constructor(private formBuilder: FormBuilder, private certificateService: CertificateService) { }
@@ -36,7 +42,10 @@ export class NewCertificateComponent implements OnInit {
       password: ['']
     });
 
-    this.certificates = this.certificateService.allCertificates();
+    this.certificateService.allCertificates().subscribe(data=>{
+      this.cert = data;
+      this.certTemp = data;
+    });
   }
 
   onSubmit(){
@@ -48,6 +57,8 @@ export class NewCertificateComponent implements OnInit {
   }
 
   rowSelected(cert:any){
+    console.log(this.certForm.get('parent').value);
+    console.log(this.cert);
     this.certForm.value.parent = cert;
     this.inputVar = cert;
     this.par = cert;
@@ -55,12 +66,16 @@ export class NewCertificateComponent implements OnInit {
 
   onSearchChange(searchValue : string) {
     console.log(searchValue);
-   /* this.certificates = this.certificates.filter(
-      CertInfo => CertInfo.name === searchValue);*/
+    this.cert = this.certTemp.filter(
+      CertInfo => CertInfo.alias === searchValue);
 
   }
+
 
   revoke(alias: string){
     this.certificateService.revokeCertificate(alias);
   }
+
+
+
 }

@@ -8,9 +8,9 @@ export class User {
   password: string;
   enabled: boolean;
   lastPasswordResetDate: Date;
-  isVerified: boolean;
+  verified: boolean;
 
-  constructor(id: number, username: string, firstName: string, lastName: string,  email: string, password: string, enabled: boolean, lastPasswordResetDate: Date, isVerified: boolean) {
+  constructor(id: number, username: string, firstName: string, lastName: string,  email: string, password: string, enabled: boolean, lastPasswordResetDate: Date, verified: boolean) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -19,7 +19,7 @@ export class User {
     this.password = password;
     this.enabled = enabled;
     this.lastPasswordResetDate = lastPasswordResetDate;
-    this.isVerified = isVerified;
+    this.verified = verified;
   }
 
 }

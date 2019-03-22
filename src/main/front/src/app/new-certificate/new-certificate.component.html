@@ -1,7 +1,7 @@
 <app-navigation></app-navigation>
 
 <div class="form-label-group" id="search">
-  <input type="text" class="form-control" placeholder="Search" (input)="onSearchChange($event.target.value)">
+  <input type="text" class="form-control" [(ngModel)]="searchText" >
 </div>
 
 <div class="table-wrapper-scroll-y my-custom-scrollbar" id ="certs">
@@ -14,7 +14,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let cert of certificates| async; let i = index"  (click)="rowSelected(cert.alias);" >
+    <tr *ngFor="let cert of cert | filter : searchText ; let i = index "  (click)="rowSelected(cert.alias);" >
       <td>{{i}}</td>
       <td>{{cert.alias}}</td>
     </tr>

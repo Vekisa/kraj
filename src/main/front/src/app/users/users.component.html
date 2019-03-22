@@ -13,18 +13,19 @@
       <th scope="col">Enabled</th>
       <th scope="col">Last Password Reset Date</th>
       <th scope="col">Is Verified</th>
+      <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let user of users; let i = index" >
-      <td>{{i}}</td>
+      <td>{{i+1}}</td>
       <td>{{user.firstName}}</td>
       <td>{{user.lastName}}</td>
       <td>{{user.username}}</td>
       <td>{{user.email}}</td>
       <td>{{user.enabled}}</td>
       <td>{{user.lastPasswordResetDate}}</td>
-      <td>{{user.isVerified}}</td>
+      <td>{{user.verified}}</td>
       <td *ngIf="!user.isVerified" (click)="enable(user.id);"><button class="btn btn-success">Enable</button></td>
       <td *ngIf="user.isVerified" (click)="disable(user.id);"><button class="btn btn-danger">Disable</button></td>
     </tr>
