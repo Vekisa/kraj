@@ -91,8 +91,9 @@ public class CertificateController {
     public ResponseEntity<List<CertificateInfo>> allCertificates() {
         ArrayList<CertificateInfo> ci=(ArrayList<CertificateInfo>) certificateService.allCertificates();
         ArrayList<CertificateInfo> pom= new ArrayList<>();
+        ArrayList<Revoke> revoke= (ArrayList<Revoke>) revokeService.getAll();
         for(CertificateInfo c:ci){
-            if(revokeService.findByAlias(c.getAlias())!=null)
+            if(!revoke.contains(c.getAlias()))
                 pom.add(c);
         }
 
