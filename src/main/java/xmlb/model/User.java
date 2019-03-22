@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -45,7 +46,7 @@ public class User implements UserDetails {
     private Boolean isVerified;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "users",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Role> roles;
 
     @JsonIgnore
@@ -54,6 +55,7 @@ public class User implements UserDetails {
 
     public User() {
         super();
+        this.roles = new ArrayList<>();
     }
 
     public User(String username, String password, String firstName, String lastName, String email, boolean enabled, Date lastPasswordResetDate, boolean isVerified) {
@@ -65,6 +67,7 @@ public class User implements UserDetails {
         this.enabled = enabled;
         this.lastPasswordResetDate = lastPasswordResetDate;
         this.isVerified = isVerified;
+        this.roles = new ArrayList<>();
     }
 
 

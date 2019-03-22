@@ -26,8 +26,8 @@
       <td>{{user.enabled}}</td>
       <td>{{user.lastPasswordResetDate}}</td>
       <td>{{user.verified}}</td>
-      <td *ngIf="!user.isVerified" (click)="enable(user.id);"><button class="btn btn-success">Enable</button></td>
-      <td *ngIf="user.isVerified" (click)="disable(user.id);"><button class="btn btn-danger">Disable</button></td>
+      <td *ngIf="!user.enabled" (click)="enable(user.id);"><button class="btn btn-success">Enable</button></td>
+      <td *ngIf="user.enabled" (click)="disable(user.id);"><button class="btn btn-danger">Disable</button></td>
     </tr>
     </tbody>
   </table>

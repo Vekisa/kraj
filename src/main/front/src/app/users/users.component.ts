@@ -17,16 +17,22 @@ export class UsersComponent implements OnInit {
 
     this.certificateService.allUsers().subscribe(data=>{
       this.users = data;
-      console.log(data);
 
     })
   }
 
   enable(id : number){
     this.certificateService.enable(id);
+    this.certificateService.allUsers().subscribe(data=>{
+      this.users = data;
+    })
   }
 
   disable(id: number){
     this.certificateService.disable(id);
+    this.certificateService.allUsers().subscribe(data=>{
+      this.users = data;
+    })
   }
+
 }

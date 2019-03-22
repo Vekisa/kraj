@@ -80,16 +80,6 @@ public class AuthenticationController {
             return new ResponseEntity<>(new ResponseMessage("Email is already in use!"), HttpStatus.BAD_REQUEST);
         }
 
-        /*String proba = "";
-        try {
-            proba = PasswordHashingService.generateStrongPasswordHash("adminadmin");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (InvalidKeySpecException e) {
-            e.printStackTrace();
-        }
-        System.out.println(proba);*/
-
         String passwordHash = "";
         try {
             passwordHash = PasswordHashingService.generateStrongPasswordHash(signUpRequest.getPassword());
@@ -103,16 +93,16 @@ public class AuthenticationController {
         User user = new User( signUpRequest.getUsername(), passwordHash,
                 signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getEmail(),false,null,false);
 
-        List<Role> tempRoles = new ArrayList<Role>();
+
+
 
         Role role = roleRepository.findByName("ROLE_USER_REG")
                 .orElseThrow(() -> new RuntimeException("Role can't be found!"));
 
-        tempRoles.add(role);
-        user.setRoles(tempRoles);
+        user.getRoles().add(role);
+        role.getUsers().add(user);
 
         String token = UUID.randomUUID().toString();
-
         userRepository.save(user);
         userService.createVerificationToken(user, token);
 

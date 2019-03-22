@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,17 +20,19 @@ public class Role implements GrantedAuthority {
     private String name;
 
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<User> users;
 
     public Role() {
         super();
+        this.users = new ArrayList<>();
         // TODO Auto-generated constructor stub
     }
 
     public Role(String name) {
         super();
         this.name = name;
+        this.users = new ArrayList<>();
     }
 
     public Long getId() {
