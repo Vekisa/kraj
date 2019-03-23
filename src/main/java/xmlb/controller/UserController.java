@@ -28,8 +28,19 @@ public class UserController {
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<List<User>> allCertificates() {
+    public ResponseEntity<List<User>> allCUsers() {
         return new ResponseEntity<>(userService.getAll(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{text}/search", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value="Pretraga usera", httpMethod = "GET", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = List.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<List<User>> search(@PathVariable(value="text") String text) {
+        return new ResponseEntity<>(userService.search(text), HttpStatus.OK);
     }
 
     @RequestMapping(value = "{id}/enable", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)

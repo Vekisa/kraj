@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {CertInfo} from "../model";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {CertificateService} from "../service/certificate.service";
+import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
   selector: 'app-communication',
@@ -11,10 +12,14 @@ import {CertificateService} from "../service/certificate.service";
 export class CommunicationComponent implements OnInit {
   comForm: FormGroup;
   cert: CertInfo[];
+  certComm: CertInfo[];
 
   fS:number;
   first: string;
   second: string;
+
+  searchTextF:any;
+  searchTextS:any;
   constructor(private formBuilder: FormBuilder, private certificateService: CertificateService) { }
 
   ngOnInit() {
@@ -38,6 +43,10 @@ export class CommunicationComponent implements OnInit {
       this.second=cert;
     }
 
+    this.certificateService.communications(cert).subscribe(data=>{
+      this.certComm = data;
+    });
+
   }
 
   buttonR(broj: number){
@@ -46,7 +55,46 @@ export class CommunicationComponent implements OnInit {
 
   enableCommunication(){
     console.log(this.first + " " + this.second);
-    this.certificateService.enableCommunication(this.first,this.second);
+    this.certificateService.enableCommunication(this.first,this.second).then(value =>
+      this.certificateService.communications(this.first).subscribe(data=>{
+        this.certComm = data;
+      })
+    );
+  }
+
+  disableCommunication(alias : string){
+    console.log(this.first + " " + alias);
+    this.certificateService.disableCommunication(this.first,alias).then( value =>
+      this.certificateService.communications(alias).subscribe(data=>{
+        this.certComm = data;
+      })
+
+    );
+  }
+
+  searchS(searchValue : string) {
+    console.log("sv:" + searchValue);
+    if(searchValue == undefined || searchValue == ""){
+      this.certificateService.allCertificates().subscribe(data=>{
+        this.cert = data;
+      });
+    }else {
+      this.certificateService.search(searchValue).subscribe(data => {
+        this.cert = data;
+      });
+    }
+
+  }
+
+  searchF(searchValue : string) {
+    console.log("sv:" + searchValue);
+    if(searchValue == undefined || searchValue == ""){
+      this.certificateService.communications(this.first).subscribe(data=>{
+        this.certComm = data;
+      });
+    }else {
+      this.certComm = this.certComm.filter(x => x.alias.includes(searchValue));
+    }
   }
 
 }

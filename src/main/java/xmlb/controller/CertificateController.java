@@ -30,15 +30,15 @@ public class CertificateController {
     @Autowired
     private RevokeService revokeService;
 
-    @RequestMapping(value= "/search/{id}/{name}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value= "/{alias}/search",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Pretrazuje sertifikate", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = List.class),
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<List<String>> search(@PathVariable(value="id") Long id, @PathVariable(value="name") String name) {
-        return new ResponseEntity<>(certificateService.search(name),HttpStatus.OK);
+    public ResponseEntity<List<CertificateInfo>> search(@PathVariable(value="alias") String alias) {
+        return new ResponseEntity<>(certificateService.search(alias),HttpStatus.OK);
     }
 
     @RequestMapping(value= "/check/{id}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

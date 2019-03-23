@@ -47,8 +47,25 @@ export class CertificateService {
     return this.http.post<JwtResponse>(this.userUrl + "/" + id + "/disable",id).toPromise();
   }
 
-  enableCommunication(first: string, second: string){
+  enableCommunication(first: string, second: string):Promise<JwtResponse>{
     console.log("url: " + this.commUrl + "/" + first + "/" + second);
-    return this.http.post<JwtResponse>(this.commUrl + "/" + first + "/" + second,first);
+    return this.http.post<JwtResponse>(this.commUrl + "/" + first +"/" + second +"/create",first).toPromise();
+  }
+
+  disableCommunication(first: string, second: string):Promise<JwtResponse>{
+    console.log("url: " + this.commUrl + "/" + first + "/" + second);
+    return this.http.post<JwtResponse>(this.commUrl + "/" + first +"/" + second +"/disable",first).toPromise();
+  }
+
+  communications(alias: string):Observable<any>{
+    return this.http.get<JwtResponse>(this.commUrl+"/"+alias);
+  }
+
+  search(alias: string):Observable<any>{
+    return this.http.get<JwtResponse>(this.certUrl+"/" + alias + "/search")
+  }
+
+  searchUsers(alias: string):Observable<any>{
+    return this.http.get<JwtResponse>(this.userUrl+"/" + alias + "/search")
   }
 }

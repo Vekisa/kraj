@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import org.springframework.web.server.ResponseStatusException;
+import xmlb.model.CertificateInfo;
 import xmlb.model.Communication;
 import xmlb.repository.CommunicationRepository;
 
@@ -50,14 +51,19 @@ public class CommunicationService {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Communication does not exist");
     }
 
-    public List<String> getCommunicationsOfCertificate(String alias){
-        List<String> list = new ArrayList<>();
+    public List<CertificateInfo> getCommunicationsOfCertificate(String alias){
+        List<CertificateInfo> list = new ArrayList<>();
         List<Communication> communications = communicationRepository.findAll();
+        CertificateInfo ci = null;
         for(Communication communication : communications){
             if(communication.getFirst().equals(alias)){
-                list.add(communication.getSecond());
+                ci = new CertificateInfo();
+                ci.setAlias(communication.getSecond());
+                list.add(ci);
             }else if(communication.getSecond().equals(alias)){
-                list.add(communication.getFirst());
+                ci = new CertificateInfo();
+                ci.setAlias(communication.getFirst());
+                list.add(ci);
             }
         }
         return list;

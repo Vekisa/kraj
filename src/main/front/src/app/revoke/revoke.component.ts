@@ -11,18 +11,37 @@ import {CertInfo} from "../model";
 })
 export class RevokeComponent implements OnInit {
 
+  searchText: any;
+
   constructor( private certificateService: CertificateService) { }
 
-  certificates: Observable<CertInfo[]>;
+  certificates: CertInfo[];
 
   ngOnInit() {
-    this.certificates = this.certificateService.allCertificatesL();
+    this.certificateService.allCertificates().subscribe(data=>{
+      this.certificates = data;
+    });
   }
 
   revoke(alias: string){
     this.certificateService.revokeCertificate(alias).then(value => {
-      this.certificates = this.certificateService.allCertificatesL();
+      this.certificateService.allCertificates().subscribe(data=>{
+        this.certificates = data;
+      });
     });
 
+  }
+
+  search(searchValue : string) {
+    console.log("sv:" + searchValue);
+    if(searchValue == undefined || searchValue == ""){
+      this.certificateService.allCertificates().subscribe(data=>{
+        this.certificates = data;
+      });
+    }else {
+      this.certificateService.search(searchValue).subscribe(data => {
+        this.certificates = data;
+      });
+    }
   }
 }

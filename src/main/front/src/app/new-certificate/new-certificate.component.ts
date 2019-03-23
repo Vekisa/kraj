@@ -78,31 +78,33 @@ export class NewCertificateComponent implements OnInit {
     this.par = cert;
   }
 
-  onSearchChange(searchValue : string) {
-    console.log(searchValue);
-    this.cert = this.certTemp.filter(
-      CertInfo => CertInfo.alias === searchValue);
-
+  search(searchValue : string) {
+    console.log("sv:" + searchValue);
+    if(searchValue == undefined || searchValue == ""){
+      this.certificateService.allCertificates().subscribe(data=>{
+        this.cert = data;
+      });
+    }else {
+      this.certificateService.search(searchValue).subscribe(data => {
+        this.cert = data;
+      });
+    }
   }
-
-
-
 
   mySelectHandler(){
 
-  console.log(this.selectType);
+    console.log(this.selectType);
 
-  if (this.selectType==="Root") {
-    this.roott = true;
-    this.leaf = false;
-  }else if (this.selectType==="Leaf"){
-    this.roott = false;
-    this.leaf = true;
-  }else{
-    this.roott = false;
-    this.leaf = false;
-  }
-
+    if (this.selectType==="Root") {
+      this.roott = true;
+      this.leaf = false;
+    }else if (this.selectType==="Leaf"){
+      this.roott = false;
+      this.leaf = true;
+    }else{
+      this.roott = false;
+      this.leaf = false;
+    }
 
   }
 

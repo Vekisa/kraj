@@ -11,6 +11,7 @@ import {FormBuilder} from "@angular/forms";
 export class UsersComponent implements OnInit {
 
   users: User[];
+  searchText: any;
   constructor(private formBuilder: FormBuilder, private certificateService: CertificateService) { }
 
   ngOnInit() {
@@ -22,17 +23,33 @@ export class UsersComponent implements OnInit {
   }
 
   enable(id : number){
-    this.certificateService.enable(id);
-    this.certificateService.allUsers().subscribe(data=>{
-      this.users = data;
-    })
+    this.certificateService.enable(id).then( value =>
+      this.certificateService.allUsers().subscribe(data=>{
+        this.users = data;
+      })
+    );
+
   }
 
   disable(id: number){
-    this.certificateService.disable(id);
-    this.certificateService.allUsers().subscribe(data=>{
-      this.users = data;
-    })
+    this.certificateService.disable(id).then(value =>
+      this.certificateService.allUsers().subscribe(data=>{
+        this.users = data;
+      })
+    );
+
   }
 
+  search(searchValue : string) {
+    console.log("sv:" + searchValue);
+    if(searchValue == undefined || searchValue == ""){
+      this.certificateService.allUsers().subscribe(data=>{
+        this.users = data;
+      });
+    }else {
+      this.certificateService.searchUsers(searchValue).subscribe(data => {
+        this.users = data;
+      });
+    }
+  }
 }

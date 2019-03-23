@@ -1,3 +1,14 @@
-#revoke_table{
+#certs{
   margin: 2%;
+}
+
+#search{
+  position: relative;
+  left: 33%;
+  width: 30%;
+  margin: 2%;
+}
+
+#btnSearch{
+  margin-top: 2%;
 }

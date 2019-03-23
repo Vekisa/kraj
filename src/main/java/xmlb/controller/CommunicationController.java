@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import xmlb.model.CertificateInfo;
 import xmlb.model.Communication;
 import xmlb.service.CommunicationService;
 
@@ -21,20 +22,20 @@ public class CommunicationController {
     @Autowired
     private CommunicationService communicationService;
 
-    @RequestMapping(value= "/{first_alias}/{second_alias}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value= "/{first_alias}/{second_alias}/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Kreiranje komunikacije", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Communication.class),
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<Communication> createCommunication(@PathVariable(value="first_alias") String first, @PathVariable(value="second_alias") String second ) {
-        System.out.println("COMM: ");
-        return new ResponseEntity<>(communicationService.createCommunication(first,second), HttpStatus.CREATED);
+    public ResponseEntity<Communication> createCommunication(@PathVariable(value="first_alias") String first_alias, @PathVariable(value="second_alias") String second_alias ) {
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + first_alias + " " +  second_alias);
+        return new ResponseEntity<>(communicationService.createCommunication(first_alias,second_alias), HttpStatus.CREATED);
     }
 
-    @RequestMapping(value= "/{first_alias}/{second_alias}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value="Brisanje komunikacije", httpMethod = "DELETE", produces = "application/json")
+    @RequestMapping(value= "/{first_alias}/{second_alias}/disable", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value="Brisanje komunikacije", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 204, message = "No Content."),
@@ -52,7 +53,8 @@ public class CommunicationController {
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<List<String>> getCommunicationsOfCertificate(@PathVariable(value="alias") String alias ) {
+    public ResponseEntity<List<CertificateInfo>> getCommunicationsOfCertificate(@PathVariable(value="alias") String alias ) {
+        System.out.println("bbbbbbbbbbbbbbb " + alias );
         return new ResponseEntity<>(communicationService.getCommunicationsOfCertificate(alias),HttpStatus.OK);
     }
 }

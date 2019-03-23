@@ -10,6 +10,7 @@ import xmlb.repository.UserRepository;
 import xmlb.repository.VerificationTokenRepository;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +33,17 @@ public class UserService {
         return false;
     }
 
+    public List<User> search(String text){
+        List<User> users = userRepository.findAll();
+        List<User> list = new ArrayList<>();
+
+        for(User user : users){
+            if(user.getFirstName().contains(text) || user.getLastName().contains(text) || user.getUsername().contains(text)){
+                list.add(user);
+            }
+        }
+        return list;
+    }
 
     public User getUser(String verificationToken) {
         User user = tokenRepository.findByVerificationToken(verificationToken).getUser();

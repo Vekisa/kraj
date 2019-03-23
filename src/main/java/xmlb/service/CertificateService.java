@@ -32,9 +32,24 @@ public class CertificateService {
     @Value("${certificate.serial.number}")
     private int serialNumber;
 
-    public List<String> search(String name){
+    public List<CertificateInfo> search(String alias){
+        File folder = new File("keystores/");
+        File[] listOfFiles = folder.listFiles();
 
-        return null;
+        List<CertificateInfo> list = new ArrayList<>();
+
+        CertificateInfo cInfo = new CertificateInfo();
+
+        for (File file : listOfFiles) {
+            if (file.isFile()) {
+                if(file.getName().substring(0,file.getName().length()-4).contains(alias)) {
+                    cInfo = new CertificateInfo();
+                    cInfo.setAlias(file.getName().substring(0, file.getName().length() - 4));
+                    list.add(cInfo);
+                }
+            }
+        }
+        return list;
     }
 
     public Boolean check(Long id){

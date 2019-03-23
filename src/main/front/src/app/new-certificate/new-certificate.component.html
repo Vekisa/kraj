@@ -2,6 +2,7 @@
 
 <div class="form-label-group" id="search">
   <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText" >
+  <button class="btn btn-primary" id="btnSearch" (click)="search(searchText)"> Search</button>
 </div>
 
 <div class="table-wrapper-scroll-y my-custom-scrollbar" id ="certs">
@@ -14,7 +15,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let cert of cert | filter : searchText ; let i = index "  (click)="rowSelected(cert.alias);" >
+    <tr *ngFor="let cert of cert; let i = index "  (click)="rowSelected(cert.alias);" >
       <td>{{i+1}}</td>
       <td>{{cert.alias}}</td>
     </tr>

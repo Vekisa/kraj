@@ -43,6 +43,6 @@ table:hover{
   cursor:pointer;
 }
 
-#lajna{
-
+#btnSS, #btnSF{
+  margin: 2%;
 }
