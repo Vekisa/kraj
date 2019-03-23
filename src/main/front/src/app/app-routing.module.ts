@@ -8,6 +8,7 @@ import {NewCertificateComponent} from "./new-certificate/new-certificate.compone
 import {UsersComponent} from "./users/users.component";
 import {RevokeComponent } from "./revoke/revoke.component";
 import {CommunicationComponent} from "./communication/communication.component";
+import {ValidateComponent} from "./validate/validate.component";
 
 const routes: Routes = [
   {
@@ -41,6 +42,10 @@ const routes: Routes = [
   {
     path: 'communication',
     component: CommunicationComponent
+  },
+  {
+    path: 'validate',
+    component: ValidateComponent
   }
 
 ];

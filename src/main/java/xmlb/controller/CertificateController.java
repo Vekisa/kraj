@@ -8,8 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import xmlb.model.CertificateDB;
 import xmlb.model.CertificateInfo;
 import xmlb.model.Revoke;
+import xmlb.security.ResponseMessage;
 import xmlb.security.SignUpRequest;
 import xmlb.service.CertificateService;
 import xmlb.service.RevokeService;
@@ -39,17 +41,6 @@ public class CertificateController {
     })
     public ResponseEntity<List<CertificateInfo>> search(@PathVariable(value="alias") String alias) {
         return new ResponseEntity<>(certificateService.search(alias),HttpStatus.OK);
-    }
-
-    @RequestMapping(value= "/{alias}/search_without_leafs",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value="Pretrazuje sertifikate", httpMethod = "GET", produces = "application/json")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = List.class),
-            @ApiResponse(code = 204, message = "No Content."),
-            @ApiResponse(code = 400, message = "Bad Request.")
-    })
-    public ResponseEntity<List<CertificateInfo>> searchWithoutLeafs(@PathVariable(value="alias") String alias) {
-        return new ResponseEntity<>(certificateService.search2(alias),HttpStatus.OK);
     }
 
     @RequestMapping(value= "/check/{id}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -87,17 +78,16 @@ public class CertificateController {
 
     }
 
-    @RequestMapping(value= "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+   /* @RequestMapping(value= "/show/{alias}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Prikaz sertifikata", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = List.class),
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<List<CertificateInfo>> allCertificates() {
-
-        return new ResponseEntity<>(certificateService.allCertificates(),HttpStatus.OK);
-    }
+    public ResponseEntity<String> show(@PathVariable(value="alias") String alias) {
+        return new ResponseEntity<>(certificateService.showKeyStoreContent(alias),HttpStatus.OK);
+    }*/
 
     @RequestMapping(value= "/all_without_leafs", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Prikaz sertifikata bez listova", httpMethod = "GET", produces = "application/json")
@@ -108,6 +98,42 @@ public class CertificateController {
     })
     public ResponseEntity<List<CertificateInfo>> allCertificatesWithoutLeafs() {
         return new ResponseEntity<>(certificateService.allCertificatesBL(),HttpStatus.OK);
+    }
+
+    @RequestMapping(value= "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value="Prikaz sertifikata", httpMethod = "GET", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = List.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<List<CertificateInfo>> allCertificates() {
+        ArrayList<CertificateInfo> ci=(ArrayList<CertificateInfo>) certificateService.allCertificates();
+        ArrayList<CertificateInfo> pom= new ArrayList<>();
+        ArrayList<String> lista= (ArrayList<String>) revokeService.getAliase();
+        for(CertificateInfo c:ci){
+            if(!c.getAlias().equals(".DS_S")){
+                if(certificateService.checkIfValid(c.getAlias())){
+                    pom.add(c);
+             }
+            }
+        }
+
+        return new ResponseEntity<>(pom,HttpStatus.OK);
+    }
+
+    @RequestMapping(value= "/allDb", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value="Prikaz sertifikata", httpMethod = "GET", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = List.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<List<CertificateDB>> allCertificatesDB() {
+
+        List<CertificateDB> lista = certificateService.allCertificatesDB();
+
+        return new ResponseEntity<>(lista,HttpStatus.OK);
     }
 
 
@@ -149,4 +175,23 @@ public class CertificateController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
+
+    @RequestMapping(value= "/checkIfValid", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value="Check if valid", httpMethod = "POST", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = List.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<?> checkIfValid(@RequestBody String alias) {
+
+
+        if (certificateService.checkIfValid(alias)){
+            return new ResponseEntity<>(new ResponseMessage("Valid"),HttpStatus.OK);
+        }else
+            return new ResponseEntity<>(new ResponseMessage("NOT Valid!"),HttpStatus.OK);
+
+    }
+
 }

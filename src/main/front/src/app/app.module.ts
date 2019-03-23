@@ -17,6 +17,7 @@ import { RevokeComponent } from './revoke/revoke.component';
 import { UsersComponent } from './users/users.component';
 import {FilterPipe} from "./additional/filter.pipe";
 import { CommunicationComponent } from './communication/communication.component';
+import { ValidateComponent } from './validate/validate.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { CommunicationComponent } from './communication/communication.component'
     RevokeComponent,
     UsersComponent,
     FilterPipe,
-    CommunicationComponent
+    CommunicationComponent,
+    ValidateComponent
   ],
   imports: [
     BrowserModule,

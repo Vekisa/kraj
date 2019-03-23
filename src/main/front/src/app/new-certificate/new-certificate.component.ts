@@ -35,7 +35,7 @@ export class NewCertificateComponent implements OnInit {
 
     this.roott= false;
     this.leaf = false;
-    this.selectType = "Root";
+    this.selectType = "Intermediate";
 
     this.certForm = this.formBuilder.group({
       parent: [''],

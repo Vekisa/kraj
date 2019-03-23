@@ -65,3 +65,24 @@ export class CertInfo {
   }
 
 }
+
+export class CertificateDB {
+
+  alias: String;
+  sn: String;
+  startDate: Date;
+  endDate: Date;
+  signedByAlias: String;
+
+  constructor(alias: string,sn: string,startDate: Date,endDate: Date,signedByAlias: string){
+    this.alias = alias;
+    this.sn = sn;
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.signedByAlias = signedByAlias;
+  }
+
+
+
+
+}

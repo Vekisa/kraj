@@ -4,17 +4,19 @@ import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import xmlb.KeyStoreReader;
-import xmlb.model.CertificateInfo;
-import xmlb.model.IssuerData;
-import xmlb.model.Revoke;
-import xmlb.model.SubjectData;
+import xmlb.model.*;
+import xmlb.repository.CertificateRepository;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.security.*;
+import java.security.cert.*;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.text.SimpleDateFormat;
@@ -33,6 +35,12 @@ public class CertificateService {
 
     @Value("${certificate.serial.number}")
     private int serialNumber;
+
+    @Autowired
+    public CertificateRepository certificateRepository;
+
+    @Autowired
+    public RevokeService revokeService;
 
     @Autowired
     private RevokeService rs;
@@ -89,7 +97,7 @@ public class CertificateService {
         File[] listOfFiles = folder.listFiles();
 
         List<CertificateInfo> list = new ArrayList<>();
-        List<String> revoke= rs.getPovuceneAliasi();
+        List<String> revoke= rs.getAliase();
 
         CertificateInfo cInfo = new CertificateInfo();
 
@@ -108,6 +116,7 @@ public class CertificateService {
         File folder = new File("keystores/");
         File[] listOfFiles = folder.listFiles();
 
+
         List<String> revoke= rs.getAliase();
 
         List<CertificateInfo> list = new ArrayList<>();
@@ -118,8 +127,13 @@ public class CertificateService {
             if (file.isFile()) {
                 cInfo = new CertificateInfo();
                 cInfo.setAlias(file.getName().substring(0,file.getName().length()-4));
-                if(!revoke.contains(cInfo.getAlias()))
-                  list.add(cInfo);
+
+                if(!cInfo.getAlias().equals(".DS_S")){
+                    if(checkIfValid(cInfo.getAlias())){
+                        list.add(cInfo);
+                    }
+                }
+
             }
         }
         return list;
@@ -293,8 +307,17 @@ public class CertificateService {
         builder.addRDN(BCStyle.ST, certificateInfo.getState());
 
 
-        SubjectData subjectData = new SubjectData(keyPairSubject.getPublic(), builder.build(), String.valueOf(serialNumber), startDate, endDate);
-        ++serialNumber;
+        String sn = BigInteger.valueOf(System.currentTimeMillis()).toString();
+
+        SubjectData subjectData = new SubjectData(keyPairSubject.getPublic(), builder.build(), sn, startDate, endDate);
+
+        CertificateDB certificateDB = new CertificateDB(certificateInfo.getAlias(),
+                sn,
+                certificateInfo.getStartDate(),
+                certificateInfo.getEndDate(),
+                certificateInfo.getParent());
+
+
         CertificateGenerator certificateGenerator = new CertificateGenerator();
         X509Certificate cert = certificateGenerator.generateCertificate(subjectData,issuer);
 
@@ -306,6 +329,117 @@ public class CertificateService {
 
         keyStoreWriter.saveKeyStore("keystores/"+certificateInfo.getAlias()+".p12",password.toCharArray());
 
+
+        certificateRepository.save(certificateDB);
+
         System.out.println("NAPRAVIO CERT");
     }
+
+
+
+    public boolean checkIfValid(String alias){
+        System.out.println("Validnost " +alias);
+
+        String pass ="";
+
+        if (alias.equals("root")){
+            System.out.println("JESTE ROOOT");
+            pass = secret;
+        }else {
+            System.out.println("NIJEEE");
+            pass = password;
+        }
+
+        System.out.println("pass"+pass);
+
+        Revoke revoke=new Revoke();
+        revoke.setAlias(alias);
+        revoke.setLeaf(false);
+        ArrayList<String> lista= (ArrayList<String>) revokeService.getPovuceneAliasi();
+        if(lista.contains(revoke.getAlias())) {
+            System.out.println("Revoked");
+            return false;
+        }
+
+
+        System.out.println("Ucitavanje cert");
+
+        Certificate cert = readFromKS(alias,pass);
+
+        X509Certificate x509Certificate = (X509Certificate) cert;
+
+
+        try {
+            x509Certificate.checkValidity();
+        } catch (CertificateExpiredException e) {
+            e.printStackTrace();
+            System.out.println("EXPIRED");
+            return false;
+        } catch (CertificateNotYetValidException e) {
+            e.printStackTrace();
+            System.out.println("Not YET VALID");
+            return false;
+        }
+
+        IssuerData data = getIssuerFromCertificate(alias,pass);
+
+        System.out.println(data.getX500name().toString());
+
+        if (!alias.equals("root")){
+
+
+
+        CertificateDB certificateDB = certificateRepository.findByAlias(alias);
+
+        String aliasIs = certificateDB.getSignedByAlias();
+
+
+        if (aliasIs.equals("root")){
+            pass=secret;
+        }
+
+            Certificate certIss = readFromKS(aliasIs,pass);
+
+            try {
+                cert.verify(certIss.getPublicKey());
+            } catch (CertificateException e) {
+                e.printStackTrace();
+                return false;
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+
+            } catch (InvalidKeyException e) {
+                e.printStackTrace();
+                return false;
+            } catch (NoSuchProviderException e) {
+                e.printStackTrace();
+
+            } catch (SignatureException e) {
+                e.printStackTrace();
+                return false;
+            }
+
+            return checkIfValid(aliasIs);
+         }
+
+
+        return true;
+    }
+
+    public Certificate readFromKS(String alias,String pass){
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+
+        String name = "keystores/"+ alias +".p12";
+
+        KeyStoreReader keyStoreReader = new KeyStoreReader();
+
+       return  keyStoreReader.readCertificate(name,pass,alias);
+    }
+
+    public List<CertificateDB> allCertificatesDB(){
+        return certificateRepository.findAll();
+    }
+
+
+
 }
