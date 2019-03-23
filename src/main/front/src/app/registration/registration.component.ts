@@ -32,40 +32,24 @@ export class RegistrationComponent implements OnInit {
       passwordConfirm: ['']
     }, {
       validator: ConfirmPasswordValidator.validate.bind(this)
-
     });
-
-
   }
 
   onSubmit() {
-
     this.authService.signUp(this.signUpForm.value).subscribe(
       data => {
         this.isSignedUp = true;
         this.isSignUpFailed = false;
+        this.reloadPage();
       }, error => {
         this.errorMessage = error.error.message;
         this.isSignUpFailed = true;
       }
-
     );
-
-
-
   }
 
 
   reloadPage() {
     window.location.href = "http://localhost:4200/"
   }
-
-
-
-
-
-
-
-
-
 }

@@ -28,7 +28,6 @@ export class UsersComponent implements OnInit {
         this.users = data;
       })
     );
-
   }
 
   disable(id: number){
@@ -37,7 +36,6 @@ export class UsersComponent implements OnInit {
         this.users = data;
       })
     );
-
   }
 
   search(searchValue : string) {

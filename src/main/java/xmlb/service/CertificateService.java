@@ -89,7 +89,7 @@ public class CertificateService {
         File[] listOfFiles = folder.listFiles();
 
         List<CertificateInfo> list = new ArrayList<>();
-        List<String> revoke= rs.getAliase();
+        List<String> revoke= rs.getPovuceneAliasi();
 
         CertificateInfo cInfo = new CertificateInfo();
 
@@ -107,7 +107,6 @@ public class CertificateService {
     public List<CertificateInfo> allCertificatesBL(){ //bez listova
         File folder = new File("keystores/");
         File[] listOfFiles = folder.listFiles();
-
 
         List<String> revoke= rs.getAliase();
 

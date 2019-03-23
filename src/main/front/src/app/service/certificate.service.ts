@@ -23,6 +23,10 @@ export class CertificateService {
     return this.http.get<any>(this.certUrl+"/all");
   }
 
+  allCertificatesWihoutLeafs(): Observable<any>{
+    return this.http.get<any>(this.certUrl+"/all_without_leafs");
+  }
+
   allCertificatesL(): Observable<any>{
     return this.http.get<any>(this.certUrl+"/allL");
   }
@@ -63,6 +67,10 @@ export class CertificateService {
 
   search(alias: string):Observable<any>{
     return this.http.get<JwtResponse>(this.certUrl+"/" + alias + "/search")
+  }
+
+  searchWithoutLeafs(alias: string):Observable<any>{
+    return this.http.get<JwtResponse>(this.certUrl+"/" + alias + "/search_without_leafs")
   }
 
   searchUsers(alias: string):Observable<any>{

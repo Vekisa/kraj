@@ -64,12 +64,19 @@ export class CommunicationComponent implements OnInit {
 
   disableCommunication(alias : string){
     console.log(this.first + " " + alias);
-    this.certificateService.disableCommunication(this.first,alias).then( value =>
-      this.certificateService.communications(alias).subscribe(data=>{
-        this.certComm = data;
-      })
+    if(alias == this.first){
+      this.certificateService.disableCommunication(this.first,this.second).then( value =>
+        this.certificateService.communications(this.first).subscribe(data=>{
+          this.certComm = data;
+        }));
+    }else{
+      this.certificateService.disableCommunication(this.first,alias).then( value =>
+        this.certificateService.communications(this.first).subscribe(data=>{
+          this.certComm = data;
+        })
+      );
+    }
 
-    );
   }
 
   searchS(searchValue : string) {

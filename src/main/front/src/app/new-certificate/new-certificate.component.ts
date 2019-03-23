@@ -52,7 +52,7 @@ export class NewCertificateComponent implements OnInit {
       leaf:['']
     });
 
-    this.certificateService.allCertificates().subscribe(data=>{
+    this.certificateService.allCertificatesWihoutLeafs().subscribe(data=>{
       this.cert = data;
       this.certTemp = data;
     });
@@ -65,9 +65,6 @@ export class NewCertificateComponent implements OnInit {
     this.certForm.value.leaf=this.leaf;
 
     this.certificateService.newCertificate(this.certForm.value);
-
-
-
   }
 
   rowSelected(cert:any){
@@ -81,11 +78,11 @@ export class NewCertificateComponent implements OnInit {
   search(searchValue : string) {
     console.log("sv:" + searchValue);
     if(searchValue == undefined || searchValue == ""){
-      this.certificateService.allCertificates().subscribe(data=>{
+      this.certificateService.allCertificatesWihoutLeafs().subscribe(data=>{
         this.cert = data;
       });
     }else {
-      this.certificateService.search(searchValue).subscribe(data => {
+      this.certificateService.searchWithoutLeafs(searchValue).subscribe(data => {
         this.cert = data;
       });
     }
