@@ -2,11 +2,13 @@ package xmlb.service;
 
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import xmlb.KeyStoreReader;
 import xmlb.model.CertificateInfo;
 import xmlb.model.IssuerData;
+import xmlb.model.Revoke;
 import xmlb.model.SubjectData;
 
 import java.io.BufferedReader;
@@ -32,12 +34,15 @@ public class CertificateService {
     @Value("${certificate.serial.number}")
     private int serialNumber;
 
-    public List<CertificateInfo> search(String alias){
+    @Autowired
+    private RevokeService rs;
+
+    public List<CertificateInfo> search(String alias){ //Svi osim povucenih
         File folder = new File("keystores/");
         File[] listOfFiles = folder.listFiles();
 
         List<CertificateInfo> list = new ArrayList<>();
-
+        List<String> revoke= rs.getPovuceneAliasi();
         CertificateInfo cInfo = new CertificateInfo();
 
         for (File file : listOfFiles) {
@@ -45,7 +50,29 @@ public class CertificateService {
                 if(file.getName().substring(0,file.getName().length()-4).contains(alias)) {
                     cInfo = new CertificateInfo();
                     cInfo.setAlias(file.getName().substring(0, file.getName().length() - 4));
-                    list.add(cInfo);
+                    if(!revoke.contains(cInfo.getAlias()))
+                         list.add(cInfo);
+                }
+            }
+        }
+        return list;
+    }
+
+    public List<CertificateInfo> search2(String alias){ //bez listova i bez povucenih
+        File folder = new File("keystores/");
+        File[] listOfFiles = folder.listFiles();
+
+        List<CertificateInfo> list = new ArrayList<>();
+        List<String> revoke= rs.getAliase();
+        CertificateInfo cInfo = new CertificateInfo();
+
+        for (File file : listOfFiles) {
+            if (file.isFile()) {
+                if(file.getName().substring(0,file.getName().length()-4).contains(alias)) {
+                    cInfo = new CertificateInfo();
+                    cInfo.setAlias(file.getName().substring(0, file.getName().length() - 4));
+                    if(!revoke.contains(cInfo.getAlias()))
+                        list.add(cInfo);
                 }
             }
         }
@@ -62,6 +89,7 @@ public class CertificateService {
         File[] listOfFiles = folder.listFiles();
 
         List<CertificateInfo> list = new ArrayList<>();
+        List<String> revoke= rs.getAliase();
 
         CertificateInfo cInfo = new CertificateInfo();
 
@@ -69,7 +97,30 @@ public class CertificateService {
             if (file.isFile()) {
                 cInfo = new CertificateInfo();
                 cInfo.setAlias(file.getName().substring(0,file.getName().length()-4));
-                list.add(cInfo);
+                if(!revoke.contains(cInfo.getAlias()))
+                    list.add(cInfo);
+            }
+        }
+        return list;
+    }
+
+    public List<CertificateInfo> allCertificatesBL(){ //bez listova
+        File folder = new File("keystores/");
+        File[] listOfFiles = folder.listFiles();
+
+
+        List<String> revoke= rs.getAliase();
+
+        List<CertificateInfo> list = new ArrayList<>();
+
+        CertificateInfo cInfo = new CertificateInfo();
+
+        for (File file : listOfFiles) {
+            if (file.isFile()) {
+                cInfo = new CertificateInfo();
+                cInfo.setAlias(file.getName().substring(0,file.getName().length()-4));
+                if(!revoke.contains(cInfo.getAlias()))
+                  list.add(cInfo);
             }
         }
         return list;
