@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.megatravell.com/user"
+    xmlns:address="http://www.megatravell.com/address" xmlns:user="http://www.megatravell.com/user"
+    xmlns:object="http://megatravell.com/object">
+
+    <xs:import namespace="http://www.megatravell.com/address" schemaLocation="Adress.xsd"/>
+    <xs:import namespace="http://megatravell.com/object" schemaLocation="Object.xsd"/>
+    <xs:complexType abstract="true" name="User">
+        <xs:sequence>
+            <xs:element name="FirstName">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                        <xs:maxLength value="40"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="LastName">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                        <xs:maxLength value="40"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Email">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                        <xs:maxLength value="40"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Password">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="5"/>
+                        <xs:maxLength value="40"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element ref="address:Adress"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="Message">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Text">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:maxLength value="150"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element form="qualified" name="postingDate" type="xs:dateTime"/>
+                <xs:element ref="user:Agent"/>
+                <xs:element ref="user:RegisteredUser"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element block="" name="Agent">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="user:User">
+                    <xs:sequence>
+                        <xs:element name="BussinesRegistrationNumber">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:length value="15"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="user:Message"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="RegisteredUser">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="user:User">
+                    <xs:sequence>
+                        <xs:element default="true" name="Aktivan" type="xs:boolean"/>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="object:Comment"/>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="object:Reservation"/>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="user:Message"/>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="object:Rating"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
