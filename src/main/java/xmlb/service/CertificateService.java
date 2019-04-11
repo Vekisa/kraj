@@ -111,8 +111,6 @@ public class CertificateService {
         File[] listOfFiles = folder.listFiles();
 
 
-       /* List<String> revoke= rs.getAliase();
-
         List<CertificateDTO> list = new ArrayList<>();
 
         CertificateDTO cInfo = new CertificateDTO();
@@ -120,18 +118,18 @@ public class CertificateService {
         for (File file : listOfFiles) {
             if (file.isFile()) {
                 cInfo = new CertificateDTO();
-                cInfo.setAlias(file.getName().substring(0,file.getName().length()-4));
+                cInfo.setAlias(file.getName().substring(0, file.getName().length() - 4));
 
-                if(!cInfo.getAlias().equals(".DS_S")){
-                    if(checkIfValid(cInfo.getAlias())){
-                        list.add(cInfo);
-                    }
+                if (!cInfo.getAlias().equals(".DS_S")) {
+
+                    list.add(cInfo);
+
                 }
-
             }
+
         }
-        return list;*/
-       return null;
+        return list;
+
     }
 
     public Boolean ifAliasExist(String alias){
@@ -310,7 +308,8 @@ public class CertificateService {
                 sn,
                 certificateDTO.getStartDate(),
                 certificateDTO.getEndDate(),
-                certificateDTO.getParent());
+                certificateDTO.getParent(),
+                false);
 
 
         CertificateGenerator certificateGenerator = new CertificateGenerator();
@@ -318,11 +317,17 @@ public class CertificateService {
 
         KeyStoreWriter keyStoreWriter = new KeyStoreWriter();
 
-        keyStoreWriter.loadKeyStore(null,password.toCharArray());
+        if (!certificateRepository.existsByCompany(certificateDTO.getOrg())){
+            keyStoreWriter.loadKeyStore(null,password.toCharArray());
 
-        keyStoreWriter.write(certificateDTO.getAlias(),keyPairSubject.getPrivate(),password.toCharArray(),cert);
+            keyStoreWriter.write(certificateDTO.getAlias(),keyPairSubject.getPrivate(),password.toCharArray(),cert);
 
-        keyStoreWriter.saveKeyStore("keystores/"+ certificateDTO.getAlias()+".p12",password.toCharArray());
+        }else{
+            keyStoreWriter.loadKeyStore("keystores/"+ certificateDTO.getOrg()+".p12",password.toCharArray());
+            keyStoreWriter.write(certificateDTO.getAlias(),keyPairSubject.getPrivate(),password.toCharArray(),cert);
+        }
+
+        keyStoreWriter.saveKeyStore("keystores/"+ certificateDTO.getOrg()+".p12",password.toCharArray());
 
 
         certificateRepository.save(certificate);
