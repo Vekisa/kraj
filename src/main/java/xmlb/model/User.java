@@ -49,6 +49,9 @@ public class User implements UserDetails {
     @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Role> roles;
 
+    @ManyToOne
+    private Company company;
+
     @JsonIgnore
     @OneToOne
     private VerificationToken verificationToken;
@@ -128,7 +131,7 @@ public class User implements UserDetails {
     }
 
     public boolean isVerified() {
-        return isVerified;
+        return getVerified();
     }
 
     public void setVerified(boolean verified) {
@@ -137,7 +140,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return enabled;
+        return getEnabled();
     }
 
     public void setEnabled(boolean enabled) {
@@ -181,5 +184,29 @@ public class User implements UserDetails {
 
     public void setVerificationToken(VerificationToken verificationToken) {
         this.verificationToken = verificationToken;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public Boolean getVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(Boolean verified) {
+        isVerified = verified;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }

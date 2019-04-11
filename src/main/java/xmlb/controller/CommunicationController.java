@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import xmlb.model.CertificateInfo;
+import xmlb.dto.CertificateDTO;
 import xmlb.model.Communication;
 import xmlb.service.CommunicationService;
 
@@ -30,7 +30,6 @@ public class CommunicationController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<Communication> createCommunication(@PathVariable(value="first_alias") String first_alias, @PathVariable(value="second_alias") String second_alias ) {
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + first_alias + " " +  second_alias);
         return new ResponseEntity<>(communicationService.createCommunication(first_alias,second_alias), HttpStatus.CREATED);
     }
 
@@ -53,8 +52,7 @@ public class CommunicationController {
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<List<CertificateInfo>> getCommunicationsOfCertificate(@PathVariable(value="alias") String alias ) {
-        System.out.println("bbbbbbbbbbbbbbb " + alias );
+    public ResponseEntity<List<CertificateDTO>> getCommunicationsOfCertificate(@PathVariable(value="alias") String alias ) {
         return new ResponseEntity<>(communicationService.getCommunicationsOfCertificate(alias),HttpStatus.OK);
     }
 }

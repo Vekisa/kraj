@@ -1,8 +1,8 @@
-package xmlb.model;
+package xmlb.dto;
 
 import java.util.Date;
 
-public class CertificateInfo {
+public class CertificateDTO {
 
     private String parent;
     private String country;
@@ -17,11 +17,11 @@ public class CertificateInfo {
     private String password;
     private Boolean leaf;
 
-    public CertificateInfo() {
+    public CertificateDTO() {
         super();
     }
 
-    public CertificateInfo(String parent, String country, String state, String loc, String org, String orgUnit, String commName, Date startDate, Date endDate,String alias,String password) {
+    public CertificateDTO(String parent, String country, String state, String loc, String org, String orgUnit, String commName, Date startDate, Date endDate, String alias, String password) {
         this.parent = parent;
         this.country = country;
         this.state = state;

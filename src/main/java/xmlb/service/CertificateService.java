@@ -4,11 +4,11 @@ import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import xmlb.KeyStoreReader;
+import xmlb.dto.CertificateDTO;
 import xmlb.model.*;
+import xmlb.model.Certificate;
 import xmlb.repository.CertificateRepository;
 
 import java.io.BufferedReader;
@@ -17,7 +17,6 @@ import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.security.*;
 import java.security.cert.*;
-import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,51 +38,46 @@ public class CertificateService {
     @Autowired
     public CertificateRepository certificateRepository;
 
-    @Autowired
-    public RevokeService revokeService;
 
-    @Autowired
-    private RevokeService rs;
-
-    public List<CertificateInfo> search(String alias){ //Svi osim povucenih
+    public List<CertificateDTO> search(String alias){ //Svi osim povucenih
         File folder = new File("keystores/");
         File[] listOfFiles = folder.listFiles();
 
-        List<CertificateInfo> list = new ArrayList<>();
-        List<String> revoke= rs.getPovuceneAliasi();
-        CertificateInfo cInfo = new CertificateInfo();
+        List<CertificateDTO> list = new ArrayList<>();
+        /*List<String> revoke= rs.getPovuceneAliasi();
+        CertificateDTO cInfo = new CertificateDTO();
 
         for (File file : listOfFiles) {
             if (file.isFile()) {
                 if(file.getName().substring(0,file.getName().length()-4).contains(alias)) {
-                    cInfo = new CertificateInfo();
+                    cInfo = new CertificateDTO();
                     cInfo.setAlias(file.getName().substring(0, file.getName().length() - 4));
                     if(!revoke.contains(cInfo.getAlias()))
                          list.add(cInfo);
                 }
             }
-        }
+        }*/
         return list;
     }
 
-    public List<CertificateInfo> search2(String alias){ //bez listova i bez povucenih
+    public List<CertificateDTO> search2(String alias){ //bez listova i bez povucenih
         File folder = new File("keystores/");
         File[] listOfFiles = folder.listFiles();
 
-        List<CertificateInfo> list = new ArrayList<>();
-        List<String> revoke= rs.getAliase();
-        CertificateInfo cInfo = new CertificateInfo();
+        List<CertificateDTO> list = new ArrayList<>();
+       /* List<String> revoke= rs.getAliase();
+        CertificateDTO cInfo = new CertificateDTO();
 
         for (File file : listOfFiles) {
             if (file.isFile()) {
                 if(file.getName().substring(0,file.getName().length()-4).contains(alias)) {
-                    cInfo = new CertificateInfo();
+                    cInfo = new CertificateDTO();
                     cInfo.setAlias(file.getName().substring(0, file.getName().length() - 4));
                     if(!revoke.contains(cInfo.getAlias()))
                         list.add(cInfo);
                 }
             }
-        }
+        }*/
         return list;
     }
 
@@ -92,40 +86,40 @@ public class CertificateService {
         return null;
     }
 
-    public List<CertificateInfo> allCertificates(){
+    public List<CertificateDTO> allCertificates(){
         File folder = new File("keystores/");
         File[] listOfFiles = folder.listFiles();
 
-        List<CertificateInfo> list = new ArrayList<>();
-        List<String> revoke= rs.getAliase();
+        List<CertificateDTO> list = new ArrayList<>();
+        /*List<String> revoke= rs.getAliase();
 
-        CertificateInfo cInfo = new CertificateInfo();
+        CertificateDTO cInfo = new CertificateDTO();
 
         for (File file : listOfFiles) {
             if (file.isFile()) {
-                cInfo = new CertificateInfo();
+                cInfo = new CertificateDTO();
                 cInfo.setAlias(file.getName().substring(0,file.getName().length()-4));
                 if(!revoke.contains(cInfo.getAlias()))
                     list.add(cInfo);
             }
-        }
+        }*/
         return list;
     }
 
-    public List<CertificateInfo> allCertificatesBL(){ //bez listova
+    public List<CertificateDTO> allCertificatesBL(){ //bez listova
         File folder = new File("keystores/");
         File[] listOfFiles = folder.listFiles();
 
 
-        List<String> revoke= rs.getAliase();
+       /* List<String> revoke= rs.getAliase();
 
-        List<CertificateInfo> list = new ArrayList<>();
+        List<CertificateDTO> list = new ArrayList<>();
 
-        CertificateInfo cInfo = new CertificateInfo();
+        CertificateDTO cInfo = new CertificateDTO();
 
         for (File file : listOfFiles) {
             if (file.isFile()) {
-                cInfo = new CertificateInfo();
+                cInfo = new CertificateDTO();
                 cInfo.setAlias(file.getName().substring(0,file.getName().length()-4));
 
                 if(!cInfo.getAlias().equals(".DS_S")){
@@ -136,7 +130,8 @@ public class CertificateService {
 
             }
         }
-        return list;
+        return list;*/
+       return null;
     }
 
     public Boolean ifAliasExist(String alias){
@@ -153,8 +148,8 @@ public class CertificateService {
         return false;
     }
 
-    public String createNewSelfSignedCertificate(CertificateInfo certificateInfo) {
-        if(ifAliasExist(certificateInfo.getAlias()))
+    public String createNewSelfSignedCertificate(CertificateDTO certificateDTO) {
+        if(ifAliasExist(certificateDTO.getAlias()))
             return "Alias exists";
 
         try {
@@ -164,31 +159,31 @@ public class CertificateService {
 
             //Datumi od kad do kad vazi sertifikat
             SimpleDateFormat iso8601Formater = new SimpleDateFormat("yyyy-MM-dd");
-            Date startDate =  certificateInfo.getStartDate();
-            Date endDate = certificateInfo.getEndDate();
+            Date startDate =  certificateDTO.getStartDate();
+            Date endDate = certificateDTO.getEndDate();
 
             System.out.println(startDate);
             System.out.println(endDate);
 
-            System.out.println(certificateInfo.getParent());
-            System.out.println(certificateInfo.getCommName());
-            System.out.println(certificateInfo.getOrg());
-            System.out.println(certificateInfo.getOrgUnit());
-            System.out.println(certificateInfo.getCountry());
-            System.out.println(certificateInfo.getLoc());
-            System.out.println(certificateInfo.getState());
+            System.out.println(certificateDTO.getParent());
+            System.out.println(certificateDTO.getCommName());
+            System.out.println(certificateDTO.getOrg());
+            System.out.println(certificateDTO.getOrgUnit());
+            System.out.println(certificateDTO.getCountry());
+            System.out.println(certificateDTO.getLoc());
+            System.out.println(certificateDTO.getState());
 
 
             //Serijski broj sertifikata
             ++serialNumber;
             //klasa X500NameBuilder pravi X500Name objekat koji predstavlja podatke o vlasniku
             X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);
-            builder.addRDN(BCStyle.CN, certificateInfo.getCommName());
-            builder.addRDN(BCStyle.O, certificateInfo.getOrg());
-            builder.addRDN(BCStyle.OU, certificateInfo.getOrgUnit());
-            builder.addRDN(BCStyle.C, certificateInfo.getCountry());
-            builder.addRDN(BCStyle.L, certificateInfo.getLoc());
-            builder.addRDN(BCStyle.ST, certificateInfo.getState());
+            builder.addRDN(BCStyle.CN, certificateDTO.getCommName());
+            builder.addRDN(BCStyle.O, certificateDTO.getOrg());
+            builder.addRDN(BCStyle.OU, certificateDTO.getOrgUnit());
+            builder.addRDN(BCStyle.C, certificateDTO.getCountry());
+            builder.addRDN(BCStyle.L, certificateDTO.getLoc());
+            builder.addRDN(BCStyle.ST, certificateDTO.getState());
 
 
             //Kreiraju se podaci za sertifikat, sto ukljucuje:
@@ -206,9 +201,9 @@ public class CertificateService {
 
             keyStoreWriter.loadKeyStore(null,password.toCharArray());
 
-            keyStoreWriter.write(certificateInfo.getAlias(),keyPairSubject.getPrivate(),password.toCharArray(),cert);
+            keyStoreWriter.write(certificateDTO.getAlias(),keyPairSubject.getPrivate(),password.toCharArray(),cert);
 
-            keyStoreWriter.saveKeyStore("keystores/"+certificateInfo.getAlias()+".p12",password.toCharArray());
+            keyStoreWriter.saveKeyStore("keystores/"+ certificateDTO.getAlias()+".p12",password.toCharArray());
 
             return "Successful";
 
@@ -240,7 +235,7 @@ public class CertificateService {
         String name = "keystores/"+ alias +".p12";
 
         KeyStoreReader keyStoreReader = new KeyStoreReader();
-        Certificate cert = keyStoreReader.readCertificate(name,secret,alias);
+        java.security.cert.Certificate cert = keyStoreReader.readCertificate(name,secret,alias);
 
         IssuerData issuerData = keyStoreReader.readIssuerFromStore(name,alias,secret.toCharArray(),password.toCharArray());
 
@@ -256,7 +251,7 @@ public class CertificateService {
         String name = "keystores/"+ alias +".p12";
 
         KeyStoreReader keyStoreReader = new KeyStoreReader();
-        Certificate cert = keyStoreReader.readCertificate(name,password,alias);
+        java.security.cert.Certificate cert = keyStoreReader.readCertificate(name,password,alias);
 
         IssuerData issuerData = keyStoreReader.readIssuerFromStore(name,alias,password.toCharArray(),password.toCharArray());
 
@@ -270,7 +265,7 @@ public class CertificateService {
         String name = "keystores/root.p12";
 
         KeyStoreReader keyStoreReader = new KeyStoreReader();
-        Certificate cert = keyStoreReader.readCertificate(name,pass,"root");
+        java.security.cert.Certificate cert = keyStoreReader.readCertificate(name,pass,"root");
         if(cert == null)
             System.out.println("PUKAO SAM");
 
@@ -278,44 +273,44 @@ public class CertificateService {
 
         return issuerData;
     }
-    public void createNewIssuedCertificate(CertificateInfo certificateInfo) {
-        if(ifAliasExist(certificateInfo.getAlias()))
+    public void createNewIssuedCertificate(CertificateDTO certificateDTO) {
+        if(ifAliasExist(certificateDTO.getAlias()))
             return;
 
         System.out.println("PASS "  + password);
         IssuerData issuer;
-        if(certificateInfo.getParent().equals("ROOT")){
-            issuer = this.getIssuerFromRootCertificate(certificateInfo.getPassword());
+        if(certificateDTO.getParent().equals("ROOT")){
+            issuer = this.getIssuerFromRootCertificate(certificateDTO.getPassword());
         }else{
-            issuer = this.getIssuerFromCertificate(certificateInfo.getParent(),certificateInfo.getPassword());
+            issuer = this.getIssuerFromCertificate(certificateDTO.getParent(), certificateDTO.getPassword());
         }
         System.out.println("NASAO ISSUERA");
 
         KeyPair keyPairSubject = generateKeyPair();
 
         //Datumi od kad do kad vazi sertifikat
-        Date startDate =  certificateInfo.getStartDate();
-        Date endDate = certificateInfo.getEndDate();
+        Date startDate =  certificateDTO.getStartDate();
+        Date endDate = certificateDTO.getEndDate();
 
         //klasa X500NameBuilder pravi X500Name objekat koji predstavlja podatke o vlasniku
         X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);
-        builder.addRDN(BCStyle.CN, certificateInfo.getCommName());
-        builder.addRDN(BCStyle.O, certificateInfo.getOrg());
-        builder.addRDN(BCStyle.OU, certificateInfo.getOrgUnit());
-        builder.addRDN(BCStyle.C, certificateInfo.getCountry());
-        builder.addRDN(BCStyle.L, certificateInfo.getLoc());
-        builder.addRDN(BCStyle.ST, certificateInfo.getState());
+        builder.addRDN(BCStyle.CN, certificateDTO.getCommName());
+        builder.addRDN(BCStyle.O, certificateDTO.getOrg());
+        builder.addRDN(BCStyle.OU, certificateDTO.getOrgUnit());
+        builder.addRDN(BCStyle.C, certificateDTO.getCountry());
+        builder.addRDN(BCStyle.L, certificateDTO.getLoc());
+        builder.addRDN(BCStyle.ST, certificateDTO.getState());
 
 
         String sn = BigInteger.valueOf(System.currentTimeMillis()).toString();
 
         SubjectData subjectData = new SubjectData(keyPairSubject.getPublic(), builder.build(), sn, startDate, endDate);
 
-        CertificateDB certificateDB = new CertificateDB(certificateInfo.getAlias(),
+        Certificate certificate = new Certificate(certificateDTO.getAlias(),
                 sn,
-                certificateInfo.getStartDate(),
-                certificateInfo.getEndDate(),
-                certificateInfo.getParent());
+                certificateDTO.getStartDate(),
+                certificateDTO.getEndDate(),
+                certificateDTO.getParent());
 
 
         CertificateGenerator certificateGenerator = new CertificateGenerator();
@@ -325,14 +320,13 @@ public class CertificateService {
 
         keyStoreWriter.loadKeyStore(null,password.toCharArray());
 
-        keyStoreWriter.write(certificateInfo.getAlias(),keyPairSubject.getPrivate(),password.toCharArray(),cert);
+        keyStoreWriter.write(certificateDTO.getAlias(),keyPairSubject.getPrivate(),password.toCharArray(),cert);
 
-        keyStoreWriter.saveKeyStore("keystores/"+certificateInfo.getAlias()+".p12",password.toCharArray());
+        keyStoreWriter.saveKeyStore("keystores/"+ certificateDTO.getAlias()+".p12",password.toCharArray());
 
 
-        certificateRepository.save(certificateDB);
-
-        System.out.println("NAPRAVIO CERT");
+        certificateRepository.save(certificate);
+        
     }
 
 
@@ -352,19 +346,19 @@ public class CertificateService {
 
         System.out.println("pass"+pass);
 
-        Revoke revoke=new Revoke();
+       /* Revoke revoke=new Revoke();
         revoke.setAlias(alias);
         revoke.setLeaf(false);
         ArrayList<String> lista= (ArrayList<String>) revokeService.getPovuceneAliasi();
         if(lista.contains(revoke.getAlias())) {
             System.out.println("Revoked");
             return false;
-        }
+        }*/
 
 
         System.out.println("Ucitavanje cert");
 
-        Certificate cert = readFromKS(alias,pass);
+        java.security.cert.Certificate cert = readFromKS(alias,pass);
 
         X509Certificate x509Certificate = (X509Certificate) cert;
 
@@ -389,16 +383,16 @@ public class CertificateService {
 
 
 
-        CertificateDB certificateDB = certificateRepository.findByAlias(alias);
+        Certificate certificate = certificateRepository.findByAlias(alias);
 
-        String aliasIs = certificateDB.getSignedByAlias();
+        String aliasIs = certificate.getSignedByAlias();
 
 
         if (aliasIs.equals("root")){
             pass=secret;
         }
 
-            Certificate certIss = readFromKS(aliasIs,pass);
+            java.security.cert.Certificate certIss = readFromKS(aliasIs,pass);
 
             try {
                 cert.verify(certIss.getPublicKey());
@@ -426,7 +420,7 @@ public class CertificateService {
         return true;
     }
 
-    public Certificate readFromKS(String alias,String pass){
+    public java.security.cert.Certificate readFromKS(String alias, String pass){
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
         String name = "keystores/"+ alias +".p12";
@@ -436,7 +430,7 @@ public class CertificateService {
        return  keyStoreReader.readCertificate(name,pass,alias);
     }
 
-    public List<CertificateDB> allCertificatesDB(){
+    public List<Certificate> allCertificatesDB(){
         return certificateRepository.findAll();
     }
 

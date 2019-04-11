@@ -11,10 +11,10 @@ public class Communication {
     private Long id;
 
     @Column
-    private String first;
+    private Long first;
 
     @Column
-    private String second;
+    private Long second;
 
     public Communication() {
 
@@ -28,19 +28,19 @@ public class Communication {
         this.id = id;
     }
 
-    public String getFirst() {
+    public Long getFirst() {
         return first;
     }
 
-    public void setFirst(String first) {
+    public void setFirst(Long first) {
         this.first = first;
     }
 
-    public String getSecond() {
+    public Long getSecond() {
         return second;
     }
 
-    public void setSecond(String second) {
+    public void setSecond(Long second) {
         this.second = second;
     }
 }

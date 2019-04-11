@@ -1,10 +1,10 @@
 package xmlb.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import xmlb.model.CertificateDB;
+import xmlb.model.Certificate;
 
-public interface CertificateRepository extends JpaRepository<CertificateDB, Long> {
+public interface CertificateRepository extends JpaRepository<Certificate, Long> {
 
-    CertificateDB findByAlias(String alias);
+    Certificate findByAlias(String alias);
 
 }

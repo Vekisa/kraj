@@ -8,16 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import xmlb.model.CertificateDB;
-import xmlb.model.CertificateInfo;
-import xmlb.model.Revoke;
+import xmlb.model.Certificate;
+import xmlb.dto.CertificateDTO;
 import xmlb.security.ResponseMessage;
-import xmlb.security.SignUpRequest;
 import xmlb.service.CertificateService;
-import xmlb.service.RevokeService;
 
-import javax.validation.Valid;
-import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,8 +24,6 @@ public class CertificateController {
     @Autowired
     private CertificateService certificateService;
 
-    @Autowired
-    private RevokeService revokeService;
 
     @RequestMapping(value= "/{alias}/search",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Pretrazuje sertifikate", httpMethod = "GET", produces = "application/json")
@@ -39,7 +32,7 @@ public class CertificateController {
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<List<CertificateInfo>> search(@PathVariable(value="alias") String alias) {
+    public ResponseEntity<List<CertificateDTO>> search(@PathVariable(value="alias") String alias) {
         return new ResponseEntity<>(certificateService.search(alias),HttpStatus.OK);
     }
 
@@ -57,23 +50,17 @@ public class CertificateController {
 
     @RequestMapping(value= "/createSS",method = RequestMethod.POST)
     @ApiOperation(value="Kreira novi samopotpisani sertifikat", httpMethod = "POST")
-    public ResponseEntity<String> createNewSSCertificate(@RequestBody CertificateInfo certificateInfo) {
+    public ResponseEntity<String> createNewSSCertificate(@RequestBody CertificateDTO certificateDTO) {
         System.out.println("Create new certificate!");
-        certificateService.createNewSelfSignedCertificate(certificateInfo);
+        certificateService.createNewSelfSignedCertificate(certificateDTO);
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
 
     @RequestMapping(value= "/create_new_certificate",method = RequestMethod.POST)
-    @ApiOperation(value="Kreira novi samopotpisani sertifikat", httpMethod = "POST")
-    public ResponseEntity<String> createNewCertificate(@RequestBody CertificateInfo certificateInfo) {
-        certificateService.createNewIssuedCertificate(certificateInfo);
-        if(certificateInfo.getLeaf()){
-            Revoke leaf=new Revoke();
-            leaf.setLeaf(true);
-            leaf.setAlias(certificateInfo.getAlias());
-            revokeService.newRevoke(leaf);
-        }
+    @ApiOperation(value="Kreira novi sertifikat", httpMethod = "POST")
+    public ResponseEntity<String> createNewCertificate(@RequestBody CertificateDTO certificateDTO) {
+        certificateService.createNewIssuedCertificate(certificateDTO);
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
@@ -96,7 +83,7 @@ public class CertificateController {
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<List<CertificateInfo>> allCertificatesWithoutLeafs() {
+    public ResponseEntity<List<CertificateDTO>> allCertificatesWithoutLeafs() {
         return new ResponseEntity<>(certificateService.allCertificatesBL(),HttpStatus.OK);
     }
 
@@ -107,17 +94,17 @@ public class CertificateController {
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<List<CertificateInfo>> allCertificates() {
-        ArrayList<CertificateInfo> ci=(ArrayList<CertificateInfo>) certificateService.allCertificates();
-        ArrayList<CertificateInfo> pom= new ArrayList<>();
-        ArrayList<String> lista= (ArrayList<String>) revokeService.getAliase();
-        for(CertificateInfo c:ci){
+    public ResponseEntity<List<CertificateDTO>> allCertificates() {
+        ArrayList<CertificateDTO> ci=(ArrayList<CertificateDTO>) certificateService.allCertificates();
+        ArrayList<CertificateDTO> pom= new ArrayList<>();
+        /*ArrayList<String> lista= (ArrayList<String>) revokeService.getAliase();
+        for(CertificateDTO c:ci){
             if(!c.getAlias().equals(".DS_S")){
                 if(certificateService.checkIfValid(c.getAlias())){
                     pom.add(c);
              }
             }
-        }
+        }*/
 
         return new ResponseEntity<>(pom,HttpStatus.OK);
     }
@@ -129,9 +116,9 @@ public class CertificateController {
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<List<CertificateDB>> allCertificatesDB() {
+    public ResponseEntity<List<Certificate>> allCertificatesDB() {
 
-        List<CertificateDB> lista = certificateService.allCertificatesDB();
+        List<Certificate> lista = certificateService.allCertificatesDB();
 
         return new ResponseEntity<>(lista,HttpStatus.OK);
     }
@@ -144,14 +131,14 @@ public class CertificateController {
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<List<CertificateInfo>> certificatesL() {
-        ArrayList<CertificateInfo> ci=(ArrayList<CertificateInfo>) certificateService.allCertificates();
-        ArrayList<CertificateInfo> pom= new ArrayList<>();
-        ArrayList<String> lista= (ArrayList<String>) revokeService.getPovuceneAliasi();
-        for(CertificateInfo c:ci){
+    public ResponseEntity<List<CertificateDTO>> certificatesL() {
+        ArrayList<CertificateDTO> ci=(ArrayList<CertificateDTO>) certificateService.allCertificates();
+        ArrayList<CertificateDTO> pom= new ArrayList<>();
+        /*ArrayList<String> lista= (ArrayList<String>) revokeService.getPovuceneAliasi();
+        for(CertificateDTO c:ci){
             if(!lista.contains(c.getAlias()))
                 pom.add(c);
-        }
+        }*/
 
         return new ResponseEntity<>(pom,HttpStatus.OK);
     }
@@ -165,14 +152,14 @@ public class CertificateController {
     })
     public ResponseEntity<String> revoke(@RequestBody String alias) {
 
-        Revoke revoke=new Revoke();
-        revoke.setAlias(alias);
-        revoke.setLeaf(false);
-        ArrayList<String> lista= (ArrayList<String>) revokeService.getPovuceneAliasi();
-        if(!lista.contains(revoke.getAlias())) {
-            revokeService.newRevoke(revoke);
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
+        //Revoke revoke=new Revoke();
+        //revoke.setAlias(alias);
+        //revoke.setLeaf(false);
+        //ArrayList<String> lista= (ArrayList<String>) revokeService.getPovuceneAliasi();
+        //if(!lista.contains(revoke.getAlias())) {
+            //revokeService.newRevoke(revoke);
+            //return new ResponseEntity<>(HttpStatus.OK);
+        //}
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 

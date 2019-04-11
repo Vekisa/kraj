@@ -4,7 +4,8 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class CertificateDB {
+@Table(name="certificate")
+public class Certificate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,7 +15,7 @@ public class CertificateDB {
     private String alias;
 
     @Column
-    private String sn;
+    private String serialNumber;
 
     @Column
     private Date startDate;
@@ -25,13 +26,25 @@ public class CertificateDB {
     @Column
     private String signedByAlias;
 
-    public CertificateDB() {
+    @Column
+    private Boolean revoked;
+
+    @Column
+    private Boolean isLeaf;
+
+    @ManyToOne
+    private Company company;
+
+    @OneToOne
+    private Communication communication;
+
+    public Certificate() {
         super();
     }
 
-    public CertificateDB(String alias, String sn, Date startDate, Date endDate, String signedByAlias) {
+    public Certificate(String alias, String serialNumber, Date startDate, Date endDate, String signedByAlias) {
         this.alias = alias;
-        this.sn = sn;
+        this.serialNumber = serialNumber;
         this.startDate = startDate;
         this.endDate = endDate;
         this.signedByAlias = signedByAlias;
@@ -53,12 +66,12 @@ public class CertificateDB {
         this.alias = alias;
     }
 
-    public String getSn() {
-        return sn;
+    public String getSerialNumber() {
+        return this.serialNumber;
     }
 
-    public void setSn(String sn) {
-        this.sn = sn;
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
     }
 
     public Date getStartDate() {
@@ -84,4 +97,20 @@ public class CertificateDB {
     public void setSignedByAlias(String signedByAlias) {
         this.signedByAlias = signedByAlias;
     }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public Boolean getRevoke() { return revoked; }
+
+    public void setRevoke(Boolean revoked) { this.revoked = revoked; }
+
+    public Boolean getLeaf() { return isLeaf; }
+
+    public void setLeaf(Boolean isLeaf) { this.isLeaf = isLeaf; }
 }
