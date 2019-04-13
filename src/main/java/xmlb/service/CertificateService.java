@@ -1,5 +1,6 @@
 package xmlb.service;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,30 +121,17 @@ public class CertificateService {
         return list;
     }
 
-    public List<CertificateDTO> allCertificatesBL(){ //bez listova
-        File folder = new File("keystores/");
-        File[] listOfFiles = folder.listFiles();
+    public List<CertificateDTO> allCertificatesWithoutLeafs(){
+        //UBACITI PROVERU ZA TRENUTNOOG KORISNIKA
+        List<Certificate> certificates = certificateRepository.findAll();
+        List<Certificate> certificateWithoutLeafs = new ArrayList<>();
 
-
-        List<CertificateDTO> list = new ArrayList<>();
-
-        CertificateDTO cInfo = new CertificateDTO();
-
-        for (File file : listOfFiles) {
-            if (file.isFile()) {
-                cInfo = new CertificateDTO();
-                cInfo.setAlias(file.getName().substring(0, file.getName().length() - 4));
-
-                if (!cInfo.getAlias().equals(".DS_S")) {
-
-                    list.add(cInfo);
-
-                }
-            }
-
+        for(Certificate certificate : certificates){
+            if(!certificate.getLeaf())
+                certificateWithoutLeafs.add(certificate);
         }
-        return list;
 
+        return CreateDTOList.certificates(certificateWithoutLeafs);
     }
 
     public Boolean ifAliasExist(String alias){
@@ -308,7 +296,12 @@ public class CertificateService {
                 certificateDTO.getEndDate(),
                 certificateDTO.getParent(),
                 false,
-                certificateDTO.getLeaf());
+                certificateDTO.getLeaf(),
+                certificateDTO.getCountry(),
+                certificateDTO.getState(),
+                certificateDTO.getLocality(),
+                certificateDTO.getOrganizationUnit(),
+                certificateDTO.getCommonName());
 
         CertificateGenerator certificateGenerator = new CertificateGenerator();
         X509Certificate cert = certificateGenerator.generateCertificate(subjectData,issuer);

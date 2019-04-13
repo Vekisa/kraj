@@ -27,6 +27,21 @@ public class Certificate {
     private String signedByAlias;
 
     @Column
+    private String country;
+
+    @Column
+    private String state;
+
+    @Column
+    private String locality;
+
+    @Column
+    private String organizationUnit;
+
+    @Column
+    private String commonName;
+
+    @Column
     private Boolean revoked;
 
     @Column
@@ -42,7 +57,8 @@ public class Certificate {
         super();
     }
 
-    public Certificate(String alias, String serialNumber, Date startDate, Date endDate, String signedByAlias, Boolean revoked, Boolean isLeaf) {
+    public Certificate(String alias, String serialNumber, Date startDate, Date endDate, String signedByAlias, Boolean revoked, Boolean isLeaf,String country, String state, String locality,
+                       String organizationUnit, String commonName) {
         this.alias = alias;
         this.serialNumber = serialNumber;
         this.startDate = startDate;
@@ -50,6 +66,11 @@ public class Certificate {
         this.signedByAlias = signedByAlias;
         this.revoked = revoked;
         this.isLeaf = isLeaf;
+        this.country = country;
+        this.state = state;
+        this.locality = locality;
+        this.setOrganizationUnit(organizationUnit);
+        this.setCommonName(commonName);
     }
 
     public Long getId() {
@@ -108,11 +129,67 @@ public class Certificate {
         this.company = company;
     }
 
-    public Boolean getRevoke() { return revoked; }
+    public Boolean getRevoke() { return getRevoked(); }
 
-    public void setRevoke(Boolean revoked) { this.revoked = revoked; }
+    public void setRevoke(Boolean revoked) { this.setRevoked(revoked); }
 
     public Boolean getLeaf() { return isLeaf; }
 
     public void setLeaf(Boolean isLeaf) { this.isLeaf = isLeaf; }
+
+    public Boolean getRevoked() {
+        return revoked;
+    }
+
+    public void setRevoked(Boolean revoked) {
+        this.revoked = revoked;
+    }
+
+    public Communication getCommunication() {
+        return communication;
+    }
+
+    public void setCommunication(Communication communication) {
+        this.communication = communication;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getLocality() {
+        return locality;
+    }
+
+    public void setLocality(String locality) {
+        this.locality = locality;
+    }
+
+    public String getOrganizationUnit() {
+        return organizationUnit;
+    }
+
+    public void setOrganizationUnit(String organizationUnit) {
+        this.organizationUnit = organizationUnit;
+    }
+
+    public String getCommonName() {
+        return commonName;
+    }
+
+    public void setCommonName(String commonName) {
+        this.commonName = commonName;
+    }
 }

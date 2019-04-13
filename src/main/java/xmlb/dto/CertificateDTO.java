@@ -1,5 +1,7 @@
 package xmlb.dto;
 
+import xmlb.model.Certificate;
+
 import java.util.Date;
 
 public class CertificateDTO {
@@ -19,6 +21,19 @@ public class CertificateDTO {
 
     public CertificateDTO() {
         super();
+    }
+
+    public CertificateDTO(Certificate certificate){
+        this.parent = certificate.getSignedByAlias();
+        this.country = certificate.getCountry();
+        this.state = certificate.getState();
+        this.locality = certificate.getLocality();
+        this.organization = certificate.getCompany().getName();
+        this.organizationUnit = certificate.getOrganizationUnit();
+        this.commonName = certificate.getCommonName();
+        this.startDate = certificate.getStartDate();
+        this.endDate = certificate.getEndDate();
+        this.alias = certificate.getAlias();
     }
 
     public CertificateDTO(String parent, String country, String state, String locality, String organization, String organizationUnit, String commonName, Date startDate, Date endDate, String alias, String password) {

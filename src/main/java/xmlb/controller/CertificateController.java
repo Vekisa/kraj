@@ -24,7 +24,6 @@ public class CertificateController {
     @Autowired
     private CertificateService certificateService;
 
-
     @RequestMapping(value= "/{alias}/search",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Pretrazuje sertifikate", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
@@ -46,7 +45,6 @@ public class CertificateController {
     public ResponseEntity<Boolean> check(@PathVariable(value="id") Long id) {
         return new ResponseEntity<>(certificateService.check(id),HttpStatus.OK);
     }
-
 
     @RequestMapping(value= "/createSS",method = RequestMethod.POST)
     @ApiOperation(value="Kreira novi samopotpisani sertifikat", httpMethod = "POST")
@@ -84,7 +82,7 @@ public class CertificateController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<List<CertificateDTO>> allCertificatesWithoutLeafs() {
-        return new ResponseEntity<>(certificateService.allCertificatesBL(),HttpStatus.OK);
+        return new ResponseEntity<>(certificateService.allCertificatesWithoutLeafs(),HttpStatus.OK);
     }
 
     @RequestMapping(value= "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -122,7 +120,6 @@ public class CertificateController {
 
         return new ResponseEntity<>(lista,HttpStatus.OK);
     }
-
 
     @RequestMapping(value= "/allL", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Prikaz sertifikata koji nisu povuceni", httpMethod = "GET", produces = "application/json")
