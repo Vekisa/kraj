@@ -25,9 +25,7 @@ export class NewCertificateComponent implements OnInit {
   roott: boolean;
   leaf: boolean;
 
-
   searchText:any;
-
 
   constructor(private formBuilder: FormBuilder, private certificateService: CertificateService) { }
 
@@ -41,10 +39,10 @@ export class NewCertificateComponent implements OnInit {
       parent: [''],
       country: [''],
       state: [''],
-      loc: [''],
-      org: [''],
-      orgUnit:[''],
-      commName: [''],
+      locality: [''],
+      organization: [''],
+      organizationUnit:[''],
+      commonName: [''],
       startDate: null,
       endDate: null,
       alias:[''],
@@ -90,8 +88,6 @@ export class NewCertificateComponent implements OnInit {
 
   mySelectHandler(){
 
-    console.log(this.selectType);
-
     if (this.selectType==="Root") {
       this.roott = true;
       this.leaf = false;
@@ -104,7 +100,5 @@ export class NewCertificateComponent implements OnInit {
     }
 
   }
-
-
 
 }

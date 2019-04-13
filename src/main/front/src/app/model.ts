@@ -40,23 +40,23 @@ export class CertInfo {
   parent: string;
   country: string;
   state:string;
-  loc: string;
-  org: string;
-  orgUnit: string;
-  commName: string;
+  locality: string;
+  organization: string;
+  organizationUnit: string;
+  commonName: string;
   startDate: Date;
   endDate: Date;
   alias: string;
   password: string;
   leaf: boolean;
 
-  constructor(parent: string, country: string, state:string, loc: string, org: string, orgUnit: string, commName: string, startDate: Date, endDate: Date, alias: string, password: string) {
+  constructor(parent: string, country: string, state:string, locality: string, organization: string, organizationUnit: string, commonName: string, startDate: Date, endDate: Date, alias: string, password: string) {
     this.country = country;
     this.state = state;
-    this.loc = loc;
-    this.org = org;
-    this.orgUnit = orgUnit;
-    this.commName = commName;
+    this.locality = locality;
+    this.organization = organization;
+    this.organizationUnit = organizationUnit;
+    this.commonName = commonName;
     this.startDate = startDate;
     this.endDate = endDate;
     this.alias = alias;

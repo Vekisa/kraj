@@ -1,5 +1,5 @@
 INSERT INTO roles (id,name) VALUES (1, 'ROLE_MAIN_ADMIN');
-/*INSERT INTO roles (id,name) VALUES (2, 'ROLE_ADMIN');
+INSERT INTO roles (id,name) VALUES (2, 'ROLE_ADMIN');
 INSERT INTO roles (id,name) VALUES (3, 'ROLE_USER_REG');
 
 -- glavniadmin
@@ -8,4 +8,4 @@ INSERT INTO users (username,enabled, is_verified, password, first_name, last_nam
                                                                                                   'Admin', 'Admin', 'mailad@mail.com');
 INSERT INTO roles_users (roles_id, users_id) VALUES (1, 1);
 
-INSERT INTO certificate(id,alias,end_date,signed_by_alias,sn,start_date) values (1,'root','2019-08-31 02:00:00','root','1','2019-03-22 01:00:00');*/
+INSERT INTO certificate(id,alias,end_date,signed_by_alias,serial_number,start_date) values (1,'root','2019-08-31 02:00:00','root','1','2019-03-22 01:00:00');

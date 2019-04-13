@@ -42,13 +42,14 @@ public class Certificate {
         super();
     }
 
-    public Certificate(String alias, String serialNumber, Date startDate, Date endDate, String signedByAlias, Boolean revoked) {
+    public Certificate(String alias, String serialNumber, Date startDate, Date endDate, String signedByAlias, Boolean revoked, Boolean isLeaf) {
         this.alias = alias;
         this.serialNumber = serialNumber;
         this.startDate = startDate;
         this.endDate = endDate;
         this.signedByAlias = signedByAlias;
         this.revoked = revoked;
+        this.isLeaf = isLeaf;
     }
 
     public Long getId() {

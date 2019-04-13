@@ -4,15 +4,19 @@ import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import xmlb.KeyStoreReader;
 import xmlb.dto.CertificateDTO;
 import xmlb.model.*;
 import xmlb.model.Certificate;
 import xmlb.repository.CertificateRepository;
+import xmlb.repository.CompanyRepository;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.security.*;
@@ -36,7 +40,17 @@ public class CertificateService {
     private int serialNumber;
 
     @Autowired
-    public CertificateRepository certificateRepository;
+    private CertificateRepository certificateRepository;
+
+    @Autowired
+    private CompanyRepository companyRepository;
+
+    @Autowired
+    private CompanyService companyService;
+
+    private String rootPath = "keystores/root.p12";
+
+    private String pathToKeystores = "keystores/";
 
 
     public List<CertificateDTO> search(String alias){ //Svi osim povucenih
@@ -160,27 +174,15 @@ public class CertificateService {
             Date startDate =  certificateDTO.getStartDate();
             Date endDate = certificateDTO.getEndDate();
 
-            System.out.println(startDate);
-            System.out.println(endDate);
-
-            System.out.println(certificateDTO.getParent());
-            System.out.println(certificateDTO.getCommName());
-            System.out.println(certificateDTO.getOrg());
-            System.out.println(certificateDTO.getOrgUnit());
-            System.out.println(certificateDTO.getCountry());
-            System.out.println(certificateDTO.getLoc());
-            System.out.println(certificateDTO.getState());
-
-
             //Serijski broj sertifikata
             ++serialNumber;
             //klasa X500NameBuilder pravi X500Name objekat koji predstavlja podatke o vlasniku
             X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);
-            builder.addRDN(BCStyle.CN, certificateDTO.getCommName());
-            builder.addRDN(BCStyle.O, certificateDTO.getOrg());
-            builder.addRDN(BCStyle.OU, certificateDTO.getOrgUnit());
+            builder.addRDN(BCStyle.CN, certificateDTO.getCommonName());
+            builder.addRDN(BCStyle.O, certificateDTO.getOrganization());
+            builder.addRDN(BCStyle.OU, certificateDTO.getOrganizationUnit());
             builder.addRDN(BCStyle.C, certificateDTO.getCountry());
-            builder.addRDN(BCStyle.L, certificateDTO.getLoc());
+            builder.addRDN(BCStyle.L, certificateDTO.getLocality());
             builder.addRDN(BCStyle.ST, certificateDTO.getState());
 
 
@@ -201,7 +203,7 @@ public class CertificateService {
 
             keyStoreWriter.write(certificateDTO.getAlias(),keyPairSubject.getPrivate(),password.toCharArray(),cert);
 
-            keyStoreWriter.saveKeyStore("keystores/"+ certificateDTO.getAlias()+".p12",password.toCharArray());
+            keyStoreWriter.saveKeyStore(pathToKeystores + certificateDTO.getAlias()+".p12",password.toCharArray());
 
             return "Successful";
 
@@ -246,7 +248,7 @@ public class CertificateService {
         System.out.println("TRAZIM ISSUERA");
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
-        String name = "keystores/"+ alias +".p12";
+        String name = pathToKeystores + alias +".p12";
 
         KeyStoreReader keyStoreReader = new KeyStoreReader();
         java.security.cert.Certificate cert = keyStoreReader.readCertificate(name,password,alias);
@@ -258,31 +260,28 @@ public class CertificateService {
 
     public IssuerData getIssuerFromRootCertificate(String pass){
         System.out.println("TRAZIM ISSUERA ROOTA " + pass);
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
-        String name = "keystores/root.p12";
 
         KeyStoreReader keyStoreReader = new KeyStoreReader();
-        java.security.cert.Certificate cert = keyStoreReader.readCertificate(name,pass,"root");
-        if(cert == null)
-            System.out.println("PUKAO SAM");
 
-        IssuerData issuerData = keyStoreReader.readIssuerFromStore(name,"root",pass.toCharArray(),pass.toCharArray());
+        java.security.cert.Certificate cert = keyStoreReader.readCertificate(rootPath,pass,"root");
+
+
+        IssuerData issuerData = keyStoreReader.readIssuerFromStore(rootPath,"root",pass.toCharArray(),pass.toCharArray());
 
         return issuerData;
     }
+
     public void createNewIssuedCertificate(CertificateDTO certificateDTO) {
         if(ifAliasExist(certificateDTO.getAlias()))
-            return;
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Alias already exists");
 
-        System.out.println("PASS "  + password);
         IssuerData issuer;
-        if(certificateDTO.getParent().equals("ROOT")){
+        if(certificateDTO.getParent().toUpperCase().equals("ROOT")){
             issuer = this.getIssuerFromRootCertificate(certificateDTO.getPassword());
         }else{
             issuer = this.getIssuerFromCertificate(certificateDTO.getParent(), certificateDTO.getPassword());
         }
-        System.out.println("NASAO ISSUERA");
 
         KeyPair keyPairSubject = generateKeyPair();
 
@@ -292,49 +291,55 @@ public class CertificateService {
 
         //klasa X500NameBuilder pravi X500Name objekat koji predstavlja podatke o vlasniku
         X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);
-        builder.addRDN(BCStyle.CN, certificateDTO.getCommName());
-        builder.addRDN(BCStyle.O, certificateDTO.getOrg());
-        builder.addRDN(BCStyle.OU, certificateDTO.getOrgUnit());
+        builder.addRDN(BCStyle.CN, certificateDTO.getCommonName());
+        builder.addRDN(BCStyle.O, certificateDTO.getOrganization());
+        builder.addRDN(BCStyle.OU, certificateDTO.getOrganizationUnit());
         builder.addRDN(BCStyle.C, certificateDTO.getCountry());
-        builder.addRDN(BCStyle.L, certificateDTO.getLoc());
+        builder.addRDN(BCStyle.L, certificateDTO.getLocality());
         builder.addRDN(BCStyle.ST, certificateDTO.getState());
 
+        String serialNumber = BigInteger.valueOf(System.currentTimeMillis()).toString();
 
-        String sn = BigInteger.valueOf(System.currentTimeMillis()).toString();
-
-        SubjectData subjectData = new SubjectData(keyPairSubject.getPublic(), builder.build(), sn, startDate, endDate);
+        SubjectData subjectData = new SubjectData(keyPairSubject.getPublic(), builder.build(), serialNumber, startDate, endDate);
 
         Certificate certificate = new Certificate(certificateDTO.getAlias(),
-                sn,
+                serialNumber,
                 certificateDTO.getStartDate(),
                 certificateDTO.getEndDate(),
                 certificateDTO.getParent(),
-                false);
-
+                false,
+                certificateDTO.getLeaf());
 
         CertificateGenerator certificateGenerator = new CertificateGenerator();
         X509Certificate cert = certificateGenerator.generateCertificate(subjectData,issuer);
 
         KeyStoreWriter keyStoreWriter = new KeyStoreWriter();
 
-        if (!certificateRepository.existsByCompany(certificateDTO.getOrg())){
+        Company company = companyRepository.findCompanyByName(certificateDTO.getOrganization());
+        if (company == null){
             keyStoreWriter.loadKeyStore(null,password.toCharArray());
-
             keyStoreWriter.write(certificateDTO.getAlias(),keyPairSubject.getPrivate(),password.toCharArray(),cert);
-
+            company = new Company();
+            company.setName(certificateDTO.getOrganization());
+            company.setFilePath(pathToKeystores + certificateDTO.getOrganization()+".p12");
+            company.getCertificates().add(certificate);
+            certificate.setCompany(company);
+            companyRepository.save(company);
         }else{
-            keyStoreWriter.loadKeyStore("keystores/"+ certificateDTO.getOrg()+".p12",password.toCharArray());
+            if(companyService.hasCertificateWithAlias(company.getId(),certificate.getAlias()))
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Alias in that company keystore already exist");
+
+            keyStoreWriter.loadKeyStore(pathToKeystores+ certificateDTO.getOrganization()+".p12",password.toCharArray());
             keyStoreWriter.write(certificateDTO.getAlias(),keyPairSubject.getPrivate(),password.toCharArray(),cert);
+            company.getCertificates().add(certificate);
+            certificate.setCompany(company);
+            companyRepository.save(company);
         }
 
-        keyStoreWriter.saveKeyStore("keystores/"+ certificateDTO.getOrg()+".p12",password.toCharArray());
-
-
+        keyStoreWriter.saveKeyStore(pathToKeystores + certificateDTO.getOrganization()+".p12",password.toCharArray());
         certificateRepository.save(certificate);
-        
+
     }
-
-
 
     public boolean checkIfValid(String alias){
         System.out.println("Validnost " +alias);

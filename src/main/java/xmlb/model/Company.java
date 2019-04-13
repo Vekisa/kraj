@@ -1,6 +1,7 @@
 package xmlb.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,11 +15,19 @@ public class Company {
     @Column
     private String name;
 
+    @Column
+    private String filePath;
+
     @OneToMany(mappedBy = "company")
     private List<User> admins;
 
     @OneToMany(mappedBy = "company")
     private List<Certificate> certificates;
+
+    public Company(){
+        admins = new ArrayList<>();
+        certificates = new ArrayList<>();
+    }
 
     public Long getId() {
         return id;
@@ -51,4 +60,8 @@ public class Company {
     public void setCertificates(List<Certificate> certificates) {
         this.certificates = certificates;
     }
+
+    public String getFilePath() { return filePath; }
+
+    public void setFilePath(String filePath) { this.filePath = filePath; }
 }

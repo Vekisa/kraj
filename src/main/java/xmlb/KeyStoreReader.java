@@ -2,6 +2,8 @@ package xmlb;
 
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 import xmlb.model.IssuerData;
 
 import java.io.BufferedInputStream;
@@ -87,17 +89,18 @@ public class KeyStoreReader {
 				return cert;
 			}
 		} catch (KeyStoreException e) {
-			e.printStackTrace();
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Something went wrong");
 		} catch (NoSuchProviderException e) {
-			e.printStackTrace();
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Something went wrong");
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Something went wrong");
 		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Something went wrong");
 		} catch (CertificateException e) {
-			e.printStackTrace();
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Something went wrong");
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong password");
+
 		}
 		return null;
 	}

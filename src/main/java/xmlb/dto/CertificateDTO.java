@@ -7,10 +7,10 @@ public class CertificateDTO {
     private String parent;
     private String country;
     private String state;
-    private String loc;
-    private String org;
-    private String orgUnit;
-    private String commName;
+    private String locality;
+    private String organization;
+    private String organizationUnit;
+    private String commonName;
     private Date startDate;
     private Date endDate;
     private String alias;
@@ -21,14 +21,14 @@ public class CertificateDTO {
         super();
     }
 
-    public CertificateDTO(String parent, String country, String state, String loc, String org, String orgUnit, String commName, Date startDate, Date endDate, String alias, String password) {
+    public CertificateDTO(String parent, String country, String state, String locality, String organization, String organizationUnit, String commonName, Date startDate, Date endDate, String alias, String password) {
         this.parent = parent;
         this.country = country;
         this.state = state;
-        this.loc = loc;
-        this.org = org;
-        this.orgUnit = orgUnit;
-        this.commName = commName;
+        this.locality = locality;
+        this.organization = organization;
+        this.organizationUnit = organizationUnit;
+        this.commonName = commonName;
         this.startDate = startDate;
         this.endDate = endDate;
         this.alias = alias;
@@ -49,38 +49,6 @@ public class CertificateDTO {
 
     public void setState(String state) {
         this.state = state;
-    }
-
-    public String getLoc() {
-        return loc;
-    }
-
-    public void setLoc(String loc) {
-        this.loc = loc;
-    }
-
-    public String getOrg() {
-        return org;
-    }
-
-    public void setOrg(String org) {
-        this.org = org;
-    }
-
-    public String getOrgUnit() {
-        return orgUnit;
-    }
-
-    public void setOrgUnit(String orgUnit) {
-        this.orgUnit = orgUnit;
-    }
-
-    public String getCommName() {
-        return commName;
-    }
-
-    public void setCommName(String commName) {
-        this.commName = commName;
     }
 
     public Date getStartDate() {
@@ -126,4 +94,37 @@ public class CertificateDTO {
     public void setLeaf(Boolean leaf) {
         this.leaf = leaf;
     }
+
+    public String getLocality() {
+        return locality;
+    }
+
+    public void setLocality(String locality) {
+        this.locality = locality;
+    }
+
+    public String getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
+    }
+
+    public String getOrganizationUnit() {
+        return organizationUnit;
+    }
+
+    public void setOrganizationUnit(String organizationUnit) {
+        this.organizationUnit = organizationUnit;
+    }
+
+    public String getCommonName() {
+        return commonName;
+    }
+
+    public void setCommonName(String commonName) {
+        this.commonName = commonName;
+    }
+
 }
