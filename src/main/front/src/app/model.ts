@@ -49,8 +49,9 @@ export class CertInfo {
   alias: string;
   password: string;
   leaf: boolean;
+  serialNumber: string;
 
-  constructor(parent: string, country: string, state:string, locality: string, organization: string, organizationUnit: string, commonName: string, startDate: Date, endDate: Date, alias: string, password: string) {
+  constructor(parent: string, country: string, state:string, locality: string, organization: string, organizationUnit: string, commonName: string, startDate: Date, endDate: Date, alias: string, password: string, serialNumber: string) {
     this.country = country;
     this.state = state;
     this.locality = locality;
@@ -62,6 +63,7 @@ export class CertInfo {
     this.alias = alias;
     this.password = password;
     this.parent = parent;
+    this.serialNumber = serialNumber;
   }
 
 }

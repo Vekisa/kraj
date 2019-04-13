@@ -23,12 +23,12 @@ export class CertificateService {
     return this.http.get<any>(this.certUrl+"/all");
   }
 
-  allCertificatesWihoutLeafs(): Observable<any>{
-    return this.http.get<any>(this.certUrl+"/all_without_leafs");
+  allCertificatesWithoutRoot(): Observable<any>{
+    return this.http.get<any>(this.certUrl+"/all_without_root");
   }
 
-  allCertificatesL(): Observable<any>{
-    return this.http.get<any>(this.certUrl+"/allL");
+  allCertificatesWithoutLeafs(): Observable<any>{
+    return this.http.get<any>(this.certUrl+"/all_without_leafs");
   }
 
   allCertificateDB(): Observable<any>{
@@ -37,10 +37,6 @@ export class CertificateService {
 
   checkValidate(alias):Promise<any>{
     return this.http.post<any>(this.certUrl+"/checkIfValid",alias).toPromise();
-  }
-
-  showCertificate(alias): Promise<JwtResponse> {
-    return this.http.get<JwtResponse>(this.certUrl+"/show/"+ alias).toPromise();
   }
 
   revokeCertificate(alias): Promise<JwtResponse> {

@@ -22,15 +22,15 @@ public class CommunicationController {
     @Autowired
     private CommunicationService communicationService;
 
-    @RequestMapping(value= "/{first_alias}/{second_alias}/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value= "/{first_sn}/{second_sn}/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Kreiranje komunikacije", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Communication.class),
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<Communication> createCommunication(@PathVariable(value="first_alias") String first_alias, @PathVariable(value="second_alias") String second_alias ) {
-        return new ResponseEntity<>(communicationService.createCommunication(first_alias,second_alias), HttpStatus.CREATED);
+    public ResponseEntity<Communication> createCommunication(@PathVariable(value="first_sn") String first_serial_number, @PathVariable(value="second_sn") String second_serial_number ) {
+        return new ResponseEntity<>(communicationService.createCommunication(first_serial_number,second_serial_number), HttpStatus.CREATED);
     }
 
     @RequestMapping(value= "/{first_alias}/{second_alias}/disable", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -45,14 +45,14 @@ public class CommunicationController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value= "/{alias}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value= "/{serial_number}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Vraca sve komunikacije za prosledjeni sertifikat", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = List.class),
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<List<CertificateDTO>> getCommunicationsOfCertificate(@PathVariable(value="alias") String alias ) {
-        return new ResponseEntity<>(communicationService.getCommunicationsOfCertificate(alias),HttpStatus.OK);
+    public ResponseEntity<List<CertificateDTO>> getCommunicationsOfCertificate(@PathVariable(value="serial_number") String serialNumber ) {
+        return new ResponseEntity<>(communicationService.getCommunicationsOfCertificate(serialNumber),HttpStatus.OK);
     }
 }

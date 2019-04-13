@@ -5,10 +5,13 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.web.server.ResponseStatusException;
 import xmlb.dto.CertificateDTO;
+import xmlb.model.Certificate;
 import xmlb.model.Communication;
+import xmlb.repository.CertificateRepository;
 import xmlb.repository.CommunicationRepository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -16,6 +19,9 @@ public class CommunicationService {
 
     @Autowired
     private CommunicationRepository communicationRepository;
+
+    @Autowired
+    private CertificateRepository certificateRepository;
 
     public Communication createCommunication(String first, String second){
 
@@ -32,8 +38,8 @@ public class CommunicationService {
         }
 
         Communication communication = new Communication();
-        //communication.setFirst(first);
-        //communication.setSecond(second);
+        communication.setFirst(first);
+        communication.setSecond(second);
         communicationRepository.save(communication);
         return communication;
     }
@@ -51,22 +57,38 @@ public class CommunicationService {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Communication does not exist");
     }
 
-    public List<CertificateDTO> getCommunicationsOfCertificate(String alias){
+    public List<CertificateDTO> getCommunicationsOfCertificate(String serialNumber){
         List<CertificateDTO> list = new ArrayList<>();
         List<Communication> communications = communicationRepository.findAll();
-        CertificateDTO ci = null;
         for(Communication communication : communications){
-            if(communication.getFirst().equals(alias)){
-                ci = new CertificateDTO();
-                //ci.setAlias(communication.getSecond());
-                list.add(ci);
-            }else if(communication.getSecond().equals(alias)){
-                ci = new CertificateDTO();
-                //ci.setAlias(communication.getFirst());
-                list.add(ci);
+            if(communication.getFirst().equals(serialNumber)){
+                Certificate certificate = getCertificateBySerialNmber(communication.getSecond());
+                if(certificate!= null)
+                    list.add(new CertificateDTO(certificate));
+            }else if(communication.getSecond().equals(serialNumber)){
+                Certificate certificate = getCertificateBySerialNmber(communication.getFirst());
+                if(certificate!= null)
+                    list.add(new CertificateDTO(certificate));
             }
         }
         return list;
+    }
+
+    private Certificate getCertificateBySerialNmber(String serialNumber){
+        List<Certificate> certificates = certificateRepository.findAll();
+
+        for(Certificate certificate : certificates){
+            if(certificate.getSerialNumber().equals(serialNumber) && isCertificateOk(certificate))
+                return certificate;
+        }
+
+        return null;
+    }
+
+    private Boolean isCertificateOk(Certificate certificate){
+        if(!certificate.getRevoked() && certificate.getStartDate().before(new Date()) && certificate.getEndDate().after(new Date()))
+            return true;
+        return false;
     }
 
 }

@@ -74,6 +74,7 @@ public class CertificateController {
         return new ResponseEntity<>(certificateService.showKeyStoreContent(alias),HttpStatus.OK);
     }*/
 
+   //ovaaaaa
     @RequestMapping(value= "/all_without_leafs", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Prikaz sertifikata bez listova", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
@@ -86,25 +87,25 @@ public class CertificateController {
     }
 
     @RequestMapping(value= "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value="Prikaz sertifikata", httpMethod = "GET", produces = "application/json")
+    @ApiOperation(value="Prikaz svih sertifikata", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = List.class),
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<List<CertificateDTO>> allCertificates() {
-        ArrayList<CertificateDTO> ci=(ArrayList<CertificateDTO>) certificateService.allCertificates();
-        ArrayList<CertificateDTO> pom= new ArrayList<>();
-        /*ArrayList<String> lista= (ArrayList<String>) revokeService.getAliase();
-        for(CertificateDTO c:ci){
-            if(!c.getAlias().equals(".DS_S")){
-                if(certificateService.checkIfValid(c.getAlias())){
-                    pom.add(c);
-             }
-            }
-        }*/
+        return new ResponseEntity<>(certificateService.all(),HttpStatus.OK);
+    }
 
-        return new ResponseEntity<>(pom,HttpStatus.OK);
+    @RequestMapping(value= "/all_without_root", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value="Prikaz svih sertifikata", httpMethod = "GET", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = List.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<List<CertificateDTO>> allCertificatesWithoutRoot() {
+        return new ResponseEntity<>(certificateService.allWithoutRoot(),HttpStatus.OK);
     }
 
     @RequestMapping(value= "/allDb", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

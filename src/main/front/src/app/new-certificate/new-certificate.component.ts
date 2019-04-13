@@ -47,10 +47,11 @@ export class NewCertificateComponent implements OnInit {
       endDate: null,
       alias:[''],
       password: [''],
-      leaf:['']
+      leaf:[''],
+      serialNumber:['']
     });
 
-    this.certificateService.allCertificatesWihoutLeafs().subscribe(data=>{
+    this.certificateService.allCertificatesWithoutLeafs().subscribe(data=>{
       this.cert = data;
       this.certTemp = data;
     });
@@ -76,7 +77,7 @@ export class NewCertificateComponent implements OnInit {
   search(searchValue : string) {
     console.log("sv:" + searchValue);
     if(searchValue == undefined || searchValue == ""){
-      this.certificateService.allCertificatesWihoutLeafs().subscribe(data=>{
+      this.certificateService.allCertificatesWithoutLeafs().subscribe(data=>{
         this.cert = data;
       });
     }else {

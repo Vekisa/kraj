@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CertificateService} from "../service/certificate.service";
 
-import {Observable} from "rxjs";
 import {CertInfo} from "../model";
 
 @Component({
@@ -18,22 +17,20 @@ export class RevokeComponent implements OnInit {
   certificates: CertInfo[];
 
   ngOnInit() {
-    this.certificateService.allCertificates().subscribe(data=>{
+    this.certificateService.allCertificatesWithoutRoot().subscribe(data=>{
       this.certificates = data;
     });
   }
 
   revoke(alias: string){
     this.certificateService.revokeCertificate(alias).then(value => {
-      this.certificateService.allCertificates().subscribe(data=>{
+      this.certificateService.allCertificatesWithoutRoot().subscribe(data=>{
         this.certificates = data;
       });
     });
-
   }
 
   search(searchValue : string) {
-    console.log("sv:" + searchValue);
     if(searchValue == undefined || searchValue == ""){
       this.certificateService.allCertificates().subscribe(data=>{
         this.certificates = data;

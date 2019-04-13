@@ -18,6 +18,7 @@ public class CertificateDTO {
     private String alias;
     private String password;
     private Boolean leaf;
+    private String serialNumber;
 
     public CertificateDTO() {
         super();
@@ -34,9 +35,11 @@ public class CertificateDTO {
         this.startDate = certificate.getStartDate();
         this.endDate = certificate.getEndDate();
         this.alias = certificate.getAlias();
+        this.serialNumber = certificate.getSerialNumber();
     }
 
-    public CertificateDTO(String parent, String country, String state, String locality, String organization, String organizationUnit, String commonName, Date startDate, Date endDate, String alias, String password) {
+    public CertificateDTO(String parent, String country, String state, String locality, String organization, String organizationUnit, String commonName,
+                          Date startDate, Date endDate, String alias, String password, String serialNumber) {
         this.parent = parent;
         this.country = country;
         this.state = state;
@@ -48,6 +51,7 @@ public class CertificateDTO {
         this.endDate = endDate;
         this.alias = alias;
         this.password = password;
+        this.serialNumber = serialNumber;
     }
 
     public String getCountry() {
@@ -142,4 +146,11 @@ public class CertificateDTO {
         this.commonName = commonName;
     }
 
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
 }

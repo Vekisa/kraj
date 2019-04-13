@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {CertInfo} from "../model";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {CertificateService} from "../service/certificate.service";
-import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
   selector: 'app-communication',

@@ -121,13 +121,39 @@ public class CertificateService {
         return list;
     }
 
+    public List<CertificateDTO> all(){
+        //UBACITI PROVERU ZA TRENUTNOOG KORISNIKA
+        List<Certificate> certificates = certificateRepository.findAll();
+        List<Certificate> certificateWithoutLeafs = new ArrayList<>();
+
+        for(Certificate certificate : certificates){
+            if(!certificate.getRevoked())
+                certificateWithoutLeafs.add(certificate);
+        }
+
+        return CreateDTOList.certificates(certificateWithoutLeafs);
+    }
+
+    public List<CertificateDTO> allWithoutRoot(){
+        //UBACITI PROVERU ZA TRENUTNOOG KORISNIKA
+        List<Certificate> certificates = certificateRepository.findAll();
+        List<Certificate> certificateWithoutLeafs = new ArrayList<>();
+
+        for(Certificate certificate : certificates){
+            if(!certificate.getRevoked() && !certificate.getAlias().equals("root"))
+                certificateWithoutLeafs.add(certificate);
+        }
+
+        return CreateDTOList.certificates(certificateWithoutLeafs);
+    }
+
     public List<CertificateDTO> allCertificatesWithoutLeafs(){
         //UBACITI PROVERU ZA TRENUTNOOG KORISNIKA
         List<Certificate> certificates = certificateRepository.findAll();
         List<Certificate> certificateWithoutLeafs = new ArrayList<>();
 
         for(Certificate certificate : certificates){
-            if(!certificate.getLeaf())
+            if(!certificate.getLeaf() && !certificate.getRevoked())
                 certificateWithoutLeafs.add(certificate);
         }
 
