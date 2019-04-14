@@ -54,72 +54,20 @@ public class CertificateService {
     private String pathToKeystores = "keystores/";
 
 
-    public List<CertificateDTO> search(String alias){ //Svi osim povucenih
-        File folder = new File("keystores/");
-        File[] listOfFiles = folder.listFiles();
-
+    public List<CertificateDTO> search(String alias, Boolean leafs, Boolean root){
         List<CertificateDTO> list = new ArrayList<>();
-        /*List<String> revoke= rs.getPovuceneAliasi();
-        CertificateDTO cInfo = new CertificateDTO();
-
-        for (File file : listOfFiles) {
-            if (file.isFile()) {
-                if(file.getName().substring(0,file.getName().length()-4).contains(alias)) {
-                    cInfo = new CertificateDTO();
-                    cInfo.setAlias(file.getName().substring(0, file.getName().length() - 4));
-                    if(!revoke.contains(cInfo.getAlias()))
-                         list.add(cInfo);
-                }
+        List<Certificate> certificates = certificateRepository.findAll();
+        for(Certificate certificate : certificates)
+            if(certificate.getAlias().contains(alias) && certificate.getAlias().equals("root") && root){
+                list.add(new CertificateDTO(certificate));
+            }else if(certificate.getAlias().contains(alias) && isCertificateOk(certificate) && certificate.getLeaf() && leafs) {
+                list.add(new CertificateDTO(certificate));
+            }else if(certificate.getAlias().contains(alias) && isCertificateOk(certificate) && !certificate.getLeaf()){
+                list.add(new CertificateDTO(certificate));
             }
-        }*/
         return list;
     }
 
-    public List<CertificateDTO> search2(String alias){ //bez listova i bez povucenih
-        File folder = new File("keystores/");
-        File[] listOfFiles = folder.listFiles();
-
-        List<CertificateDTO> list = new ArrayList<>();
-       /* List<String> revoke= rs.getAliase();
-        CertificateDTO cInfo = new CertificateDTO();
-
-        for (File file : listOfFiles) {
-            if (file.isFile()) {
-                if(file.getName().substring(0,file.getName().length()-4).contains(alias)) {
-                    cInfo = new CertificateDTO();
-                    cInfo.setAlias(file.getName().substring(0, file.getName().length() - 4));
-                    if(!revoke.contains(cInfo.getAlias()))
-                        list.add(cInfo);
-                }
-            }
-        }*/
-        return list;
-    }
-
-    public Boolean check(Long id){
-
-        return null;
-    }
-
-    public List<CertificateDTO> allCertificates(){
-        File folder = new File("keystores/");
-        File[] listOfFiles = folder.listFiles();
-
-        List<CertificateDTO> list = new ArrayList<>();
-        /*List<String> revoke= rs.getAliase();
-
-        CertificateDTO cInfo = new CertificateDTO();
-
-        for (File file : listOfFiles) {
-            if (file.isFile()) {
-                cInfo = new CertificateDTO();
-                cInfo.setAlias(file.getName().substring(0,file.getName().length()-4));
-                if(!revoke.contains(cInfo.getAlias()))
-                    list.add(cInfo);
-            }
-        }*/
-        return list;
-    }
 
     public List<CertificateDTO> all(){
         //UBACITI PROVERU ZA TRENUTNOOG KORISNIKA
@@ -127,7 +75,7 @@ public class CertificateService {
         List<Certificate> certificateWithoutLeafs = new ArrayList<>();
 
         for(Certificate certificate : certificates){
-            if(!certificate.getRevoked())
+            if(isCertificateOk(certificate))
                 certificateWithoutLeafs.add(certificate);
         }
 
@@ -140,7 +88,7 @@ public class CertificateService {
         List<Certificate> certificateWithoutLeafs = new ArrayList<>();
 
         for(Certificate certificate : certificates){
-            if(!certificate.getRevoked() && !certificate.getAlias().equals("root"))
+            if(isCertificateOk(certificate) && !certificate.getAlias().equals("root"))
                 certificateWithoutLeafs.add(certificate);
         }
 
@@ -153,31 +101,14 @@ public class CertificateService {
         List<Certificate> certificateWithoutLeafs = new ArrayList<>();
 
         for(Certificate certificate : certificates){
-            if(!certificate.getLeaf() && !certificate.getRevoked())
+            if(!certificate.getLeaf() && isCertificateOk(certificate))
                 certificateWithoutLeafs.add(certificate);
         }
 
         return CreateDTOList.certificates(certificateWithoutLeafs);
     }
 
-    public Boolean ifAliasExist(String alias){
-        File folder = new File("keystores/");
-        File[] listOfFiles = folder.listFiles();
-
-        if(alias.equals("root") || alias.equals("ROOT"))
-            return true;
-
-        for (File file : listOfFiles) {
-            if (file.getName().substring(0,file.getName().length()-4).equals(alias))
-                return true;
-        }
-        return false;
-    }
-
     public String createNewSelfSignedCertificate(CertificateDTO certificateDTO) {
-        if(ifAliasExist(certificateDTO.getAlias()))
-            return "Alias exists";
-
         try {
             System.out.println("Create SS Service!");
 
@@ -199,12 +130,6 @@ public class CertificateService {
             builder.addRDN(BCStyle.L, certificateDTO.getLocality());
             builder.addRDN(BCStyle.ST, certificateDTO.getState());
 
-
-            //Kreiraju se podaci za sertifikat, sto ukljucuje:
-            // - javni kljuc koji se vezuje za sertifikat
-            // - podatke o vlasniku
-            // - serijski broj sertifikata
-            // - od kada do kada vazi sertifikat
             SubjectData subjectData = new SubjectData(keyPairSubject.getPublic(), builder.build(), String.valueOf(serialNumber), startDate, endDate);
             IssuerData issuerData = new IssuerData(keyPairSubject.getPrivate(),builder.build());
 
@@ -215,9 +140,9 @@ public class CertificateService {
 
             keyStoreWriter.loadKeyStore(null,password.toCharArray());
 
-            keyStoreWriter.write(certificateDTO.getAlias(),keyPairSubject.getPrivate(),password.toCharArray(),cert);
+            keyStoreWriter.write("root",keyPairSubject.getPrivate(),password.toCharArray(),cert);
 
-            keyStoreWriter.saveKeyStore(pathToKeystores + certificateDTO.getAlias()+".p12",password.toCharArray());
+            keyStoreWriter.saveKeyStore(pathToKeystores +"root.p12",password.toCharArray());
 
             return "Successful";
 
@@ -240,32 +165,9 @@ public class CertificateService {
         return null;
     }
 
-    public String showKeyStoreContent(String alias, String password) {
-        //TODO: Upotrebom klasa iz primeri/pki paketa, prikazati sadrzaj keystore-a, gde korisnik unosi ime i lozinku
-        //Dozvoljeno je menjati klase iz primeri/pki paketa
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-
-
-        String name = "keystores/"+ alias +".p12";
-
+    public IssuerData getIssuerFromCertificate(String organization, String alias, String password){
+        String name = pathToKeystores + organization +".p12";
         KeyStoreReader keyStoreReader = new KeyStoreReader();
-        java.security.cert.Certificate cert = keyStoreReader.readCertificate(name,secret,alias);
-
-        IssuerData issuerData = keyStoreReader.readIssuerFromStore(name,alias,secret.toCharArray(),password.toCharArray());
-
-        X509Certificate certi = (X509Certificate) cert;
-        return "Imam GA";
-
-    }
-
-    public IssuerData getIssuerFromCertificate(String alias, String password){
-        System.out.println("TRAZIM ISSUERA");
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-
-        String name = pathToKeystores + alias +".p12";
-
-        KeyStoreReader keyStoreReader = new KeyStoreReader();
-        java.security.cert.Certificate cert = keyStoreReader.readCertificate(name,password,alias);
 
         IssuerData issuerData = keyStoreReader.readIssuerFromStore(name,alias,password.toCharArray(),password.toCharArray());
 
@@ -273,28 +175,27 @@ public class CertificateService {
     }
 
     public IssuerData getIssuerFromRootCertificate(String pass){
-        System.out.println("TRAZIM ISSUERA ROOTA " + pass);
-
-
         KeyStoreReader keyStoreReader = new KeyStoreReader();
-
         java.security.cert.Certificate cert = keyStoreReader.readCertificate(rootPath,pass,"root");
-
-
         IssuerData issuerData = keyStoreReader.readIssuerFromStore(rootPath,"root",pass.toCharArray(),pass.toCharArray());
 
         return issuerData;
     }
 
     public void createNewIssuedCertificate(CertificateDTO certificateDTO) {
-        if(ifAliasExist(certificateDTO.getAlias()))
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Alias already exists");
 
         IssuerData issuer;
-        if(certificateDTO.getParent().toUpperCase().equals("ROOT")){
+        if(certificateDTO.getParent().toUpperCase().equals("1")){
             issuer = this.getIssuerFromRootCertificate(certificateDTO.getPassword());
         }else{
-            issuer = this.getIssuerFromCertificate(certificateDTO.getParent(), certificateDTO.getPassword());
+            Certificate certificateParent = findBySerialNumber(certificateDTO.getParent());
+            if(certificateParent == null)
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No certificate with this serial number");
+
+            System.out.println("---" +  certificateParent.getCompany().getName());
+            System.out.println("---" + certificateDTO.getParent());
+            System.out.println("---" + certificateDTO.getPassword());
+            issuer = this.getIssuerFromCertificate(certificateParent.getCompany().getName(), certificateParent.getAlias(), certificateDTO.getPassword());
         }
 
         KeyPair keyPairSubject = generateKeyPair();
@@ -360,7 +261,7 @@ public class CertificateService {
 
     }
 
-    public boolean checkIfValid(String alias){
+    /*public boolean checkIfValid(String alias){
         System.out.println("Validnost " +alias);
 
         String pass ="";
@@ -375,14 +276,14 @@ public class CertificateService {
 
         System.out.println("pass"+pass);
 
-       /* Revoke revoke=new Revoke();
+        Revoke revoke=new Revoke();
         revoke.setAlias(alias);
         revoke.setLeaf(false);
         ArrayList<String> lista= (ArrayList<String>) revokeService.getPovuceneAliasi();
         if(lista.contains(revoke.getAlias())) {
             System.out.println("Revoked");
             return false;
-        }*/
+        }
 
 
         System.out.println("Ucitavanje cert");
@@ -447,7 +348,7 @@ public class CertificateService {
 
 
         return true;
-    }
+    }*/
 
     public java.security.cert.Certificate readFromKS(String alias, String pass){
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -463,6 +364,35 @@ public class CertificateService {
         return certificateRepository.findAll();
     }
 
+    public void revokeCertificate(String serialNumber){
+            List<Certificate> certificates = certificateRepository.findAll();
+            for(Certificate certificate : certificates){
+                if(certificate.getSerialNumber().equals(serialNumber))
+                    if(certificate.getRevoked())
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Certificate already revoked");
+                    else{
+                        certificate.setRevoked(true);
+                        certificateRepository.save(certificate);
+                        return;
+                    }
+            }
 
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Certificate does not exist");
+    }
+
+    private Boolean isCertificateOk(Certificate certificate){
+        if(!certificate.getRevoked() && certificate.getStartDate().before(new Date()) && certificate.getEndDate().after(new Date()))
+            return true;
+        return false;
+    }
+
+    private Certificate findBySerialNumber(String serialNumber){
+        List<Certificate> certificates = certificateRepository.findAll();
+        for(Certificate certificate : certificates)
+            if(certificate.getSerialNumber().equals(serialNumber) && isCertificateOk(certificate))
+                return certificate;
+
+        return null;
+    }
 
 }

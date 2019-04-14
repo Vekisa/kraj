@@ -12,13 +12,15 @@
     <tr>
       <th scope="col">#</th>
       <th scope="col">Name</th>
+      <th scope="col">SerialNumber</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let cert of certificates; let i = index"   >
       <td >{{i}}</td>
       <td >{{cert.alias}}</td>
-      <td ><button (click)="revoke(cert.alias)" class="btn btn-danger"> Revoke </button></td>
+      <td >{{cert.serialNumber}}</td>
+      <td ><button (click)="revoke(cert.serialNumber)" class="btn btn-danger"> Revoke </button></td>
     </tr>
     </tbody>
   </table>

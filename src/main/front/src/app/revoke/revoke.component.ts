@@ -32,11 +32,11 @@ export class RevokeComponent implements OnInit {
 
   search(searchValue : string) {
     if(searchValue == undefined || searchValue == ""){
-      this.certificateService.allCertificates().subscribe(data=>{
+      this.certificateService.allCertificatesWithoutRoot().subscribe(data=>{
         this.certificates = data;
       });
     }else {
-      this.certificateService.search(searchValue).subscribe(data => {
+      this.certificateService.search(searchValue,true,false).subscribe(data => {
         this.certificates = data;
       });
     }

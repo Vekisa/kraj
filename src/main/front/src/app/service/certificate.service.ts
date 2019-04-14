@@ -69,12 +69,8 @@ export class CertificateService {
     return this.http.get<JwtResponse>(this.commUrl+"/"+alias);
   }
 
-  search(alias: string):Observable<any>{
-    return this.http.get<JwtResponse>(this.certUrl+"/" + alias + "/search")
-  }
-
-  searchWithoutLeafs(alias: string):Observable<any>{
-    return this.http.get<JwtResponse>(this.certUrl+"/" + alias + "/search_without_leafs")
+  search(alias: string, leafs: boolean, root: boolean, ):Observable<any>{
+    return this.http.get<JwtResponse>(this.certUrl+"/" + alias + "/search/" + leafs + "/" + root)
   }
 
   searchUsers(alias: string):Observable<any>{

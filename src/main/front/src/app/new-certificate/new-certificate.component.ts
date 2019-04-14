@@ -63,25 +63,27 @@ export class NewCertificateComponent implements OnInit {
 
     this.certForm.value.leaf=this.leaf;
 
-    this.certificateService.newCertificate(this.certForm.value);
+    this.certificateService.newCertificate(this.certForm.value).then( value =>
+      this.certificateService.allCertificatesWithoutLeafs().subscribe(data=>{
+        this.cert = data;
+        this.certTemp = data;
+      })
+    );
   }
 
   rowSelected(cert:any){
-    console.log(this.certForm.get('parent').value);
-    console.log(this.cert);
     this.certForm.value.parent = cert;
     this.inputVar = cert;
     this.par = cert;
   }
 
   search(searchValue : string) {
-    console.log("sv:" + searchValue);
     if(searchValue == undefined || searchValue == ""){
       this.certificateService.allCertificatesWithoutLeafs().subscribe(data=>{
         this.cert = data;
       });
     }else {
-      this.certificateService.searchWithoutLeafs(searchValue).subscribe(data => {
+      this.certificateService.search(searchValue, false, true).subscribe(data => {
         this.cert = data;
       });
     }

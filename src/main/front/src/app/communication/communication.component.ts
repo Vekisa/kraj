@@ -79,13 +79,12 @@ export class CommunicationComponent implements OnInit {
   }
 
   searchS(searchValue : string) {
-    console.log("sv:" + searchValue);
     if(searchValue == undefined || searchValue == ""){
       this.certificateService.allCertificates().subscribe(data=>{
         this.cert = data;
       });
     }else {
-      this.certificateService.search(searchValue).subscribe(data => {
+      this.certificateService.search(searchValue,true,true).subscribe(data => {
         this.cert = data;
       });
     }
@@ -93,7 +92,6 @@ export class CommunicationComponent implements OnInit {
   }
 
   searchF(searchValue : string) {
-    console.log("sv:" + searchValue);
     if(searchValue == undefined || searchValue == ""){
       this.certificateService.communications(this.first).subscribe(data=>{
         this.certComm = data;

@@ -24,32 +24,20 @@ public class CertificateController {
     @Autowired
     private CertificateService certificateService;
 
-    @RequestMapping(value= "/{alias}/search",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value= "/{alias}/search/{leafs}/{root}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Pretrazuje sertifikate", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = List.class),
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<List<CertificateDTO>> search(@PathVariable(value="alias") String alias) {
-        return new ResponseEntity<>(certificateService.search(alias),HttpStatus.OK);
-    }
-
-    @RequestMapping(value= "/check/{id}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value="Proverava validnost sertifikata", httpMethod = "GET", produces = "application/json")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = List.class),
-            @ApiResponse(code = 204, message = "No Content."),
-            @ApiResponse(code = 400, message = "Bad Request.")
-    })
-    public ResponseEntity<Boolean> check(@PathVariable(value="id") Long id) {
-        return new ResponseEntity<>(certificateService.check(id),HttpStatus.OK);
+    public ResponseEntity<List<CertificateDTO>> search(@PathVariable(value="alias") String alias, @PathVariable(value="leafs") Boolean leafs, @PathVariable(value="root") Boolean root) {
+        return new ResponseEntity<>(certificateService.search(alias, leafs, root),HttpStatus.OK);
     }
 
     @RequestMapping(value= "/createSS",method = RequestMethod.POST)
     @ApiOperation(value="Kreira novi samopotpisani sertifikat", httpMethod = "POST")
     public ResponseEntity<String> createNewSSCertificate(@RequestBody CertificateDTO certificateDTO) {
-        System.out.println("Create new certificate!");
         certificateService.createNewSelfSignedCertificate(certificateDTO);
         return new ResponseEntity<>(HttpStatus.OK);
 
@@ -74,7 +62,6 @@ public class CertificateController {
         return new ResponseEntity<>(certificateService.showKeyStoreContent(alias),HttpStatus.OK);
     }*/
 
-   //ovaaaaa
     @RequestMapping(value= "/all_without_leafs", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Prikaz sertifikata bez listova", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
@@ -108,39 +95,6 @@ public class CertificateController {
         return new ResponseEntity<>(certificateService.allWithoutRoot(),HttpStatus.OK);
     }
 
-    @RequestMapping(value= "/allDb", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value="Prikaz sertifikata", httpMethod = "GET", produces = "application/json")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = List.class),
-            @ApiResponse(code = 204, message = "No Content."),
-            @ApiResponse(code = 400, message = "Bad Request.")
-    })
-    public ResponseEntity<List<Certificate>> allCertificatesDB() {
-
-        List<Certificate> lista = certificateService.allCertificatesDB();
-
-        return new ResponseEntity<>(lista,HttpStatus.OK);
-    }
-
-    @RequestMapping(value= "/allL", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value="Prikaz sertifikata koji nisu povuceni", httpMethod = "GET", produces = "application/json")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = List.class),
-            @ApiResponse(code = 204, message = "No Content."),
-            @ApiResponse(code = 400, message = "Bad Request.")
-    })
-    public ResponseEntity<List<CertificateDTO>> certificatesL() {
-        ArrayList<CertificateDTO> ci=(ArrayList<CertificateDTO>) certificateService.allCertificates();
-        ArrayList<CertificateDTO> pom= new ArrayList<>();
-        /*ArrayList<String> lista= (ArrayList<String>) revokeService.getPovuceneAliasi();
-        for(CertificateDTO c:ci){
-            if(!lista.contains(c.getAlias()))
-                pom.add(c);
-        }*/
-
-        return new ResponseEntity<>(pom,HttpStatus.OK);
-    }
-
     @RequestMapping(value= "/revoke", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Povlacenje sertifikata", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {
@@ -148,21 +102,13 @@ public class CertificateController {
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<String> revoke(@RequestBody String alias) {
-
-        //Revoke revoke=new Revoke();
-        //revoke.setAlias(alias);
-        //revoke.setLeaf(false);
-        //ArrayList<String> lista= (ArrayList<String>) revokeService.getPovuceneAliasi();
-        //if(!lista.contains(revoke.getAlias())) {
-            //revokeService.newRevoke(revoke);
-            //return new ResponseEntity<>(HttpStatus.OK);
-        //}
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    public ResponseEntity<?> revoke(@RequestBody String serialNumber) {
+        certificateService.revokeCertificate(serialNumber);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
-    @RequestMapping(value= "/checkIfValid", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    /*@RequestMapping(value= "/checkIfValid", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Check if valid", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = List.class),
@@ -177,6 +123,6 @@ public class CertificateController {
         }else
             return new ResponseEntity<>(new ResponseMessage("NOT Valid!"),HttpStatus.OK);
 
-    }
+    }*/
 
 }
