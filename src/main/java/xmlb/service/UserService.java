@@ -4,12 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import xmlb.model.Company;
 import xmlb.model.User;
 import xmlb.model.VerificationToken;
 import xmlb.repository.UserRepository;
 import xmlb.repository.VerificationTokenRepository;
 
 import javax.transaction.Transactional;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -107,4 +109,30 @@ public class UserService {
         userRepository.save(user.get());
         return user.get();
     }
+
+    public User getUser(Principal user){
+
+        Optional<User> optionalUser = userRepository.findByUsername(user.getName());
+
+
+        if(!optionalUser.isPresent())
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Requested user does not exist");
+
+
+        return optionalUser.get();
+
+    }
+
+    public User saveCompany(Long id, Company company){
+        Optional<User> optionalUser = userRepository.findById(id);
+
+        if(!optionalUser.isPresent())
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Requested user does not exist");
+
+        User user = optionalUser.get();
+        user.setCompany(company);
+
+        return userRepository.save(user);
+    }
+
 }

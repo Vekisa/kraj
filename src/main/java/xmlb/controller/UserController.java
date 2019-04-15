@@ -64,4 +64,7 @@ public class UserController {
     public ResponseEntity<User> disable(@PathVariable(value="id") Long id) {
         return new ResponseEntity<>(userService.disableUser(id), HttpStatus.OK);
     }
+
+
+
 }

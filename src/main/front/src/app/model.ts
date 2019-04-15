@@ -9,6 +9,7 @@ export class User {
   enabled: boolean;
   lastPasswordResetDate: Date;
   verified: boolean;
+  company:Company;
 
   constructor(id: number, username: string, firstName: string, lastName: string,  email: string, password: string, enabled: boolean, lastPasswordResetDate: Date, verified: boolean) {
     this.id = id;
@@ -23,6 +24,18 @@ export class User {
   }
 
 }
+
+export class Company {
+  id: string;
+  name: string;
+
+  constructor(id: string,name:string){
+    this.id = id;
+    this.name = name;
+  }
+
+}
+
 
 export class UserLogin {
   username: string;
@@ -88,3 +101,5 @@ export class CertificateDB {
 
 
 }
+
+

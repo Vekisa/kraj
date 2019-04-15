@@ -19,6 +19,8 @@ import {FilterPipe} from "./additional/filter.pipe";
 import { CommunicationComponent } from './communication/communication.component';
 import { ValidateComponent } from './validate/validate.component';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [
@@ -41,6 +43,7 @@ import { ValidateComponent } from './validate/validate.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgbModule
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
