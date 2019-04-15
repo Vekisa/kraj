@@ -1,6 +1,5 @@
 package xmlb.service;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +15,9 @@ import xmlb.repository.CertificateRepository;
 import xmlb.repository.CompanyRepository;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.security.*;
-import java.security.cert.*;
 import java.security.cert.X509Certificate;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -217,11 +213,15 @@ public class CertificateService {
 
         SubjectData subjectData = new SubjectData(keyPairSubject.getPublic(), builder.build(), serialNumber, startDate, endDate);
 
+        Certificate certificateParent = findBySerialNumber(certificateDTO.getParent());
+        if(certificateParent == null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Parent certificate does not exist");
+
         Certificate certificate = new Certificate(certificateDTO.getAlias(),
                 serialNumber,
                 certificateDTO.getStartDate(),
                 certificateDTO.getEndDate(),
-                certificateDTO.getParent(),
+                certificateParent.getAlias(),
                 false,
                 certificateDTO.getLeaf(),
                 certificateDTO.getCountry(),
