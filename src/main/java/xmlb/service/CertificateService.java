@@ -97,8 +97,11 @@ public class CertificateService {
         List<Certificate> certificateWithoutLeafs = new ArrayList<>();
 
         for(Certificate certificate : certificates){
-            if(!certificate.getLeaf() && isCertificateOk(certificate))
+            System.out.println("PROVERAMA: " + certificate.getAlias());
+            if(!certificate.getLeaf() && isCertificateOk(certificate)) {
+                System.out.println("UBACIO: " + certificate.getAlias());
                 certificateWithoutLeafs.add(certificate);
+            }
         }
 
         return CreateDTOList.certificates(certificateWithoutLeafs);
@@ -180,7 +183,11 @@ public class CertificateService {
 
     public void createNewIssuedCertificate(CertificateDTO certificateDTO) {
 
+        //VALIDACIJA
+        validateCertificateFromFront(certificateDTO);
+
         IssuerData issuer;
+
         if(certificateDTO.getParent().toUpperCase().equals("1")){
             issuer = this.getIssuerFromRootCertificate(certificateDTO.getPassword());
         }else{
@@ -188,9 +195,6 @@ public class CertificateService {
             if(certificateParent == null)
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No certificate with this serial number");
 
-            System.out.println("---" +  certificateParent.getCompany().getName());
-            System.out.println("---" + certificateDTO.getParent());
-            System.out.println("---" + certificateDTO.getPassword());
             issuer = this.getIssuerFromCertificate(certificateParent.getCompany().getName(), certificateParent.getAlias(), certificateDTO.getPassword());
         }
 
@@ -360,10 +364,6 @@ public class CertificateService {
        return  keyStoreReader.readCertificate(name,pass,alias);
     }
 
-    public List<Certificate> allCertificatesDB(){
-        return certificateRepository.findAll();
-    }
-
     public void revokeCertificate(String serialNumber){
             List<Certificate> certificates = certificateRepository.findAll();
             for(Certificate certificate : certificates){
@@ -381,8 +381,10 @@ public class CertificateService {
     }
 
     private Boolean isCertificateOk(Certificate certificate){
-        if(!certificate.getRevoked() && certificate.getStartDate().before(new Date()) && certificate.getEndDate().after(new Date()))
+        if(!certificate.getRevoked() &&
+                (certificate.getEndDate().after(new Date()) || certificate.getEndDate().equals(new Date())))
             return true;
+
         return false;
     }
 
@@ -393,6 +395,30 @@ public class CertificateService {
                 return certificate;
 
         return null;
+    }
+
+    private void validateCertificateFromFront(CertificateDTO certificateDTO){
+        if(certificateDTO.getStartDate().before(new Date()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad start date");
+        if(certificateDTO.getEndDate().before(new Date()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad end date");
+        if(certificateDTO.getEndDate().before(certificateDTO.getStartDate()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad end and start dates");
+
+        if(certificateDTO.getLeaf() == null)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Leaf is null");
+
+        String serialNumber = certificateDTO.getParent();
+        if(serialNumber == null)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parent is null");
+
+        Certificate certificateParent = findBySerialNumber(serialNumber);
+        System.out.println("OVAJ: " + serialNumber);
+        if(certificateParent == null)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parent certificate does not exist");
+
+        if(certificateParent.getCompany().getName().equals(certificateDTO.getOrganization()) && !certificateParent.getCompany().getName().equals("rootComp"))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parent certificate does not exist");
     }
 
 }
