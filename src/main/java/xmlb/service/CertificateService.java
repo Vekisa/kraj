@@ -1,6 +1,22 @@
 package xmlb.service;
 
+import org.bouncycastle.asn1.ASN1EncodableVector;
+import org.bouncycastle.asn1.DERIA5String;
+import org.bouncycastle.asn1.DERSequence;
 import org.bouncycastle.asn1.x500.X500NameBuilder;
+
+import org.bouncycastle.asn1.x509.*;
+import org.bouncycastle.asn1.x509.CRLReason;
+import org.bouncycastle.asn1.x509.Extension;
+import org.bouncycastle.cert.CertIOException;
+import org.bouncycastle.cert.X509v2CRLBuilder;
+import org.bouncycastle.x509.X509V2CRLGenerator;
+import org.bouncycastle.x509.extension.X509ExtensionUtil;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
+
+import java.io.*;
+import java.security.cert.*;
 import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,21 +24,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import xmlb.KeyStoreReader;
+import xmlb.controller.CertificateController;
 import xmlb.dto.CertificateDTO;
 import xmlb.model.*;
 import xmlb.model.Certificate;
 import xmlb.repository.CertificateRepository;
 import xmlb.repository.CompanyRepository;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.math.BigInteger;
 import java.security.*;
-import java.security.cert.X509Certificate;
+import java.security.cert.X509Extension;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class CertificateService {
@@ -187,9 +201,9 @@ public class CertificateService {
         validateCertificateFromFront(certificateDTO);
 
         IssuerData issuer;
-
         if(certificateDTO.getParent().toUpperCase().equals("1")){
             issuer = this.getIssuerFromRootCertificate(certificateDTO.getPassword());
+
         }else{
             Certificate certificateParent = findBySerialNumber(certificateDTO.getParent());
             if(certificateParent == null)
@@ -213,6 +227,7 @@ public class CertificateService {
         builder.addRDN(BCStyle.L, certificateDTO.getLocality());
         builder.addRDN(BCStyle.ST, certificateDTO.getState());
 
+
         String serialNumber = BigInteger.valueOf(System.currentTimeMillis()).toString();
 
         SubjectData subjectData = new SubjectData(keyPairSubject.getPublic(), builder.build(), serialNumber, startDate, endDate);
@@ -235,9 +250,25 @@ public class CertificateService {
                 certificateDTO.getCommonName());
 
         CertificateGenerator certificateGenerator = new CertificateGenerator();
-        X509Certificate cert = certificateGenerator.generateCertificate(subjectData,issuer);
+       // V3TBSCertificateGenerator certificateGenerator1= new V3TBSCertificateGenerator();
 
+        X509Certificate cert = certificateGenerator.generateCertificate(subjectData,issuer);
+        //TBSCertificate cert1 = certificateGenerator1.generateTBSCertificate();
         KeyStoreWriter keyStoreWriter = new KeyStoreWriter();
+
+        /*byte[] extVal = cert.getExtensionValue(Extension.authorityInfoAccess.getId());
+
+        AccessDescription ad=new AccessDescription(AccessDescription.id_ad_caIssuers, new GeneralName(GeneralName.uniformResourceIdentifier, new DERIA5String(linkTo(methodOn(CertificateController.class).getCertificate(certificateDTO.getParent())).toUri().toString())));
+        AccessDescription ocsp= new AccessDescription(AccessDescription.id_ad_ocsp, new GeneralName(GeneralName.uniformResourceIdentifier, new DERIA5String(linkTo(methodOn(CertificateController.class).allRevoke()).toUri().toString())));
+        ASN1EncodableVector aia_ASN=new ASN1EncodableVector();
+        aia_ASN.add(ad);
+        aia_ASN.add(ocsp);
+        AuthorityInformationAccess aia =  AuthorityInformationAccess.getInstance(new DERSequence(aia_ASN));
+        //AuthorityInformationAccess aia = AuthorityInformationAccess.getInstance(X509ExtensionUtil.fromExtensionValue(extVal));
+        //X509v2CRLBuilder crlgen = new X509v2CRLBuilder(issuer.getX500name(), new Date());
+        //crlgen.addExtension(Extension.authorityInfoAccess, false, aia);
+
+*/
 
         Company company = companyRepository.findCompanyByName(certificateDTO.getOrganization());
         if (company == null){
@@ -388,7 +419,7 @@ public class CertificateService {
         return false;
     }
 
-    private Certificate findBySerialNumber(String serialNumber){
+    public Certificate findBySerialNumber(String serialNumber){
         List<Certificate> certificates = certificateRepository.findAll();
         for(Certificate certificate : certificates)
             if(certificate.getSerialNumber().equals(serialNumber) && isCertificateOk(certificate))
@@ -421,4 +452,51 @@ public class CertificateService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parent certificate does not exist");
     }
 
+   /* public X509CRL getCRL() throws CertificateException, IOException {
+
+        List<Certificate> lista = certificateRepository.findAll();
+        List<Certificate> listaR=null;
+
+        //String certificatePath = "C:\\Users\\user1\\Desktop\\test.cer";
+
+        CertificateFactory cf = CertificateFactory.getInstance("X509");
+
+        X509Certificate certificate = null;
+        X509CRLEntry revokedCertificate = null;
+        X509CRL crl = null;
+        //certificate = (X509Certificate) cf.generateCertificate(new FileInputStream(new File(certificatePath)));
+
+        for (Certificate ce : lista){
+            if(ce.getRevoked()){
+                listaR.add(ce);
+
+            }
+
+        }
+
+
+        URL url = new URL("http://<someUrl from certificate>.crl");
+        URLConnection connection = url.openConnection();
+        //crl.getRevokedCertificates().add(eCerts);
+        try(DataInputStream inStream = new DataInputStream(connection.getInputStream())){
+
+            crl = (X509CRL)cf.generateCRL(inStream);
+        } catch (CRLException e) {
+            e.printStackTrace();
+        }
+
+       /* revokedCertificate = crl.getRevokedCertificate(certificate.getSerialNumber());
+
+        if(revokedCertificate !=null){
+            System.out.println("Revoked");
+        }
+        else{
+            System.out.println("Valid");
+        }
+
+        return crl;
+    }*/
+
+
 }
+

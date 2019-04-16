@@ -125,4 +125,33 @@ public class CertificateController {
 
     }*/
 
+    //Za AIA
+    @RequestMapping(value= "/getCertificate", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value="Pronalazi sertfikat", httpMethod = "GET", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = List.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<Certificate> getCertificate(@RequestBody String serialNumber) {
+
+        return new ResponseEntity<>(certificateService.findBySerialNumber(serialNumber),HttpStatus.OK);
+    }
+
+    @RequestMapping(value= "/allRevoke", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value="Prikaz svih povucenih sertifikata", httpMethod = "GET", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = List.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<List<CertificateDTO>> allRevoke() {
+        List<CertificateDTO>lista=certificateService.all();
+        List<CertificateDTO>listaP=certificateService.all();
+        for(CertificateDTO c: lista){
+            if(c.getRevoked())
+                listaP.add(c);
+        }
+        return new ResponseEntity<>(listaP, HttpStatus.OK);
+    }
 }
