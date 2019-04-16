@@ -41,7 +41,7 @@ import java.util.*;
 @Service
 public class CertificateService {
 
-    @Value("Xmlsecuritypass")
+    @Value("ng servfe")
     private String secret;
 
     @Value("${password.for.keystore}")
