@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {User} from "../model";
 import {AuthService} from "../authentication/auth.service";
 import {ConfirmPasswordValidator} from "../validation/confirm-pass.validator";
@@ -24,12 +24,12 @@ export class RegistrationComponent implements OnInit {
   ngOnInit() {
 
     this.signUpForm = this.formBuilder.group({
-      firstName: [''],
-      lastName: [''],
-      username: [''],
-      email: [''],
-      password: [''],
-      passwordConfirm: ['']
+      firstName: ['', [Validators.required, Validators.pattern('[a-zA-Z]*'), Validators.maxLength(30)]],
+      lastName: ['', [Validators.required, Validators.pattern('[a-zA-Z]*'), Validators.maxLength(30)]],
+      username: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_]*'), Validators.maxLength(15)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_!?*#/]*'), Validators.minLength(8), Validators.maxLength(30)]],
+      passwordConfirm: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_!?*#/]*'), Validators.minLength(8), Validators.maxLength(30)]]
     }, {
       validator: ConfirmPasswordValidator.validate.bind(this)
     });

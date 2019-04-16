@@ -20,7 +20,6 @@ export class LoginComponent implements OnInit {
   errorMessage = '';
   roles: string[] = [];
   private loginInfo: UserLogin;
-
   loginForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder,private authService: AuthService, private tokenStorage: TokenService) { }
@@ -32,8 +31,8 @@ export class LoginComponent implements OnInit {
     }
 
     this.loginForm  =  this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+      username: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_]*')]],
+      password: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_!?*#/]*')]]
     });
   }
 
