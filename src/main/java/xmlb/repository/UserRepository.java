@@ -1,7 +1,7 @@
 package xmlb.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import xmlb.model.User;
+import xmlb.model.User.User;
 
 import java.util.Optional;
 

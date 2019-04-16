@@ -1,6 +1,7 @@
 package xmlb.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import xmlb.model.User.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;

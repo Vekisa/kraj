@@ -5,8 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import xmlb.model.Company;
-import xmlb.model.User;
-import xmlb.model.VerificationToken;
+import xmlb.model.User.User;
+import xmlb.model.User.VerificationToken;
 import xmlb.repository.UserRepository;
 import xmlb.repository.VerificationTokenRepository;
 

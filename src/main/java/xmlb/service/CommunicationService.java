@@ -25,9 +25,14 @@ public class CommunicationService {
 
     public Communication createCommunication(String first, String second){
 
-        if(first.equals(second)){
+        if(first.equals(second))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad parameters");
-        }
+
+        Certificate certificateFirst = getCertificateBySerialNumber(first);
+        Certificate certificateSecond = getCertificateBySerialNumber(second);
+
+        if(certificateFirst == null || certificateSecond == null)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Bad serial number");
 
         List<Communication> communications = communicationRepository.findAll();
 
@@ -45,6 +50,10 @@ public class CommunicationService {
     }
 
     public void delete(String first, String second){
+
+        if(first == null || second == null)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad parameters");
+
         List<Communication> communications = communicationRepository.findAll();
 
         for(Communication communication : communications){
@@ -58,15 +67,18 @@ public class CommunicationService {
     }
 
     public List<CertificateDTO> getCommunicationsOfCertificate(String serialNumber){
+        if(serialNumber == null)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad parameter");
+
         List<CertificateDTO> list = new ArrayList<>();
         List<Communication> communications = communicationRepository.findAll();
         for(Communication communication : communications){
             if(communication.getFirst().equals(serialNumber)){
-                Certificate certificate = getCertificateBySerialNmber(communication.getSecond());
+                Certificate certificate = getCertificateBySerialNumber(communication.getSecond());
                 if(certificate!= null)
                     list.add(new CertificateDTO(certificate));
             }else if(communication.getSecond().equals(serialNumber)){
-                Certificate certificate = getCertificateBySerialNmber(communication.getFirst());
+                Certificate certificate = getCertificateBySerialNumber(communication.getFirst());
                 if(certificate!= null)
                     list.add(new CertificateDTO(certificate));
             }
@@ -74,7 +86,7 @@ public class CommunicationService {
         return list;
     }
 
-    private Certificate getCertificateBySerialNmber(String serialNumber){
+    private Certificate getCertificateBySerialNumber(String serialNumber){
         List<Certificate> certificates = certificateRepository.findAll();
 
         for(Certificate certificate : certificates){
@@ -86,7 +98,7 @@ public class CommunicationService {
     }
 
     private Boolean isCertificateOk(Certificate certificate){
-        if(!certificate.getRevoked() && certificate.getStartDate().before(new Date()) && certificate.getEndDate().after(new Date()))
+        if(!certificate.getRevoked() && certificate.getEndDate().after(new Date()))
             return true;
         return false;
     }

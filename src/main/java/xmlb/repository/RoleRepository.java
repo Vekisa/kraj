@@ -1,7 +1,7 @@
 package xmlb.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import xmlb.model.Role;
+import xmlb.model.User.Role;
 
 import java.util.Optional;
 

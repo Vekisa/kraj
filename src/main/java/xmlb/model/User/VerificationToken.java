@@ -1,4 +1,4 @@
-package xmlb.model;
+package xmlb.model.User;
 
 import javax.persistence.*;
 import java.sql.Timestamp;

@@ -1,0 +1,64 @@
+package xmlb.model.User;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
+@Table(name = "endpoint")
+public class EndPoint {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column
+    private String url;
+
+    @Column
+    private String method;
+
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Role> roles;
+
+    public EndPoint(){}
+
+    public EndPoint(String url, String method){
+        this.setUrl(url);
+        this.setMethod(method);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+}

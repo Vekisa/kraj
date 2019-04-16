@@ -1,8 +1,9 @@
-package xmlb.model;
+package xmlb.model.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import xmlb.model.Company;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -46,8 +47,12 @@ public class User implements UserDetails {
     private Boolean isVerified;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Role> roles;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<Group> group;
 
     @ManyToOne
     private Company company;
@@ -208,5 +213,13 @@ public class User implements UserDetails {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public List<Group> getGroup() {
+        return group;
+    }
+
+    public void setGroup(List<Group> group) {
+        this.group = group;
     }
 }

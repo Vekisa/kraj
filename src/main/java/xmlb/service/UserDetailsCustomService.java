@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import xmlb.model.User;
+import xmlb.model.User.User;
 import xmlb.repository.UserRepository;
 
 import javax.transaction.Transactional;

@@ -1,16 +1,14 @@
-package xmlb.model;
+package xmlb.model.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="roles")
-public class Role implements GrantedAuthority {
+@Table(name = "groupT")
+public class Group {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,19 +18,22 @@ public class Role implements GrantedAuthority {
     private String name;
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<User> users;
 
-    public Role() {
-        super();
-        this.users = new ArrayList<>();
-        // TODO Auto-generated constructor stub
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<Role> roles;
+
+    public Group(){
+        users = new ArrayList<>();
+        roles = new ArrayList<>();
     }
 
-    public Role(String name) {
-        super();
+    public Group(String name){
         this.name = name;
-        this.users = new ArrayList<>();
+        users = new ArrayList<>();
+        roles = new ArrayList<>();
     }
 
     public Long getId() {
@@ -51,17 +52,19 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
-
-    @Override
-    public String getAuthority() {
-        return name;
-    }
-
     public List<User> getUsers() {
         return users;
     }
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }

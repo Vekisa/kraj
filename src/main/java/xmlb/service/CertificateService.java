@@ -65,6 +65,9 @@ public class CertificateService {
 
 
     public List<CertificateDTO> search(String alias, Boolean leafs, Boolean root){
+        if(alias == null || leafs == null || root == null)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parameters cannot be null");
+
         List<CertificateDTO> list = new ArrayList<>();
         List<Certificate> certificates = certificateRepository.findAll();
         for(Certificate certificate : certificates)
@@ -396,19 +399,22 @@ public class CertificateService {
     }
 
     public void revokeCertificate(String serialNumber){
-            List<Certificate> certificates = certificateRepository.findAll();
-            for(Certificate certificate : certificates){
-                if(certificate.getSerialNumber().equals(serialNumber))
-                    if(certificate.getRevoked())
-                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Certificate already revoked");
-                    else{
-                        certificate.setRevoked(true);
-                        certificateRepository.save(certificate);
-                        return;
-                    }
-            }
+        if(serialNumber == null)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Serial number is null");
 
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Certificate does not exist");
+        List<Certificate> certificates = certificateRepository.findAll();
+        for(Certificate certificate : certificates){
+            if(certificate.getSerialNumber().equals(serialNumber))
+                if(certificate.getRevoked())
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Certificate already revoked");
+                else{
+                    certificate.setRevoked(true);
+                    certificateRepository.save(certificate);
+                    return;
+                }
+        }
+
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Certificate does not exist");
     }
 
     private Boolean isCertificateOk(Certificate certificate){
@@ -436,6 +442,7 @@ public class CertificateService {
         if(certificateDTO.getEndDate().before(certificateDTO.getStartDate()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad end and start dates");
 
+
         if(certificateDTO.getLeaf() == null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Leaf is null");
 
@@ -444,9 +451,14 @@ public class CertificateService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parent is null");
 
         Certificate certificateParent = findBySerialNumber(serialNumber);
-        System.out.println("OVAJ: " + serialNumber);
         if(certificateParent == null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parent certificate does not exist");
+
+        if(certificateParent.getEndDate().before(certificateDTO.getEndDate()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parent end date is before end date");
+
+        if(certificateParent.getStartDate().after(certificateDTO.getStartDate()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parent start date is after start date");
 
         if(certificateParent.getCompany().getName().equals(certificateDTO.getOrganization()) && !certificateParent.getCompany().getName().equals("rootComp"))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parent certificate does not exist");

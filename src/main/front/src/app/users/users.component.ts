@@ -49,9 +49,6 @@ export class UsersComponent implements OnInit {
     })
 
   }
-
-
-
   enable(id : number){
     this.certificateService.enable(id).then(value =>
     this.initTable()

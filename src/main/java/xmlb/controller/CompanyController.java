@@ -9,7 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import xmlb.model.Company;
-import xmlb.model.User;
+import xmlb.model.User.User;
 import xmlb.service.CompanyService;
 
 import java.util.List;
