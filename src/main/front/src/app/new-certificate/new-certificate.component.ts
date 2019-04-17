@@ -1,5 +1,5 @@
 import {Component, NgModule, OnInit, Pipe} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CertificateService} from "../service/certificate.service";
 import {FilterPipe} from "../additional/filter.pipe";
 
@@ -37,16 +37,16 @@ export class NewCertificateComponent implements OnInit {
 
     this.certForm = this.formBuilder.group({
       parent: [''],
-      country: [''],
-      state: [''],
-      locality: [''],
-      organization: [''],
-      organizationUnit:[''],
-      commonName: [''],
+      country: ['',[Validators.required, Validators.pattern('[a-zA-Z_]*')]],
+      state: ['',[Validators.required, Validators.pattern('[a-zA-Z_]*')]],
+      locality: ['',[Validators.required, Validators.pattern('[a-zA-Z_]*')]],
+      organization: ['',[Validators.required, Validators.pattern('[a-zA-Z_]*')]],
+      organizationUnit:['',[Validators.required, Validators.pattern('[a-zA-Z_]*')]],
+      commonName: ['',[Validators.required, Validators.pattern('[a-zA-Z_]*')]],
       startDate: null,
       endDate: null,
-      alias:[''],
-      password: [''],
+      alias:['',[Validators.required, Validators.pattern('[a-zA-Z_]*')]],
+      password: ['',[Validators.required, Validators.pattern('[a-zA-Z0-9_!?*#/]*'), Validators.minLength(8)]],
       leaf:[''],
       serialNumber:['']
     });
@@ -89,7 +89,7 @@ export class NewCertificateComponent implements OnInit {
     }
   }
 
-  mySelectHandler(){
+  mySelectHandler($event){
 
     if (this.selectType==="Root") {
       this.roott = true;

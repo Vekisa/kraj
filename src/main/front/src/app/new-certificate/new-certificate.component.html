@@ -56,36 +56,58 @@
             <div *ngIf="!roott" class="form-label-group">
               <label for="passwordParent">Password</label>
               <input type="password" id="passwordParent" class="form-control" [formControlName]="'password'" placeholder="Password Parent" required >
+              <div class="alert alert-danger" *ngIf="certForm.get('password').errors?.required && certForm.get('password').touched">Password Parent is required</div>
+              <div class="alert alert-danger" *ngIf="certForm.get('password').errors?.pattern && certForm.get('password').touched">Only letters, numbers and ! ? # * / _</div>
+              <div class="alert alert-danger" *ngIf="certForm.get('password').errors?.minlength && certForm.get('password').touched">Password must be at least 8 characters</div>
+
             </div>
 
             <div class="form-label-group">
               <label for="country">Country</label>
-              <input type="text" id="country" class="form-control" [formControlName]="'country'" required autofocus>
+              <input type="text" ngModel maxlength="30" id="country" class="form-control" [formControlName]="'country'" required autofocus>
+              <div class="alert alert-danger" *ngIf="certForm.get('country').errors?.required && certForm.get('country').touched">Country is required</div>
+              <div class="alert alert-danger" *ngIf="certForm.get('country').errors?.pattern && certForm.get('country').touched">Only letters</div>
+
             </div>
 
             <div class="form-label-group">
               <label for="state">State/Province</label>
-              <input type="text" id="state" class="form-control" [formControlName]="'state'" required >
+              <input type="text" ngModel maxlength="30" id="state" class="form-control" [formControlName]="'state'" required >
+              <div class="alert alert-danger" *ngIf="certForm.get('state').errors?.required && certForm.get('state').touched">State/Province is required</div>
+              <div class="alert alert-danger" *ngIf="certForm.get('state').errors?.pattern && certForm.get('state').touched">Only letters</div>
+
             </div>
 
             <div class="form-label-group">
               <label for="locality">Locality</label>
-              <input type="text" id="locality" [formControlName]="'locality'" class="form-control" required >
+              <input type="text" ngModel maxlength="30" id="locality" [formControlName]="'locality'" class="form-control" required >
+              <div class="alert alert-danger" *ngIf="certForm.get('locality').errors?.required && certForm.get('locality').touched">Locality is required</div>
+              <div class="alert alert-danger" *ngIf="certForm.get('locality').errors?.pattern && certForm.get('locality').touched">Only letters</div>
+
             </div>
 
             <div class="form-label-group">
               <label for="organization">Organization</label>
-              <input type="text" id="organization" class="form-control" [formControlName]="'organization'" required >
+              <input type="text" ngModel maxlength="30" id="organization" class="form-control" [formControlName]="'organization'" required >
+              <div class="alert alert-danger" *ngIf="certForm.get('organization').errors?.required && certForm.get('organization').touched">Organization is required</div>
+              <div class="alert alert-danger" *ngIf="certForm.get('organization').errors?.pattern && certForm.get('organization').touched">Only letters</div>
+
             </div>
 
             <div class="form-label-group">
               <label for="organizationalUnit">Organizational Unit</label>
-              <input type="text" id="organizationalUnit" class="form-control" [formControlName]="'organizationUnit'" required >
+              <input type="text" ngModel maxlength="30" id="organizationalUnit" class="form-control" [formControlName]="'organizationUnit'" required >
+              <div class="alert alert-danger" *ngIf="certForm.get('organizationUnit').errors?.required && certForm.get('organizationUnit').touched">Organization Unit is required</div>
+              <div class="alert alert-danger" *ngIf="certForm.get('organizationUnit').errors?.pattern && certForm.get('organizationUnit').touched">Only letters</div>
+
             </div>
 
             <div class="form-label-group">
               <label for="commonName">Common Name</label>
-              <input type="text" id="commonName" class="form-control" [formControlName]="'commonName'" required >
+              <input type="text" ngModel maxlength="20" id="commonName" class="form-control" [formControlName]="'commonName'" required >
+              <div class="alert alert-danger" *ngIf="certForm.get('commonName').errors?.required && certForm.get('commonName').touched">Comon Name is required</div>
+              <div class="alert alert-danger" *ngIf="certForm.get('commonName').errors?.pattern && certForm.get('commonName').touched">Only letters</div>
+
             </div>
 
             <div class="form-label-group">
@@ -101,10 +123,13 @@
             <div class="form-label-group">
               <label for="alias">Alias</label>
               <input type="text" id="alias" class="form-control" [formControlName]="'alias'" required >
+              <div class="alert alert-danger" *ngIf="certForm.get('alias').errors?.required && certForm.get('alias').touched">Alias is required</div>
+              <div class="alert alert-danger" *ngIf="certForm.get('alias').errors?.pattern && certForm.get('alias').touched">Only letters</div>
+
             </div>
 
             <hr class="my-4">
-            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Create</button>
+            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit"  [disabled]="!certForm.valid">Create</button>
           </form>
         </div>
       </div>
