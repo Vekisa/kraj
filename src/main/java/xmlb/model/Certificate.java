@@ -27,6 +27,9 @@ public class Certificate {
     private String signedByAlias;
 
     @Column
+    private String signedBySerialNumber;
+
+    @Column
     private String country;
 
     @Column
@@ -57,13 +60,14 @@ public class Certificate {
         super();
     }
 
-    public Certificate(String alias, String serialNumber, Date startDate, Date endDate, String signedByAlias, Boolean revoked, Boolean isLeaf,String country, String state, String locality,
+    public Certificate(String alias, String serialNumber, Date startDate, Date endDate, String signedByAlias,String signedBySerialNumber, Boolean revoked, Boolean isLeaf,String country, String state, String locality,
                        String organizationUnit, String commonName) {
         this.alias = alias;
         this.serialNumber = serialNumber;
         this.startDate = startDate;
         this.endDate = endDate;
         this.signedByAlias = signedByAlias;
+        this.signedBySerialNumber = signedBySerialNumber;
         this.revoked = revoked;
         this.isLeaf = isLeaf;
         this.country = country;
@@ -191,5 +195,13 @@ public class Certificate {
 
     public void setCommonName(String commonName) {
         this.commonName = commonName;
+    }
+
+    public String getSignedBySerialNumber() {
+        return signedBySerialNumber;
+    }
+
+    public void setSignedBySerialNumber(String signedBySerialNumber) {
+        this.signedBySerialNumber = signedBySerialNumber;
     }
 }

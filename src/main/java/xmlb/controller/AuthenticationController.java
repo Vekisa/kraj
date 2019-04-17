@@ -63,7 +63,7 @@ public class AuthenticationController {
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
-        if(Pattern.matches(Regex.username,loginRequest.getUsername()) || !Pattern.matches(Regex.password,loginRequest.getPassword()))
+        if(!Pattern.matches(Regex.username,loginRequest.getUsername()) || !Pattern.matches(Regex.password,loginRequest.getPassword()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Bad parameters");
 
         Authentication authentication = authenticationManager.authenticate(
@@ -105,7 +105,10 @@ public class AuthenticationController {
         User user = new User( signUpRequest.getUsername(), passwordHash,
                 signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getEmail(),false,null,false);
 
-        Role role = roleRepository.findByName("ROLE_USER_REG")
+
+
+
+        Role role = roleRepository.findByName("ROLE_REG")
                 .orElseThrow(() -> new RuntimeException("Role can't be found!"));
 
         user.getRoles().add(role);

@@ -3,21 +3,12 @@
   <div  class="collapse navbar-collapse">
     <ul class="navbar-nav mr-auto">
         <li class="nav-item" *ngIf="isLoggedIn">
-          <a class="nav-link" [href]="['certificate_new']">New Certificate</a>
+          <a class="nav-link" [href]="['certificate_panel']">Certificate panel</a>
         </li>
         <li class="nav-item" *ngIf="isLoggedIn">
-          <a class="nav-link" [href]="['revoke']">Revoke</a>
+          <a class="nav-link" href="" [href]="['user_panel']">User panel</a>
         </li>
-        <li class="nav-item" *ngIf="isLoggedIn">
-          <a class="nav-link" href="" [href]="['users']">Users</a>
-        </li>
-      <li class="nav-item" *ngIf="isLoggedIn">
-        <a class="nav-link" href="" [href]="['communication']">Communication</a>
-      </li>
 
-      <li class="nav-item" *ngIf="isLoggedIn">
-        <a class="nav-link" href="" [href]="['validate']">Validate</a>
-      </li>
     </ul>
     <div *ngIf="!isLoggedIn">
       <form class="form-inline my-2 my-lg-0">
@@ -43,4 +34,3 @@
       </div>
     </div>
 </nav>
-

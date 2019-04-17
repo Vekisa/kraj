@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+.hrefColor{
+  color: rgb(36, 39, 41);
+}
+
+.navPar{
+  font-size: 20px;
+}
+
+.navPar :hover{
+  color: rgb(105, 101, 101);
+}

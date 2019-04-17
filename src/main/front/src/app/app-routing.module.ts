@@ -5,10 +5,13 @@ import {RegistrationComponent} from './registration/registration.component';
 import {WelcomeComponent} from './welcome/welcome.component';
 import {HomeComponent} from "./home/home.component";
 import {NewCertificateComponent} from "./new-certificate/new-certificate.component";
-import {UsersComponent} from "./users/users.component";
+import {UsersComponent} from "./user/users/users.component";
 import {RevokeComponent } from "./revoke/revoke.component";
 import {CommunicationComponent} from "./communication/communication.component";
 import {ValidateComponent} from "./validate/validate.component";
+import {UserPanelComponent} from "./user/user-panel/user-panel.component";
+import {RolepointComponent} from "./user/rolepoint/rolepoint.component";
+import {CertificatePanelComponent} from "./certificate/certificate-panel/certificate-panel.component";
 
 const routes: Routes = [
   {
@@ -28,24 +31,22 @@ const routes: Routes = [
     component: HomeComponent
   },
   {
-    path: 'certificate_new',
-    component: NewCertificateComponent
+    path: 'user_panel', component: UserPanelComponent,
+    children: [
+      { path: '', redirectTo: 'users', pathMatch: 'full'},
+      { path: 'users', component: UsersComponent },
+      { path: 'roles', component: RolepointComponent },
+    ]
   },
   {
-    path: 'revoke',
-    component: RevokeComponent
-  },
-  {
-    path: 'users',
-    component: UsersComponent
-  },
-  {
-    path: 'communication',
-    component: CommunicationComponent
-  },
-  {
-    path: 'validate',
-    component: ValidateComponent
+    path: 'certificate_panel', component: CertificatePanelComponent,
+    children: [
+      { path: '', redirectTo: 'all', pathMatch: 'full'},
+      { path: 'all', component: NewCertificateComponent },
+      { path: 'revoke', component: RevokeComponent },
+      { path: 'validate', component: ValidateComponent },
+      { path: 'communication', component: CommunicationComponent },
+    ]
   }
 
 ];

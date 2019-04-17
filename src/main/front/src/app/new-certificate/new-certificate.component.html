@@ -1,5 +1,3 @@
-<app-navigation></app-navigation>
-
 <div class="form-label-group" id="search">
   <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText" >
   <button class="btn btn-primary" id="btnSearch" (click)="search(searchText)"> Search</button>
@@ -112,12 +110,26 @@
 
             <div class="form-label-group">
               <label for="startDate">Not Valid Before</label>
-              <input type="date" id="startDate" class="form-control"  [formControlName]="'startDate'" required >
+              <div class="input-group">
+                <input id="startDate" class="form-control" [readonly]="true" [minDate]="fromDate" name="d2" ngbDatepicker #d2="ngbDatepicker"
+                       (dateSelect)="onDateSelected()" [formControlName]="'startDate'">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"><i
+                    class="fas fa-calendar"></i></button>
+                </div>
+              </div>
             </div>
 
             <div class="form-label-group">
               <label for="endDate">Not Valid After</label>
-              <input type="date" id="endDate" class="form-control" [formControlName]="'endDate'" required >
+              <div class="input-group">
+                <input id="endDate" class="form-control" [readonly]="true" [minDate]="toDate" [maxDate]="toDateMax" name="d3" ngbDatepicker #d3="ngbDatepicker"
+                       [formControlName]="'endDate'">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary calendar" (click)="d3.toggle()" type="button"><i
+                    class="fas fa-calendar"></i></button>
+                </div>
+              </div>
             </div>
 
             <div class="form-label-group">

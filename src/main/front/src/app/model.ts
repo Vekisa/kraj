@@ -25,6 +25,30 @@ export class User {
 
 }
 
+export class Roles {
+  id:number;
+  name:string;
+
+  constructor(id: number, name: string) {
+    this.id = id;
+    this.name = name;
+  }
+
+}
+
+export class EndPoint {
+  id:number;
+  url:string;
+  method:string;
+
+  constructor(id:number,url:string,method:string) {
+    this.id = id;
+    this.url = url;
+    this.method = method;
+  }
+
+}
+
 export class Company {
   id: string;
   name: string;

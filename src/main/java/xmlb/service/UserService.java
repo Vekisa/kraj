@@ -135,4 +135,14 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User getUser(Long id){
+
+        Optional<User> optionalUser = userRepository.findById(id);
+
+        if (!optionalUser.isPresent())
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Requested user does not exist");
+
+        return optionalUser.get();
+    }
+
 }

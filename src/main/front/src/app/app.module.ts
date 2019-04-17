@@ -14,13 +14,17 @@ import {HttpClientModule} from "@angular/common/http";
 import { HomeComponent } from './home/home.component';
 import { NewCertificateComponent } from './new-certificate/new-certificate.component';
 import { RevokeComponent } from './revoke/revoke.component';
-import { UsersComponent } from './users/users.component';
+import { UsersComponent } from './user/users/users.component';
 import {FilterPipe} from "./additional/filter.pipe";
 import { CommunicationComponent } from './communication/communication.component';
 import { ValidateComponent } from './validate/validate.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MessageComponent } from './message/message.component';
+import { RolepointComponent } from './user/rolepoint/rolepoint.component';
+
+import { UserPanelComponent } from './user/user-panel/user-panel.component';
+import { CertificatePanelComponent } from './certificate/certificate-panel/certificate-panel.component';
 
 
 @NgModule({
@@ -37,7 +41,10 @@ import { MessageComponent } from './message/message.component';
     FilterPipe,
     CommunicationComponent,
     ValidateComponent,
-    MessageComponent
+    MessageComponent,
+    RolepointComponent,
+    UserPanelComponent,
+    CertificatePanelComponent
   ],
   imports: [
     BrowserModule,

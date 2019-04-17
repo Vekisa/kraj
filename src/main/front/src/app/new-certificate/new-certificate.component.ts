@@ -1,6 +1,11 @@
 import {Component, NgModule, OnInit, Pipe} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CertificateService} from "../service/certificate.service";
+import { NgbDate, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+
+import {FilterPipe} from "../additional/filter.pipe";
+
+import {Observable} from "rxjs";
 import {CertInfo} from "../model";
 
 
@@ -24,7 +29,12 @@ export class NewCertificateComponent implements OnInit {
 
   searchText:any;
 
-  constructor(private formBuilder: FormBuilder, private certificateService: CertificateService) { }
+  fromDate: NgbDate;
+  toDate: NgbDate;
+  toDateMax: NgbDate;
+
+
+  constructor(private formBuilder: FormBuilder, private certificateService: CertificateService,private calendar: NgbCalendar) { }
 
   ngOnInit() {
 
@@ -52,9 +62,25 @@ export class NewCertificateComponent implements OnInit {
       this.cert = data;
       this.certTemp = data;
     });
+
+    this.fromDate = this.calendar.getToday();
+    this.toDate = this.calendar.getNext(this.calendar.getToday(), 'd', 1);
+
   }
 
   onSubmit(){
+
+    const fromDate = this.certForm.get('startDate').value;
+    const toDate = this.certForm.get('endDate').value;
+
+    const fromDateDate = new Date(fromDate.year, fromDate.month - 1, fromDate.day, 0,0, 0);
+    const toDateDate = new Date(toDate.year, toDate.month - 1, toDate.day, 0,0, 0);
+
+    this.certForm.patchValue({
+      startDate: fromDateDate,
+      endDate: toDateDate
+
+    });
 
     console.log(this.certForm.value);
 
@@ -100,6 +126,19 @@ export class NewCertificateComponent implements OnInit {
       this.roott = false;
       this.leaf = false;
     }
+
+  }
+
+  onDateSelected() {
+
+    console.log('Promena');
+
+    this.toDate = this.calendar.getNext(this.certForm.get('startDate').value, 'd', 1);
+
+    this.certForm.patchValue({
+      endDate: this.toDate
+
+    });
 
   }
 

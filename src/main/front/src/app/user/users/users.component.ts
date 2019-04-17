@@ -1,9 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Company, User} from "../model";
-import {CertificateService} from "../service/certificate.service";
+import {Company, User} from "../../model";
+import {CertificateService} from "../../service/certificate.service";
 import {FormBuilder, FormGroup} from "@angular/forms"
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {CompanyService} from "../service/company.service";
+import {CompanyService} from "../../service/company.service";
 
 
 @Component({

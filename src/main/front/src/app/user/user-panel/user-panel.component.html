@@ -1,0 +1,25 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col">
+      <div id="navigation">
+        <nav class="nav navPar">
+
+          <a class="nav-link active hrefColor" [routerLink]="['users']" active>Users</a>
+          <a class="nav-link active hrefColor" [routerLink]="['roles']">Roles and permissions</a>
+
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+
+    <router-outlet></router-outlet>
+
+    </div>
+  </div>
+
+
+</div>
