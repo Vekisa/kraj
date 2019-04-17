@@ -27,7 +27,7 @@ public class CertificateController {
     @Autowired
     private CertificateService certificateService;
 
-    @PreAuthorize("hasRole('MAIN_ADMIN') OR hasRole('ADMIN')")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
     @RequestMapping(value= "/{alias}/search/{leafs}/{root}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Pretrazuje sertifikate", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
@@ -35,25 +35,25 @@ public class CertificateController {
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<List<CertificateDTO>> search(@PathVariable(value="alias") String alias, @PathVariable(value="leafs") Boolean leafs, @PathVariable(value="root") Boolean root) {
+    public ResponseEntity<List<CertificateDTO>> search(@PathVariable(value="alias") String alias, @PathVariable(value="leafs") Boolean leafs, @PathVariable(value="root") Boolean root,
+                                                       HttpServletRequest hr) {
         return new ResponseEntity<>(certificateService.search(alias, leafs, root),HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('MAIN_ADMIN')")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
     @RequestMapping(value= "/createSS",method = RequestMethod.POST)
     @ApiOperation(value="Kreira novi samopotpisani sertifikat", httpMethod = "POST")
-    public ResponseEntity<String> createNewSSCertificate(@RequestBody CertificateDTO certificateDTO) {
+    public ResponseEntity<String> createNewSSCertificate(@RequestBody CertificateDTO certificateDTO, HttpServletRequest hr) {
         certificateService.createNewSelfSignedCertificate(certificateDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('MAIN_ADMIN') OR hasRole('ADMIN')")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL()) AND @accesControllService.hasAccessToCertificate(#certificateDTO.parent)")
     @RequestMapping(value= "/create_new_certificate",method = RequestMethod.POST)
     @ApiOperation(value="Kreira novi sertifikat", httpMethod = "POST")
-    public ResponseEntity<String> createNewCertificate(@RequestBody CertificateDTO certificateDTO ) {
+    public ResponseEntity<String> createNewCertificate(@RequestBody CertificateDTO certificateDTO, HttpServletRequest hr) {
         certificateService.createNewIssuedCertificate(certificateDTO);
         return new ResponseEntity<>(HttpStatus.OK);
-
     }
 
    /* @RequestMapping(value= "/show/{alias}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -76,11 +76,10 @@ public class CertificateController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<List<CertificateDTO>> allCertificatesWithoutLeafs(HttpServletRequest hr) {
-        System.out.println("URI: " + hr.getRequestURL());
         return new ResponseEntity<>(certificateService.allCertificatesWithoutLeafs(),HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('MAIN_ADMIN') OR hasRole('ADMIN')")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
     @RequestMapping(value= "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Prikaz svih sertifikata", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
@@ -88,11 +87,11 @@ public class CertificateController {
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<List<CertificateDTO>> allCertificates() {
+    public ResponseEntity<List<CertificateDTO>> allCertificates(HttpServletRequest hr) {
         return new ResponseEntity<>(certificateService.all(),HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('MAIN_ADMIN') OR hasRole('ADMIN')")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
     @RequestMapping(value= "/all_without_root", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Prikaz svih sertifikata", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
@@ -100,11 +99,11 @@ public class CertificateController {
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<List<CertificateDTO>> allCertificatesWithoutRoot() {
+    public ResponseEntity<List<CertificateDTO>> allCertificatesWithoutRoot(HttpServletRequest hr) {
         return new ResponseEntity<>(certificateService.allWithoutRoot(),HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('MAIN_ADMIN') OR hasRole('ADMIN')")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())  AND @accesControllService.hasAccessToCertificate(#serialNumber)")
     @RequestMapping(value= "/revoke", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Povlacenje sertifikata", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {
@@ -112,7 +111,7 @@ public class CertificateController {
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<?> revoke(@RequestBody String serialNumber) {
+    public ResponseEntity<?> revoke(@RequestBody String serialNumber,HttpServletRequest hr) {
         certificateService.revokeCertificate(serialNumber);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -136,6 +135,7 @@ public class CertificateController {
     }*/
 
     //Za AIA
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
     @RequestMapping(value= "/getCertificate", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Pronalazi sertfikat", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
@@ -143,7 +143,7 @@ public class CertificateController {
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<Certificate> getCertificate(@RequestBody String serialNumber) {
+    public ResponseEntity<Certificate> getCertificate(@RequestBody String serialNumber,HttpServletRequest hr) {
 
         return new ResponseEntity<>(certificateService.findBySerialNumber(serialNumber),HttpStatus.OK);
     }

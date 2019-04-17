@@ -3,6 +3,7 @@ package xmlb.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,11 +24,14 @@ public class EndPoint {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
 
-    public EndPoint(){}
+    public EndPoint(){
+        roles = new ArrayList<>();
+    }
 
     public EndPoint(String url, String method){
         this.setUrl(url);
         this.setMethod(method);
+        roles = new ArrayList<>();
     }
 
     public Long getId() {

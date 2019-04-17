@@ -1,20 +1,7 @@
 package xmlb.service;
 
-import org.bouncycastle.asn1.ASN1EncodableVector;
-import org.bouncycastle.asn1.DERIA5String;
-import org.bouncycastle.asn1.DERSequence;
+
 import org.bouncycastle.asn1.x500.X500NameBuilder;
-
-import org.bouncycastle.asn1.x509.*;
-import org.bouncycastle.asn1.x509.CRLReason;
-import org.bouncycastle.asn1.x509.Extension;
-import org.bouncycastle.cert.CertIOException;
-import org.bouncycastle.cert.X509v2CRLBuilder;
-import org.bouncycastle.x509.X509V2CRLGenerator;
-import org.bouncycastle.x509.extension.X509ExtensionUtil;
-
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
-
 import java.io.*;
 import java.security.cert.*;
 import org.bouncycastle.asn1.x500.style.BCStyle;
@@ -24,19 +11,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import xmlb.KeyStoreReader;
-import xmlb.controller.CertificateController;
 import xmlb.dto.CertificateDTO;
 import xmlb.model.*;
 import xmlb.model.Certificate;
 import xmlb.repository.CertificateRepository;
 import xmlb.repository.CompanyRepository;
-import java.net.URL;
-import java.net.URLConnection;
 import java.math.BigInteger;
 import java.security.*;
-import java.security.cert.X509Extension;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Pattern;
 
 @Service
 public class CertificateService {
@@ -435,6 +419,24 @@ public class CertificateService {
     }
 
     private void validateCertificateFromFront(CertificateDTO certificateDTO){
+
+        if(!Pattern.matches(Regex.stringLong,certificateDTO.getCountry()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Field country is not correct");
+        if(!Pattern.matches(Regex.stringLong,certificateDTO.getState()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Field state is not correct");
+        if(!Pattern.matches(Regex.stringLong,certificateDTO.getLocality()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Field locality is not correct");
+        if(!Pattern.matches(Regex.stringLong,certificateDTO.getOrganization()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Field organization is not correct");
+        if(!Pattern.matches(Regex.stringLong,certificateDTO.getOrganizationUnit()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Field organizational unit is not correct");
+        if(!Pattern.matches(Regex.stringShort,certificateDTO.getCommonName()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Field common name unit is not correct");
+        if(!Pattern.matches(Regex.stringShort,certificateDTO.getOrganizationUnit()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Field alias unit is not correct");
+
+        if(certificateDTO.getStartDate() == null || certificateDTO.getEndDate() == null)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Dates cannot be null");
         if(certificateDTO.getStartDate().before(new Date()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad start date");
         if(certificateDTO.getEndDate().before(new Date()))
@@ -451,8 +453,13 @@ public class CertificateService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parent is null");
 
         Certificate certificateParent = findBySerialNumber(serialNumber);
+
         if(certificateParent == null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parent certificate does not exist");
+
+        if(!certificateParent.getSerialNumber().equals("1") && !certificateParent.getCompany().getName().equals(certificateDTO.getOrganization())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Different organizations");
+        }
 
         if(certificateParent.getEndDate().before(certificateDTO.getEndDate()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parent end date is before end date");
@@ -460,8 +467,8 @@ public class CertificateService {
         if(certificateParent.getStartDate().after(certificateDTO.getStartDate()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parent start date is after start date");
 
-        if(certificateParent.getCompany().getName().equals(certificateDTO.getOrganization()) && !certificateParent.getCompany().getName().equals("rootComp"))
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parent certificate does not exist");
+        if(certificateParent.getEndDate().before(certificateDTO.getEndDate()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parent end date is before end date");
     }
 
    /* public X509CRL getCRL() throws CertificateException, IOException {
@@ -508,7 +515,6 @@ public class CertificateService {
 
         return crl;
     }*/
-
 
 }
 

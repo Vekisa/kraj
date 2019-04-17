@@ -23,7 +23,6 @@ public class CommunicationController {
     @Autowired
     private CommunicationService communicationService;
 
-    @PreAuthorize("hasRole('MAIN_ADMIN') OR hasRole('ADMIN')")
     @RequestMapping(value= "/{first_sn}/{second_sn}/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Kreiranje komunikacije", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {
@@ -35,7 +34,6 @@ public class CommunicationController {
         return new ResponseEntity<>(communicationService.createCommunication(first_serial_number,second_serial_number), HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('MAIN_ADMIN') OR hasRole('ADMIN')")
     @RequestMapping(value= "/{first_alias}/{second_alias}/disable", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Brisanje komunikacije", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {
@@ -48,7 +46,6 @@ public class CommunicationController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('MAIN_ADMIN') OR hasRole('ADMIN')")
     @RequestMapping(value= "/{serial_number}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Vraca sve komunikacije za prosledjeni sertifikat", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {

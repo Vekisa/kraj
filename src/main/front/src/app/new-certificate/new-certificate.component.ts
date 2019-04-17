@@ -1,9 +1,6 @@
 import {Component, NgModule, OnInit, Pipe} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CertificateService} from "../service/certificate.service";
-import {FilterPipe} from "../additional/filter.pipe";
-
-import {Observable} from "rxjs";
 import {CertInfo} from "../model";
 
 
@@ -63,11 +60,13 @@ export class NewCertificateComponent implements OnInit {
 
     this.certForm.value.leaf=this.leaf;
 
-    this.certificateService.newCertificate(this.certForm.value).then( value =>
+    this.certificateService.newCertificate(this.certForm.value).subscribe( value =>
       this.certificateService.allCertificatesWithoutLeafs().subscribe(data=>{
         this.cert = data;
         this.certTemp = data;
-      })
+      }),err => {
+        alert(err.error.message);
+      }
     );
   }
 
@@ -89,7 +88,7 @@ export class NewCertificateComponent implements OnInit {
     }
   }
 
-  mySelectHandler($event){
+  mySelectHandler(){
 
     if (this.selectType==="Root") {
       this.roott = true;

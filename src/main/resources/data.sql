@@ -1,5 +1,6 @@
-INSERT INTO roles (id,name) VALUES (1, 'MAIN_ADMIN');
-INSERT INTO roles (id,name) VALUES (2, 'ADMIN');
+INSERT INTO roles (id,name) VALUES (1, 'ROLE_MAIN_ADMIN');
+INSERT INTO roles (id,name) VALUES (2, 'ROLE_ADMIN');
+INSERT INTO roles (id,name) VALUES (3, 'ROLE_USER_REG');
 
 -- glavniadmin
 INSERT INTO users (username,enabled, is_verified, password, first_name, last_name, email) VALUES ('admin',1,1,

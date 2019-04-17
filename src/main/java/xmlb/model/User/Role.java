@@ -33,13 +33,16 @@ public class Role implements GrantedAuthority {
     public Role() {
         super();
         this.users = new ArrayList<>();
-        // TODO Auto-generated constructor stub
+        this.groups = new ArrayList<>();
+        this.endPoints = new ArrayList<>();
     }
 
     public Role(String name) {
         super();
         this.name = name;
         this.users = new ArrayList<>();
+        this.groups = new ArrayList<>();
+        this.endPoints = new ArrayList<>();
     }
 
     public Long getId() {

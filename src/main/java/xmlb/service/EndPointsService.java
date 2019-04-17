@@ -24,7 +24,7 @@ public class EndPointsService {
             path = path.substring(1,path.length()-1);
             parts = path.split(",");
             parts = parts[0].split(" ");
-            endPoint = new EndPoint(parts[0],parts[1]);
+            endPoint = new EndPoint(parts[1],parts[0]);
             endPointRepository.save(endPoint);
         }
     }

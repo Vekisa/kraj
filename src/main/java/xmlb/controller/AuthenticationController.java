@@ -1,5 +1,6 @@
 package xmlb.controller;
 
+import javafx.scene.shape.PathElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+import xmlb.model.Regex;
 import xmlb.model.User.Role;
 import xmlb.model.User.User;
 import xmlb.model.User.VerificationToken;
@@ -25,6 +28,7 @@ import javax.validation.Valid;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.*;
+import java.util.regex.Pattern;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -59,6 +63,9 @@ public class AuthenticationController {
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
+        if(Pattern.matches(Regex.username,loginRequest.getUsername()) || !Pattern.matches(Regex.password,loginRequest.getPassword()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Bad parameters");
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
@@ -72,6 +79,11 @@ public class AuthenticationController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
+
+        if(!Pattern.matches(Regex.flNames,signUpRequest.getFirstName()) || !Pattern.matches(Regex.flNames,signUpRequest.getLastName()) ||
+                !Pattern.matches(Regex.password,signUpRequest.getPassword()) || !Pattern.matches(Regex.email,signUpRequest.getEmail()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad parameters");
+
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return new ResponseEntity<>(new ResponseMessage("Username is already taken!"), HttpStatus.BAD_REQUEST);
         }
@@ -92,9 +104,6 @@ public class AuthenticationController {
         // Creating user's account
         User user = new User( signUpRequest.getUsername(), passwordHash,
                 signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getEmail(),false,null,false);
-
-
-
 
         Role role = roleRepository.findByName("ROLE_USER_REG")
                 .orElseThrow(() -> new RuntimeException("Role can't be found!"));

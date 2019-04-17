@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import {CertInfo, User} from "../model";
-import {Observable} from "rxjs";
+import {Observable, throwError} from "rxjs";
 import {JwtResponse} from "../authentication/response";
 import {HttpClient} from "@angular/common/http";
+import {catchError} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,10 @@ export class CertificateService {
 
   constructor(private http: HttpClient) { }
 
-  newCertificate(certInfo: CertInfo): Promise<JwtResponse> {
-    return this.http.post<JwtResponse>(this.certUrl+"/create_new_certificate", certInfo).toPromise();
+  newCertificate(certInfo: CertInfo): Observable<JwtResponse> {
+    return this.http.post<JwtResponse>(this.certUrl+"/create_new_certificate", certInfo).pipe(catchError( err => {
+      return throwError(err);
+    }));
   }
 
   allCertificates(): Observable<any>{
@@ -28,7 +31,9 @@ export class CertificateService {
   }
 
   allCertificatesWithoutLeafs(): Observable<any>{
-    return this.http.get<any>(this.certUrl+"/all_without_leafs");
+    return this.http.get<any>(this.certUrl+"/all_without_leafs").pipe(catchError( err => {
+      return throwError(err);
+    }));
   }
 
   allCertificateDB(): Observable<any>{

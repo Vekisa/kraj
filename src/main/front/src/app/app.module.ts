@@ -20,6 +20,7 @@ import { CommunicationComponent } from './communication/communication.component'
 import { ValidateComponent } from './validate/validate.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MessageComponent } from './message/message.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     UsersComponent,
     FilterPipe,
     CommunicationComponent,
-    ValidateComponent
+    ValidateComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,

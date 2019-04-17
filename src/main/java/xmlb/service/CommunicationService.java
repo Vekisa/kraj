@@ -7,12 +7,14 @@ import org.springframework.web.server.ResponseStatusException;
 import xmlb.dto.CertificateDTO;
 import xmlb.model.Certificate;
 import xmlb.model.Communication;
+import xmlb.model.Regex;
 import xmlb.repository.CertificateRepository;
 import xmlb.repository.CommunicationRepository;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Service
 public class CommunicationService {
@@ -24,6 +26,8 @@ public class CommunicationService {
     private CertificateRepository certificateRepository;
 
     public Communication createCommunication(String first, String second){
+        if(!Pattern.matches(Regex.serialNumber,first) || !Pattern.matches(Regex.serialNumber,second))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad serial numbers");
 
         if(first.equals(second))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad parameters");
@@ -50,6 +54,9 @@ public class CommunicationService {
     }
 
     public void delete(String first, String second){
+
+        if(!Pattern.matches(Regex.serialNumber,first) || !Pattern.matches(Regex.serialNumber,second))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad serial numbers");
 
         if(first == null || second == null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad parameters");

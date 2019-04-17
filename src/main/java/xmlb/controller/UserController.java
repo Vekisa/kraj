@@ -23,7 +23,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PreAuthorize("hasRole('MAIN_ADMIN')")
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Vraca sve usere", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
@@ -35,7 +34,6 @@ public class UserController {
         return new ResponseEntity<>(userService.getAll(), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('MAIN_ADMIN')")
     @RequestMapping(value = "/{text}/search", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Pretraga usera", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
@@ -47,7 +45,6 @@ public class UserController {
         return new ResponseEntity<>(userService.search(text), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('MAIN_ADMIN')")
     @RequestMapping(value = "{id}/enable", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Enable usera", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {
@@ -58,7 +55,7 @@ public class UserController {
     public ResponseEntity<User> enable(@PathVariable(value="id") Long id) {
         return new ResponseEntity<>(userService.enableUser(id), HttpStatus.OK);
     }
-    @PreAuthorize("hasRole('MAIN_ADMIN')")
+
     @RequestMapping(value = "{id}/disable", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Enable usera", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {
