@@ -25,9 +25,9 @@ export class RegistrationComponent implements OnInit {
 
     this.signUpForm = this.formBuilder.group({
 
-      firstName: ['', [Validators.required, Validators.pattern('[a-zA-Z]*'), Validators.maxLength(30)]],
-      lastName: ['', [Validators.required, Validators.pattern('[a-zA-Z]*'), Validators.maxLength(30)]],
-      username: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_]*'), Validators.maxLength(15)]],
+      firstName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.maxLength(30)]],
+      lastName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.maxLength(30)]],
+      username: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_ ]*'), Validators.maxLength(15)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_!?*#/]*'), Validators.minLength(8), Validators.maxLength(30)]],
       passwordConfirm: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_!?*#/]*'), Validators.minLength(8), Validators.maxLength(30)]]
