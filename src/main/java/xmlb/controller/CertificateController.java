@@ -146,7 +146,6 @@ public class CertificateController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<Certificate> getCertificate(@RequestBody String serialNumber) {
-
         return new ResponseEntity<>(certificateService.findBySerialNumber(serialNumber),HttpStatus.OK);
     }
 

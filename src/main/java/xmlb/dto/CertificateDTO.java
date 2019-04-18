@@ -19,6 +19,7 @@ public class CertificateDTO {
     private String password;
     private Boolean leaf;
     private String serialNumber;
+    private Boolean revoked;
 
     public CertificateDTO() {
         super();
@@ -36,6 +37,7 @@ public class CertificateDTO {
         this.endDate = certificate.getEndDate();
         this.alias = certificate.getAlias();
         this.serialNumber = certificate.getSerialNumber();
+        this.revoked = certificate.getRevoked();
     }
 
     public CertificateDTO(String parent, String country, String state, String locality, String organization, String organizationUnit, String commonName,
@@ -152,5 +154,13 @@ public class CertificateDTO {
 
     public void setSerialNumber(String serialNumber) {
         this.serialNumber = serialNumber;
+    }
+
+    public Boolean getRevoked() {
+        return revoked;
+    }
+
+    public void setRevoked(Boolean revoked) {
+        this.revoked = revoked;
     }
 }
