@@ -129,6 +129,20 @@ export class RolesService {
     return this.http.post<any>(this.usersUrl+"/addGroupToUser",params);
   }
 
+  removeRoleFromUser(userId,roleId):Observable<any>{
+    let params = new HttpParams()
+      .append("userId",userId)
+      .append("roleId",roleId)
+    return this.http.delete<any>(this.usersUrl+"/removeRoleFromUser",{params:params});
+  }
+
+  removeGroupFromUser(userId,groupId):Observable<any>{
+    let params = new HttpParams()
+      .append("userId",userId)
+      .append("groupId",groupId)
+    return this.http.delete<any>(this.usersUrl+"/removeGroupFromUser",{params:params});
+  }
+
 
 
 

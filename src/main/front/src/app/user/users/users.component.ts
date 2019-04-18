@@ -98,9 +98,10 @@ export class UsersComponent implements OnInit {
 
     const companyId = this.userForm.get('company').value
 
-    this.companyService.addCompanyUser(this.selectedUser,companyId).toPromise().then(data=>
-      console.log(data)
-    )
+    this.companyService.addCompanyUser(this.selectedUser,companyId).toPromise().then(data=>{
+        console.log(data);
+        this.initTable();
+    })
 
     this.modalRef.close();
 

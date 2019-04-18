@@ -131,7 +131,7 @@ public class CertificateService {
 
         for(Certificate certificate : certificates){
             System.out.println("PROVERAMA: " + certificate.getAlias());
-            if(!certificate.getLeaf() && isCertificateOk(certificate)) {
+            if(!certificate.getLeaf() && checkIfValid(certificate.getSerialNumber())) {
                 System.out.println("UBACIO: " + certificate.getAlias());
                 certificateWithoutLeafs.add(certificate);
             }
@@ -327,12 +327,12 @@ public class CertificateService {
 
     }
 
-    /*public boolean checkIfValid(String alias){
-        System.out.println("Validnost " +alias);
+    public boolean checkIfValid(String serialNumber){
+        System.out.println("Validnost " +serialNumber);
 
         String pass ="";
 
-        if (alias.equals("root")){
+        if (serialNumber.equals("1")){
             System.out.println("JESTE ROOOT");
             pass = secret;
         }else {
@@ -342,11 +342,8 @@ public class CertificateService {
 
         System.out.println("pass"+pass);
 
-        Revoke revoke=new Revoke();
-        revoke.setAlias(alias);
-        revoke.setLeaf(false);
-        ArrayList<String> lista= (ArrayList<String>) revokeService.getPovuceneAliasi();
-        if(lista.contains(revoke.getAlias())) {
+
+        if(checkRevokeStatus(serialNumber)) {
             System.out.println("Revoked");
             return false;
         }
@@ -354,9 +351,11 @@ public class CertificateService {
 
         System.out.println("Ucitavanje cert");
 
-        java.security.cert.Certificate cert = readFromKS(alias,pass);
+        java.security.cert.Certificate cert = readFromKS(serialNumber,pass);
 
         X509Certificate x509Certificate = (X509Certificate) cert;
+
+
 
 
         try {
@@ -371,24 +370,27 @@ public class CertificateService {
             return false;
         }
 
-        IssuerData data = getIssuerFromCertificate(alias,pass);
+        Certificate certificate = getCertificateFromDB(serialNumber);
+
+        String alias = certificate.getAlias();
+        String organisationUnit = certificate.getOrganizationUnit();
+
+
+        IssuerData data = getIssuerFromCertificate(organisationUnit,alias,pass);
 
         System.out.println(data.getX500name().toString());
 
-        if (!alias.equals("root")){
+        if (!serialNumber.equals("1")){
 
 
-
-        Certificate certificate = certificateRepository.findByAlias(alias);
-
-        String aliasIs = certificate.getSignedByAlias();
+            String serialNumberIssuer = certificate.getSignedBySerialNumber();
 
 
-        if (aliasIs.equals("root")){
-            pass=secret;
-        }
+            if (serialNumberIssuer.equals("1")){
+                pass=secret;
+            }
 
-            java.security.cert.Certificate certIss = readFromKS(aliasIs,pass);
+            java.security.cert.Certificate certIss = readFromKS(serialNumberIssuer,pass);
 
             try {
                 cert.verify(certIss.getPublicKey());
@@ -409,40 +411,64 @@ public class CertificateService {
                 return false;
             }
 
-            return checkIfValid(aliasIs);
-         }
-
+            return checkIfValid(serialNumberIssuer);
+        }
 
         return true;
-    }*/
+    }
 
-    public java.security.cert.Certificate readFromKS(String alias, String pass){
+
+    public java.security.cert.Certificate readFromKS(String serialNumber, String pass){
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
-        String name = "keystores/"+ alias +".p12";
+        Certificate certificate = getCertificateFromDB(serialNumber);
+
+        String name = "keystores/"+ certificate.getOrganizationUnit() +".p12";
+
+        System.out.println(name);
 
         KeyStoreReader keyStoreReader = new KeyStoreReader();
 
-       return  keyStoreReader.readCertificate(name,pass,alias);
+        return  keyStoreReader.readCertificate(name,pass,certificate.getAlias());
     }
+
+    public Certificate getCertificateFromDB(String serialNumber){
+
+        Certificate optionalCertificate = certificateRepository.findBySerialNumber(serialNumber);
+
+        if (optionalCertificate==null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Certificate does not exist");
+
+        return optionalCertificate;
+    }
+
+
 
     public void revokeCertificate(String serialNumber){
         if(serialNumber == null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Serial number is null");
 
-        List<Certificate> certificates = certificateRepository.findAll();
-        for(Certificate certificate : certificates){
-            if(certificate.getSerialNumber().equals(serialNumber))
-                if(certificate.getRevoked())
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Certificate already revoked");
-                else{
-                    certificate.setRevoked(true);
-                    certificateRepository.save(certificate);
-                    return;
-                }
+        Certificate certificate = getCertificateFromDB(serialNumber);
+
+        if(certificate.getRevoked())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Certificate already revoked");
+        else{
+            certificate.setRevoked(true);
+            certificateRepository.save(certificate);
+            return;
+        }
+    }
+
+    public boolean checkRevokeStatus(String serialNumber){
+
+        Certificate certificate = getCertificateFromDB(serialNumber);
+
+        if(certificate.getRevoked())
+            return  true;
+        else{
+            return false;
         }
 
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Certificate does not exist");
     }
 
     private Boolean isCertificateOk(Certificate certificate){

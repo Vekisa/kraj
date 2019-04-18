@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {CertificateDB} from "../model";
+import {CertificateDB, CertInfo} from "../model";
 import {CertificateService} from "../service/certificate.service";
 
 @Component({
@@ -9,14 +9,14 @@ import {CertificateService} from "../service/certificate.service";
 })
 export class ValidateComponent implements OnInit {
 
-  certi: CertificateDB[];
+  certi: CertInfo[];
   info: any;
 
   constructor(private certificateService: CertificateService) { }
 
   ngOnInit() {
 
-    this.certificateService.allCertificateDB().subscribe(data => {
+    this.certificateService.allCertificates().subscribe(data => {
       this.certi = data;
     })
 

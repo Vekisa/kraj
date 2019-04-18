@@ -119,23 +119,22 @@ public class CertificateController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
-    /*@RequestMapping(value= "/checkIfValid", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @RequestMapping(value= "/checkIfValid", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Check if valid", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = List.class),
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<?> checkIfValid(@RequestBody String alias) {
-
+    public ResponseEntity<?> checkIfValid(@RequestBody String alias,HttpServletRequest hr) {
 
         if (certificateService.checkIfValid(alias)){
             return new ResponseEntity<>(new ResponseMessage("Valid"),HttpStatus.OK);
         }else
             return new ResponseEntity<>(new ResponseMessage("NOT Valid!"),HttpStatus.OK);
 
-    }*/
+    }
 
     //Za AIA
    // @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")

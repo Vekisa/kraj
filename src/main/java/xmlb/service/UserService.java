@@ -187,4 +187,30 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User removeRoleFromUser(Long userId,Long roleId){
+        User user = getUser(userId);
+        Role role = roleService.getRole(roleId);
+
+        user.getRoles().remove(role);
+        role.getUsers().remove(user);
+
+        roleService.saveRole(role);
+
+        return userRepository.save(user);
+
+    }
+
+    public User removeGroupFromUser(Long userId,Long groupId){
+        User user = getUser(userId);
+        Group group = groupService.getGroup(groupId);
+
+        user.getGroup().remove(group);
+        group.getUsers().remove(user);
+
+        groupService.saveGroup(group);
+
+        return userRepository.save(user);
+
+    }
+
 }

@@ -52,7 +52,19 @@ public class RoleService {
     }
 
     public List<Role> allRoles(){
-        return roleRepository.findAll();
+
+
+        List<Role> allRoles = roleRepository.findAll();
+
+        Optional<Role> role = roleRepository.findByName("ROLE_MAIN_ADMIN");
+
+        if (!role.isPresent())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Role doesn't exist!");
+
+        allRoles.remove(role.get());
+
+        return allRoles;
+
     }
 
     public User addRoleToUser(Long userId, Long roleId){

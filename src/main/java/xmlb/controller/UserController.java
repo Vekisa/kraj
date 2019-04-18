@@ -96,5 +96,31 @@ public class UserController {
         return new ResponseEntity<>(userService.groupsToUser(id, list), HttpStatus.OK);
     }
 
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @RequestMapping(value = "/removeRoleFromUser", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value="Delete role from user", httpMethod = "DELETE", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Group.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<User> removeRoleFromUser(@RequestParam(value="userId") Long userId,@RequestParam(value="roleId") Long roleId,HttpServletRequest hr) {
+        return new ResponseEntity<>(userService.removeRoleFromUser(userId, roleId), HttpStatus.OK);
+    }
+
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @RequestMapping(value = "/removeGroupFromUser", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value="Delete group from user", httpMethod = "DELETE", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Group.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<User> removeGroupFromUser(@RequestParam(value="userId") Long userId,@RequestParam(value="groupId") Long groupId,HttpServletRequest hr) {
+        return new ResponseEntity<>(userService.removeGroupFromUser(userId, groupId), HttpStatus.OK);
+    }
+
+
+
 
 }

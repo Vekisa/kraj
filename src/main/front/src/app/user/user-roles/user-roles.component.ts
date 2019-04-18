@@ -133,6 +133,18 @@ export class UserRolesComponent implements OnInit {
 
   deleteRole(id:number){
 
+    this.rolesService.removeRoleFromUser(this.selectedUser.id,id).subscribe(data=>{
+
+      this.initTables();
+    });
+
+  }
+
+  deleteGroup(id:number){
+
+    this.rolesService.removeGroupFromUser(this.selectedUser.id,id).subscribe(data=>{
+      this.initTables();
+    });
 
   }
 
