@@ -35,7 +35,7 @@ public class CompanyController {
         return new ResponseEntity<>(companyService.getAllCompanies(), HttpStatus.OK);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL()) AND @accesControllService.workForCompany(#companyId)")
     @RequestMapping(value = "/addToUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Add to user", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {

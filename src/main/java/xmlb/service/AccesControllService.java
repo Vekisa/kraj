@@ -7,11 +7,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import xmlb.model.Certificate;
+import xmlb.model.Company;
 import xmlb.model.User.EndPoint;
 import xmlb.model.User.Group;
 import xmlb.model.User.Role;
 import xmlb.model.User.User;
 import xmlb.repository.CertificateRepository;
+import xmlb.repository.CompanyRepository;
 import xmlb.repository.EndPointRepository;
 import xmlb.repository.UserRepository;
 
@@ -29,6 +31,9 @@ public class AccesControllService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CompanyRepository companyRepository;
 
     public Boolean hasAccess(String s) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -71,5 +76,20 @@ public class AccesControllService {
             return true;
 
         throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access problem");
+    }
+
+    public boolean workForCompany(Long companyId){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Optional<User> user = userRepository.findByUsername(auth.getName());
+        List<Role> usersRoles = user.get().getRoles();
+
+        for(Role role : usersRoles)
+            if(role.getId() == 1)
+                return true;
+
+        if(user.get().getCompany().getId() == companyId)
+            return true;
+
+        return false;
     }
 }
