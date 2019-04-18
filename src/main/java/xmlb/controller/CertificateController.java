@@ -3,6 +3,8 @@ package xmlb.controller;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.bouncycastle.cert.CertIOException;
+import org.bouncycastle.operator.OperatorCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,7 @@ import xmlb.security.ResponseMessage;
 import xmlb.service.CertificateService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +54,7 @@ public class CertificateController {
     @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL()) AND @accesControllService.hasAccessToCertificate(#certificateDTO.parent)")
     @RequestMapping(value= "/create_new_certificate",method = RequestMethod.POST)
     @ApiOperation(value="Kreira novi sertifikat", httpMethod = "POST")
-    public ResponseEntity<String> createNewCertificate(@RequestBody CertificateDTO certificateDTO, HttpServletRequest hr) {
+    public ResponseEntity<String> createNewCertificate(@RequestBody CertificateDTO certificateDTO, HttpServletRequest hr) throws CertificateException, CertIOException, OperatorCreationException {
         certificateService.createNewIssuedCertificate(certificateDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -135,7 +138,7 @@ public class CertificateController {
     }*/
 
     //Za AIA
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+   // @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
     @RequestMapping(value= "/getCertificate", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Pronalazi sertfikat", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
@@ -143,12 +146,12 @@ public class CertificateController {
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<Certificate> getCertificate(@RequestBody String serialNumber,HttpServletRequest hr) {
+    public ResponseEntity<Certificate> getCertificate(@RequestBody String serialNumber) {
 
         return new ResponseEntity<>(certificateService.findBySerialNumber(serialNumber),HttpStatus.OK);
     }
 
-    /*@RequestMapping(value= "/allRevoke", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value= "/allRevoke", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Prikaz svih povucenih sertifikata", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = List.class),
@@ -163,5 +166,5 @@ public class CertificateController {
                 listaP.add(c);
         }
         return new ResponseEntity<>(listaP, HttpStatus.OK);
-    }*/
+    }
 }

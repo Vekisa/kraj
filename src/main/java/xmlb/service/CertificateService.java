@@ -9,7 +9,14 @@ import org.bouncycastle.asn1.x509.*;
 import org.bouncycastle.asn1.x509.CRLReason;
 import org.bouncycastle.asn1.x509.Extension;
 import org.bouncycastle.cert.CertIOException;
+import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.X509v2CRLBuilder;
+import org.bouncycastle.cert.X509v3CertificateBuilder;
+import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
+import org.bouncycastle.cert.jcajce.JcaX509v3CertificateBuilder;
+import org.bouncycastle.operator.ContentSigner;
+import org.bouncycastle.operator.OperatorCreationException;
+import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 import org.bouncycastle.x509.X509V2CRLGenerator;
 import org.bouncycastle.x509.extension.X509ExtensionUtil;
 
@@ -41,6 +48,9 @@ import java.math.BigInteger;
 import java.security.*;
 import java.security.cert.X509Extension;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -204,7 +214,7 @@ public class CertificateService {
         return issuerData;
     }
 
-    public void createNewIssuedCertificate(CertificateDTO certificateDTO) {
+    public void createNewIssuedCertificate(CertificateDTO certificateDTO) throws CertIOException, OperatorCreationException, CertificateException {
 
         //VALIDACIJA
         validateCertificateFromFront(certificateDTO);
@@ -259,27 +269,38 @@ public class CertificateService {
                 certificateDTO.getOrganizationUnit(),
                 certificateDTO.getCommonName());
 
-        CertificateGenerator certificateGenerator = new CertificateGenerator();
+        //CertificateGenerator certificateGenerator = new CertificateGenerator();
        // V3TBSCertificateGenerator certificateGenerator1= new V3TBSCertificateGenerator();
+        X509v3CertificateBuilder certificateGenerator = new JcaX509v3CertificateBuilder(issuer.getX500name(),
+                new BigInteger(serialNumber), new java.sql.Date(certificateDTO.getStartDate().getTime()) , new java.sql.Date(certificateDTO.getEndDate().getTime()),  builder.build(), keyPairSubject.getPublic());
 
-        X509Certificate cert = certificateGenerator.generateCertificate(subjectData,issuer);
+
         //TBSCertificate cert1 = certificateGenerator1.generateTBSCertificate();
         KeyStoreWriter keyStoreWriter = new KeyStoreWriter();
 
-        /*byte[] extVal = cert.getExtensionValue(Extension.authorityInfoAccess.getId());
+        //byte[] extVal = cert.getExtensionValue(Extension.authorityInfoAccess.getId());
 
         AccessDescription ad=new AccessDescription(AccessDescription.id_ad_caIssuers, new GeneralName(GeneralName.uniformResourceIdentifier, new DERIA5String(linkTo(methodOn(CertificateController.class).getCertificate(certificateDTO.getParent())).toUri().toString())));
         AccessDescription ocsp= new AccessDescription(AccessDescription.id_ad_ocsp, new GeneralName(GeneralName.uniformResourceIdentifier, new DERIA5String(linkTo(methodOn(CertificateController.class).allRevoke()).toUri().toString())));
         ASN1EncodableVector aia_ASN=new ASN1EncodableVector();
         aia_ASN.add(ad);
         aia_ASN.add(ocsp);
-        AuthorityInformationAccess aia =  AuthorityInformationAccess.getInstance(new DERSequence(aia_ASN));
+        //AuthorityInformationAccess aia =  AuthorityInformationAccess.getInstance(new DERSequence(aia_ASN));
         //AuthorityInformationAccess aia = AuthorityInformationAccess.getInstance(X509ExtensionUtil.fromExtensionValue(extVal));
         //X509v2CRLBuilder crlgen = new X509v2CRLBuilder(issuer.getX500name(), new Date());
-        //crlgen.addExtension(Extension.authorityInfoAccess, false, aia);
+        certificateGenerator.addExtension(Extension.authorityInfoAccess, false, new DERSequence(aia_ASN));
 
-*/
+        JcaContentSignerBuilder singerBuilder = new JcaContentSignerBuilder("SHA256WithRSAEncryption");
 
+        singerBuilder = singerBuilder.setProvider("BC");
+
+        ContentSigner contentSigner = singerBuilder.build(issuer.getPrivateKey());
+
+        X509CertificateHolder cHol = certificateGenerator.build(contentSigner);
+        JcaX509CertificateConverter pom = new JcaX509CertificateConverter();
+        X509Certificate cert = pom.getCertificate(cHol);
+
+       // X509Certificate cert = certificateGenerator.generateCertificate(subjectData,issuer);
         Company company = companyRepository.findCompanyByName(certificateDTO.getOrganization());
         if (company == null){
             keyStoreWriter.loadKeyStore(null,password.toCharArray());
