@@ -67,4 +67,27 @@ public class UserController {
         return new ResponseEntity<>(userService.disableUser(id), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/addRoleToUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value="Add role to user", httpMethod = "POST", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Group.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<User> addRoleToUser(@RequestParam(value="id") Long id,@RequestParam(value="list") List<Long> list) {
+        return new ResponseEntity<>(userService.rolesToUser(id, list), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/addGroupToUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value="Add group to user", httpMethod = "POST", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Group.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<User> addGroupToUser(@RequestParam(value="id") Long id,@RequestParam(value="list") List<Long> list) {
+        return new ResponseEntity<>(userService.groupsToUser(id, list), HttpStatus.OK);
+    }
+
+
 }

@@ -1,10 +1,13 @@
 package xmlb.service;
 
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import xmlb.model.Company;
+import xmlb.model.User.Group;
+import xmlb.model.User.Role;
 import xmlb.model.User.User;
 import xmlb.model.User.VerificationToken;
 import xmlb.repository.UserRepository;
@@ -25,6 +28,12 @@ public class UserService {
 
     @Autowired
     private VerificationTokenRepository tokenRepository;
+
+    @Autowired
+    private RoleService roleService;
+
+    @Autowired
+    private GroupService groupService;
 
 
     public boolean checkIfEmailExists(String email) {
@@ -143,6 +152,39 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Requested user does not exist");
 
         return optionalUser.get();
+    }
+
+    public User rolesToUser(Long id,List<Long> ids){
+
+        User user = getUser(id);
+
+        for (Long idRole:ids){
+
+            Role role = roleService.getRole(idRole);
+
+            role.getUsers().add(user);
+            roleService.saveRole(role);
+
+            user.getRoles().add(role);
+        }
+
+        return userRepository.save(user);
+
+    }
+
+    public User groupsToUser(Long id,List<Long> ids){
+
+        User user = getUser(id);
+
+        for (Long idGroup:ids){
+            Group group = groupService.getGroup(idGroup);
+            group.getUsers().add(user);
+
+            groupService.saveGroup(group);
+            user.getGroup().add(group);
+        }
+
+        return userRepository.save(user);
     }
 
 }

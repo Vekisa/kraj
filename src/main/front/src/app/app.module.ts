@@ -25,6 +25,8 @@ import { RolepointComponent } from './user/rolepoint/rolepoint.component';
 
 import { UserPanelComponent } from './user/user-panel/user-panel.component';
 import { CertificatePanelComponent } from './certificate/certificate-panel/certificate-panel.component';
+import { GroupComponent } from './user/group/group.component';
+import { UserRolesComponent } from './user/user-roles/user-roles.component';
 
 
 @NgModule({
@@ -44,7 +46,9 @@ import { CertificatePanelComponent } from './certificate/certificate-panel/certi
     MessageComponent,
     RolepointComponent,
     UserPanelComponent,
-    CertificatePanelComponent
+    CertificatePanelComponent,
+    GroupComponent,
+    UserRolesComponent
   ],
   imports: [
     BrowserModule,

@@ -29,7 +29,13 @@ public class RoleService {
     private GroupRepository groupRepository;
 
     @Autowired
+    private GroupService groupService;
+
+    @Autowired
     private EndPointsService endPointsService;
+
+    @Autowired
+    private UserService userService;
 
     public Role createRole(String name){
         Role role = new Role(name);
@@ -79,34 +85,18 @@ public class RoleService {
         return user.get();
     }
 
-    public Group addRoleToGroup(Long groupId, Long roleId){
-        Optional<Group> group = groupRepository.findById(groupId);
-        Optional<Role> role = roleRepository.findById(roleId);
-
-        if(!group.isPresent() || !role.isPresent())
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad parameters");
-
-        group.get().getRoles().add(role.get());
-
-        groupRepository.save(group.get());
-        roleRepository.save(role.get());
-
-        return group.get();
-    }
 
     public Group removeRoleFromGroup(Long groupId, Long roleId){
-        Optional<Group> group = groupRepository.findById(groupId);
-        Optional<Role> role = roleRepository.findById(roleId);
 
-        if(!group.isPresent() || !role.isPresent())
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad parameters");
+        Group group = groupService.getGroup(groupId);
 
-        group.get().getRoles().remove(role.get());
+        Role role = getRole(roleId);
 
-        groupRepository.save(group.get());
-        roleRepository.save(role.get());
+        group.getRoles().remove(role);
 
-        return group.get();
+        roleRepository.save(role);
+
+        return groupRepository.save(group);
     }
 
 
@@ -119,8 +109,6 @@ public class RoleService {
         return optionalRole.get();
 
     }
-
-
 
     public Role addEndPointsToRole(Long roleId,List<Long> endPointsId){
 
@@ -166,6 +154,57 @@ public class RoleService {
 
         role.setName(name);
 
+        return roleRepository.save(role);
+    }
+
+    public List<Role> allAddedRoles(Long id){
+
+        Group group = groupService.getGroup(id);
+
+        List<Role> roles = group.getRoles();
+
+        return roles;
+    }
+
+    public List<Role> allMissingRoles(Long id){
+
+        Group group = groupService.getGroup(id);
+
+        List<Role> allRoles = roleRepository.findAll();
+
+        List<Role> roles = group.getRoles();
+
+        for(Role role: roles){
+            allRoles.remove(role);
+        }
+
+        return allRoles;
+    }
+
+    public List<Role> allAddedRolesUser(Long id){
+
+        User user = userService.getUser(id);
+
+        List<Role> roles =user.getRoles();
+
+        return roles;
+    }
+
+    public List<Role> allMissingRolesUser(Long id){
+
+        List<Role> allRoles = roleRepository.findAll();
+
+        List<Role> roles = allAddedRolesUser(id);
+
+        for(Role role: roles){
+            allRoles.remove(role);
+        }
+
+        return allRoles;
+    }
+
+
+    public Role saveRole(Role role){
         return roleRepository.save(role);
     }
 

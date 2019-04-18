@@ -12,6 +12,9 @@ import {ValidateComponent} from "./validate/validate.component";
 import {UserPanelComponent} from "./user/user-panel/user-panel.component";
 import {RolepointComponent} from "./user/rolepoint/rolepoint.component";
 import {CertificatePanelComponent} from "./certificate/certificate-panel/certificate-panel.component";
+import {GroupService} from "./service/group.service";
+import {GroupComponent} from "./user/group/group.component";
+import {UserRolesComponent} from "./user/user-roles/user-roles.component";
 
 const routes: Routes = [
   {
@@ -36,6 +39,8 @@ const routes: Routes = [
       { path: '', redirectTo: 'users', pathMatch: 'full'},
       { path: 'users', component: UsersComponent },
       { path: 'roles', component: RolepointComponent },
+      { path: 'groups', component: GroupComponent },
+      { path: 'users_perm', component: UserRolesComponent },
     ]
   },
   {

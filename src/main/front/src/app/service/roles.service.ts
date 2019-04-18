@@ -7,6 +7,7 @@ import {Observable} from "rxjs";
 })
 export class RolesService {
 
+  private usersUrl = 'https://localhost:8443/users';
   private rolesUrl = 'https://localhost:8443/roles';
   private endPointUrl = 'https://localhost:8443/endpoint';
 
@@ -52,7 +53,6 @@ export class RolesService {
   }
 
 
-
   addPointsMissing(id,list): Observable<any>{
     let params = new HttpParams()
       .append("id",id)
@@ -77,6 +77,58 @@ export class RolesService {
     return this.http.post<any>(this.rolesUrl+"/edit",params);
 
   }
+
+
+  allRollesAdded(id): Observable<any>{
+    let params = new HttpParams()
+      .append("id",id)
+    return this.http.get<any>(this.rolesUrl+"/allRolesAdded",{params:params});
+  }
+
+  allRollesMissing(id): Observable<any>{
+    let params = new HttpParams()
+      .append("id",id)
+    return this.http.get<any>(this.rolesUrl+"/allMissing",{params:params});
+  }
+
+  removeRoleFromGroup(roleId,groupId){
+    let params = new HttpParams()
+      .append("groupId",groupId)
+      .append("roleId",roleId)
+    return this.http.delete<any>(this.rolesUrl+"/removeRoleFromGroup",{params:params});
+
+  }
+
+
+  allRollesUserAdded(id): Observable<any>{
+    let params = new HttpParams()
+      .append("id",id)
+    return this.http.get<any>(this.rolesUrl+"/allRolesAddedUser",{params:params});
+  }
+
+  allRollesUserMissing(id): Observable<any>{
+    let params = new HttpParams()
+      .append("id",id)
+    return this.http.get<any>(this.rolesUrl+"/allMissingRolesUser",{params:params});
+  }
+
+
+  addRolesUsers(id,list): Observable<any>{
+    let params = new HttpParams()
+      .append("id",id)
+      .append("list",list)
+
+    return this.http.post<any>(this.usersUrl+"/addRoleToUser",params);
+  }
+
+  addGroupsUsers(id,list): Observable<any>{
+    let params = new HttpParams()
+      .append("id",id)
+      .append("list",list)
+
+    return this.http.post<any>(this.usersUrl+"/addGroupToUser",params);
+  }
+
 
 
 

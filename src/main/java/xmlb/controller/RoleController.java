@@ -81,17 +81,6 @@ public class RoleController {
         return new ResponseEntity<>( HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/add_role_in_group/{role_id}/{group_id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value="Dodavanje usera u grupu", httpMethod = "POST", produces = "application/json")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = User.class),
-            @ApiResponse(code = 204, message = "No Content."),
-            @ApiResponse(code = 400, message = "Bad Request.")
-    })
-    public ResponseEntity<Group> addRoleInGroup(@PathVariable(value="role_id") Long roleId, @PathVariable(value="group_id") Long groupId) {
-        return new ResponseEntity<>(roleService.addRoleToGroup(groupId,roleId), HttpStatus.OK);
-    }
-
     @RequestMapping(value = "/add_role_to_user/{user_id}/{role_id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Dodavanje usera u grupu", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {
@@ -125,15 +114,59 @@ public class RoleController {
         return new ResponseEntity<>(roleService.removeRoleFromUser(userId,roleId), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/remove_role_from_group/{role_id}/{group_id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value="Dodavanje usera u grupu", httpMethod = "POST", produces = "application/json")
+    @RequestMapping(value = "/removeRoleFromGroup", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value="Remove role from group", httpMethod = "DELETE", produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = List.class),
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<Group> removeRoleFromGroup(@PathVariable(value="group_id") Long groupId, @PathVariable(value="role_id") Long roleId) {
+    public ResponseEntity<Group> removeRoleFromGroup(@RequestParam(value="groupId") Long groupId, @RequestParam(value="roleId") Long roleId) {
         return new ResponseEntity<>(roleService.removeRoleFromGroup(groupId,roleId), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/allRolesAdded", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value="All added to group", httpMethod = "GET", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = List.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<List<Role>> allAddedRoles(@RequestParam(value="id") Long id ){
+        return new ResponseEntity<>(roleService.allAddedRoles(id), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/allMissing", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value="All missing from group", httpMethod = "GET", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = List.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<List<Role>> allMissingRoles(@RequestParam(value="id") Long id ){
+        return new ResponseEntity<>(roleService.allMissingRoles(id), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/allRolesAddedUser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value="All added to group", httpMethod = "GET", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = List.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<List<Role>> allAddedRolesUser(@RequestParam(value="id") Long id ){
+        return new ResponseEntity<>(roleService.allAddedRolesUser(id), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/allMissingRolesUser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value="All missing from group", httpMethod = "GET", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = List.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<List<Role>> allMissingRolesUser(@RequestParam(value="id") Long id ){
+        return new ResponseEntity<>(roleService.allMissingRolesUser(id), HttpStatus.OK);
     }
 
 
