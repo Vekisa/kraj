@@ -65,6 +65,9 @@ public class CertificateService {
     @Autowired
     private CompanyService companyService;
 
+    @Autowired
+    private UserRepository userRepository;
+
     private String rootPath = "keystores/root.p12";
 
     private String pathToKeystores = "keystores/";
@@ -89,8 +92,7 @@ public class CertificateService {
 
 
     public List<CertificateDTO> all(){
-        //UBACITI PROVERU ZA TRENUTNOOG KORISNIKA
-        List<Certificate> certificates = certificateRepository.findAll();
+        List<Certificate> certificates = filterCertificates(certificateRepository.findAll());
         List<Certificate> certificateWithoutLeafs = new ArrayList<>();
 
         for(Certificate certificate : certificates){
@@ -102,8 +104,7 @@ public class CertificateService {
     }
 
     public List<CertificateDTO> allWithoutRoot(){
-        //UBACITI PROVERU ZA TRENUTNOOG KORISNIKA
-        List<Certificate> certificates = certificateRepository.findAll();
+        List<Certificate> certificates = filterCertificates(certificateRepository.findAll());
         List<Certificate> certificateWithoutLeafs = new ArrayList<>();
 
         for(Certificate certificate : certificates){
@@ -115,8 +116,7 @@ public class CertificateService {
     }
 
     public List<CertificateDTO> allCertificatesWithoutLeafs(){
-        //UBACITI PROVERU ZA TRENUTNOOG KORISNIKA
-        List<Certificate> certificates = certificateRepository.findAll();
+        List<Certificate> certificates = filterCertificates(certificateRepository.findAll());
         List<Certificate> certificateWithoutLeafs = new ArrayList<>();
 
         for(Certificate certificate : certificates){
@@ -538,6 +538,21 @@ public class CertificateService {
 
         return crl;
     }*/
+
+   private List<Certificate> filterCertificates(List<Certificate> certificates){
+       Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+       Optional<User> user = userRepository.findByUsername(auth.getName());
+       List<Certificate> filteredCertificates = new ArrayList<>();
+       if(user.get().getId() == 1)
+           return certificates;
+
+       for(Certificate certificate : certificates)
+           if(certificate.getCompany().getId() == user.get().getCompany().getId())
+               filteredCertificates.add(certificate);
+
+
+           return filteredCertificates;
+   }
 
 }
 
