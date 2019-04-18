@@ -44,12 +44,12 @@ export class NewCertificateComponent implements OnInit {
 
     this.certForm = this.formBuilder.group({
       parent: [''],
-      country: ['',[Validators.required, Validators.pattern('[a-zA-Z_]*')]],
-      state: ['',[Validators.required, Validators.pattern('[a-zA-Z_]*')]],
-      locality: ['',[Validators.required, Validators.pattern('[a-zA-Z_]*')]],
-      organization: ['',[Validators.required, Validators.pattern('[a-zA-Z_]*')]],
-      organizationUnit:['',[Validators.required, Validators.pattern('[a-zA-Z_]*')]],
-      commonName: ['',[Validators.required, Validators.pattern('[a-zA-Z_]*')]],
+      country: ['',[Validators.required, Validators.pattern('[a-zA-Z ]*')]],
+      state: ['',[Validators.required, Validators.pattern('[a-zA-Z ]*')]],
+      locality: ['',[Validators.required, Validators.pattern('[a-zA-Z ]*')]],
+      organization: ['',[Validators.required, Validators.pattern('[a-zA-Z ]*')]],
+      organizationUnit:['',[Validators.required, Validators.pattern('[a-zA-Z ]*')]],
+      commonName: ['',[Validators.required, Validators.pattern('[a-zA-Z_: ]*')]],
       startDate: null,
       endDate: null,
       alias:['',[Validators.required, Validators.pattern('[a-zA-Z_]*')]],
