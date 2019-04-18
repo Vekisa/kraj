@@ -104,7 +104,7 @@ public class CertificateService {
     }
 
     public List<CertificateDTO> allWithoutRoot(){
-        List<Certificate> certificates = filterCertificates(certificateRepository.findAll());
+        List<Certificate> certificates = filterCertificates(certificateRepository.findAll()); 
         List<Certificate> certificateWithoutLeafs = new ArrayList<>();
 
         for(Certificate certificate : certificates){
