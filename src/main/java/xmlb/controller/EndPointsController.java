@@ -22,7 +22,6 @@ import java.util.List;
 @RequestMapping("/endpoint")
 public class EndPointsController {
 
-
     @Autowired
     EndPointsService endPointsService;
 
@@ -62,7 +61,4 @@ public class EndPointsController {
     public ResponseEntity<List<EndPoint>> roleEndPointsMissing(@RequestParam(value="id") Long id, HttpServletRequest hr) {
         return new ResponseEntity<>(endPointsService.allEndPointsMissingId(id), HttpStatus.OK);
     }
-
-
-
 }

@@ -24,7 +24,8 @@ public class CommunicationController {
     @Autowired
     private CommunicationService communicationService;
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL()) AND @accesControllService.hasAccessToCertificate(#first_serial_number) " +
+            "AND @accesControllService.hasAccessToCertificate(#second_serial_number)")
     @RequestMapping(value= "/{first_sn}/{second_sn}/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Kreiranje komunikacije", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {
@@ -37,7 +38,8 @@ public class CommunicationController {
         return new ResponseEntity<>(communicationService.createCommunication(first_serial_number,second_serial_number), HttpStatus.CREATED);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL()) AND @accesControllService.hasAccessToCertificate(#first) " +
+            "AND @accesControllService.hasAccessToCertificate(#second)")
     @RequestMapping(value= "/{first_alias}/{second_alias}/disable", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Brisanje komunikacije", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {
