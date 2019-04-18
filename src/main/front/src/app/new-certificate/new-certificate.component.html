@@ -38,7 +38,7 @@
 
           <div class="form-group"  >
             <label for="typeCert">Type</label>
-            <select class="form-control" id="typeCert"  (change)="mySelectHandler($event)" [(ngModel)]="selectType">
+            <select class="form-control" id="typeCert"  (change)="mySelectHandler()" [(ngModel)]="selectType">
               <option selected value="Intermediate">Intermediate</option>
               <option value="Leaf">Leaf</option>
             </select>

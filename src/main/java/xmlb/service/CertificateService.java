@@ -21,6 +21,8 @@ import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import xmlb.KeyStoreReader;
@@ -28,10 +30,13 @@ import xmlb.controller.CertificateController;
 import xmlb.dto.CertificateDTO;
 import xmlb.model.*;
 import xmlb.model.Certificate;
+import xmlb.model.User.User;
 import xmlb.repository.CertificateRepository;
 import xmlb.repository.CompanyRepository;
 import java.net.URL;
 import java.net.URLConnection;
+import xmlb.repository.UserRepository;
+
 import java.math.BigInteger;
 import java.security.*;
 import java.security.cert.X509Extension;
@@ -245,7 +250,7 @@ public class CertificateService {
                 certificateDTO.getStartDate(),
                 certificateDTO.getEndDate(),
                 certificateParent.getAlias(),
-                certificateParent.getSerialNumber(),
+                certificateParent.getSignedBySerialNumber(),
                 false,
                 certificateDTO.getLeaf(),
                 certificateDTO.getCountry(),
@@ -301,12 +306,12 @@ public class CertificateService {
 
     }
 
-    public boolean checkIfValid(String serialNumber){
-        System.out.println("Validnost " +serialNumber);
+    /*public boolean checkIfValid(String alias){
+        System.out.println("Validnost " +alias);
 
         String pass ="";
 
-        if (serialNumber.equals("1")){
+        if (alias.equals("root")){
             System.out.println("JESTE ROOOT");
             pass = secret;
         }else {
@@ -316,8 +321,11 @@ public class CertificateService {
 
         System.out.println("pass"+pass);
 
-
-        if(checkRevokeStatus(serialNumber)) {
+        Revoke revoke=new Revoke();
+        revoke.setAlias(alias);
+        revoke.setLeaf(false);
+        ArrayList<String> lista= (ArrayList<String>) revokeService.getPovuceneAliasi();
+        if(lista.contains(revoke.getAlias())) {
             System.out.println("Revoked");
             return false;
         }
@@ -325,11 +333,9 @@ public class CertificateService {
 
         System.out.println("Ucitavanje cert");
 
-        java.security.cert.Certificate cert = readFromKS(serialNumber,pass);
+        java.security.cert.Certificate cert = readFromKS(alias,pass);
 
         X509Certificate x509Certificate = (X509Certificate) cert;
-
-
 
 
         try {
@@ -344,27 +350,24 @@ public class CertificateService {
             return false;
         }
 
-        Certificate certificate = getCertificateFromDB(serialNumber);
-
-        String alias = certificate.getAlias();
-        String organisationUnit = certificate.getOrganizationUnit();
-
-
-        IssuerData data = getIssuerFromCertificate(organisationUnit,alias,pass);
+        IssuerData data = getIssuerFromCertificate(alias,pass);
 
         System.out.println(data.getX500name().toString());
 
-        if (!serialNumber.equals("1")){
+        if (!alias.equals("root")){
 
 
-            String serialNumberIssuer = certificate.getSignedBySerialNumber();
+
+        Certificate certificate = certificateRepository.findByAlias(alias);
+
+        String aliasIs = certificate.getSignedByAlias();
 
 
-            if (serialNumberIssuer.equals("1")){
-                pass=secret;
-            }
+        if (aliasIs.equals("root")){
+            pass=secret;
+        }
 
-            java.security.cert.Certificate certIss = readFromKS(serialNumberIssuer,pass);
+            java.security.cert.Certificate certIss = readFromKS(aliasIs,pass);
 
             try {
                 cert.verify(certIss.getPublicKey());
@@ -385,62 +388,40 @@ public class CertificateService {
                 return false;
             }
 
-            return checkIfValid(serialNumberIssuer);
-        }
+            return checkIfValid(aliasIs);
+         }
+
 
         return true;
-    }
+    }*/
 
-
-    public java.security.cert.Certificate readFromKS(String serialNumber, String pass){
+    public java.security.cert.Certificate readFromKS(String alias, String pass){
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
-        Certificate certificate = getCertificateFromDB(serialNumber);
-
-        String name = "keystores/"+ certificate.getOrganizationUnit() +".p12";
+        String name = "keystores/"+ alias +".p12";
 
         KeyStoreReader keyStoreReader = new KeyStoreReader();
 
-        return  keyStoreReader.readCertificate(name,pass,certificate.getAlias());
+       return  keyStoreReader.readCertificate(name,pass,alias);
     }
-
-    public Certificate getCertificateFromDB(String serialNumber){
-
-           Certificate optionalCertificate = certificateRepository.findBySerialNumber(serialNumber);
-
-        if (optionalCertificate==null)
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Certificate does not exist");
-
-        return optionalCertificate;
-    }
-
-
 
     public void revokeCertificate(String serialNumber){
         if(serialNumber == null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Serial number is null");
 
-        Certificate certificate = getCertificateFromDB(serialNumber);
-
-        if(certificate.getRevoked())
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Certificate already revoked");
-        else{
-            certificate.setRevoked(true);
-            certificateRepository.save(certificate);
-            return;
-        }
-    }
-
-    public boolean checkRevokeStatus(String serialNumber){
-
-        Certificate certificate = getCertificateFromDB(serialNumber);
-
-        if(certificate.getRevoked())
-            return  true;
-        else{
-            return false;
+        List<Certificate> certificates = certificateRepository.findAll();
+        for(Certificate certificate : certificates){
+            if(certificate.getSerialNumber().equals(serialNumber))
+                if(certificate.getRevoked())
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Certificate already revoked");
+                else{
+                    certificate.setRevoked(true);
+                    certificateRepository.save(certificate);
+                    return;
+                }
         }
 
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Certificate does not exist");
     }
 
     private Boolean isCertificateOk(Certificate certificate){

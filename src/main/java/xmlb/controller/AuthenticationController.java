@@ -30,7 +30,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.*;
 import java.util.regex.Pattern;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://localhost:4200")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthenticationController {

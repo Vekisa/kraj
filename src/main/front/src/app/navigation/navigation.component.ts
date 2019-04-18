@@ -24,7 +24,7 @@ export class NavigationComponent implements OnInit {
 
     if(this.isLoggedIn){
       this.tokenStorage.signOut();
-      window.location.href = "http://localhost:4200/"
+      window.location.href = "https://localhost:4200/"
     }
 
   }
