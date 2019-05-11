@@ -1,5 +1,7 @@
 package xmlb.service;
 
+import org.apache.juli.logging.Log;
+import org.apache.juli.logging.LogFactory;
 import org.bouncycastle.asn1.ASN1EncodableVector;
 import org.bouncycastle.asn1.DERIA5String;
 import org.bouncycastle.asn1.DERSequence;
@@ -56,6 +58,8 @@ import java.util.regex.Pattern;
 
 @Service
 public class CertificateService {
+
+    protected final Log LOGGER = LogFactory.getLog(getClass());
 
     @Value("ng servfe")
     private String secret;
@@ -175,6 +179,8 @@ public class CertificateService {
             keyStoreWriter.write("root",keyPairSubject.getPrivate(),password.toCharArray(),cert);
 
             keyStoreWriter.saveKeyStore(pathToKeystores +"root.p12",password.toCharArray());
+
+
 
             return "Successful";
 
@@ -325,6 +331,8 @@ public class CertificateService {
         keyStoreWriter.saveKeyStore(pathToKeystores + certificateDTO.getOrganization()+".p12",password.toCharArray());
         certificateRepository.save(certificate);
 
+        LOGGER.info("CF CREATED " + "CN:" + certificateDTO.getCommonName() + "SN:" + serialNumber );
+
     }
 
     public boolean checkIfValid(String serialNumber){
@@ -445,14 +453,20 @@ public class CertificateService {
 
 
     public void revokeCertificate(String serialNumber){
-        if(serialNumber == null)
+        if(serialNumber == null){
+            LOGGER.error("CFR SN NULL: " + serialNumber );
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Serial number is null");
+        }
+
 
         Certificate certificate = getCertificateFromDB(serialNumber);
 
-        if(certificate.getRevoked())
+        if(certificate.getRevoked()) {
+            LOGGER.error("CFR ALREADY REVOKED SN: " + serialNumber );
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Certificate already revoked");
+        }
         else{
+            LOGGER.info("CFR REVOKED SN: " + serialNumber );
             certificate.setRevoked(true);
             certificateRepository.save(certificate);
             return;
