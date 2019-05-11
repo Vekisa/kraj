@@ -1,6 +1,8 @@
 package xmlb.controller;
 
 import javafx.scene.shape.PathElement;
+import org.apache.juli.logging.Log;
+import org.apache.juli.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +36,7 @@ import java.util.regex.Pattern;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthenticationController {
+    protected final Log LOGGER = LogFactory.getLog(getClass());
 
     @Autowired
     AuthenticationManager authenticationManager;
@@ -63,8 +66,11 @@ public class AuthenticationController {
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
-        if(!Pattern.matches(Regex.username,loginRequest.getUsername()) || !Pattern.matches(Regex.password,loginRequest.getPassword()))
+        if(!Pattern.matches(Regex.username,loginRequest.getUsername()) || !Pattern.matches(Regex.password,loginRequest.getPassword())){
+
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Bad parameters");
+        }
+
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
@@ -73,7 +79,7 @@ public class AuthenticationController {
 
         String jwt = jwtProvider.generateJWToken(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-
+        LOGGER.info("Usepsno logovanje " + loginRequest.getUsername() );
         return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities()));
     }
 
