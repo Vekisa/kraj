@@ -5,9 +5,7 @@
             <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger{36}.%M - %msg%n</pattern>
         </encoder>
     </appender>
-    <root level="info">
-        <appender-ref ref="STDOUT" />
-    </root>
+
     <appender name="SAVE-TO-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_PATH}/log.log</file>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
@@ -19,8 +17,17 @@
             <totalSizeCap>100MB</totalSizeCap>
         </rollingPolicy>
     </appender>
+
+
     <root level="info">
-        <appender-ref ref="SAVE-TO-FILE" />
+        <appender-ref ref="STDOUT" />
     </root>
+    <logger name="xmlb.controller" additivity="false" level="debug">
+        <appender-ref ref="SAVE-TO-FILE" />
+    </logger>
+    <logger name="xmlb.service" additivity="false" level="debug">
+        <appender-ref ref="SAVE-TO-FILE" />
+    </logger>
+
 
 </configuration>
