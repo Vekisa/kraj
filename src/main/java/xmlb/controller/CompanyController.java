@@ -3,25 +3,43 @@ package xmlb.controller;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.apache.juli.logging.Log;
+import org.apache.juli.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import xmlb.model.Company;
 import xmlb.model.User.User;
+import xmlb.repository.UserRepository;
 import xmlb.service.CompanyService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "https://localhost:4200")
 @RestController
 @RequestMapping("/companies")
 public class CompanyController {
+
+    protected final Log LOGGER = LogFactory.getLog(getClass());
+
     @Autowired
     private CompanyService companyService;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    private String getCurrentUser(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Optional<User> user = userRepository.findByUsername(auth.getName());
+        return user.get().getUsername();
+    }
 
     @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
     @RequestMapping(value = "/allCompanies", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -32,6 +50,7 @@ public class CompanyController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<List<Company>> allCompanies(HttpServletRequest hr) {
+        LOGGER.info("ENDPOINT: " + hr.getRequestURL() + " USER: " + getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: X");
         return new ResponseEntity<>(companyService.getAllCompanies(), HttpStatus.OK);
     }
 
@@ -44,6 +63,7 @@ public class CompanyController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<User> addToUser(@RequestParam(value="id") Long id,@RequestParam(value="companyId") Long companyId, HttpServletRequest hr) {
+        LOGGER.info("ENDPOINT: " + hr.getRequestURL() + " USER: " + getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + id + ", " + companyId);
         return new ResponseEntity<>(companyService.setCompany(id,companyId), HttpStatus.OK);
     }
 
