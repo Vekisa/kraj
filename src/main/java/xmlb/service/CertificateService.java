@@ -61,7 +61,7 @@ public class CertificateService {
 
     protected final Log LOGGER = LogFactory.getLog(getClass());
 
-    @Value("ng servfe")
+    @Value("Xmlsecuritypass")
     private String secret;
 
     @Value("${password.for.keystore}")
@@ -381,7 +381,7 @@ public class CertificateService {
         Certificate certificate = getCertificateFromDB(serialNumber);
 
         String alias = certificate.getAlias();
-        String organisationUnit = certificate.getOrganizationUnit();
+        String organisationUnit = certificate.getCompany().getName();
 
 
         IssuerData data = getIssuerFromCertificate(organisationUnit,alias,pass);
@@ -431,7 +431,7 @@ public class CertificateService {
 
         Certificate certificate = getCertificateFromDB(serialNumber);
 
-        String name = "keystores/"+ certificate.getOrganizationUnit() +".p12";
+        String name = certificate.getCompany().getFilePath();
 
         System.out.println(name);
 

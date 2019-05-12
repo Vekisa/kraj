@@ -8,7 +8,7 @@ INSERT INTO users (username,enabled, is_verified, password, first_name, last_nam
                                                                                                   'Admin', 'Admin', 'mailad@mail.com',1);
 INSERT INTO roles_users (roles_id, users_id) VALUES (1, 1);
 
-INSERT INTO company(id,name,file_path) values (1,'rootComp','keystores/root.p12');
+INSERT INTO company(id,name,file_path) values (1,'root','keystores/root.p12');
 
 INSERT INTO certificate(id,alias,end_date,signed_by_alias,signed_by_serial_number,serial_number,start_date,is_leaf,company_id,revoked) values (1,'root','2019-08-31 02:00:00','root','1','1','2019-03-22 01:00:00',0,1,0);
 

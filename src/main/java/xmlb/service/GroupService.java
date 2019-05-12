@@ -1,7 +1,11 @@
 package xmlb.service;
 
+import org.apache.juli.logging.Log;
+import org.apache.juli.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import xmlb.model.User.Group;
@@ -15,6 +19,7 @@ import java.util.Optional;
 
 @Service
 public class GroupService {
+    protected final Log LOGGER = LogFactory.getLog(getClass());
 
     @Autowired
     private GroupRepository groupRepository;
@@ -33,6 +38,11 @@ public class GroupService {
     public Group createGroup(String name){
         Group group = new Group(name);
         groupRepository.save(group);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Optional<User> user = userRepository.findByUsername(auth.getName());
+        LOGGER.info("Group " + name + " is created by " + user.get().getUsername()  );
+
+
         return group;
     }
 
@@ -42,6 +52,9 @@ public class GroupService {
         group.setName(name);
 
         groupRepository.save(group);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Optional<User> user = userRepository.findByUsername(auth.getName());
+        LOGGER.info("Group with ID " + id + " is edited:  " + name + " by "+  user.get().getUsername() );
         return group;
     }
 
@@ -54,10 +67,14 @@ public class GroupService {
     }
 
     public void deleteGroup(Long id){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Optional<User> user = userRepository.findByUsername(auth.getName());
         Optional<Group> group = groupRepository.findById(id);
-        if(!group.isPresent())
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Group does not exist");
-
+        if(!group.isPresent()) {
+            LOGGER.error("Group with ID " + id  + " does not exist and can't be deleted. User : " + user.get().getUsername());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Group does not exist");
+        }
+        LOGGER.info("Group with ID " + id + " is deleted by " + user.get().getUsername()  );
         groupRepository.deleteById(id);
     }
 
@@ -65,14 +82,15 @@ public class GroupService {
         Optional<User> user =userRepository.findById(userId);
         Optional<Group> group = groupRepository.findById(groupId);
 
-        if(!user.isPresent() || !group.isPresent())
+        if(!user.isPresent() || !group.isPresent()) {
+            LOGGER.error("User with id "  + userId + " isn't added in group with ID " + groupId + " by " +user.get().getUsername());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad parameters");
-
+        }
         user.get().getGroup().add(group.get());
 
         userRepository.save(user.get());
         groupRepository.save(group.get());
-
+        LOGGER.info("User with id "  + userId + " is added in group with ID " + groupId + " by "+user.get().getUsername());
         return user.get();
     }
 
@@ -80,14 +98,15 @@ public class GroupService {
         Optional<User> user =userRepository.findById(userId);
         Optional<Group> group = groupRepository.findById(groupId);
 
-        if(!user.isPresent() || !group.isPresent())
+        if(!user.isPresent() || !group.isPresent()){
+            LOGGER.error("User with id "  + userId + " isn't removed from group with ID " + groupId+ " by " + user.get().getUsername());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad parameters");
-
+        }
         group.get().getUsers().remove(user);
 
         userRepository.save(user.get());
         groupRepository.save(group.get());
-
+        LOGGER.info("User with id "  + userId + " is removed from group with ID " + groupId + " by " + user.get().getUsername());
         return user.get();
     }
 
@@ -143,7 +162,9 @@ public class GroupService {
     }
 
     public Group saveGroup(Group group){
-
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Optional<User> user = userRepository.findByUsername(auth.getName());
+        LOGGER.info("Group with ID " + group.getId() + " is saved by " + user.get().getUsername());
         return groupRepository.save(group);
 
     }
