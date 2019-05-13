@@ -1,7 +1,11 @@
 package xmlb.service;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import xmlb.model.User.EndPoint;
@@ -18,6 +22,7 @@ import java.util.OptionalInt;
 
 @Service
 public class RoleService {
+    protected final Log LOGGER = LogFactory.getLog(getClass());
 
     @Autowired
     private RoleRepository roleRepository;
@@ -37,16 +42,36 @@ public class RoleService {
     @Autowired
     private UserService userService;
 
+    private String getCurrentUser(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Optional<User> user = userRepository.findByUsername(auth.getName());
+        return user.get().getUsername();
+    }
+
+
     public Role createRole(String name){
         Role role = new Role(name);
         roleRepository.save(role);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Optional<User> user = userRepository.findByUsername(auth.getName());
+        LOGGER.info("Role " + name + " is created by " + user.get().getUsername()  );
+
+
         return role;
     }
 
     public void deleteRole(Long id){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Optional<User> user = userRepository.findByUsername(auth.getName());
+
         Optional<Role> role = roleRepository.findById(id);
-        if(!role.isPresent())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Role does nt exist");
+        if(!role.isPresent()){
+            LOGGER.error("Role with ID " + id  + " does not exist and can't be deleted. User : " + user.get().getUsername());
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Role does not exist");
+    }
+        LOGGER.info("Role with ID " + id + " is deleted by " + user.get().getUsername()  );
 
         roleRepository.deleteById(id);
     }
@@ -58,11 +83,13 @@ public class RoleService {
 
         Optional<Role> role = roleRepository.findByName("ROLE_MAIN_ADMIN");
 
-        if (!role.isPresent())
+        if (!role.isPresent()) {
+            LOGGER.error("IN FUNC: Requested role does not exist");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Role doesn't exist!");
-
+        }
         allRoles.remove(role.get());
 
+        LOGGER.info("IN FUNC: Success");
         return allRoles;
 
     }
@@ -71,14 +98,16 @@ public class RoleService {
         Optional<User> user = userRepository.findById(userId);
         Optional<Role> role = roleRepository.findById(roleId);
 
-        if(!user.isPresent() || !role.isPresent())
+        if(!user.isPresent() || !role.isPresent()) {
+            LOGGER.error("IN FUNC: Bad parameters");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad parameters");
-
+        }
         user.get().getRoles().add(role.get());
 
         userRepository.save(user.get());
         roleRepository.save(role.get());
 
+        LOGGER.info("IN FUNC: Success");
         return user.get();
     }
 
@@ -86,14 +115,16 @@ public class RoleService {
         Optional<User> user = userRepository.findById(userId);
         Optional<Role> role = roleRepository.findById(roleId);
 
-        if(!user.isPresent() || !role.isPresent())
+        if(!user.isPresent() || !role.isPresent()) {
+            LOGGER.error("IN FUNC: Bad parameters");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad parameters");
-
+        }
         user.get().getRoles().remove(role);
 
         userRepository.save(user.get());
         roleRepository.save(role.get());
 
+        LOGGER.info("IN FUNC: Success");
         return user.get();
     }
 
@@ -108,6 +139,7 @@ public class RoleService {
 
         roleRepository.save(role);
 
+        LOGGER.info("IN FUNC: Success");
         return groupRepository.save(group);
     }
 
@@ -115,9 +147,12 @@ public class RoleService {
     public Role getRole(Long id){
         Optional<Role> optionalRole = roleRepository.findById(id);
 
-        if(!optionalRole.isPresent())
+        if(!optionalRole.isPresent()) {
+            LOGGER.error("IN FUNC: Role doesn't exist!");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Role doesn't exist!");
+        }
 
+        LOGGER.info("IN FUNC: Success");
         return optionalRole.get();
 
     }
@@ -144,7 +179,7 @@ public class RoleService {
 
         }
 
-
+        LOGGER.info("IN FUNC: Success");
         return roleRepository.save(role);
     }
 
@@ -156,6 +191,7 @@ public class RoleService {
         endPoint.getRoles().remove(role);
         endPointsService.saveEndPoint(endPoint);
 
+        LOGGER.info("IN FUNC: Success");
         return roleRepository.save(role);
 
     }
@@ -165,6 +201,11 @@ public class RoleService {
         Role role = getRole(id);
 
         role.setName(name);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Optional<User> user = userRepository.findByUsername(auth.getName());
+        LOGGER.info("Role with ID " + id + " is edited:  " + name + " by "+  user.get().getUsername() );
+
 
         return roleRepository.save(role);
     }
@@ -217,6 +258,12 @@ public class RoleService {
 
 
     public Role saveRole(Role role){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Optional<User> user = userRepository.findByUsername(auth.getName());
+        LOGGER.info("Role with ID " + role.getId() + " is saved by " + user.get().getUsername());
+
+
         return roleRepository.save(role);
     }
 

@@ -1,8 +1,12 @@
 package xmlb.service;
 
 import net.bytebuddy.asm.Advice;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import xmlb.model.Company;
@@ -22,6 +26,8 @@ import java.util.Optional;
 @Service
 @Transactional
 public class UserService {
+    protected final Log LOGGER = LogFactory.getLog(getClass());
+
 
     @Autowired
     private UserRepository userRepository;
@@ -35,12 +41,19 @@ public class UserService {
     @Autowired
     private GroupService groupService;
 
+    private String getCurrentUser(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Optional<User> user = userRepository.findByUsername(auth.getName());
+        return user.get().getUsername();
+    }
 
     public boolean checkIfEmailExists(String email) {
         User user = userRepository.findByEmail(email);
         if (user != null) {
+            LOGGER.info("IN FUNC: TRUE");
             return true;
         }
+        LOGGER.info("IN FUNC: FALSE");
         return false;
     }
 
@@ -97,25 +110,35 @@ public class UserService {
         }
 
         users.remove(user);
+
+        LOGGER.info("IN FUNC: Success");
         return users;
     }
 
     public User enableUser(Long id){
         System.out.println("BBB");
         Optional<User> user = userRepository.findById(id);
-        if(!user.isPresent())
+        if(!user.isPresent()) {
+            LOGGER.error("IN FUNC: Requested user does not exist");
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Requested user does not exist");
-        user.get().setEnabled(true);
+        }
+            user.get().setEnabled(true);
         userRepository.save(user.get());
+
+        LOGGER.info("IN FUNC: Success");
         return user.get();
     }
 
     public User disableUser(Long id){
         Optional<User> user = userRepository.findById(id);
-        if(!user.isPresent())
+        if(!user.isPresent()) {
+            LOGGER.error("IN FUNC: Requested user does not exist");
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Requested user does not exist");
-        user.get().setEnabled(false);
+        }
+            user.get().setEnabled(false);
         userRepository.save(user.get());
+
+        LOGGER.info("IN FUNC: Success");
         return user.get();
     }
 
@@ -124,10 +147,12 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findByUsername(user.getName());
 
 
-        if(!optionalUser.isPresent())
+        if(!optionalUser.isPresent()) {
+            LOGGER.error("IN FUNC: Requested user does not exist");
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Requested user does not exist");
+        }
 
-
+        LOGGER.info("IN FUNC: Success");
         return optionalUser.get();
 
     }
@@ -135,12 +160,14 @@ public class UserService {
     public User saveCompany(Long id, Company company){
         Optional<User> optionalUser = userRepository.findById(id);
 
-        if(!optionalUser.isPresent())
+        if(!optionalUser.isPresent()) {
+            LOGGER.error("IN FUNC: Requested user does not exist");
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Requested user does not exist");
-
+        }
         User user = optionalUser.get();
         user.setCompany(company);
 
+        LOGGER.info("IN FUNC: Success");
         return userRepository.save(user);
     }
 
@@ -148,9 +175,12 @@ public class UserService {
 
         Optional<User> optionalUser = userRepository.findById(id);
 
-        if (!optionalUser.isPresent())
+        if (!optionalUser.isPresent()) {
+            LOGGER.error("IN FUNC: Requested user does not exist");
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Requested user does not exist");
 
+        }
+        LOGGER.info("IN FUNC: Success");
         return optionalUser.get();
     }
 
@@ -168,6 +198,8 @@ public class UserService {
             user.getRoles().add(role);
         }
 
+
+        LOGGER.info("IN FUNC: Success");
         return userRepository.save(user);
 
     }
@@ -184,6 +216,8 @@ public class UserService {
             user.getGroup().add(group);
         }
 
+        LOGGER.info("IN FUNC: Success");
+
         return userRepository.save(user);
     }
 
@@ -195,6 +229,8 @@ public class UserService {
         role.getUsers().remove(user);
 
         roleService.saveRole(role);
+
+        LOGGER.info("IN FUNC: Success");
 
         return userRepository.save(user);
 
@@ -209,6 +245,8 @@ public class UserService {
 
         groupService.saveGroup(group);
 
+
+        LOGGER.info("IN FUNC: Success");
         return userRepository.save(user);
 
     }
