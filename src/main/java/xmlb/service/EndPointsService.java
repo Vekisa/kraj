@@ -24,7 +24,7 @@ import java.util.Optional;
 @Service
 public class EndPointsService {
 
-    protected final Log LOGGER = LogFactory.getLog(getClass());
+    private Logging logging = new Logging(getClass());
 
     @Autowired
     private EndPointRepository endPointRepository;
@@ -56,7 +56,7 @@ public class EndPointsService {
     }
 
     public List<EndPoint> allEndPoints(){
-        LOGGER.info("IN FUNC: Success");
+        logging.printInfo("IN FUNC: Success");
         return endPointRepository.findAll();
 
     }
@@ -64,7 +64,7 @@ public class EndPointsService {
     public List<EndPoint> allEndPointsId(Long id){
 
        Role role  = roleService.getRole(id);
-        LOGGER.info("IN FUNC: Success");
+        logging.printInfo("IN FUNC: Success");
        return role.getEndPoints();
 
     }
@@ -82,7 +82,7 @@ public class EndPointsService {
         for (EndPoint endPoint:roleEndPoints){
             allEndPoints.remove(endPoint);
         }
-        LOGGER.info("IN FUNC: Success");
+        logging.printInfo("IN FUNC: Success");
         return allEndPoints;
 
     }
@@ -92,17 +92,17 @@ public class EndPointsService {
         Optional<EndPoint> optionalEndPoint = endPointRepository.findById(id);
 
         if (!optionalEndPoint.isPresent()){
-            LOGGER.error("IN FUNC: End point doesn't exist!");
+            logging.printError("IN FUNC: End point doesn't exist!");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "End point doesn't exist!");
         }
 
-        LOGGER.info("Success");
+        logging.printInfo("Success");
         return optionalEndPoint.get();
 
     }
 
     public EndPoint saveEndPoint(EndPoint endPoint){
-        LOGGER.info("Success");
+        logging.printInfo("Success");
         return endPointRepository.save(endPoint);
     }
 

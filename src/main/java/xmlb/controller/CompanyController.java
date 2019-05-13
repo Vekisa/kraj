@@ -17,6 +17,7 @@ import xmlb.model.Company;
 import xmlb.model.User.User;
 import xmlb.repository.UserRepository;
 import xmlb.service.CompanyService;
+import xmlb.service.Logging;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -27,7 +28,7 @@ import java.util.Optional;
 @RequestMapping("/companies")
 public class CompanyController {
 
-    protected final Log LOGGER = LogFactory.getLog(getClass());
+    private Logging logging = new Logging(getClass());
 
     @Autowired
     private CompanyService companyService;
@@ -41,7 +42,7 @@ public class CompanyController {
         return user.get().getUsername();
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(),#hr.getRemoteAddr())")
     @RequestMapping(value = "/allCompanies", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Get all companies", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
@@ -50,11 +51,11 @@ public class CompanyController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<List<Company>> allCompanies(HttpServletRequest hr) {
-        LOGGER.info("ENDPOINT: " + hr.getRequestURL() + " USER: " + getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: X");
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: X");
         return new ResponseEntity<>(companyService.getAllCompanies(), HttpStatus.OK);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL()) AND @accesControllService.workForCompany(#companyId)")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(),#hr.getRemoteAddr()) AND @accesControllService.workForCompany(#companyId,#hr.getRemoteAddr())")
     @RequestMapping(value = "/addToUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Add to user", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {
@@ -63,7 +64,7 @@ public class CompanyController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<User> addToUser(@RequestParam(value="id") Long id,@RequestParam(value="companyId") Long companyId, HttpServletRequest hr) {
-        LOGGER.info("ENDPOINT: " + hr.getRequestURL() + " USER: " + getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + id + ", " + companyId);
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + id + ", " + companyId);
         return new ResponseEntity<>(companyService.setCompany(id,companyId), HttpStatus.OK);
     }
 

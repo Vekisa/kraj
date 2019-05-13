@@ -21,7 +21,7 @@ import java.util.Optional;
 @Service
 public class CompanyService {
 
-    protected final Log LOGGER = LogFactory.getLog(getClass());
+    private Logging logging = new Logging(getClass());
 
     @Autowired
     private CompanyRepository companyRepository;
@@ -41,18 +41,18 @@ public class CompanyService {
     public Boolean hasCertificateWithAlias(Long id, String alias){
         Optional<Company> company = companyRepository.findById(id);
         if(!company.isPresent()) {
-            LOGGER.error("IN FUNC: Company does not exist");
+            logging.printError("IN FUNC: Company does not exist");
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Company does not exist");
         }
 
         for(Certificate certificate : company.get().getCertificates()){
             if(certificate.getAlias().equals(alias)) {
-                LOGGER.info("IN FUNC: TRUE");
+                logging.printInfo("IN FUNC: TRUE");
                 return true;
             }
         }
 
-        LOGGER.info("IN FUNC: FALSE");
+        logging.printInfo("IN FUNC: FALSE");
         return false;
     }
 
@@ -67,25 +67,25 @@ public class CompanyService {
                 }
         }
 
-        LOGGER.info("IN FUNC: Success");
+        logging.printInfo("IN FUNC: Success");
         return sendList;
     }
 
     public User setCompany(Long id,Long companyId){
 
         if (companyId==0){
-            LOGGER.info("IN FUNC: Id = 0");
+            logging.printInfo("IN FUNC: Id = 0");
             return userService.saveCompany(id,null);
         }
 
         Optional<Company> optionalCompany = companyRepository.findById(companyId);
 
         if (!optionalCompany.isPresent()) {
-            LOGGER.error("IN FUNC: Requested company does not exist");
+            logging.printError("IN FUNC: Requested company does not exist");
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Requested company does not exist");
         }
 
-        LOGGER.info("IN FUNC: Success");
+        logging.printInfo("IN FUNC: Success");
         return userService.saveCompany(id,optionalCompany.get());
     }
 }

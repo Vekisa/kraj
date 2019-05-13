@@ -7,7 +7,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import xmlb.model.Certificate;
-import xmlb.model.Company;
 import xmlb.model.User.EndPoint;
 import xmlb.model.User.Group;
 import xmlb.model.User.Role;
@@ -23,6 +22,8 @@ import java.util.Optional;
 @Service
 public class AccesControllService {
 
+    private Logging logging = new Logging(getClass());
+
     @Autowired
     private EndPointRepository endPointRepository;
 
@@ -35,7 +36,7 @@ public class AccesControllService {
     @Autowired
     private CompanyRepository companyRepository;
 
-    public Boolean hasAccess(String s) {
+    public Boolean hasAccess(String s, String ip) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Optional<User> user = userRepository.findByUsername(auth.getName());
         List<Role> usersRoles = user.get().getRoles();
@@ -58,11 +59,11 @@ public class AccesControllService {
                 if(endPointRoles.contains(role))
                     return true;
 
-
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access problem");
+        logging.printWarning("USER: " + user.get().getUsername() + " ADDRESS: " + ip + " tried to access to endpoint: " + endPoint);
+        throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access problem");
     }
 
-    public boolean hasAccessToCertificate(String serialNumber){
+    public boolean hasAccessToCertificate(String serialNumber, String ip){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Optional<User> user = userRepository.findByUsername(auth.getName());
         List<Role> usersRoles = user.get().getRoles();
@@ -75,10 +76,11 @@ public class AccesControllService {
         if(certificate.getCompany().getId() == user.get().getCompany().getId())
             return true;
 
+        logging.printWarning("USER: " + user.get().getUsername() + " ADDRESS: " + ip + " tried to access to certifcate: " + certificate.getSerialNumber() );
         throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access problem");
     }
 
-    public boolean workForCompany(Long companyId){
+    public boolean workForCompany(Long companyId, String ip){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Optional<User> user = userRepository.findByUsername(auth.getName());
         List<Role> usersRoles = user.get().getRoles();
@@ -90,6 +92,7 @@ public class AccesControllService {
         if(user.get().getCompany().getId() == companyId)
             return true;
 
+        logging.printWarning("USER: " + user.get().getUsername() + " ADDRESS: " + ip + " tried to access to company: " + user.get().getCompany().getName());
         return false;
     }
 }

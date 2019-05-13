@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 @Service
 public class CommunicationService {
 
-    protected final Log LOGGER = LogFactory.getLog(getClass());
+    private Logging logging = new Logging(getClass());
 
     @Autowired
     private CommunicationRepository communicationRepository;
@@ -45,12 +45,12 @@ public class CommunicationService {
 
     public Communication createCommunication(String first, String second){
         if(!Pattern.matches(Regex.serialNumber,first) || !Pattern.matches(Regex.serialNumber,second)) {
-            LOGGER.error("IN FUNC: Bad serial numbers");
+            logging.printError("IN FUNC: Bad serial numbers");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad serial numbers");
         }
 
         if(first.equals(second)) {
-            LOGGER.error("IN FUNC: Bad parameters");
+            logging.printError("IN FUNC: Bad parameters");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad parameters");
         }
 
@@ -58,7 +58,7 @@ public class CommunicationService {
         Certificate certificateSecond = getCertificateBySerialNumber(second);
 
         if(certificateFirst == null || certificateSecond == null) {
-            LOGGER.error("IN FUNC: Bad serial number");
+            logging.printError("IN FUNC: Bad serial number");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad serial number");
         }
 
@@ -66,7 +66,7 @@ public class CommunicationService {
 
         for(Communication communication : communications){
             if((communication.getFirst().equals(first) && communication.getSecond().equals(second)) || communication.getFirst().equals(second) && communication.getSecond().equals(first)){
-                LOGGER.error("IN FUNC: Communication already exists");
+                logging.printError("IN FUNC: Communication already exists");
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Communication already exists");
             }
         }
@@ -76,19 +76,19 @@ public class CommunicationService {
         communication.setSecond(second);
         communicationRepository.save(communication);
 
-        LOGGER.info("IN FUNC: Created successfully");
+        logging.printInfo("IN FUNC: Created successfully");
         return communication;
     }
 
     public void delete(String first, String second){
 
         if(!Pattern.matches(Regex.serialNumber,first) || !Pattern.matches(Regex.serialNumber,second)) {
-            LOGGER.error("IN FUNC: Bad serial numbers");
+            logging.printError("IN FUNC: Bad serial numbers");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad serial numbers");
         }
 
         if(first == null || second == null) {
-            LOGGER.error("IN FUNC: Bad parameters");
+            logging.printError("IN FUNC: Bad parameters");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad parameters");
         }
 
@@ -97,18 +97,18 @@ public class CommunicationService {
         for(Communication communication : communications){
             if((communication.getFirst().equals(first) && communication.getSecond().equals(second)) || communication.getFirst().equals(second) && communication.getSecond().equals(first)){
                 communicationRepository.deleteById(communication.getId());
-                LOGGER.info("IN FUNC: Created successfully");
+                logging.printInfo("IN FUNC: Created successfully");
                 return;
             }
         }
 
-        LOGGER.error("IN FUNC: Communication does not exist");
+        logging.printError("IN FUNC: Communication does not exist");
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Communication does not exist");
     }
 
     public List<CertificateDTO> getCommunicationsOfCertificate(String serialNumber){
         if(serialNumber == null) {
-            LOGGER.error("IN FUNC: Bad parameter");
+            logging.printError("IN FUNC: Bad parameter");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad parameter");
         }
 
@@ -125,7 +125,7 @@ public class CommunicationService {
                     list.add(new CertificateDTO(certificate));
             }
         }
-        LOGGER.info("IN FUNC: Success");
+        logging.printInfo("IN FUNC: Success");
         return list;
     }
 
