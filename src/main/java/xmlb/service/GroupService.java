@@ -19,7 +19,8 @@ import java.util.Optional;
 
 @Service
 public class GroupService {
-    protected final Log LOGGER = LogFactory.getLog(getClass());
+
+    private Logging logging = new Logging(getClass());
 
     @Autowired
     private GroupRepository groupRepository;
@@ -40,9 +41,7 @@ public class GroupService {
         groupRepository.save(group);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Optional<User> user = userRepository.findByUsername(auth.getName());
-        LOGGER.info("Group " + name + " is created by " + user.get().getUsername()  );
-
-
+        logging.printInfo("IN FUNC: Created successfully");
         return group;
     }
 
@@ -54,15 +53,17 @@ public class GroupService {
         groupRepository.save(group);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Optional<User> user = userRepository.findByUsername(auth.getName());
-        LOGGER.info("Group with ID " + id + " is edited:  " + name + " by "+  user.get().getUsername() );
+        logging.printInfo("IN FUNC: Edited successfully");
         return group;
     }
 
     public Group getGroup(Long id){
         Optional<Group> group = groupRepository.findById(id);
-        if(!group.isPresent())
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Group does not exist");
-
+        if(!group.isPresent()) {
+            logging.printError("IN FUNC: Group does not exist");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Group does not exist");
+        }
+        logging.printInfo("IN FUNC: Success");
         return group.get();
     }
 
@@ -71,10 +72,10 @@ public class GroupService {
         Optional<User> user = userRepository.findByUsername(auth.getName());
         Optional<Group> group = groupRepository.findById(id);
         if(!group.isPresent()) {
-            LOGGER.error("Group with ID " + id  + " does not exist and can't be deleted. User : " + user.get().getUsername());
+            logging.printError("IN FUNC: Group does not exist");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Group does not exist");
         }
-        LOGGER.info("Group with ID " + id + " is deleted by " + user.get().getUsername()  );
+        logging.printInfo("IN FUNC: Deleted successfully");
         groupRepository.deleteById(id);
     }
 
@@ -83,14 +84,14 @@ public class GroupService {
         Optional<Group> group = groupRepository.findById(groupId);
 
         if(!user.isPresent() || !group.isPresent()) {
-            LOGGER.error("User with id "  + userId + " isn't added in group with ID " + groupId + " by " +user.get().getUsername());
+            logging.printError("IN FUNC: Bad parameters");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad parameters");
         }
         user.get().getGroup().add(group.get());
 
         userRepository.save(user.get());
         groupRepository.save(group.get());
-        LOGGER.info("User with id "  + userId + " is added in group with ID " + groupId + " by "+user.get().getUsername());
+        logging.printInfo("IN FUNC: Added successfully");
         return user.get();
     }
 
@@ -99,24 +100,26 @@ public class GroupService {
         Optional<Group> group = groupRepository.findById(groupId);
 
         if(!user.isPresent() || !group.isPresent()){
-            LOGGER.error("User with id "  + userId + " isn't removed from group with ID " + groupId+ " by " + user.get().getUsername());
+            logging.printError("IN FUNC: Bad parameters");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad parameters");
         }
         group.get().getUsers().remove(user);
 
         userRepository.save(user.get());
         groupRepository.save(group.get());
-        LOGGER.info("User with id "  + userId + " is removed from group with ID " + groupId + " by " + user.get().getUsername());
+        logging.printInfo("IN FUNC: Removed successfully");
         return user.get();
     }
 
     public List<User> usersFromGroup(Long id){
         Group group = getGroup(id);
 
+        logging.printInfo("IN FUNC: Success");
         return group.getUsers();
     }
 
     public List<Group> allGroups(){
+        logging.printInfo("IN FUNC: Success");
         return groupRepository.findAll();
     }
 
@@ -135,7 +138,7 @@ public class GroupService {
             roleService.saveRole(role);
 
         }
-
+        logging.printInfo("IN FUNC: Success");
         return groupRepository.save(group);
 
     }
@@ -164,7 +167,7 @@ public class GroupService {
     public Group saveGroup(Group group){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Optional<User> user = userRepository.findByUsername(auth.getName());
-        LOGGER.info("Group with ID " + group.getId() + " is saved by " + user.get().getUsername());
+        //LOGGER.info("Group with ID " + group.getId() + " is saved by " + user.get().getUsername());
         return groupRepository.save(group);
 
     }

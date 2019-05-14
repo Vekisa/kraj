@@ -41,7 +41,7 @@ public class UserService {
     @Autowired
     private GroupService groupService;
 
-    private String getCurrentUser(){
+    public String getCurrentUser(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Optional<User> user = userRepository.findByUsername(auth.getName());
         return user.get().getUsername();

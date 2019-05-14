@@ -24,7 +24,7 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr())")
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Kreiranje rola", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {
@@ -36,7 +36,7 @@ public class RoleController {
         return new ResponseEntity<>(roleService.createRole(name), HttpStatus.OK);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr())")
     @RequestMapping(value = "/edit", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Edit role", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {
@@ -48,7 +48,7 @@ public class RoleController {
         return new ResponseEntity<>(roleService.editRole(id,name), HttpStatus.OK);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr())")
     @RequestMapping(value = "/addEndPointToRole", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Add end points to role", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {
@@ -60,7 +60,7 @@ public class RoleController {
         return new ResponseEntity<>(roleService.addEndPointsToRole(id, list), HttpStatus.OK);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr())")
     @RequestMapping(value = "/deleteEndPointFromRole", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Delete end point from role", httpMethod = "DELETE", produces = "application/json")
     @ApiResponses(value = {
@@ -72,7 +72,7 @@ public class RoleController {
         return new ResponseEntity<>(roleService.deleteEndPointFromRole(id, endPointId), HttpStatus.OK);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr())")
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     @ApiOperation(value="Brisanje grupe", httpMethod = "DELETE", produces = "application/json")
     @ApiResponses(value = {
@@ -85,7 +85,7 @@ public class RoleController {
         return new ResponseEntity<>( HttpStatus.OK);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr())")
     @RequestMapping(value = "/add_role_to_user/{user_id}/{role_id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Dodavanje usera u grupu", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {
@@ -97,7 +97,7 @@ public class RoleController {
         return new ResponseEntity<>(roleService.addRoleToUser(userId,roleId), HttpStatus.OK);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr())")
     @RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Dodavanje usera u grupu", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
@@ -109,7 +109,7 @@ public class RoleController {
         return new ResponseEntity<>(roleService.allRoles(), HttpStatus.OK);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr())")
     @RequestMapping(value = "/remove_role_from_user/{role_id}/{user_id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Dodavanje usera u grupu", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {
@@ -121,7 +121,7 @@ public class RoleController {
         return new ResponseEntity<>(roleService.removeRoleFromUser(userId,roleId), HttpStatus.OK);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr())")
     @RequestMapping(value = "/removeRoleFromGroup", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Remove role from group", httpMethod = "DELETE", produces = "application/json")
     @ApiResponses(value = {
@@ -133,7 +133,7 @@ public class RoleController {
         return new ResponseEntity<>(roleService.removeRoleFromGroup(groupId,roleId), HttpStatus.OK);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr())")
     @RequestMapping(value = "/allRolesAdded", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="All added to group", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
@@ -145,7 +145,7 @@ public class RoleController {
         return new ResponseEntity<>(roleService.allAddedRoles(id), HttpStatus.OK);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr())")
     @RequestMapping(value = "/allMissing", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="All missing from group", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
@@ -157,7 +157,7 @@ public class RoleController {
         return new ResponseEntity<>(roleService.allMissingRoles(id), HttpStatus.OK);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr())")
     @RequestMapping(value = "/allRolesAddedUser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="All added to group", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
@@ -169,7 +169,7 @@ public class RoleController {
         return new ResponseEntity<>(roleService.allAddedRolesUser(id), HttpStatus.OK);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr())")
     @RequestMapping(value = "/allMissingRolesUser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="All missing from group", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {

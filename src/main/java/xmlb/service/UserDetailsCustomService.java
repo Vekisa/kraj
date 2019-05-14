@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import xmlb.model.User.User;
 import xmlb.repository.UserRepository;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
@@ -33,6 +34,12 @@ public class UserDetailsCustomService implements UserDetailsService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private HttpServletRequest request;
+
+    @Autowired
+    private LoginService loginService;
 
     @Override
     @Transactional
@@ -63,5 +70,13 @@ public class UserDetailsCustomService implements UserDetailsService {
         userRepository.save(userOpt.get());
 
 
+    }
+
+    public String getClientIP() {
+        String xfHeader = request.getHeader("X-Forwarded-For");
+        if (xfHeader == null){
+            return request.getRemoteAddr();
+        }
+        return xfHeader.split(",")[0];
     }
 }

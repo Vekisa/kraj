@@ -30,7 +30,7 @@ public class CertificateController {
     @Autowired
     private CertificateService certificateService;
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr())")
     @RequestMapping(value= "/{alias}/search/{leafs}/{root}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Pretrazuje sertifikate", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
@@ -43,7 +43,7 @@ public class CertificateController {
         return new ResponseEntity<>(certificateService.search(alias, leafs, root),HttpStatus.OK);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL() , #hr.getRemoteAddr())")
     @RequestMapping(value= "/createSS",method = RequestMethod.POST)
     @ApiOperation(value="Kreira novi samopotpisani sertifikat", httpMethod = "POST")
     public ResponseEntity<String> createNewSSCertificate(@RequestBody CertificateDTO certificateDTO, HttpServletRequest hr) {
@@ -51,7 +51,7 @@ public class CertificateController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL()) AND @accesControllService.hasAccessToCertificate(#certificateDTO.parent)")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr()) AND @accesControllService.hasAccessToCertificate(#certificateDTO.parent , #hr.getRemoteAddr())")
     @RequestMapping(value= "/create_new_certificate",method = RequestMethod.POST)
     @ApiOperation(value="Kreira novi sertifikat", httpMethod = "POST")
     public ResponseEntity<String> createNewCertificate(@RequestBody CertificateDTO certificateDTO, HttpServletRequest hr) throws CertificateException, CertIOException, OperatorCreationException {
@@ -70,7 +70,7 @@ public class CertificateController {
         return new ResponseEntity<>(certificateService.showKeyStoreContent(alias),HttpStatus.OK);
     }*/
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr())")
     @RequestMapping(value= "/all_without_leafs", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Prikaz sertifikata bez listova", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
@@ -82,7 +82,7 @@ public class CertificateController {
         return new ResponseEntity<>(certificateService.allCertificatesWithoutLeafs(),HttpStatus.OK);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr())")
     @RequestMapping(value= "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Prikaz svih sertifikata", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
@@ -94,7 +94,7 @@ public class CertificateController {
         return new ResponseEntity<>(certificateService.all(),HttpStatus.OK);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr())")
     @RequestMapping(value= "/all_without_root", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Prikaz svih sertifikata", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
@@ -106,7 +106,7 @@ public class CertificateController {
         return new ResponseEntity<>(certificateService.allWithoutRoot(),HttpStatus.OK);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())  AND @accesControllService.hasAccessToCertificate(#serialNumber)")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr())  AND @accesControllService.hasAccessToCertificate(#serialNumber, #hr.getRemoteAddr())")
     @RequestMapping(value= "/revoke", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Povlacenje sertifikata", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {
@@ -119,7 +119,7 @@ public class CertificateController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr())")
     @RequestMapping(value= "/checkIfValid", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Check if valid", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {

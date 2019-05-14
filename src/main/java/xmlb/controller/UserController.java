@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import xmlb.model.User.Group;
 import xmlb.model.User.User;
+import xmlb.service.UserDetailsCustomService;
 import xmlb.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +25,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(),#hr.getRemoteAddr())")
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Vraca sve usere", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
@@ -36,7 +37,7 @@ public class UserController {
         return new ResponseEntity<>(userService.getAll(), HttpStatus.OK);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr())")
     @RequestMapping(value = "/{text}/search", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Pretraga usera", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
@@ -48,7 +49,7 @@ public class UserController {
         return new ResponseEntity<>(userService.search(text), HttpStatus.OK);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(),#hr.getRemoteAddr())")
     @RequestMapping(value = "{id}/enable", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Enable usera", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {
@@ -60,7 +61,7 @@ public class UserController {
         return new ResponseEntity<>(userService.enableUser(id), HttpStatus.OK);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr())")
     @RequestMapping(value = "{id}/disable", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Enable usera", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {
@@ -72,7 +73,7 @@ public class UserController {
         return new ResponseEntity<>(userService.disableUser(id), HttpStatus.OK);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr())")
     @RequestMapping(value = "/addRoleToUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Add role to user", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {
@@ -84,7 +85,7 @@ public class UserController {
         return new ResponseEntity<>(userService.rolesToUser(id, list), HttpStatus.OK);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr())")
     @RequestMapping(value = "/addGroupToUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Add group to user", httpMethod = "POST", produces = "application/json")
     @ApiResponses(value = {
@@ -96,7 +97,7 @@ public class UserController {
         return new ResponseEntity<>(userService.groupsToUser(id, list), HttpStatus.OK);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr())")
     @RequestMapping(value = "/removeRoleFromUser", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Delete role from user", httpMethod = "DELETE", produces = "application/json")
     @ApiResponses(value = {
@@ -108,7 +109,7 @@ public class UserController {
         return new ResponseEntity<>(userService.removeRoleFromUser(userId, roleId), HttpStatus.OK);
     }
 
-    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL())")
+    @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr())")
     @RequestMapping(value = "/removeGroupFromUser", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value="Delete group from user", httpMethod = "DELETE", produces = "application/json")
     @ApiResponses(value = {

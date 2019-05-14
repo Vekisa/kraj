@@ -21,10 +21,7 @@ import xmlb.model.User.VerificationToken;
 import xmlb.repository.RoleRepository;
 import xmlb.repository.UserRepository;
 import xmlb.security.*;
-import xmlb.service.PasswordHashingService;
-import xmlb.service.UserDetailsCustomService;
-import xmlb.service.UserService;
-import xmlb.service.EmailSenderService;
+import xmlb.service.*;
 
 import javax.validation.Valid;
 import java.security.NoSuchAlgorithmException;
@@ -62,9 +59,20 @@ public class AuthenticationController {
     @Autowired
     EmailSenderService emailSenderService;
 
+    @Autowired
+    LoginService loginService;
+
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+
+        String ip = userDetails.getClientIP();
+        if (loginService.isBlocked(ip)) {
+            System.out.println("Blokirano!");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Bad parameters");
+        }else{
+            System.out.println("NJet!!!!!!!!!!!!!!");
+        }
 
         if(!Pattern.matches(Regex.username,loginRequest.getUsername()) || !Pattern.matches(Regex.password,loginRequest.getPassword())){
 

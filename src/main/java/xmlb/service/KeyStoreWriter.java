@@ -20,7 +20,8 @@ public class KeyStoreWriter {
 	// - Privatni kljucevi
 	// - Tajni kljucevi, koji se koriste u simetricnima siframa
 	private KeyStore keyStore;
-	protected final Log LOGGER = LogFactory.getLog(getClass());
+
+	private Logging logging = new Logging(getClass());
 
 	public KeyStoreWriter() {
 		try {
@@ -34,22 +35,23 @@ public class KeyStoreWriter {
 		try {
 			if(fileName != null) {
 				keyStore.load(new FileInputStream(fileName), password);
-				LOGGER.info("KeyStore loaded " + fileName  );
+				logging.printInfo("IN FUNC: Loaded successfully");
 			} else {
 				//Ako je cilj kreirati novi KeyStore poziva se i dalje load, pri cemu je prvi parametar null
 				keyStore.load(null, password);
+				logging.printInfo("IN FUNC: Loaded successfully");
 			}
 		} catch (NoSuchAlgorithmException e) {
-			LOGGER.error("KeyStore" + fileName + " not loaded "  + e.getMessage());
+			logging.printError("IN FUNC: " + e.getMessage());
 			e.printStackTrace();
 		} catch (CertificateException e) {
-			LOGGER.error("KeyStore" + fileName + " not loaded "  + e.getMessage());
+			logging.printError("IN FUNC: " + e.getMessage());
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
-			LOGGER.error("KeyStore" + fileName + " not loaded "  + e.getMessage());
+			logging.printError("IN FUNC: " + e.getMessage());
 			e.printStackTrace();
 		} catch (IOException e) {
-			LOGGER.error("KeyStore" + fileName + " not loaded "  + e.getMessage());
+			logging.printError("IN FUNC: " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -57,21 +59,21 @@ public class KeyStoreWriter {
 	public void saveKeyStore(String fileName, char[] password) {
 		try {
 			keyStore.store(new FileOutputStream(fileName), password);
-			LOGGER.info("KeyStore saved " + fileName);
+			logging.printInfo("IN FUNC: Saved successfully");
 		} catch (KeyStoreException e) {
-			LOGGER.error("KeyStore" + fileName + " not saved " + e.getMessage());
+			logging.printError("IN FUNC: " + e.getMessage());
 			e.printStackTrace();
 		} catch (NoSuchAlgorithmException e) {
-			LOGGER.error("KeyStore" + fileName + " not saved "  + e.getMessage());
+			logging.printError("IN FUNC: " + e.getMessage());
 			e.printStackTrace();
 		} catch (CertificateException e) {
-			LOGGER.error("KeyStore" + fileName + " not saved "  + e.getMessage());
+			logging.printError("IN FUNC: " + e.getMessage());
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
-			LOGGER.error("KeyStore" + fileName + " not saved "  + e.getMessage());
+			logging.printError("IN FUNC: " + e.getMessage());
 			e.printStackTrace();
 		} catch (IOException e) {
-			LOGGER.error("KeyStore" + fileName + " not saved "  + e.getMessage());
+			logging.printError("IN FUNC: " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -79,9 +81,9 @@ public class KeyStoreWriter {
 	public void write(String alias, PrivateKey privateKey, char[] password, Certificate certificate) {
 		try {
 			keyStore.setKeyEntry(alias, privateKey, password, new Certificate[] {certificate});
-			LOGGER.info("Certificate " +  alias + " saved at keyStore" );
+			logging.printInfo("IN FUNC: Wrote successfully");
 		} catch (KeyStoreException e) {
-			LOGGER.error("Certificate " +  alias + " not saved at keyStore: " + e.getMessage() );
+			logging.printError("IN FUNC: " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
