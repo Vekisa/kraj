@@ -24,8 +24,6 @@ import java.util.Optional;
 @Service
 public class UserDetailsCustomService implements UserDetailsService {
 
-    protected final Log LOGGER = LogFactory.getLog(getClass());
-
     @Autowired
     UserRepository userRepository;
 

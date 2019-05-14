@@ -26,8 +26,8 @@ import java.util.Optional;
 @Service
 @Transactional
 public class UserService {
-    protected final Log LOGGER = LogFactory.getLog(getClass());
 
+    private Logging logging = new Logging(getClass());
 
     @Autowired
     private UserRepository userRepository;
@@ -50,10 +50,10 @@ public class UserService {
     public boolean checkIfEmailExists(String email) {
         User user = userRepository.findByEmail(email);
         if (user != null) {
-            LOGGER.info("IN FUNC: TRUE");
+            logging.printInfo("IN FUNC: TRUE");
             return true;
         }
-        LOGGER.info("IN FUNC: FALSE");
+        logging.printInfo("IN FUNC: FALSE");
         return false;
     }
 
@@ -66,6 +66,7 @@ public class UserService {
                 list.add(user);
             }
         }
+        logging.printInfo("IN FUNC: Success");
         return list;
     }
 
@@ -111,7 +112,7 @@ public class UserService {
 
         users.remove(user);
 
-        LOGGER.info("IN FUNC: Success");
+        logging.printInfo("IN FUNC: Success");
         return users;
     }
 
@@ -119,26 +120,26 @@ public class UserService {
         System.out.println("BBB");
         Optional<User> user = userRepository.findById(id);
         if(!user.isPresent()) {
-            LOGGER.error("IN FUNC: Requested user does not exist");
+            logging.printInfo("IN FUNC: Requested user does not exist");
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Requested user does not exist");
         }
             user.get().setEnabled(true);
         userRepository.save(user.get());
 
-        LOGGER.info("IN FUNC: Success");
+        logging.printInfo("IN FUNC: Success");
         return user.get();
     }
 
     public User disableUser(Long id){
         Optional<User> user = userRepository.findById(id);
         if(!user.isPresent()) {
-            LOGGER.error("IN FUNC: Requested user does not exist");
+            logging.printError("IN FUNC: Requested user does not exist");
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Requested user does not exist");
         }
             user.get().setEnabled(false);
         userRepository.save(user.get());
 
-        LOGGER.info("IN FUNC: Success");
+        logging.printError("IN FUNC: Success");
         return user.get();
     }
 
@@ -148,11 +149,11 @@ public class UserService {
 
 
         if(!optionalUser.isPresent()) {
-            LOGGER.error("IN FUNC: Requested user does not exist");
+            logging.printError("IN FUNC: Requested user does not exist");
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Requested user does not exist");
         }
 
-        LOGGER.info("IN FUNC: Success");
+        logging.printInfo("IN FUNC: Success");
         return optionalUser.get();
 
     }
@@ -161,13 +162,13 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findById(id);
 
         if(!optionalUser.isPresent()) {
-            LOGGER.error("IN FUNC: Requested user does not exist");
+            logging.printError("IN FUNC: Requested user does not exist");
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Requested user does not exist");
         }
         User user = optionalUser.get();
         user.setCompany(company);
 
-        LOGGER.info("IN FUNC: Success");
+        logging.printInfo("IN FUNC: Success");
         return userRepository.save(user);
     }
 
@@ -176,11 +177,11 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findById(id);
 
         if (!optionalUser.isPresent()) {
-            LOGGER.error("IN FUNC: Requested user does not exist");
+            logging.printError("IN FUNC: Requested user does not exist");
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Requested user does not exist");
 
         }
-        LOGGER.info("IN FUNC: Success");
+        logging.printInfo("IN FUNC: Success");
         return optionalUser.get();
     }
 
@@ -198,8 +199,7 @@ public class UserService {
             user.getRoles().add(role);
         }
 
-
-        LOGGER.info("IN FUNC: Success");
+        logging.printInfo("IN FUNC: Success");
         return userRepository.save(user);
 
     }
@@ -216,8 +216,7 @@ public class UserService {
             user.getGroup().add(group);
         }
 
-        LOGGER.info("IN FUNC: Success");
-
+        logging.printInfo("IN FUNC: Success");
         return userRepository.save(user);
     }
 
@@ -230,8 +229,7 @@ public class UserService {
 
         roleService.saveRole(role);
 
-        LOGGER.info("IN FUNC: Success");
-
+        logging.printInfo("IN FUNC: Success");
         return userRepository.save(user);
 
     }
@@ -245,8 +243,7 @@ public class UserService {
 
         groupService.saveGroup(group);
 
-
-        LOGGER.info("IN FUNC: Success");
+        logging.printInfo("IN FUNC: Success");
         return userRepository.save(user);
 
     }

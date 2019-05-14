@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import xmlb.model.User.Group;
 import xmlb.model.User.User;
+import xmlb.service.Logging;
 import xmlb.service.UserDetailsCustomService;
 import xmlb.service.UserService;
 
@@ -21,6 +22,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
+
+    private Logging logging = new Logging(getClass());
 
     @Autowired
     private UserService userService;
@@ -34,6 +37,7 @@ public class UserController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<List<User>> allCUsers(HttpServletRequest hr) {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: X");
         return new ResponseEntity<>(userService.getAll(), HttpStatus.OK);
     }
 
@@ -46,6 +50,7 @@ public class UserController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<List<User>> search(@PathVariable(value="text") String text, HttpServletRequest hr) {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + text);
         return new ResponseEntity<>(userService.search(text), HttpStatus.OK);
     }
 
@@ -58,6 +63,7 @@ public class UserController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<User> enable(@PathVariable(value="id") Long id, HttpServletRequest hr) {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + id);
         return new ResponseEntity<>(userService.enableUser(id), HttpStatus.OK);
     }
 
@@ -70,6 +76,7 @@ public class UserController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<User> disable(@PathVariable(value="id") Long id, HttpServletRequest hr) {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + id);
         return new ResponseEntity<>(userService.disableUser(id), HttpStatus.OK);
     }
 
@@ -82,6 +89,7 @@ public class UserController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<User> addRoleToUser(@RequestParam(value="id") Long id,@RequestParam(value="list") List<Long> list, HttpServletRequest hr) {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + list.toString());
         return new ResponseEntity<>(userService.rolesToUser(id, list), HttpStatus.OK);
     }
 
@@ -94,6 +102,7 @@ public class UserController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<User> addGroupToUser(@RequestParam(value="id") Long id,@RequestParam(value="list") List<Long> list, HttpServletRequest hr) {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + list.toString());
         return new ResponseEntity<>(userService.groupsToUser(id, list), HttpStatus.OK);
     }
 
@@ -106,6 +115,7 @@ public class UserController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<User> removeRoleFromUser(@RequestParam(value="userId") Long userId,@RequestParam(value="roleId") Long roleId,HttpServletRequest hr) {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + userId + ", " + roleId);
         return new ResponseEntity<>(userService.removeRoleFromUser(userId, roleId), HttpStatus.OK);
     }
 
@@ -118,6 +128,7 @@ public class UserController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<User> removeGroupFromUser(@RequestParam(value="userId") Long userId,@RequestParam(value="groupId") Long groupId,HttpServletRequest hr) {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + userId + ", " + groupId);
         return new ResponseEntity<>(userService.removeGroupFromUser(userId, groupId), HttpStatus.OK);
     }
 

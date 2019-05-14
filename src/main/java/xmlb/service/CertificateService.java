@@ -55,7 +55,7 @@ import java.util.regex.Pattern;
 @Service
 public class CertificateService {
 
-    protected final Log LOGGER = LogFactory.getLog(getClass());
+    private Logging logging = new Logging(getClass());
 
     @Value("Xmlsecuritypass")
     private String secret;
@@ -84,8 +84,10 @@ public class CertificateService {
 
 
     public List<CertificateDTO> search(String alias, Boolean leafs, Boolean root){
-        if(alias == null || leafs == null || root == null)
+        if(alias == null || leafs == null || root == null) {
+            logging.printError("IN FUNC: Parameters cannot be null");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parameters cannot be null");
+        }
 
         List<CertificateDTO> list = new ArrayList<>();
         List<Certificate> certificates = certificateRepository.findAll();
@@ -97,6 +99,8 @@ public class CertificateService {
             }else if(certificate.getAlias().contains(alias) && isCertificateOk(certificate) && !certificate.getLeaf()){
                 list.add(new CertificateDTO(certificate));
             }
+
+        logging.printInfo("IN FUNC: Success");
         return list;
     }
 
@@ -110,6 +114,7 @@ public class CertificateService {
                 certificateWithoutLeafs.add(certificate);
         }
 
+        logging.printInfo("IN FUNC: Success");
         return CreateDTOList.certificates(certificateWithoutLeafs);
     }
 
@@ -122,6 +127,7 @@ public class CertificateService {
                 certificateWithoutLeafs.add(certificate);
         }
 
+        logging.printInfo("IN FUNC: Success");
         return CreateDTOList.certificates(certificateWithoutLeafs);
     }
 
@@ -137,6 +143,7 @@ public class CertificateService {
             }
         }
 
+        logging.printInfo("IN FUNC: Success");
         return CreateDTOList.certificates(certificateWithoutLeafs);
     }
 
@@ -176,9 +183,11 @@ public class CertificateService {
 
             keyStoreWriter.saveKeyStore(pathToKeystores +"root.p12",password.toCharArray());
 
+            logging.printInfo("IN FUNC: Success");
             return "Successful";
 
         } catch (Exception e) {
+            logging.printError("IN FUNC: " + e.getMessage());
             return e.getMessage();
         }
     }
@@ -188,10 +197,13 @@ public class CertificateService {
             KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
             SecureRandom random = SecureRandom.getInstance("SHA1PRNG", "SUN");
             keyGen.initialize(2048, random);
+            logging.printInfo("IN FUNC: Success");
             return keyGen.generateKeyPair();
         } catch (NoSuchAlgorithmException e) {
+            logging.printError("IN FUNC: " + e.getMessage());
             e.printStackTrace();
         } catch (NoSuchProviderException e) {
+            logging.printError("IN FUNC: " + e.getMessage());
             e.printStackTrace();
         }
         return null;
@@ -203,6 +215,7 @@ public class CertificateService {
 
         IssuerData issuerData = keyStoreReader.readIssuerFromStore(name,alias,password.toCharArray(),password.toCharArray());
 
+        logging.printInfo("IN FUNC: Success");
         return issuerData;
     }
 
@@ -211,6 +224,7 @@ public class CertificateService {
         java.security.cert.Certificate cert = keyStoreReader.readCertificate(rootPath,pass,"root");
         IssuerData issuerData = keyStoreReader.readIssuerFromStore(rootPath,"root",pass.toCharArray(),pass.toCharArray());
 
+        logging.printInfo("IN FUNC: Success");
         return issuerData;
     }
 
@@ -225,8 +239,10 @@ public class CertificateService {
 
         }else{
             Certificate certificateParent = findBySerialNumber(certificateDTO.getParent());
-            if(certificateParent == null)
+            if(certificateParent == null) {
+                logging.printError("IN FUNC: No certificate with this serial number");
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No certificate with this serial number");
+            }
 
             issuer = this.getIssuerFromCertificate(certificateParent.getCompany().getName(), certificateParent.getAlias(), certificateDTO.getPassword());
         }
@@ -252,8 +268,10 @@ public class CertificateService {
         SubjectData subjectData = new SubjectData(keyPairSubject.getPublic(), builder.build(), serialNumber, startDate, endDate);
 
         Certificate certificateParent = findBySerialNumber(certificateDTO.getParent());
-        if(certificateParent == null)
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Parent certificate does not exist");
+        if(certificateParent == null) {
+            logging.printError("IN FUNC: Parent certificate does not exist");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Parent certificate does not exist");
+        }
 
         Certificate certificate = new Certificate(certificateDTO.getAlias(),
                 serialNumber,
@@ -312,8 +330,10 @@ public class CertificateService {
             certificate.setCompany(company);
             companyRepository.save(company);
         }else{
-            if(companyService.hasCertificateWithAlias(company.getId(),certificate.getAlias()))
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Alias in that company keystore already exist");
+            if(companyService.hasCertificateWithAlias(company.getId(),certificate.getAlias())) {
+                logging.printError("IN FUNC: Alias in that company keystore already exist");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Alias in that company keystore already exist");
+            }
 
             keyStoreWriter.loadKeyStore(pathToKeystores+ certificateDTO.getOrganization()+".p12",password.toCharArray());
             keyStoreWriter.write(certificateDTO.getAlias(),keyPairSubject.getPrivate(),password.toCharArray(),cert);
@@ -325,50 +345,38 @@ public class CertificateService {
         keyStoreWriter.saveKeyStore(pathToKeystores + certificateDTO.getOrganization()+".p12",password.toCharArray());
         certificateRepository.save(certificate);
 
-        LOGGER.info("CF CREATED " + "CN:" + certificateDTO.getCommonName() + "SN:" + serialNumber );
+        logging.printInfo("IN FUNC: Success");
 
     }
 
     public boolean checkIfValid(String serialNumber){
-        System.out.println("Validnost " +serialNumber);
 
         String pass ="";
 
         if (serialNumber.equals("1")){
-            System.out.println("JESTE ROOOT");
             pass = secret;
         }else {
-            System.out.println("NIJEEE");
             pass = password;
         }
 
-        System.out.println("pass"+pass);
-
-
         if(checkRevokeStatus(serialNumber)) {
-            System.out.println("Revoked");
+            logging.printInfo("IN FUNC: FALSE");
             return false;
         }
-
-
-        System.out.println("Ucitavanje cert");
 
         java.security.cert.Certificate cert = readFromKS(serialNumber,pass);
 
         X509Certificate x509Certificate = (X509Certificate) cert;
 
-
-
-
         try {
             x509Certificate.checkValidity();
         } catch (CertificateExpiredException e) {
             e.printStackTrace();
-            System.out.println("EXPIRED");
+            logging.printInfo("IN FUNC: FALSE(Expired)");
             return false;
         } catch (CertificateNotYetValidException e) {
             e.printStackTrace();
-            System.out.println("Not YET VALID");
+            logging.printInfo("IN FUNC: FALSE(Not yet valid)");
             return false;
         }
 
@@ -398,24 +406,28 @@ public class CertificateService {
                 cert.verify(certIss.getPublicKey());
             } catch (CertificateException e) {
                 e.printStackTrace();
+                logging.printInfo("IN FUNC: FALSE " + e.getMessage());
                 return false;
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
-
+                logging.printInfo("IN FUNC: FALSE " + e.getMessage());
             } catch (InvalidKeyException e) {
                 e.printStackTrace();
+                logging.printInfo("IN FUNC: FALSE " + e.getMessage());
                 return false;
             } catch (NoSuchProviderException e) {
                 e.printStackTrace();
+                logging.printInfo("IN FUNC: FALSE " + e.getMessage());
 
             } catch (SignatureException e) {
                 e.printStackTrace();
+                logging.printInfo("IN FUNC: FALSE " + e.getMessage());
                 return false;
             }
 
             return checkIfValid(serialNumberIssuer);
         }
-
+        logging.printInfo("IN FUNC: Success");
         return true;
     }
 
@@ -431,6 +443,7 @@ public class CertificateService {
 
         KeyStoreReader keyStoreReader = new KeyStoreReader();
 
+        logging.printInfo("IN FUNC: Success");
         return  keyStoreReader.readCertificate(name,pass,certificate.getAlias());
     }
 
@@ -438,9 +451,12 @@ public class CertificateService {
 
         Certificate optionalCertificate = certificateRepository.findBySerialNumber(serialNumber);
 
-        if (optionalCertificate==null)
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Certificate does not exist");
+        if (optionalCertificate==null) {
+            logging.printError("IN FUNC: Certificate does not exist");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Certificate does not exist");
+        }
 
+        logging.printInfo("IN FUNC: Success");
         return optionalCertificate;
     }
 
@@ -448,20 +464,20 @@ public class CertificateService {
 
     public void revokeCertificate(String serialNumber){
         if(serialNumber == null) {
-            LOGGER.error("CFR SN NULL: " + serialNumber);
+            logging.printError("IN FUNC: Serial number is null");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Serial number is null");
         }
 
         Certificate certificate = getCertificateFromDB(serialNumber);
 
         if(certificate.getRevoked()) {
-            LOGGER.error("CFR ALREADY REVOKED SN: " + serialNumber );
+            logging.printError("IN FUNC: Certificate already revoked");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Certificate already revoked");
         }
         else{
-            LOGGER.info("CFR REVOKED SN: " + serialNumber );
             certificate.setRevoked(true);
             certificateRepository.save(certificate);
+            logging.printInfo("IN FUNC: Success");
             return;
         }
     }
@@ -470,9 +486,11 @@ public class CertificateService {
 
         Certificate certificate = getCertificateFromDB(serialNumber);
 
-        if(certificate.getRevoked())
-            return  true;
-        else{
+        if(certificate.getRevoked()) {
+            logging.printInfo("IN FUNC: TRUE");
+            return true;
+        }else{
+            logging.printInfo("IN FUNC: FALSE");
             return false;
         }
 
@@ -480,72 +498,114 @@ public class CertificateService {
 
     private Boolean isCertificateOk(Certificate certificate){
         if(!certificate.getRevoked() &&
-                (certificate.getEndDate().after(new Date()) || certificate.getEndDate().equals(new Date())))
+                (certificate.getEndDate().after(new Date()) || certificate.getEndDate().equals(new Date()))) {
+            logging.printInfo("IN FUNC: TRUE");
             return true;
-
+        }
+        logging.printInfo("IN FUNC: FALSE");
         return false;
     }
 
     public Certificate findBySerialNumber(String serialNumber){
         List<Certificate> certificates = certificateRepository.findAll();
         for(Certificate certificate : certificates)
-            if(certificate.getSerialNumber().equals(serialNumber) && isCertificateOk(certificate))
+            if(certificate.getSerialNumber().equals(serialNumber) && isCertificateOk(certificate)) {
+                logging.printInfo("IN FUNC: Success");
                 return certificate;
-
+            }
+        logging.printInfo("IN FUNC: NULL");
         return null;
     }
 
     private void validateCertificateFromFront(CertificateDTO certificateDTO){
 
-        if(!Pattern.matches(Regex.stringLong,certificateDTO.getCountry()))
+        if(!Pattern.matches(Regex.stringLong,certificateDTO.getCountry())) {
+            logging.printError("IN FUNC: Field country is not correct");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Field country is not correct");
-        if(!Pattern.matches(Regex.stringLong,certificateDTO.getState()))
+        }
+        if(!Pattern.matches(Regex.stringLong,certificateDTO.getState())) {
+            logging.printError("IN FUNC: Field state is not correct");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Field state is not correct");
-        if(!Pattern.matches(Regex.stringLong,certificateDTO.getLocality()))
+        }
+        if(!Pattern.matches(Regex.stringLong,certificateDTO.getLocality())) {
+            logging.printError("IN FUNC: Field locality is not correct");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Field locality is not correct");
-        if(!Pattern.matches(Regex.stringLong,certificateDTO.getOrganization()))
+        }
+        if(!Pattern.matches(Regex.stringLong,certificateDTO.getOrganization())) {
+            logging.printError("IN FUNC: Field organization is not correct");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Field organization is not correct");
-        if(!Pattern.matches(Regex.stringLong,certificateDTO.getOrganizationUnit()))
+        }
+        if(!Pattern.matches(Regex.stringLong,certificateDTO.getOrganizationUnit())) {
+            logging.printError("IN FUNC: Field organizational unit is not correct");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Field organizational unit is not correct");
-        if(!Pattern.matches(Regex.stringShort,certificateDTO.getCommonName()))
+        }
+        if(!Pattern.matches(Regex.stringShort,certificateDTO.getCommonName())) {
+            logging.printError("IN FUNC: Field common name unit is not correct");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Field common name unit is not correct");
-        if(!Pattern.matches(Regex.stringShort,certificateDTO.getOrganizationUnit()))
+        }
+        if(!Pattern.matches(Regex.stringShort,certificateDTO.getOrganizationUnit())) {
+            logging.printError("IN FUNC: Field alias unit is not correct");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Field alias unit is not correct");
+        }
 
-        if(certificateDTO.getStartDate() == null || certificateDTO.getEndDate() == null)
+        if(certificateDTO.getStartDate() == null || certificateDTO.getEndDate() == null) {
+            logging.printError("IN FUNC: Dates cannot be null");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Dates cannot be null");
-        if(certificateDTO.getStartDate().before(new Date()))
+        }
+        if(certificateDTO.getStartDate().before(new Date())) {
+            logging.printError("IN FUNC: Bad start date");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad start date");
-        if(certificateDTO.getEndDate().before(new Date()))
+        }
+        if(certificateDTO.getEndDate().before(new Date())) {
+            logging.printError("IN FUNC: Bad end date");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad end date");
-        if(certificateDTO.getEndDate().before(certificateDTO.getStartDate()))
+        }
+        if(certificateDTO.getEndDate().before(certificateDTO.getStartDate())) {
+            logging.printError("IN FUNC: Bad end and start dates");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad end and start dates");
+        }
 
 
-        if(certificateDTO.getLeaf() == null)
+        if(certificateDTO.getLeaf() == null) {
+            logging.printError("IN FUNC: Leaf is null");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Leaf is null");
+        }
 
         String serialNumber = certificateDTO.getParent();
-        if(serialNumber == null)
+        if(serialNumber == null) {
+            logging.printError("IN FUNC: Parent is null");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parent is null");
+        }
 
         Certificate certificateParent = findBySerialNumber(serialNumber);
 
-        if(certificateParent == null)
+        if(certificateParent == null) {
+            logging.printError("IN FUNC: Parent certificate does not exist");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parent certificate does not exist");
+        }
 
         if(!certificateParent.getSerialNumber().equals("1") && !certificateParent.getCompany().getName().equals(certificateDTO.getOrganization())){
+            logging.printError("IN FUNC: Different organizations");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Different organizations");
         }
 
-        if(certificateParent.getEndDate().before(certificateDTO.getEndDate()))
+        if(certificateParent.getEndDate().before(certificateDTO.getEndDate())){
+            logging.printError("IN FUNC: Parent end date is before end date");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parent end date is before end date");
+        }
 
-        if(certificateParent.getStartDate().after(certificateDTO.getStartDate()))
+
+        if(certificateParent.getStartDate().after(certificateDTO.getStartDate())) {
+            logging.printError("IN FUNC: Parent start date is after start date");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parent start date is after start date");
+        }
 
-        if(certificateParent.getEndDate().before(certificateDTO.getEndDate()))
+        if(certificateParent.getEndDate().before(certificateDTO.getEndDate())) {
+            logging.printError("IN FUNC: Parent end date is before end date");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parent end date is before end date");
+        }
+
+        logging.printInfo("IN FUNC: Success");
     }
 
    /* public X509CRL getCRL() throws CertificateException, IOException {

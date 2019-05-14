@@ -23,6 +23,7 @@ import xmlb.repository.UserRepository;
 import xmlb.security.*;
 import xmlb.service.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -33,7 +34,8 @@ import java.util.regex.Pattern;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthenticationController {
-    protected final Log LOGGER = LogFactory.getLog(getClass());
+
+    private Logging logging = new Logging(getClass());
 
     @Autowired
     AuthenticationManager authenticationManager;
@@ -64,21 +66,18 @@ public class AuthenticationController {
 
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, HttpServletRequest hr) {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + loginRequest.getUsername());
         String ip = userDetails.getClientIP();
         if (loginService.isBlocked(ip)) {
-            System.out.println("Blokirano!");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Bad parameters");
-        }else{
-            System.out.println("NJet!!!!!!!!!!!!!!");
+            logging.printError("IN FUNC: Ip is blocked");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Ip is blocked");
         }
 
         if(!Pattern.matches(Regex.username,loginRequest.getUsername()) || !Pattern.matches(Regex.password,loginRequest.getPassword())){
-
+            logging.printError("IN FUNC: Bad parameters");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Bad parameters");
         }
-
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
@@ -87,22 +86,27 @@ public class AuthenticationController {
 
         String jwt = jwtProvider.generateJWToken(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        LOGGER.info("Usepsno logovanje " + loginRequest.getUsername() );
+        logging.printInfo("IN FUNC: Success");
         return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities()));
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
-
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest, HttpServletRequest hr) {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: "
+                + hr.getRemoteAddr() + " PARAMETERS: " + signUpRequest.getEmail() + ", " + signUpRequest.getFirstName() + ", " + signUpRequest.getLastName() + ", " + signUpRequest.getEmail());
         if(!Pattern.matches(Regex.flNames,signUpRequest.getFirstName()) || !Pattern.matches(Regex.flNames,signUpRequest.getLastName()) ||
-                !Pattern.matches(Regex.password,signUpRequest.getPassword()) || !Pattern.matches(Regex.email,signUpRequest.getEmail()))
+                !Pattern.matches(Regex.password,signUpRequest.getPassword()) || !Pattern.matches(Regex.email,signUpRequest.getEmail())) {
+            logging.printError("IN FUNC: Bad parameters");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad parameters");
+        }
 
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+            logging.printError("IN FUNC: Username is already taken");
             return new ResponseEntity<>(new ResponseMessage("Username is already taken!"), HttpStatus.BAD_REQUEST);
         }
 
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+            logging.printError("IN FUNC: Email is already in use");
             return new ResponseEntity<>(new ResponseMessage("Email is already in use!"), HttpStatus.BAD_REQUEST);
         }
 
@@ -130,27 +134,30 @@ public class AuthenticationController {
         userService.createVerificationToken(user, token);
 
         emailSenderService.sendCompleteRegistration(user);
-
+        logging.printInfo("IN FUNC: Success");
         return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/confirmReg")
-    public ResponseEntity<?> confirmReg(@RequestParam("token") String token) {
-
+    public ResponseEntity<?> confirmReg(@RequestParam("token") String token, HttpServletRequest hr) {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + token);
         VerificationToken verificationToken = userService.getToken(token);
         if (verificationToken == null) {
+            logging.printError("IN FUNC: Inavlid token");
             return new ResponseEntity<>(new ResponseMessage("INVALID Token!"), HttpStatus.BAD_REQUEST);
         }
 
         User user = verificationToken.getUser();
         Calendar cal = Calendar.getInstance();
         if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
+            logging.printError("IN FUNC: Token expired");
             return new ResponseEntity<>(new ResponseMessage("Token Expired!"), HttpStatus.BAD_REQUEST);
         }
 
         user.setVerified(true);
         userRepository.save(user);
 
+        logging.printInfo("IN FUNC: Success");
         return new ResponseEntity<>(new ResponseMessage("Account verified successfully!"), HttpStatus.OK);
 
     }

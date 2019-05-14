@@ -16,6 +16,8 @@ import xmlb.model.Certificate;
 import xmlb.dto.CertificateDTO;
 import xmlb.security.ResponseMessage;
 import xmlb.service.CertificateService;
+import xmlb.service.Logging;
+import xmlb.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.cert.CertificateException;
@@ -27,8 +29,13 @@ import java.util.List;
 @RequestMapping("/certificates")
 public class CertificateController {
 
+    private Logging logging = new Logging(getClass());
+
     @Autowired
     private CertificateService certificateService;
+
+    @Autowired
+    private UserService userService;
 
     @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr())")
     @RequestMapping(value= "/{alias}/search/{leafs}/{root}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -40,6 +47,8 @@ public class CertificateController {
     })
     public ResponseEntity<List<CertificateDTO>> search(@PathVariable(value="alias") String alias, @PathVariable(value="leafs") Boolean leafs, @PathVariable(value="root") Boolean root,
                                                        HttpServletRequest hr) {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: "
+                + alias + ", " + leafs + ", " + root);
         return new ResponseEntity<>(certificateService.search(alias, leafs, root),HttpStatus.OK);
     }
 
@@ -47,6 +56,7 @@ public class CertificateController {
     @RequestMapping(value= "/createSS",method = RequestMethod.POST)
     @ApiOperation(value="Kreira novi samopotpisani sertifikat", httpMethod = "POST")
     public ResponseEntity<String> createNewSSCertificate(@RequestBody CertificateDTO certificateDTO, HttpServletRequest hr) {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + certificateDTO.toString());
         certificateService.createNewSelfSignedCertificate(certificateDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -55,6 +65,7 @@ public class CertificateController {
     @RequestMapping(value= "/create_new_certificate",method = RequestMethod.POST)
     @ApiOperation(value="Kreira novi sertifikat", httpMethod = "POST")
     public ResponseEntity<String> createNewCertificate(@RequestBody CertificateDTO certificateDTO, HttpServletRequest hr) throws CertificateException, CertIOException, OperatorCreationException {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + certificateDTO.toString());
         certificateService.createNewIssuedCertificate(certificateDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -79,6 +90,7 @@ public class CertificateController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<List<CertificateDTO>> allCertificatesWithoutLeafs(HttpServletRequest hr) {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: X");
         return new ResponseEntity<>(certificateService.allCertificatesWithoutLeafs(),HttpStatus.OK);
     }
 
@@ -91,6 +103,7 @@ public class CertificateController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<List<CertificateDTO>> allCertificates(HttpServletRequest hr) {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: X");
         return new ResponseEntity<>(certificateService.all(),HttpStatus.OK);
     }
 
@@ -103,6 +116,7 @@ public class CertificateController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<List<CertificateDTO>> allCertificatesWithoutRoot(HttpServletRequest hr) {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: X");
         return new ResponseEntity<>(certificateService.allWithoutRoot(),HttpStatus.OK);
     }
 
@@ -115,6 +129,7 @@ public class CertificateController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<?> revoke(@RequestBody String serialNumber,HttpServletRequest hr) {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + serialNumber);
         certificateService.revokeCertificate(serialNumber);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -128,10 +143,12 @@ public class CertificateController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<?> checkIfValid(@RequestBody String alias,HttpServletRequest hr) {
-
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + alias);
         if (certificateService.checkIfValid(alias)){
+            logging.printInfo("IN FUNC: Valid");
             return new ResponseEntity<>(new ResponseMessage("Valid"),HttpStatus.OK);
         }else
+            logging.printInfo("IN FUNC: Not valid");
             return new ResponseEntity<>(new ResponseMessage("NOT Valid!"),HttpStatus.OK);
 
     }
@@ -146,6 +163,7 @@ public class CertificateController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<Certificate> getCertificate(@RequestBody String serialNumber) {
+        //0logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + serialNumber);
         return new ResponseEntity<>(certificateService.findBySerialNumber(serialNumber),HttpStatus.OK);
     }
 
@@ -157,12 +175,16 @@ public class CertificateController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<List<CertificateDTO>> allRevoke() {
+        //logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: ");
+
         List<CertificateDTO>lista=certificateService.all();
         List<CertificateDTO>listaP=certificateService.all();
         for(CertificateDTO c: lista){
             if(c.getRevoked())
                 listaP.add(c);
         }
+
+        logging.printInfo("IN FUNC: Success");
         return new ResponseEntity<>(listaP, HttpStatus.OK);
     }
 }
