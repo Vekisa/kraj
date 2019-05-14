@@ -17,6 +17,7 @@ import xmlb.model.User.User;
 import xmlb.repository.UserRepository;
 import xmlb.service.CommunicationService;
 import xmlb.service.Logging;
+import xmlb.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -33,13 +34,7 @@ public class CommunicationController {
     private CommunicationService communicationService;
 
     @Autowired
-    private UserRepository userRepository;
-
-    private String getCurrentUser(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Optional<User> user = userRepository.findByUsername(auth.getName());
-        return user.get().getUsername();
-    }
+    private UserService userService;
 
     @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(),#hr.getRemoteAddr()) AND @accesControllService.hasAccessToCertificate(#first_serial_number,#hr.getRemoteAddr()) " +
             "AND @accesControllService.hasAccessToCertificate(#second_serial_number,#hr.getRemoteAddr())")
@@ -52,7 +47,7 @@ public class CommunicationController {
     })
     public ResponseEntity<Communication> createCommunication(@PathVariable(value="first_sn") String first_serial_number, @PathVariable(value="second_sn") String second_serial_number,
                                                              HttpServletRequest hr) {
-        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + first_serial_number + ", " +
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + first_serial_number + ", " +
                 second_serial_number);
         return new ResponseEntity<>(communicationService.createCommunication(first_serial_number,second_serial_number), HttpStatus.CREATED);
     }
@@ -67,7 +62,7 @@ public class CommunicationController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<?> delete(@PathVariable(value="first_alias") String first, @PathVariable(value="second_alias") String second, HttpServletRequest hr) {
-        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + first + ", " +
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + first + ", " +
                 second);
         communicationService.delete(first,second);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -82,7 +77,7 @@ public class CommunicationController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<List<CertificateDTO>> getCommunicationsOfCertificate(@PathVariable(value="serial_number") String serialNumber, HttpServletRequest hr ) {
-        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + serialNumber);
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + serialNumber);
         return new ResponseEntity<>(communicationService.getCommunicationsOfCertificate(serialNumber),HttpStatus.OK);
     }
 }

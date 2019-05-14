@@ -34,8 +34,6 @@ public class GroupService {
     @Autowired
     private UserService userService;
 
-
-
     public Group createGroup(String name){
         Group group = new Group(name);
         groupRepository.save(group);

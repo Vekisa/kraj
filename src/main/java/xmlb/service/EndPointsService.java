@@ -32,15 +32,6 @@ public class EndPointsService {
     @Autowired
     private RoleService roleService;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    private String getCurrentUser(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Optional<User> user = userRepository.findByUsername(auth.getName());
-        return user.get().getUsername();
-    }
-
     public  void updateDatabase(Map<RequestMappingInfo, HandlerMethod> map){
         EndPoint endPoint;
         String path = "";

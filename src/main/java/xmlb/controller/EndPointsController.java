@@ -20,6 +20,7 @@ import xmlb.model.User.User;
 import xmlb.repository.UserRepository;
 import xmlb.service.EndPointsService;
 import xmlb.service.Logging;
+import xmlb.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -33,16 +34,10 @@ public class EndPointsController {
     private Logging logging = new Logging(getClass());
 
     @Autowired
-    EndPointsService endPointsService;
+    private EndPointsService endPointsService;
 
     @Autowired
-    private UserRepository userRepository;
-
-    private String getCurrentUser(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Optional<User> user = userRepository.findByUsername(auth.getName());
-        return user.get().getUsername();
-    }
+    private UserService userService;
 
     @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(),#hr.getRemoteAddr())")
     @RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -53,7 +48,7 @@ public class EndPointsController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<List<EndPoint>> allEndPoints(HttpServletRequest hr) {
-        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: X");
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: X");
         return new ResponseEntity<>(endPointsService.allEndPoints(), HttpStatus.OK);
     }
 
@@ -67,7 +62,7 @@ public class EndPointsController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<List<EndPoint>> roleEndPoints(@RequestParam(value="id") Long id, HttpServletRequest hr) {
-        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + id);
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + id);
         return new ResponseEntity<>(endPointsService.allEndPointsId(id), HttpStatus.OK);
     }
 
@@ -80,7 +75,7 @@ public class EndPointsController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<List<EndPoint>> roleEndPointsMissing(@RequestParam(value="id") Long id, HttpServletRequest hr) {
-        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + id);
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + id);
         return new ResponseEntity<>(endPointsService.allEndPointsMissingId(id), HttpStatus.OK);
     }
 }

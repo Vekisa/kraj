@@ -34,15 +34,6 @@ public class CommunicationService {
     @Autowired
     private CertificateRepository certificateRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    private String getCurrentUser(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Optional<User> user = userRepository.findByUsername(auth.getName());
-        return user.get().getUsername();
-    }
-
     public Communication createCommunication(String first, String second){
         if(!Pattern.matches(Regex.serialNumber,first) || !Pattern.matches(Regex.serialNumber,second)) {
             logging.printError("IN FUNC: Bad serial numbers");

@@ -29,15 +29,6 @@ public class CompanyService {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    private String getCurrentUser(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Optional<User> user = userRepository.findByUsername(auth.getName());
-        return user.get().getUsername();
-    }
-
     public Boolean hasCertificateWithAlias(Long id, String alias){
         Optional<Company> company = companyRepository.findById(id);
         if(!company.isPresent()) {

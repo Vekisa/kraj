@@ -18,6 +18,7 @@ import xmlb.model.User.User;
 import xmlb.repository.UserRepository;
 import xmlb.service.CompanyService;
 import xmlb.service.Logging;
+import xmlb.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -34,13 +35,8 @@ public class CompanyController {
     private CompanyService companyService;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
-    private String getCurrentUser(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Optional<User> user = userRepository.findByUsername(auth.getName());
-        return user.get().getUsername();
-    }
 
     @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(),#hr.getRemoteAddr())")
     @RequestMapping(value = "/allCompanies", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -51,7 +47,7 @@ public class CompanyController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<List<Company>> allCompanies(HttpServletRequest hr) {
-        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: X");
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: X");
         return new ResponseEntity<>(companyService.getAllCompanies(), HttpStatus.OK);
     }
 
@@ -64,7 +60,7 @@ public class CompanyController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<User> addToUser(@RequestParam(value="id") Long id,@RequestParam(value="companyId") Long companyId, HttpServletRequest hr) {
-        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + id + ", " + companyId);
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + id + ", " + companyId);
         return new ResponseEntity<>(companyService.setCompany(id,companyId), HttpStatus.OK);
     }
 

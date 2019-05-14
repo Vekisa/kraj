@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import xmlb.model.User.Group;
 import xmlb.model.User.Role;
 import xmlb.model.User.User;
+import xmlb.service.Logging;
 import xmlb.service.RoleService;
+import xmlb.service.UserService;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -21,8 +24,13 @@ import java.util.List;
 @RequestMapping("/roles")
 public class RoleController {
 
+    private Logging logging = new Logging(getClass());
+
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private UserService userService;
 
     @PreAuthorize("@accesControllService.hasAccess(#hr.getRequestURL(), #hr.getRemoteAddr())")
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -33,6 +41,7 @@ public class RoleController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<Role> createRole(@RequestParam(value="name") String name, HttpServletRequest hr) {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + name);
         return new ResponseEntity<>(roleService.createRole(name), HttpStatus.OK);
     }
 
@@ -45,6 +54,7 @@ public class RoleController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<Role> editRole(@RequestParam(value="id") Long id,@RequestParam(value="name") String name, HttpServletRequest hr) {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + id + ", " + name);
         return new ResponseEntity<>(roleService.editRole(id,name), HttpStatus.OK);
     }
 
@@ -57,6 +67,7 @@ public class RoleController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<Role> addEndPointToRole(@RequestParam(value="id") Long id,@RequestParam(value="list") List<Long> list, HttpServletRequest hr) {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + id);
         return new ResponseEntity<>(roleService.addEndPointsToRole(id, list), HttpStatus.OK);
     }
 
@@ -69,6 +80,7 @@ public class RoleController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<Role> deleteEndPointFromRole(@RequestParam(value="id") Long id,@RequestParam(value="endPointId") Long endPointId, HttpServletRequest hr) {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + id + ", " + endPointId);
         return new ResponseEntity<>(roleService.deleteEndPointFromRole(id, endPointId), HttpStatus.OK);
     }
 
@@ -81,6 +93,7 @@ public class RoleController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<?> deleteRole(@RequestParam(value="id") Long id, HttpServletRequest hr) {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + id);
         roleService.deleteRole(id);
         return new ResponseEntity<>( HttpStatus.OK);
     }
@@ -94,6 +107,7 @@ public class RoleController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<User> addRoleToUser(@PathVariable(value="user_id") Long userId, @PathVariable(value="role_id") Long roleId, HttpServletRequest hr) {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + userId + ", " + roleId);
         return new ResponseEntity<>(roleService.addRoleToUser(userId,roleId), HttpStatus.OK);
     }
 
@@ -106,6 +120,7 @@ public class RoleController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<List<Role>> allRoles(HttpServletRequest hr) {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: X");
         return new ResponseEntity<>(roleService.allRoles(), HttpStatus.OK);
     }
 
@@ -118,6 +133,7 @@ public class RoleController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<User> removeRoleFromUser(@PathVariable(value="user_id") Long userId, @PathVariable(value="role_id") Long roleId, HttpServletRequest hr) {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + userId + ", " + roleId);
         return new ResponseEntity<>(roleService.removeRoleFromUser(userId,roleId), HttpStatus.OK);
     }
 
@@ -130,6 +146,7 @@ public class RoleController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<Group> removeRoleFromGroup(@RequestParam(value="groupId") Long groupId, @RequestParam(value="roleId") Long roleId, HttpServletRequest hr) {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + groupId + ", " + roleId);
         return new ResponseEntity<>(roleService.removeRoleFromGroup(groupId,roleId), HttpStatus.OK);
     }
 
@@ -142,6 +159,7 @@ public class RoleController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<List<Role>> allAddedRoles(@RequestParam(value="id") Long id, HttpServletRequest hr){
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + id);
         return new ResponseEntity<>(roleService.allAddedRoles(id), HttpStatus.OK);
     }
 
@@ -154,6 +172,7 @@ public class RoleController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<List<Role>> allMissingRoles(@RequestParam(value="id") Long id, HttpServletRequest hr){
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + id);
         return new ResponseEntity<>(roleService.allMissingRoles(id), HttpStatus.OK);
     }
 
@@ -166,6 +185,7 @@ public class RoleController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<List<Role>> allAddedRolesUser(@RequestParam(value="id") Long id, HttpServletRequest hr){
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + id);
         return new ResponseEntity<>(roleService.allAddedRolesUser(id), HttpStatus.OK);
     }
 
@@ -178,6 +198,7 @@ public class RoleController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<List<Role>> allMissingRolesUser(@RequestParam(value="id") Long id, HttpServletRequest hr){
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + id);
         return new ResponseEntity<>(roleService.allMissingRolesUser(id), HttpStatus.OK);
     }
 }
