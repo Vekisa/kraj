@@ -3,6 +3,7 @@ package xmlb.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +15,11 @@ public class EndPoint {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Size(max = 191)
     @Column
     private String url;
 
+    @Size(max = 191)
     @Column
     private String method;
 

@@ -1,6 +1,7 @@
 package xmlb.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="communication")
@@ -10,9 +11,11 @@ public class Communication {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Size(max = 191)
     @Column
     private String first;
 
+    @Size(max = 191)
     @Column
     private String second;
 

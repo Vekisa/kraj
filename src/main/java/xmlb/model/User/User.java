@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import xmlb.model.Company;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -21,6 +22,7 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Size(max = 191)
     @Column
     private String username;
 
@@ -28,12 +30,15 @@ public class User implements UserDetails {
     @Column
     private String password;
 
+    @Size(max = 191)
     @Column
     private String firstName;
 
+    @Size(max = 191)
     @Column
     private String lastName;
 
+    @Size(max = 191)
     @Column
     private String email;
 

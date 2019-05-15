@@ -1,6 +1,7 @@
 package xmlb.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
@@ -23,24 +24,31 @@ public class Certificate {
     @Column
     private Date endDate;
 
+    @Size(max = 191)
     @Column
     private String signedByAlias;
 
+    @Size(max = 191)
     @Column
     private String signedBySerialNumber;
 
+    @Size(max = 191)
     @Column
     private String country;
 
+    @Size(max = 191)
     @Column
     private String state;
 
+    @Size(max = 191)
     @Column
     private String locality;
 
+    @Size(max = 191)
     @Column
     private String organizationUnit;
 
+    @Size(max = 191)
     @Column
     private String commonName;
 
