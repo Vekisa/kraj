@@ -97,8 +97,8 @@ public class AuthenticationController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest, HttpServletRequest hr) {
-        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: "
-                + hr.getRemoteAddr() + " PARAMETERS: " + signUpRequest.getEmail() + ", " + signUpRequest.getFirstName() + ", " + signUpRequest.getLastName() + ", " + signUpRequest.getEmail());
+        //logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: "
+        //        + hr.getRemoteAddr() + " PARAMETERS: " + signUpRequest.getEmail() + ", " + signUpRequest.getFirstName() + ", " + signUpRequest.getLastName() + ", " + signUpRequest.getEmail());
         if(!Pattern.matches(Regex.flNames,signUpRequest.getFirstName()) || !Pattern.matches(Regex.flNames,signUpRequest.getLastName()) ||
                 !Pattern.matches(Regex.password,signUpRequest.getPassword()) || !Pattern.matches(Regex.email,signUpRequest.getEmail())) {
             logging.printError("IN FUNC: Bad parameters");
@@ -166,4 +166,23 @@ public class AuthenticationController {
         return new ResponseEntity<>(new ResponseMessage("Account verified successfully!"), HttpStatus.OK);
 
     }
+
+    @RequestMapping(value = "/checkIP")
+    public ResponseEntity<?> checkIP(HttpServletRequest hr) {
+        if (loginService.isBlockedIP(hr.getRemoteAddr())) {
+            logging.printError("IN FUNC: Ip is blocked");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Ip is blocked");
+        }
+        return new ResponseEntity<>(new ResponseMessage("Account verified successfully!"), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/checkUser")
+    public ResponseEntity<?> checkUser(@RequestBody String username) {
+        if (loginService.isBlockedUser(username)) {
+            logging.printError("IN FUNC: User is blocked");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"User is blocked");
+        }
+        return new ResponseEntity<>(new ResponseMessage("Account verified successfully!"), HttpStatus.OK);
+    }
+
 }

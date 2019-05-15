@@ -10,6 +10,8 @@ export class User {
   lastPasswordResetDate: Date;
   verified: boolean;
   company:Company;
+  numF: number;
+  dateBlock: Date;
 
   constructor(id: number, username: string, firstName: string, lastName: string,  email: string, password: string, enabled: boolean, lastPasswordResetDate: Date, verified: boolean) {
     this.id = id;

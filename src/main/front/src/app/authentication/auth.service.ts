@@ -17,6 +17,8 @@ export class AuthService {
 
   private loginUrl = 'https://localhost:8443/api/auth/signin';
   private signUpUrl = 'https://localhost:8443/api/auth/signup';
+  private checkIPUrl = 'https://localhost:8443/api/auth/checkIP';
+  private checkUserUrl = 'https://localhost:8443/api/auth/checkUser';
 
   constructor(private http: HttpClient) { }
 
@@ -28,6 +30,11 @@ export class AuthService {
     return this.http.post<JwtResponse>(this.signUpUrl, user, httpOptions);
   }
 
+  checkIP (): Observable<JwtResponse> {
+    return this.http.post<JwtResponse>(this.checkIPUrl, httpOptions);
+  }
 
-
+  checkUser (username: String): Observable<JwtResponse> {
+    return this.http.post<JwtResponse>(this.checkUserUrl,username);
+  }
 }

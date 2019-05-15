@@ -21,6 +21,8 @@ export class LoginComponent implements OnInit {
   roles: string[] = [];
   private loginInfo: UserLogin;
   loginForm: FormGroup;
+  checkIP=false;
+  checkU=false;
 
   constructor(private formBuilder: FormBuilder,private authService: AuthService, private tokenStorage: TokenService) { }
 
@@ -58,7 +60,22 @@ export class LoginComponent implements OnInit {
         console.log(error);
         this.errorMessage = error.error.message;
         this.isLoginFailed = true;
-
+        this.authService.checkIP().subscribe(
+          data=>{
+            this.checkIP=false;
+          },
+          error=>{
+            this.checkIP=true;
+          }
+        )
+        this.authService.checkUser(this.loginForm.get('username').value.toString()).subscribe(
+          data=>{
+            this.checkU=false;
+          },
+          error=>{
+            this.checkU=true;
+          }
+        )
       }
     );
   }
