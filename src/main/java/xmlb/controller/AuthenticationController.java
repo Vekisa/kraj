@@ -69,9 +69,14 @@ public class AuthenticationController {
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, HttpServletRequest hr) {
         //logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + loginRequest.getUsername());
         String ip = userDetails.getClientIP();
-        if (loginService.isBlocked(ip)) {
+        if (loginService.isBlockedIP(ip)) {
             logging.printError("IN FUNC: Ip is blocked");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Ip is blocked");
+        }
+
+        if (loginService.isBlockedUser(loginRequest.getUsername())) {
+            logging.printError("IN FUNC: User is blocked");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"User is blocked");
         }
 
         if(!Pattern.matches(Regex.username,loginRequest.getUsername()) || !Pattern.matches(Regex.password,loginRequest.getPassword())){

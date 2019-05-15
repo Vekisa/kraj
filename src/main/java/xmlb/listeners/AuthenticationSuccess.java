@@ -16,11 +16,8 @@ public class AuthenticationSuccess implements ApplicationListener<Authentication
     private HttpServletRequest request;
 
     public void onApplicationEvent(AuthenticationSuccessEvent e) {
-        final String xfHeader = request.getHeader("X-Forwarded-For");
-        if (xfHeader == null) {
-            loginService.loginSucceeded(request.getRemoteAddr());
-        } else {
-            loginService.loginSucceeded(xfHeader.split(",")[0]);
-        }
+        loginService.loginSucceededU(e.getAuthentication().getPrincipal().toString());
+        loginService.loginSucceeded(request.getRemoteAddr());
+
     }
 }

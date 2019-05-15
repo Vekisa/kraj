@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import xmlb.service.LoginService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 @Component
 public class AuthenticationFailure implements ApplicationListener<AuthenticationFailureBadCredentialsEvent>{
@@ -20,11 +21,8 @@ public class AuthenticationFailure implements ApplicationListener<Authentication
         private HttpServletRequest request;
 
         public void onApplicationEvent(AuthenticationFailureBadCredentialsEvent e) {
-            final String xfHeader = request.getHeader("X-Forwarded-For");
-            if (xfHeader == null) {
-                loginService.loginFailed(request.getRemoteAddr());
-            } else {
-                loginService.loginFailed(xfHeader.split(",")[0]);
-            }
+            loginService.loginFailedU(e.getAuthentication().getPrincipal().toString());
+            loginService.loginFailed(request.getRemoteAddr());
+
         }
 }

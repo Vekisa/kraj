@@ -8,6 +8,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import xmlb.model.User.User;
 
+import java.util.Date;
+
 @Service("emailSenderService")
 public class EmailSenderService {
 
@@ -35,6 +37,15 @@ public class EmailSenderService {
         this.sendEmail(mailMessage);
     }
 
-
+    public void sendWrongPassword(User user) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(user.getEmail());
+        mailMessage.setSubject("Security alert!");
+        mailMessage.setFrom("bezbednostprojekat@gmail.com");
+        Date pom=user.getDateBlock();
+        Date pom1= new Date(pom.getTime()+(24*60*60*1000));
+        mailMessage.setText("Someone tried to sign into Your account with wrong password three times. Your account is blocked until " + pom1 + " .");
+        this.sendEmail(mailMessage);
+    }
 
 }

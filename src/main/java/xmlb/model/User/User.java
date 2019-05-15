@@ -46,6 +46,12 @@ public class User implements UserDetails {
     @Column
     private Boolean isVerified;
 
+    @Column
+    private Integer numF;
+
+    @Column
+    private Date dateBlock;
+
     @JsonIgnore
     @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Role> roles;
@@ -76,6 +82,7 @@ public class User implements UserDetails {
         this.lastPasswordResetDate = lastPasswordResetDate;
         this.isVerified = isVerified;
         this.roles = new ArrayList<>();
+        this.numF=0;
     }
 
 
@@ -221,5 +228,21 @@ public class User implements UserDetails {
 
     public void setGroup(List<Group> group) {
         this.group = group;
+    }
+
+    public Integer getNumF() {
+        return numF;
+    }
+
+    public void setNumF(Integer numF) {
+        this.numF = numF;
+    }
+
+    public Date getDateBlock() {
+        return dateBlock;
+    }
+
+    public void setDateBlock(Date dateBlock) {
+        this.dateBlock = dateBlock;
     }
 }
