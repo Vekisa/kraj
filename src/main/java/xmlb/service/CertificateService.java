@@ -63,9 +63,6 @@ public class CertificateService {
     @Value("${password.for.keystore}")
     private String password;
 
-    @Value("${certificate.serial.number}")
-    private int serialNumber;
-
     @Autowired
     private CertificateRepository certificateRepository;
 
@@ -100,7 +97,7 @@ public class CertificateService {
                 list.add(new CertificateDTO(certificate));
             }
 
-        logging.printInfo("IN FUNC: Success");
+        //logging.printInfo("IN FUNC: Success");
         return list;
     }
 
@@ -114,7 +111,7 @@ public class CertificateService {
                 certificateWithoutLeafs.add(certificate);
         }
 
-        logging.printInfo("IN FUNC: Success");
+        //logging.printInfo("IN FUNC: Success");
         return CreateDTOList.certificates(certificateWithoutLeafs);
     }
 
@@ -127,7 +124,7 @@ public class CertificateService {
                 certificateWithoutLeafs.add(certificate);
         }
 
-        logging.printInfo("IN FUNC: Success");
+        //logging.printInfo("IN FUNC: Success");
         return CreateDTOList.certificates(certificateWithoutLeafs);
     }
 
@@ -143,7 +140,7 @@ public class CertificateService {
             }
         }
 
-        logging.printInfo("IN FUNC: Success");
+        //logging.printInfo("IN FUNC: Success");
         return CreateDTOList.certificates(certificateWithoutLeafs);
     }
 
@@ -159,7 +156,7 @@ public class CertificateService {
             Date endDate = certificateDTO.getEndDate();
 
             //Serijski broj sertifikata
-            ++serialNumber;
+
             //klasa X500NameBuilder pravi X500Name objekat koji predstavlja podatke o vlasniku
             X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);
             builder.addRDN(BCStyle.CN, certificateDTO.getCommonName());
@@ -169,7 +166,7 @@ public class CertificateService {
             builder.addRDN(BCStyle.L, certificateDTO.getLocality());
             builder.addRDN(BCStyle.ST, certificateDTO.getState());
 
-            SubjectData subjectData = new SubjectData(keyPairSubject.getPublic(), builder.build(), String.valueOf(serialNumber), startDate, endDate);
+            SubjectData subjectData = new SubjectData(keyPairSubject.getPublic(), builder.build(), String.valueOf("IZMENI"), startDate, endDate);
             IssuerData issuerData = new IssuerData(keyPairSubject.getPrivate(),builder.build());
 
             CertificateGenerator certificateGenerator = new CertificateGenerator();
@@ -345,7 +342,7 @@ public class CertificateService {
         keyStoreWriter.saveKeyStore(pathToKeystores + certificateDTO.getOrganization()+".p12",password.toCharArray());
         certificateRepository.save(certificate);
 
-        logging.printInfo("IN FUNC: Success");
+        logging.printInfo("Certificate: Created");
 
     }
 
