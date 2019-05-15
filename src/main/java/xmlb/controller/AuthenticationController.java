@@ -67,7 +67,7 @@ public class AuthenticationController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, HttpServletRequest hr) {
-        //logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + loginRequest.getUsername());
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + loginRequest.getUsername() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + loginRequest.getUsername());
         String ip = userDetails.getClientIP();
         if (loginService.isBlockedIP(ip)) {
             logging.printError("IN FUNC: Ip is blocked");
@@ -97,8 +97,8 @@ public class AuthenticationController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest, HttpServletRequest hr) {
-        //logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: "
-        //        + hr.getRemoteAddr() + " PARAMETERS: " + signUpRequest.getEmail() + ", " + signUpRequest.getFirstName() + ", " + signUpRequest.getLastName() + ", " + signUpRequest.getEmail());
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + signUpRequest.getUsername() + " IP ADDRESS: "
+                + hr.getRemoteAddr() + " PARAMETERS: " + signUpRequest.getEmail() + ", " + signUpRequest.getFirstName() + ", " + signUpRequest.getLastName() + ", " + signUpRequest.getEmail());
         if(!Pattern.matches(Regex.flNames,signUpRequest.getFirstName()) || !Pattern.matches(Regex.flNames,signUpRequest.getLastName()) ||
                 !Pattern.matches(Regex.password,signUpRequest.getPassword()) || !Pattern.matches(Regex.email,signUpRequest.getEmail())) {
             logging.printError("IN FUNC: Bad parameters");

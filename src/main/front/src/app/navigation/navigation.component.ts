@@ -9,6 +9,7 @@ import {TokenService} from "../authentication/token.service";
 export class NavigationComponent implements OnInit {
 
   isLoggedIn = false;
+  mainAdmin = null;
 
   constructor(private tokenStorage: TokenService) { }
 
@@ -16,6 +17,8 @@ export class NavigationComponent implements OnInit {
 
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
+      this.mainAdmin = this.tokenStorage.getAuthorities().includes("ROLE_MAIN_ADMIN");
+      console.log(this.mainAdmin);
     }
 
   }

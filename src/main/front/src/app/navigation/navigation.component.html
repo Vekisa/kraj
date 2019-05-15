@@ -5,7 +5,7 @@
         <li class="nav-item" *ngIf="isLoggedIn">
           <a class="nav-link" [href]="['certificate_panel']">Certificate panel</a>
         </li>
-        <li class="nav-item" *ngIf="isLoggedIn">
+        <li class="nav-item" *ngIf="isLoggedIn && mainAdmin">
           <a class="nav-link" href="" [href]="['user_panel']">User panel</a>
         </li>
 
