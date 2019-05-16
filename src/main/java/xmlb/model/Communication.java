@@ -11,11 +11,11 @@ public class Communication {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 191)
+    @Size(max = 30)
     @Column
     private String first;
 
-    @Size(max = 191)
+    @Size(max = 30)
     @Column
     private String second;
 

@@ -16,7 +16,7 @@ public class Role implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 191)
+    @Size(max = 30)
     @Column
     private String name;
 

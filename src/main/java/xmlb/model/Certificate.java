@@ -32,23 +32,23 @@ public class Certificate {
     @Column
     private String signedBySerialNumber;
 
-    @Size(max = 191)
+    @Size(max = 30)
     @Column
     private String country;
 
-    @Size(max = 191)
+    @Size(max = 30)
     @Column
     private String state;
 
-    @Size(max = 191)
+    @Size(max = 30)
     @Column
     private String locality;
 
-    @Size(max = 191)
+    @Size(max = 30)
     @Column
     private String organizationUnit;
 
-    @Size(max = 191)
+    @Size(max = 30)
     @Column
     private String commonName;
 

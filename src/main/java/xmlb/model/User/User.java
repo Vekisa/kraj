@@ -22,7 +22,7 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 191)
+    @Size(max = 15)
     @Column
     private String username;
 
@@ -30,15 +30,15 @@ public class User implements UserDetails {
     @Column
     private String password;
 
-    @Size(max = 191)
+    @Size(max = 30)
     @Column
     private String firstName;
 
-    @Size(max = 191)
+    @Size(max = 30)
     @Column
     private String lastName;
 
-    @Size(max = 191)
+    @Size(max = 30)
     @Column
     private String email;
 
