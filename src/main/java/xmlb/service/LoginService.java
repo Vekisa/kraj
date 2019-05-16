@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class LoginService {
+    private Logging logging = new Logging(getClass());
     private final int MAX_IP = 10;
     private final int MAX_USER=3;
     private LoadingCache<String, Integer> attemptsCache;
@@ -45,7 +46,9 @@ public class LoginService {
 
         if(u.isPresent()){
            u.get().setNumF(0);
+
            userRepository.save(u.get());
+           logging.printInfo("IN FUNC: Success");
         }
 
     }
@@ -70,14 +73,18 @@ public class LoginService {
                 u.get().setDateBlock(new Date());
                 emailSenderService.sendWrongPassword(u.get());
             }
+
             userRepository.save(u.get());
+            logging.printInfo("IN FUNC: Success");
         }
     }
 
     public boolean isBlockedIP(String key) {
         try {
+            logging.printInfo("IN FUNC: IP is blocked");
             return attemptsCache.get(key) >= MAX_IP ;
         } catch (ExecutionException e) {
+            logging.printInfo("IN FUNC: FALSE");
             return false;
         }
     }
@@ -91,12 +98,15 @@ public class LoginService {
                 Date pom=u.get().getDateBlock();
                 Date pom1= new Date(pom.getTime()+(24*60*60*1000));
                 if((simpleDateFormat.format(pom1)).compareTo( simpleDateFormat.format(new Date())) < 0){
+                    logging.printInfo("IN FUNC: FALSE");
                     return false;
                 }else{
+                    logging.printInfo("IN FUNC: User is blocked");
                     return true;
                 }
             }
         }
+        logging.printInfo("IN FUNC: FALSE");
         return false;
     }
 }
