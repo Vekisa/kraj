@@ -1,0 +1,48 @@
+#forma {
+  position: relative;
+  width: 30%;
+  height: 50%;
+  top: 20%;
+  left: 37%;
+}
+
+.element {
+  margin: 2%;
+  float: left;
+}
+
+#radio {
+  left: 28%;
+
+}
+
+.search {
+  width: 80%;
+  margin: 2%;
+}
+
+#btn {
+  position: relative;
+  left: 32%;
+}
+
+#firstDiv {
+  float: right;
+  width: 40%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+#secondDiv {
+  width: 40%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+table:hover {
+  cursor: pointer;
+}
+
+#btnSS, #btnSF {
+  margin: 2%;
+}

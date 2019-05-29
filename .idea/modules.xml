@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Agent/Agent.iml" filepath="$PROJECT_DIR$/Agent/Agent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Front/front_security/FrontSecurity.iml" filepath="$PROJECT_DIR$/Front/front_security/FrontSecurity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Admin/Security.iml" filepath="$PROJECT_DIR$/Admin/Security.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Admin/XMLB.iml" filepath="$PROJECT_DIR$/Admin/XMLB.iml" />
+    </modules>
+  </component>
+</project>

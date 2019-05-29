@@ -1,0 +1,208 @@
+<div class="form-label-group" id="search">
+  <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText">
+  <button class="btn btn-primary" id="btnSearch" (click)="search(searchText)"> Search</button>
+</div>
+
+<div class="table-wrapper-scroll-y my-custom-scrollbar" id="certs">
+
+  <table class="table table-bordered mb-0 table-hover">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Country</th>
+      <th scope="col">Locality</th>
+      <th scope="col">SerialNumber</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let cert of cert ; let i = index " (click)="rowSelected(cert.serialNumber);">
+      <td>{{i + 1}}</td>
+      <td>{{cert.alias}}</td>
+      <td>{{cert.country}}</td>
+      <td>{{cert.locality}}</td>
+      <td>{{cert.serialNumber}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>
+
+
+<div class="container" xmlns="">
+  <div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card card-signin my-5">
+        <div class="card-body">
+          <h5 class="card-title text-center">Create Certificate</h5>
+
+          <div class="form-group">
+            <label for="typeCert">Type</label>
+            <select class="form-control" id="typeCert" (change)="mySelectHandler()" [(ngModel)]="selectType">
+              <option selected value="Intermediate">Intermediate</option>
+              <option value="Leaf">Leaf</option>
+            </select>
+          </div>
+
+          <form [formGroup]="certForm" (ngSubmit)="onSubmit()">
+
+            <div *ngIf="!roott" class="form-label-group">
+              <label for="parent">Parent</label>
+              <input type="text" id="parent" class="form-control" [formControlName]="'parent'" [(ngModel)]="inputVar"
+                     required readonly>
+            </div>
+
+            <div *ngIf="!roott" class="form-label-group">
+              <label for="passwordParent">Password</label>
+              <input type="password" id="passwordParent" class="form-control" [formControlName]="'password'"
+                     placeholder="Password Parent" required>
+              <div class="alert alert-danger"
+                   *ngIf="certForm.get('password').errors?.required && certForm.get('password').touched">Password Parent
+                is required
+              </div>
+              <div class="alert alert-danger"
+                   *ngIf="certForm.get('password').errors?.pattern && certForm.get('password').touched">Only letters,
+                numbers and ! ? # * / _
+              </div>
+              <div class="alert alert-danger"
+                   *ngIf="certForm.get('password').errors?.minlength && certForm.get('password').touched">Password must
+                be at least 8 characters
+              </div>
+
+            </div>
+
+            <div class="form-label-group">
+              <label for="country">Country</label>
+              <input type="text" ngModel maxlength="30" id="country" class="form-control" [formControlName]="'country'"
+                     required autofocus>
+              <div class="alert alert-danger"
+                   *ngIf="certForm.get('country').errors?.required && certForm.get('country').touched">Country is
+                required
+              </div>
+              <div class="alert alert-danger"
+                   *ngIf="certForm.get('country').errors?.pattern && certForm.get('country').touched">Only letters
+              </div>
+
+            </div>
+
+            <div class="form-label-group">
+              <label for="state">State/Province</label>
+              <input type="text" ngModel maxlength="30" id="state" class="form-control" [formControlName]="'state'"
+                     required>
+              <div class="alert alert-danger"
+                   *ngIf="certForm.get('state').errors?.required && certForm.get('state').touched">State/Province is
+                required
+              </div>
+              <div class="alert alert-danger"
+                   *ngIf="certForm.get('state').errors?.pattern && certForm.get('state').touched">Only letters
+              </div>
+
+            </div>
+
+            <div class="form-label-group">
+              <label for="locality">Locality</label>
+              <input type="text" ngModel maxlength="30" id="locality" [formControlName]="'locality'"
+                     class="form-control" required>
+              <div class="alert alert-danger"
+                   *ngIf="certForm.get('locality').errors?.required && certForm.get('locality').touched">Locality is
+                required
+              </div>
+              <div class="alert alert-danger"
+                   *ngIf="certForm.get('locality').errors?.pattern && certForm.get('locality').touched">Only letters
+              </div>
+
+            </div>
+
+            <div class="form-label-group">
+              <label for="organization">Organization</label>
+              <input type="text" ngModel maxlength="30" id="organization" class="form-control"
+                     [formControlName]="'organization'" required>
+              <div class="alert alert-danger"
+                   *ngIf="certForm.get('organization').errors?.required && certForm.get('organization').touched">
+                Organization is required
+              </div>
+              <div class="alert alert-danger"
+                   *ngIf="certForm.get('organization').errors?.pattern && certForm.get('organization').touched">Only
+                letters
+              </div>
+
+            </div>
+
+            <div class="form-label-group">
+              <label for="organizationalUnit">Organizational Unit</label>
+              <input type="text" ngModel maxlength="30" id="organizationalUnit" class="form-control"
+                     [formControlName]="'organizationUnit'" required>
+              <div class="alert alert-danger"
+                   *ngIf="certForm.get('organizationUnit').errors?.required && certForm.get('organizationUnit').touched">
+                Organization Unit is required
+              </div>
+              <div class="alert alert-danger"
+                   *ngIf="certForm.get('organizationUnit').errors?.pattern && certForm.get('organizationUnit').touched">
+                Only letters
+              </div>
+
+            </div>
+
+            <div class="form-label-group">
+              <label for="commonName">Common Name</label>
+              <input type="text" ngModel maxlength="20" id="commonName" class="form-control"
+                     [formControlName]="'commonName'" required>
+              <div class="alert alert-danger"
+                   *ngIf="certForm.get('commonName').errors?.required && certForm.get('commonName').touched">Comon Name
+                is required
+              </div>
+              <div class="alert alert-danger"
+                   *ngIf="certForm.get('commonName').errors?.pattern && certForm.get('commonName').touched">Only letters
+              </div>
+
+            </div>
+
+            <div class="form-label-group">
+              <label for="startDate">Not Valid Before</label>
+              <div class="input-group">
+                <input id="startDate" class="form-control" [readonly]="true" [minDate]="fromDate" name="d2"
+                       ngbDatepicker #d2="ngbDatepicker"
+                       (dateSelect)="onDateSelected()" [formControlName]="'startDate'">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"><i
+                    class="fas fa-calendar"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-label-group">
+              <label for="endDate">Not Valid After</label>
+              <div class="input-group">
+                <input id="endDate" class="form-control" [readonly]="true" [minDate]="toDate" [maxDate]="toDateMax"
+                       name="d3" ngbDatepicker #d3="ngbDatepicker"
+                       [formControlName]="'endDate'">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary calendar" (click)="d3.toggle()" type="button"><i
+                    class="fas fa-calendar"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-label-group">
+              <label for="alias">Alias</label>
+              <input type="text" id="alias" class="form-control" [formControlName]="'alias'" required>
+              <div class="alert alert-danger"
+                   *ngIf="certForm.get('alias').errors?.required && certForm.get('alias').touched">Alias is required
+              </div>
+              <div class="alert alert-danger"
+                   *ngIf="certForm.get('alias').errors?.pattern && certForm.get('alias').touched">Only letters
+              </div>
+
+            </div>
+
+            <hr class="my-4">
+            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" [disabled]="!certForm.valid">
+              Create
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

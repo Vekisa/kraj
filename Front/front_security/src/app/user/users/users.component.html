@@ -1,0 +1,71 @@
+<div class="form-label-group" id="search">
+  <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText">
+  <button class="btn btn-primary" id="btnSearch" (click)="search(searchText)"> Search</button>
+</div>
+
+<div class="table-wrapper-scroll-y my-custom-scrollbar" id="certs">
+
+  <table class="table table-bordered mb-0 table-hover">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Username</th>
+      <th scope="col">Email</th>
+      <th scope="col">Enabled</th>
+      <th scope="col">Is Verified</th>
+      <th scope="col">Company</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users; let i = index">
+      <td>{{i + 1}}</td>
+      <td>{{user.firstName}}</td>
+      <td>{{user.lastName}}</td>
+      <td>{{user.username}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.enabled}}</td>
+      <td>{{user.verified}}</td>
+      <td *ngIf="user.company">{{user.company.name}}</td>
+      <td *ngIf="!user.company"></td>
+      <td *ngIf="!user.enabled" (click)="enable(user.id);">
+        <button class="btn btn-success">Enable</button>
+      </td>
+      <td *ngIf="user.enabled" (click)="disable(user.id);">
+        <button class="btn btn-danger">Disable</button>
+      </td>
+      <td (click)="addCompany(i);">
+        <button class="btn btn-success">Edit</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+
+  <ng-template #content let-c="close" let-d="dismiss">
+
+    <div class="modal-body">
+
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="companySelect">Company</label>
+          <select class="form-control" id="companySelect" formControlName="company">
+            <option value=0>NOT ASSIGNED</option>
+            <option *ngFor="let company of companies"
+                    [value]="company.id">{{company.name}}</option>
+
+
+          </select>
+        </div>
+        <button class="btn btn-primary text-uppercase" type="submit">Save</button>
+      </form>
+
+
+    </div>
+
+  </ng-template>
+
+</div>
