@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Agent/Agent.iml" filepath="$PROJECT_DIR$/Agent/Agent.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Admin/XMLB.iml" filepath="$PROJECT_DIR$/Admin/XMLB.iml" />
       <module fileurl="file://$PROJECT_DIR$/Admin/admin.iml" filepath="$PROJECT_DIR$/Admin/admin.iml" />
       <module fileurl="file://$PROJECT_DIR$/kraj.iml" filepath="$PROJECT_DIR$/kraj.iml" />
     </modules>
