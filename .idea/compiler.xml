@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Agent" />
+        <module name="XMLB" />
         <module name="admin" />
       </profile>
     </annotationProcessing>
@@ -14,11 +15,13 @@
       <module name="admin" target="1.8" />
       <module name="Agent" target="1.8" />
       <module name="agent" target="1.8" />
+      <module name="XMLB" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Agent" options="-parameters" />
+      <module name="XMLB" options="-parameters" />
       <module name="admin" options="-parameters" />
       <module name="agent" options="-parameters" />
     </option>
