@@ -72,6 +72,8 @@ public class Comment {
     @XmlElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user", required = true)
     protected RegisteredUser registeredUser;
 
+
+    public Comment(){}
     /**
      * Gets the value of the text property.
      * 

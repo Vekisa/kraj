@@ -58,6 +58,7 @@ public class Agent
     @XmlElement(name = "Message", namespace = "http://www.megatravell.com/user")
     protected List<Message> message;
 
+    public Agent(){}
     /**
      * Gets the value of the bussinesRegistrationNumber property.
      * 

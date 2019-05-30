@@ -59,6 +59,7 @@ public class Includes {
     @XmlElement(name = "ExtraOption", namespace = "http://megatravell.com/object", required = true)
     protected ExtraOption extraOption;
 
+    public Includes(){}
     /**
      * Gets the value of the quantity property.
      * 

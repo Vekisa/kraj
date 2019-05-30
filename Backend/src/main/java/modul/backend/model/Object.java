@@ -117,6 +117,7 @@ public class Object {
     @XmlElement(name = "Agent", namespace = "http://www.megatravell.com/user")
     protected List<Agent> agent;
 
+    public Object(){}
     /**
      * Gets the value of the name property.
      * 

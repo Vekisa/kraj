@@ -74,6 +74,7 @@ public class ExtraOption {
     @Column
     protected double price;
 
+    public ExtraOption(){}
     /**
      * Gets the value of the name property.
      * 

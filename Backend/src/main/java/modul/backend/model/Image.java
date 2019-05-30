@@ -45,6 +45,7 @@ public class Image {
     @Column
     protected byte[] source;
 
+    public Image(){}
     /**
      * Gets the value of the source property.
      * 

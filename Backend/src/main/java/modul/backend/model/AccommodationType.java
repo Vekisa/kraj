@@ -63,6 +63,8 @@ public class AccommodationType {
     @Column
     protected String description;
 
+    public AccommodationType(){}
+
     /**
      * Gets the value of the name property.
      * 

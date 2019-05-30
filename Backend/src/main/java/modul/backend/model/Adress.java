@@ -90,6 +90,7 @@ public class Adress {
     @Column
     protected BigDecimal latitude;
 
+    public Adress(){}
     /**
      * Gets the value of the state property.
      * 

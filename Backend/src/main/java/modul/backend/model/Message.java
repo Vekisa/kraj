@@ -67,6 +67,7 @@ public class Message {
     @XmlElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user", required = true)
     protected RegisteredUser registeredUser;
 
+    public Message(){}
     /**
      * Gets the value of the text property.
      * 
