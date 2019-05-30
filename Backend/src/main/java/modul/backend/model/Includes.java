@@ -1,6 +1,7 @@
 
 package modul.backend.model;
 
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -42,9 +43,16 @@ import javax.xml.bind.annotation.XmlType;
     "extraOption"
 })
 @XmlRootElement(name = "Includes", namespace = "http://megatravell.com/object")
+@Entity
+@Table(name = "includes")
 public class Includes {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @XmlElement(namespace = "http://megatravell.com/object")
+    @Column
     protected int quantity;
     @XmlElement(name = "Reservation", namespace = "http://megatravell.com/object", required = true)
     protected Reservation reservation;

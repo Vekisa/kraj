@@ -3,6 +3,7 @@ package modul.backend.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -42,11 +43,17 @@ import javax.xml.bind.annotation.XmlType;
     "message"
 })
 @XmlRootElement(name = "Agent", namespace = "http://www.megatravell.com/user")
+@Entity
+@Table(name = "agent")
 public class Agent
     extends User
 {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @XmlElement(name = "BussinesRegistrationNumber", namespace = "http://www.megatravell.com/user", required = true)
+    @Column
     protected String bussinesRegistrationNumber;
     @XmlElement(name = "Message", namespace = "http://www.megatravell.com/user")
     protected List<Message> message;

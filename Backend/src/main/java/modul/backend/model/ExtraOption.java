@@ -1,6 +1,7 @@
 
 package modul.backend.model;
 
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -55,13 +56,22 @@ import javax.xml.bind.annotation.XmlType;
     "price"
 })
 @XmlRootElement(name = "ExtraOption", namespace = "http://megatravell.com/object")
+@Entity
+@Table(name = "extraOption")
 public class ExtraOption {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @XmlElement(name = "Name", namespace = "http://megatravell.com/object", required = true)
+    @Column
     protected String name;
     @XmlElement(name = "Description", namespace = "http://megatravell.com/object", required = true)
+    @Column
     protected String description;
     @XmlElement(name = "Price", namespace = "http://megatravell.com/object")
+    @Column
     protected double price;
 
     /**

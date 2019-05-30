@@ -3,6 +3,7 @@ package modul.backend.model;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -58,22 +59,35 @@ import javax.xml.bind.annotation.XmlType;
 
 
 @XmlRootElement(name = "Adress", namespace = "http://www.megatravell.com/address")
+@Entity
+@Table(name = "adress")
 public class Adress {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @XmlElement(name = "State", namespace = "http://www.megatravell.com/address", required = true)
+    @Column
     protected String state;
     @XmlElement(name = "City", namespace = "http://www.megatravell.com/address", required = true)
+    @Column
     protected String city;
     @XmlElement(name = "Street", namespace = "http://www.megatravell.com/address", required = true)
+    @Column
     protected String street;
     @XmlElement(name = "Number", namespace = "http://www.megatravell.com/address", required = true)
     @XmlSchemaType(name = "positiveInteger")
+    @Column
     protected BigInteger number;
     @XmlElement(name = "ZIP", namespace = "http://www.megatravell.com/address", defaultValue = "0")
+    @Column
     protected int zip;
     @XmlElement(name = "Longitude", namespace = "http://www.megatravell.com/address", required = true)
+    @Column
     protected BigDecimal longitude;
     @XmlElement(name = "Latitude", namespace = "http://www.megatravell.com/address", required = true)
+    @Column
     protected BigDecimal latitude;
 
     /**

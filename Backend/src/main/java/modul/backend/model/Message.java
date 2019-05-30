@@ -1,6 +1,7 @@
 
 package modul.backend.model;
 
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -46,12 +47,20 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "registeredUser"
 })
 @XmlRootElement(name = "Message", namespace = "http://www.megatravell.com/user")
+@Entity
+@Table(name = "message")
 public class Message {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @XmlElement(name = "Text", namespace = "http://www.megatravell.com/user", required = true)
+    @Column
     protected String text;
     @XmlElement(namespace = "http://www.megatravell.com/user", required = true)
     @XmlSchemaType(name = "dateTime")
+    @Column
     protected XMLGregorianCalendar postingDate;
     @XmlElement(name = "Agent", namespace = "http://www.megatravell.com/user", required = true)
     protected Agent agent;

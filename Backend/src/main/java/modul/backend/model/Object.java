@@ -4,6 +4,7 @@ package modul.backend.model;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -77,16 +78,26 @@ import javax.xml.bind.annotation.XmlType;
     "agent"
 })
 @XmlRootElement(name = "Object", namespace = "http://megatravell.com/object")
+@Entity
+@Table(name = "object")
 public class Object {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @XmlElement(name = "Name", namespace = "http://megatravell.com/object", required = true)
+    @Column
     protected String name;
     @XmlElement(name = "Description", namespace = "http://megatravell.com/object", required = true)
+    @Column
     protected String description;
     @XmlElement(name = "Cancellation", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "positiveInteger")
+    @Column
     protected BigInteger cancellation;
     @XmlElement(name = "Category", namespace = "http://megatravell.com/object")
+    @Column
     protected int category;
     @XmlElement(name = "Adress", namespace = "http://www.megatravell.com/address", required = true)
     protected Adress adress;
