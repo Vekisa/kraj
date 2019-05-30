@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-           targetNamespace="http://megatravell.com/object" xmlns:object="http://megatravell.com/object"
-           xmlns:address="http://www.megatravell.com/address" xmlns:user="http://www.megatravell.com/user">
+    targetNamespace="http://megatravell.com/object" xmlns:object="http://megatravell.com/object"
+    xmlns:address="http://www.megatravell.com/address" xmlns:user="http://www.megatravell.com/user">
     <xs:import namespace="http://www.megatravell.com/address" schemaLocation="Adress.xsd"/>
     <xs:import namespace="http://www.megatravell.com/user" schemaLocation="User.xsd"/>
     <xs:element name="Object">
@@ -37,7 +37,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="object:Unit"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="object:Rating"/>
                 <xs:element ref="object:ObjectType"/>
-                <xs:element ref="user:Agent"/>
+                <xs:element ref="user:Agent" maxOccurs="unbounded" minOccurs="0"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
