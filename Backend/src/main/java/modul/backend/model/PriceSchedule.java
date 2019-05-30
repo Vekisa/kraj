@@ -3,6 +3,9 @@ package modul.backend.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -40,14 +43,19 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "plan"
 })
 @XmlRootElement(name = "Price_schedule", namespace = "http://megatravell.com/object")
+@Entity
+@Table
 public class PriceSchedule {
 
     @XmlElement(name = "Year", namespace = "http://megatravell.com/object")
+    @Column
     protected int year;
     @XmlElement(name = "Made", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
+    @Column
     protected XMLGregorianCalendar made;
     @XmlElement(name = "Plan", namespace = "http://megatravell.com/object")
+    @Column
     protected List<Plan> plan;
 
     /**

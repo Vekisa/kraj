@@ -1,6 +1,9 @@
 
 package modul.backend.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -48,19 +51,26 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "perPerson"
 })
 @XmlRootElement(name = "Plan", namespace = "http://megatravell.com/object")
+@Entity
+@Table
 public class Plan {
 
     @XmlElement(name = "From", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
+    @Column
     protected XMLGregorianCalendar from;
     @XmlElement(name = "To", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
+    @Column
     protected XMLGregorianCalendar to;
     @XmlElement(name = "Price", namespace = "http://megatravell.com/object")
+    @Column
     protected double price;
     @XmlElement(name = "Month", namespace = "http://megatravell.com/object")
+    @Column
     protected int month;
     @XmlElement(name = "Per_person", namespace = "http://megatravell.com/object")
+    @Column
     protected boolean perPerson;
 
     /**

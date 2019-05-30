@@ -3,6 +3,9 @@ package modul.backend.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -56,26 +59,36 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "registeredUser"
 })
 @XmlRootElement(name = "Reservation", namespace = "http://megatravell.com/object")
+@Entity
+@Table
 public class Reservation {
 
     @XmlElement(name = "Start", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
+    @Column
     protected XMLGregorianCalendar start;
     @XmlElement(name = "End", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
+    @Column
     protected XMLGregorianCalendar end;
     @XmlElement(name = "Confirmed", namespace = "http://megatravell.com/object", defaultValue = "false")
+    @Column
     protected boolean confirmed;
     @XmlElement(name = "PossibleCancellationDate", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
+    @Column
     protected XMLGregorianCalendar possibleCancellationDate;
     @XmlElement(name = "Price", namespace = "http://megatravell.com/object")
+    @Column
     protected double price;
     @XmlElement(name = "Unit", namespace = "http://megatravell.com/object", required = true)
+    @Column
     protected Unit unit;
     @XmlElement(name = "Includes", namespace = "http://megatravell.com/object")
+    @Column
     protected List<Includes> includes;
     @XmlElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user", required = true)
+    @Column
     protected RegisteredUser registeredUser;
 
     /**

@@ -5,6 +5,9 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -61,29 +64,41 @@ import javax.xml.bind.annotation.XmlType;
     "object"
 })
 @XmlRootElement(name = "Unit", namespace = "http://megatravell.com/object")
+@Entity
+@Table
 public class Unit {
 
     @XmlElement(name = "Adults", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "positiveInteger")
+    @Column
     protected BigInteger adults;
     @XmlElement(name = "Children", namespace = "http://megatravell.com/object")
+    @Column
     protected int children;
     @XmlElement(name = "Beds", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "positiveInteger")
+    @Column
     protected BigInteger beds;
     @XmlElement(name = "Size", namespace = "http://megatravell.com/object", required = true)
+    @Column
     protected BigDecimal size;
     @XmlElement(name = "Smoking", namespace = "http://megatravell.com/object")
+    @Column
     protected boolean smoking;
     @XmlElement(name = "Price_schedule", namespace = "http://megatravell.com/object")
+    @Column
     protected List<PriceSchedule> priceSchedule;
     @XmlElement(name = "AccommodationType", namespace = "http://megatravell.com/object", required = true)
+    @Column
     protected AccommodationType accommodationType;
     @XmlElement(name = "Image", namespace = "http://megatravell.com/object")
+    @Column
     protected List<Image> image;
     @XmlElement(name = "Reservation", namespace = "http://megatravell.com/object")
+    @Column
     protected List<Reservation> reservation;
     @XmlElement(name = "Object", namespace = "http://megatravell.com/object", required = true)
+    @Column
     protected Object object;
 
     /**

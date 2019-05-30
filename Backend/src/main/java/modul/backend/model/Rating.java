@@ -1,6 +1,9 @@
 
 package modul.backend.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -43,13 +46,18 @@ import javax.xml.bind.annotation.XmlType;
     "registeredUser"
 })
 @XmlRootElement(name = "Rating", namespace = "http://megatravell.com/object")
+@Entity
+@Table
 public class Rating {
 
     @XmlElement(namespace = "http://megatravell.com/object")
+    @Column
     protected int mark;
     @XmlElement(name = "Object", namespace = "http://megatravell.com/object", required = true)
+    @Column
     protected Object object;
     @XmlElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user", required = true)
+    @Column
     protected RegisteredUser registeredUser;
 
     /**
