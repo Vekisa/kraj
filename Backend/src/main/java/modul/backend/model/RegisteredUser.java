@@ -3,9 +3,7 @@ package modul.backend.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -45,26 +43,22 @@ import javax.xml.bind.annotation.XmlType;
     "rating"
 })
 @XmlRootElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user")
-@Entity
-@Table
 public class RegisteredUser
     extends User
 {
+
+
 
     @XmlElement(name = "Aktivan", namespace = "http://www.megatravell.com/user", defaultValue = "true")
     @Column
     protected boolean aktivan;
     @XmlElement(name = "Comment", namespace = "http://megatravell.com/object")
-    @Column
     protected List<Comment> comment;
     @XmlElement(name = "Reservation", namespace = "http://megatravell.com/object")
-    @Column
     protected List<Reservation> reservation;
     @XmlElement(name = "Message", namespace = "http://www.megatravell.com/user")
-    @Column
     protected List<Message> message;
     @XmlElement(name = "Rating", namespace = "http://megatravell.com/object")
-    @Column
     protected List<Rating> rating;
 
     /**

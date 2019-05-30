@@ -3,9 +3,7 @@ package modul.backend.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -63,6 +61,10 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @Table
 public class Reservation {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @XmlElement(name = "Start", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
     @Column
@@ -85,7 +87,7 @@ public class Reservation {
     @Column
     protected Unit unit;
     @XmlElement(name = "Includes", namespace = "http://megatravell.com/object")
-    @Column
+
     protected List<Includes> includes;
     @XmlElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user", required = true)
     @Column

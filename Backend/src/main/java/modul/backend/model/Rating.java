@@ -1,9 +1,7 @@
 
 package modul.backend.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -49,6 +47,10 @@ import javax.xml.bind.annotation.XmlType;
 @Entity
 @Table
 public class Rating {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @XmlElement(namespace = "http://megatravell.com/object")
     @Column

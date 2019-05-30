@@ -100,6 +100,7 @@ public class Object {
     @Column
     protected int category;
     @XmlElement(name = "Adress", namespace = "http://www.megatravell.com/address", required = true)
+    @Column
     protected Adress adress;
     @XmlElement(name = "Image", namespace = "http://megatravell.com/object")
     protected List<Image> image;

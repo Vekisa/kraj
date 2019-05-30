@@ -5,9 +5,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -67,6 +65,10 @@ import javax.xml.bind.annotation.XmlType;
 @Entity
 @Table
 public class Unit {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @XmlElement(name = "Adults", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "positiveInteger")
