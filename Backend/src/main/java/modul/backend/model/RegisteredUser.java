@@ -43,22 +43,30 @@ import javax.xml.bind.annotation.XmlType;
     "rating"
 })
 @XmlRootElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user")
+@Entity
+@Table
 public class RegisteredUser
     extends User
 {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @XmlElement(name = "Aktivan", namespace = "http://www.megatravell.com/user", defaultValue = "true")
     @Column
     protected boolean aktivan;
     @XmlElement(name = "Comment", namespace = "http://megatravell.com/object")
+    @OneToMany(mappedBy = "registeredUser")
     protected List<Comment> comment;
     @XmlElement(name = "Reservation", namespace = "http://megatravell.com/object")
+    @OneToMany(mappedBy = "registeredUser")
     protected List<Reservation> reservation;
     @XmlElement(name = "Message", namespace = "http://www.megatravell.com/user")
+    @OneToMany(mappedBy = "registeredUser")
     protected List<Message> message;
     @XmlElement(name = "Rating", namespace = "http://megatravell.com/object")
+    @OneToMany(mappedBy = "registeredUser")
     protected List<Rating> rating;
 
     public RegisteredUser() {

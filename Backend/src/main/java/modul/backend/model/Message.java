@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.Date;
 
 
 /**
@@ -61,10 +62,12 @@ public class Message {
     @XmlElement(namespace = "http://www.megatravell.com/user", required = true)
     @XmlSchemaType(name = "dateTime")
     @Column
-    protected XMLGregorianCalendar postingDate;
+    protected Date postingDate;
     @XmlElement(name = "Agent", namespace = "http://www.megatravell.com/user", required = true)
+    @ManyToOne
     protected Agent agent;
     @XmlElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user", required = true)
+    @ManyToOne
     protected RegisteredUser registeredUser;
 
     public Message(){}
@@ -97,10 +100,10 @@ public class Message {
      * 
      * @return
      *     possible object is
-     *     {@link XMLGregorianCalendar }
+     *     {@link Date }
      *     
      */
-    public XMLGregorianCalendar getPostingDate() {
+    public Date getPostingDate() {
         return postingDate;
     }
 
@@ -109,10 +112,10 @@ public class Message {
      * 
      * @param value
      *     allowed object is
-     *     {@link XMLGregorianCalendar }
+     *     {@link Date }
      *     
      */
-    public void setPostingDate(XMLGregorianCalendar value) {
+    public void setPostingDate(Date value) {
         this.postingDate = value;
     }
 

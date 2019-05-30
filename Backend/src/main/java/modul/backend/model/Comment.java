@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.Date;
 
 
 /**
@@ -63,13 +64,15 @@ public class Comment {
     @XmlElement(name = "DateOfPublication", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "dateTime")
     @Column
-    protected XMLGregorianCalendar dateOfPublication;
+    protected Date dateOfPublication;
     @XmlElement(namespace = "http://megatravell.com/object", defaultValue = "false")
     @Column
     protected boolean approved;
     @XmlElement(name = "Object", namespace = "http://megatravell.com/object", required = true)
+    @ManyToOne
     protected Object object;
     @XmlElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user", required = true)
+    @ManyToOne
     protected RegisteredUser registeredUser;
 
 
@@ -103,10 +106,10 @@ public class Comment {
      * 
      * @return
      *     possible object is
-     *     {@link XMLGregorianCalendar }
+     *     {@link Date }
      *     
      */
-    public XMLGregorianCalendar getDateOfPublication() {
+    public Date getDateOfPublication() {
         return dateOfPublication;
     }
 
@@ -115,10 +118,10 @@ public class Comment {
      * 
      * @param value
      *     allowed object is
-     *     {@link XMLGregorianCalendar }
+     *     {@link Date }
      *     
      */
-    public void setDateOfPublication(XMLGregorianCalendar value) {
+    public void setDateOfPublication(Date value) {
         this.dateOfPublication = value;
     }
 

@@ -56,6 +56,7 @@ public class Agent
     @Column
     protected String bussinesRegistrationNumber;
     @XmlElement(name = "Message", namespace = "http://www.megatravell.com/user")
+    @OneToMany(mappedBy = "agent")
     protected List<Message> message;
 
     public Agent(){}

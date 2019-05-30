@@ -88,19 +88,19 @@ public class Unit {
     @Column
     protected boolean smoking;
     @XmlElement(name = "Price_schedule", namespace = "http://megatravell.com/object")
-    @Column
+    @OneToMany
     protected List<PriceSchedule> priceSchedule;
     @XmlElement(name = "AccommodationType", namespace = "http://megatravell.com/object", required = true)
-    @Column
+    @ManyToOne
     protected AccommodationType accommodationType;
     @XmlElement(name = "Image", namespace = "http://megatravell.com/object")
-    @Column
+    @OneToMany
     protected List<Image> image;
     @XmlElement(name = "Reservation", namespace = "http://megatravell.com/object")
-    @Column
+    @OneToMany
     protected List<Reservation> reservation;
     @XmlElement(name = "Object", namespace = "http://megatravell.com/object", required = true)
-    @Column
+    @ManyToOne
     protected Object object;
 
     public Unit() {

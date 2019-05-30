@@ -74,8 +74,8 @@ import javax.xml.bind.annotation.XmlType;
     "extraOption",
     "unit",
     "rating",
-    "objectType",
-    "agent"
+    "objectType"
+    //"agent"
 })
 @XmlRootElement(name = "Object", namespace = "http://megatravell.com/object")
 @Entity
@@ -100,22 +100,32 @@ public class Object {
     @Column
     protected int category;
     @XmlElement(name = "Adress", namespace = "http://www.megatravell.com/address", required = true)
-    @Column
+    @ManyToOne
     protected Adress adress;
     @XmlElement(name = "Image", namespace = "http://megatravell.com/object")
+    @OneToMany
     protected List<Image> image;
     @XmlElement(name = "Comment", namespace = "http://megatravell.com/object")
+    @OneToMany(mappedBy = "object")
     protected List<Comment> comment;
     @XmlElement(name = "ExtraOption", namespace = "http://megatravell.com/object")
+    @OneToMany
     protected List<ExtraOption> extraOption;
     @XmlElement(name = "Unit", namespace = "http://megatravell.com/object")
+    @OneToMany(mappedBy = "object")
     protected List<Unit> unit;
     @XmlElement(name = "Rating", namespace = "http://megatravell.com/object")
+    @OneToMany(mappedBy = "object")
     protected List<Rating> rating;
     @XmlElement(name = "ObjectType", namespace = "http://megatravell.com/object", required = true)
+    @ManyToOne
     protected ObjectType objectType;
-    @XmlElement(name = "Agent", namespace = "http://www.megatravell.com/user")
+    /**
+     * @XmlElement(name = "Agent", namespace = "http://www.megatravell.com/user")
+    @OneToMany
     protected List<Agent> agent;
+
+     */
 
     public Object(){}
     /**
@@ -421,11 +431,11 @@ public class Object {
      * 
      * 
      */
-    public List<Agent> getAgent() {
+   /** public List<Agent> getAgent() {
         if (agent == null) {
             agent = new ArrayList<Agent>();
         }
         return this.agent;
-    }
+    }*/
 
 }

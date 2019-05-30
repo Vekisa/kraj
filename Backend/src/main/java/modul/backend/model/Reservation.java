@@ -2,6 +2,7 @@
 package modul.backend.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -10,7 +11,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
@@ -68,29 +68,29 @@ public class Reservation {
     @XmlElement(name = "Start", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
     @Column
-    protected XMLGregorianCalendar start;
+    protected Date start;
     @XmlElement(name = "End", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
     @Column
-    protected XMLGregorianCalendar end;
+    protected Date end;
     @XmlElement(name = "Confirmed", namespace = "http://megatravell.com/object", defaultValue = "false")
     @Column
     protected boolean confirmed;
     @XmlElement(name = "PossibleCancellationDate", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
     @Column
-    protected XMLGregorianCalendar possibleCancellationDate;
+    protected Date possibleCancellationDate;
     @XmlElement(name = "Price", namespace = "http://megatravell.com/object")
     @Column
     protected double price;
     @XmlElement(name = "Unit", namespace = "http://megatravell.com/object", required = true)
-    @Column
+    @ManyToOne
     protected Unit unit;
     @XmlElement(name = "Includes", namespace = "http://megatravell.com/object")
-
+    @OneToMany(mappedBy = "reservation")
     protected List<Includes> includes;
     @XmlElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user", required = true)
-    @Column
+    @ManyToOne
     protected RegisteredUser registeredUser;
 
     public Reservation() {
@@ -101,10 +101,10 @@ public class Reservation {
      * 
      * @return
      *     possible object is
-     *     {@link XMLGregorianCalendar }
+     *     {@link Date }
      *     
      */
-    public XMLGregorianCalendar getStart() {
+    public Date getStart() {
         return start;
     }
 
@@ -113,10 +113,10 @@ public class Reservation {
      * 
      * @param value
      *     allowed object is
-     *     {@link XMLGregorianCalendar }
+     *     {@link Date }
      *     
      */
-    public void setStart(XMLGregorianCalendar value) {
+    public void setStart(Date value) {
         this.start = value;
     }
 
@@ -125,10 +125,10 @@ public class Reservation {
      * 
      * @return
      *     possible object is
-     *     {@link XMLGregorianCalendar }
+     *     {@link Date }
      *     
      */
-    public XMLGregorianCalendar getEnd() {
+    public Date getEnd() {
         return end;
     }
 
@@ -137,10 +137,10 @@ public class Reservation {
      * 
      * @param value
      *     allowed object is
-     *     {@link XMLGregorianCalendar }
+     *     {@link Date }
      *     
      */
-    public void setEnd(XMLGregorianCalendar value) {
+    public void setEnd(Date value) {
         this.end = value;
     }
 
@@ -165,10 +165,10 @@ public class Reservation {
      * 
      * @return
      *     possible object is
-     *     {@link XMLGregorianCalendar }
+     *     {@link Date }
      *     
      */
-    public XMLGregorianCalendar getPossibleCancellationDate() {
+    public Date getPossibleCancellationDate() {
         return possibleCancellationDate;
     }
 
@@ -177,10 +177,10 @@ public class Reservation {
      * 
      * @param value
      *     allowed object is
-     *     {@link XMLGregorianCalendar }
+     *     {@link Date }
      *     
      */
-    public void setPossibleCancellationDate(XMLGregorianCalendar value) {
+    public void setPossibleCancellationDate(Date value) {
         this.possibleCancellationDate = value;
     }
 

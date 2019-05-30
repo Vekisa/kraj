@@ -56,10 +56,10 @@ public class Rating {
     @Column
     protected int mark;
     @XmlElement(name = "Object", namespace = "http://megatravell.com/object", required = true)
-    @Column
+    @ManyToOne
     protected Object object;
     @XmlElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user", required = true)
-    @Column
+    @ManyToOne
     protected RegisteredUser registeredUser;
 
     public Rating() {

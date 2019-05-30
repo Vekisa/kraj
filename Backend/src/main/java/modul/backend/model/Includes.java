@@ -55,8 +55,10 @@ public class Includes {
     @Column
     protected int quantity;
     @XmlElement(name = "Reservation", namespace = "http://megatravell.com/object", required = true)
+    @ManyToOne
     protected Reservation reservation;
     @XmlElement(name = "ExtraOption", namespace = "http://megatravell.com/object", required = true)
+    @ManyToOne
     protected ExtraOption extraOption;
 
     public Includes(){}

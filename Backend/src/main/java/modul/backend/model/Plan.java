@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.Date;
 
 
 /**
@@ -50,7 +50,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 })
 @XmlRootElement(name = "Plan", namespace = "http://megatravell.com/object")
 @Entity
-@Table
+@Table(name="plan")
 public class Plan {
 
     @Id
@@ -60,20 +60,20 @@ public class Plan {
     @XmlElement(name = "From", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
     @Column
-    protected XMLGregorianCalendar from;
+    protected Date from;
     @XmlElement(name = "To", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
     @Column
-    protected XMLGregorianCalendar to;
+    protected Date to;
     @XmlElement(name = "Price", namespace = "http://megatravell.com/object")
     @Column
-    protected double price;
+    protected Double price;
     @XmlElement(name = "Month", namespace = "http://megatravell.com/object")
     @Column
-    protected int month;
+    protected Integer month;
     @XmlElement(name = "Per_person", namespace = "http://megatravell.com/object")
     @Column
-    protected boolean perPerson;
+    protected Boolean perPerson;
 
     public Plan() {
     }
@@ -83,10 +83,10 @@ public class Plan {
      * 
      * @return
      *     possible object is
-     *     {@link XMLGregorianCalendar }
+     *     {@link Date }
      *     
      */
-    public XMLGregorianCalendar getFrom() {
+    public Date getFrom() {
         return from;
     }
 
@@ -95,10 +95,10 @@ public class Plan {
      * 
      * @param value
      *     allowed object is
-     *     {@link XMLGregorianCalendar }
+     *     {@link Date }
      *     
      */
-    public void setFrom(XMLGregorianCalendar value) {
+    public void setFrom(Date value) {
         this.from = value;
     }
 
@@ -107,10 +107,10 @@ public class Plan {
      * 
      * @return
      *     possible object is
-     *     {@link XMLGregorianCalendar }
+     *     {@link Date }
      *     
      */
-    public XMLGregorianCalendar getTo() {
+    public Date getTo() {
         return to;
     }
 
@@ -119,10 +119,10 @@ public class Plan {
      * 
      * @param value
      *     allowed object is
-     *     {@link XMLGregorianCalendar }
+     *     {@link Date }
      *     
      */
-    public void setTo(XMLGregorianCalendar value) {
+    public void setTo(Date value) {
         this.to = value;
     }
 
