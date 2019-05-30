@@ -75,6 +75,9 @@ public class Plan {
     @Column
     protected boolean perPerson;
 
+    public Plan() {
+    }
+
     /**
      * Gets the value of the from property.
      * 

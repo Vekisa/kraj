@@ -63,6 +63,9 @@ public class ObjectType {
     @Column
     protected String description;
 
+    public ObjectType() {
+    }
+
     /**
      * Gets the value of the name property.
      * 

@@ -60,6 +60,9 @@ public class PriceSchedule {
 
     protected List<Plan> plan;
 
+    public PriceSchedule() {
+    }
+
     /**
      * Gets the value of the year property.
      * 

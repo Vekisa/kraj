@@ -93,6 +93,9 @@ public class Reservation {
     @Column
     protected RegisteredUser registeredUser;
 
+    public Reservation() {
+    }
+
     /**
      * Gets the value of the start property.
      * 

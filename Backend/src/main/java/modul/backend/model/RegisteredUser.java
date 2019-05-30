@@ -61,6 +61,9 @@ public class RegisteredUser
     @XmlElement(name = "Rating", namespace = "http://megatravell.com/object")
     protected List<Rating> rating;
 
+    public RegisteredUser() {
+    }
+
     /**
      * Gets the value of the aktivan property.
      * 

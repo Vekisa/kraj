@@ -62,6 +62,9 @@ public class Rating {
     @Column
     protected RegisteredUser registeredUser;
 
+    public Rating() {
+    }
+
     /**
      * Gets the value of the mark property.
      * 

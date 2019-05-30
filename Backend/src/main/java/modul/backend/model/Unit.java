@@ -103,6 +103,9 @@ public class Unit {
     @Column
     protected Object object;
 
+    public Unit() {
+    }
+
     /**
      * Gets the value of the adults property.
      * 
