@@ -42,10 +42,10 @@ import java.util.Date;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "from",
-    "to",
     "price",
     "month",
+    "fromDate",
+    "toDate",
     "perPerson"
 })
 @XmlRootElement(name = "Plan", namespace = "http://megatravell.com/object")
@@ -57,14 +57,14 @@ public class Plan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @XmlElement(name = "From", namespace = "http://megatravell.com/object", required = true)
+    @XmlElement(name = "FromDate", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
     @Column
-    protected Date from;
-    @XmlElement(name = "To", namespace = "http://megatravell.com/object", required = true)
+    protected Date fromDate;
+    @XmlElement(name = "ToDate", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
     @Column
-    protected Date to;
+    protected Date toDate;
     @XmlElement(name = "Price", namespace = "http://megatravell.com/object")
     @Column
     protected Double price;
@@ -80,55 +80,55 @@ public class Plan {
 
     /**
      * Gets the value of the from property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Date }
-     *     
+     *
      */
     public Date getFrom() {
-        return from;
+        return fromDate;
     }
 
     /**
      * Sets the value of the from property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Date }
-     *     
+     *
      */
     public void setFrom(Date value) {
-        this.from = value;
+        this.fromDate = value;
     }
 
     /**
      * Gets the value of the to property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Date }
-     *     
+     *
      */
     public Date getTo() {
-        return to;
+        return toDate;
     }
 
     /**
      * Sets the value of the to property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Date }
-     *     
+     *
      */
     public void setTo(Date value) {
-        this.to = value;
+        this.toDate = value;
     }
 
     /**
      * Gets the value of the price property.
-     * 
+     *
      */
     public double getPrice() {
         return price;
@@ -136,7 +136,7 @@ public class Plan {
 
     /**
      * Sets the value of the price property.
-     * 
+     *
      */
     public void setPrice(double value) {
         this.price = value;
@@ -144,7 +144,7 @@ public class Plan {
 
     /**
      * Gets the value of the month property.
-     * 
+     *
      */
     public int getMonth() {
         return month;
@@ -152,7 +152,7 @@ public class Plan {
 
     /**
      * Sets the value of the month property.
-     * 
+     *
      */
     public void setMonth(int value) {
         this.month = value;
@@ -160,7 +160,7 @@ public class Plan {
 
     /**
      * Gets the value of the perPerson property.
-     * 
+     *
      */
     public boolean isPerPerson() {
         return perPerson;
@@ -168,7 +168,7 @@ public class Plan {
 
     /**
      * Sets the value of the perPerson property.
-     * 
+     *
      */
     public void setPerPerson(boolean value) {
         this.perPerson = value;
