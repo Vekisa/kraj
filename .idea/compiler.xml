@@ -6,26 +6,33 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Administrator" />
         <module name="Agent" />
+        <module name="agent" />
+        <module name="backend" />
         <module name="Backend" />
         <module name="XMLB" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="admin" target="1.8" />
+      <module name="Administrator" target="1.8" />
       <module name="Agent" target="1.8" />
       <module name="agent" target="1.8" />
       <module name="Backend" target="1.8" />
+      <module name="backend" target="1.8" />
       <module name="XMLB" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Administrator" options="-parameters" />
       <module name="Agent" options="-parameters" />
       <module name="Backend" options="-parameters" />
       <module name="XMLB" options="-parameters" />
       <module name="admin" options="-parameters" />
       <module name="agent" options="-parameters" />
+      <module name="backend" options="-parameters" />
     </option>
   </component>
 </project>
