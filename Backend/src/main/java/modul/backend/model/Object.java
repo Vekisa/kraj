@@ -124,7 +124,6 @@ public class Object {
      * @XmlElement(name = "Agent", namespace = "http://www.megatravell.com/user")
     @OneToMany
     protected List<Agent> agent;
-
      */
 
     public Object(){}

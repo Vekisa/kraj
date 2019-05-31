@@ -6,12 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Administrator" />
-        <module name="Agent" />
-        <module name="agent" />
-        <module name="backend" />
         <module name="Backend" />
         <module name="XMLB" />
+        <module name="agent" />
+        <module name="Administrator" />
+        <module name="Agent" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
