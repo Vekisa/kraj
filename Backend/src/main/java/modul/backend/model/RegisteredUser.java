@@ -44,7 +44,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 @XmlRootElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user")
 @Entity
-@Table
+@Table(name = "registredUser")
 public class RegisteredUser
     extends User
 {

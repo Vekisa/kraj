@@ -63,7 +63,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 @XmlRootElement(name = "Unit", namespace = "http://megatravell.com/object")
 @Entity
-@Table
+@Table(name = "unit")
 public class Unit {
 
     @Id
