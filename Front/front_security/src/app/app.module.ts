@@ -56,7 +56,8 @@ import {UserRolesComponent} from './user/user-roles/user-roles.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    AppRoutingModule
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
