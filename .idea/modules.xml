@@ -7,7 +7,10 @@
       <module fileurl="file://$PROJECT_DIR$/Backend/Backend.iml" filepath="$PROJECT_DIR$/Backend/Backend.iml" />
       <module fileurl="file://$PROJECT_DIR$/admin/XMLB.iml" filepath="$PROJECT_DIR$/admin/XMLB.iml" />
       <module fileurl="file://$PROJECT_DIR$/Agent/agent.iml" filepath="$PROJECT_DIR$/Agent/agent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Server/eureka/eureka.iml" filepath="$PROJECT_DIR$/Server/eureka/eureka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Front/frontadmin/frontadmin.iml" filepath="$PROJECT_DIR$/Front/frontadmin/frontadmin.iml" />
       <module fileurl="file://$PROJECT_DIR$/kraj.iml" filepath="$PROJECT_DIR$/kraj.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Server/zuul/zuul.iml" filepath="$PROJECT_DIR$/Server/zuul/zuul.iml" />
     </modules>
   </component>
 </project>
