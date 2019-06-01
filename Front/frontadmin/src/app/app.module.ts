@@ -9,6 +9,7 @@ import { ExtraOptionsComponent } from './extra-options/extra-options.component';
 import { CommentsComponent } from './comments/comments.component';
 import { UsersComponent } from './users/users.component';
 import { AgentsComponent } from './agents/agents.component';
+import {AppRoutingModule} from "./app-routing.module";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AgentsComponent } from './agents/agents.component';
     AgentsComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
