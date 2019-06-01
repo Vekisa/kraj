@@ -8,12 +8,20 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/object_type")
 public class ObjectTypeController {
 
     @Autowired
     private ObjectTypeService objectTypeService;
+
+    @RequestMapping( method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ObjectTypeDTO>> getAll() {
+
+        return new ResponseEntity<>(objectTypeService.getAll(), HttpStatus.OK);
+    }
 
     @RequestMapping( method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ObjectTypeDTO> create(@RequestBody ObjectTypeDTO objectTypeDTO) {

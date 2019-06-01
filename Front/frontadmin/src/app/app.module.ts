@@ -10,6 +10,8 @@ import { CommentsComponent } from './comments/comments.component';
 import { UsersComponent } from './users/users.component';
 import { AgentsComponent } from './agents/agents.component';
 import {AppRoutingModule} from "./app-routing.module";
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import {AppRoutingModule} from "./app-routing.module";
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

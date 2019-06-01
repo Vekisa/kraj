@@ -11,7 +11,7 @@ import {AgentsComponent} from "./agents/agents.component";
 const routes: Routes = [
   {
     path: '',
-    component: NavigationComponent
+    component: NavigationComponent,
   },
   {
     path: 'object_types',
