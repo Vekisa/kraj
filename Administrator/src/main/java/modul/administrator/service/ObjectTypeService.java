@@ -26,7 +26,6 @@ public class ObjectTypeService {
         objectType.setName(objectTypeDTO.getName());
         objectType.setDescription(objectTypeDTO.getDescription());
         objectTypeRepository.save(objectType);
-
         return new ObjectTypeDTO(objectType);
     }
 
@@ -48,6 +47,7 @@ public class ObjectTypeService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Object type does not exist!");
 
         objectTypeRepository.delete(objectType.get());
+        System.out.println("OBRISAO");
     }
 
 }

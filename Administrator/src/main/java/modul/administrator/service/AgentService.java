@@ -7,11 +7,17 @@ import modul.administrator.repository.AgentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AgentService {
 
     @Autowired
     private AgentRepository agentRepository;
+
+    public List<AgentDTO> getAll(){
+        return DTOList.agents(agentRepository.findAll());
+    }
 
     public AgentDTO addAgent(AgentDTO agentDTO){
         Agent agent = new Agent();
@@ -24,4 +30,5 @@ public class AgentService {
 
         return new AgentDTO(agent);
     }
+
 }

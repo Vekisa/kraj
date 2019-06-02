@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {Agent, ExtraOption} from "../model";
+import {AgentService} from "../services/agent.service";
 
 @Component({
   selector: 'app-agents',
@@ -7,9 +10,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AgentsComponent implements OnInit {
 
-  constructor() { }
+  agentForm: FormGroup;
+  agents : Agent[];
+
+  constructor(private agentService: AgentService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+    this.agentService.allAgents().subscribe(data => {
+      this.agents = data;
+    });
+  }
+
+  onSubmit(){
+    this.agentService.createAgent(this.agentForm.value);
   }
 
 }

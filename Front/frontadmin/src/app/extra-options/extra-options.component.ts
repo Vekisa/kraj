@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {ObjectTypesService} from "../services/object-types.service";
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {ExtraOption, ObjectType} from "../model";
+import {ExtraOptionsService} from "../services/extra-options.service";
 
 @Component({
   selector: 'app-extra-options',
@@ -7,9 +11,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ExtraOptionsComponent implements OnInit {
 
-  constructor() { }
+  extraOptionsForm: FormGroup;
+  extraOptions : ExtraOption[];
+
+  constructor(private extraOptionsService: ExtraOptionsService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+    this.extraOptionsForm = this.formBuilder.group({
+      name: [''],
+      price: [''],
+      description: ['']
+    });
+
+    this.extraOptionsService.allExtraOptions().subscribe(data => {
+      this.extraOptions = data;
+    });
+  }
+
+  onSubmit(){
+    this.extraOptionsService.createExtraOption(this.extraOptionsForm.value);
+  }
+
+  remove(id: number){
+    this.extraOptionsService.delete(id);
   }
 
 }

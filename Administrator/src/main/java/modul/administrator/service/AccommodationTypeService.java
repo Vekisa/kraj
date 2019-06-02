@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,6 +16,11 @@ public class AccommodationTypeService {
 
     @Autowired
     private AccommodationTypeRepository accommodationTypeRepository;
+
+    public List<AccommodationTypeDTO> getAll(){
+        return DTOList.accommodationTypes(accommodationTypeRepository.findAll());
+    }
+
 
     public AccommodationTypeDTO create(AccommodationTypeDTO accommodationTypeDTO){
         AccommodationType accommodationType = new AccommodationType();

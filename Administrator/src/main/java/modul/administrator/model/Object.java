@@ -403,6 +403,14 @@ public class Object {
         this.objectType = value;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     /**
      * Gets the value of the agent property.
      * 

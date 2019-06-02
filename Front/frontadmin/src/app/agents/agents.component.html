@@ -1,19 +1,19 @@
-<form class="centeredForms">
+<form class="centeredForms" [formGroup]="agentForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
     <label for="fName">First Name</label>
-    <input type="text" class="form-control" id="fName" placeholder="Enter first name">
+    <input type="text" class="form-control" id="fName" placeholder="Enter first name" [formControlName]="'firstName'">
   </div>
   <div class="form-group">
     <label for="lName">Last Name</label>
-    <input type="text" class="form-control" id="lName" placeholder="Enter last name">
+    <input type="text" class="form-control" id="lName" placeholder="Enter last name" [formControlName]="'lastName'">
   </div>
   <div class="form-group">
     <label for="bussinesRegistrationNumber">Bussines Registration Number</label>
-    <input type="text" class="form-control" id="bussinesRegistrationNumber" placeholder="Enter bussines registration number">
+    <input type="text" class="form-control" id="bussinesRegistrationNumber" placeholder="Enter bussines registration number" [formControlName]="'bussinesRegistrationNumber'">
   </div>
   <div class="form-group">
     <label for="email">Email</label>
-    <input type="email" class="form-control" id="email" placeholder="Enter Email">
+    <input type="email" class="form-control" id="email" placeholder="Enter Email" [formControlName]="'email'">
   </div>
   <button type="submit" class="btn btn-primary">Add</button>
 </form>
@@ -26,16 +26,17 @@
       <th scope="col">First Name</th>
       <th scope="col">Last Name</th>
       <th scope="col">Bussines Registration Number</th>
+      <th scope="col">Email</th>
     </tr>
     </thead>
     <tbody>
-    <!--<tr *ngFor="let cert of cert ; let i = index " (click)="rowSelected(cert.serialNumber);">
+    <tr *ngFor="let agent of agents ; let i = index ">
       <td>{{i + 1}}</td>
-      <td>{{cert.alias}}</td>
-      <td>{{cert.country}}</td>
-      <td>{{cert.locality}}</td>
-      <td>{{cert.serialNumber}}</td>
-    </tr>-->
+      <td>{{agent.firstName}}</td>
+      <td>{{agent.lastName}}</td>
+      <td>{{agent.bussinesRegistrationNumber}}</td>
+      <td>{{agent.email}}</td>
+    </tr>
     </tbody>
   </table>
 

@@ -3,9 +3,6 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CertificateService} from "../service/certificate.service";
 import {NgbDate, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
 
-import {FilterPipe} from "../additional/filter.pipe";
-
-import {Observable} from "rxjs";
 import {CertInfo} from "../model";
 
 

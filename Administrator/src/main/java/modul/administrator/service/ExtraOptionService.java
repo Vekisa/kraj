@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,6 +16,10 @@ public class ExtraOptionService {
 
     @Autowired
     private ExtraOptionRepository extraOptionRepository;
+
+    public List<ExtraOptionDTO> getAll(){
+        return DTOList.extraOptions(extraOptionRepository.findAll());
+    }
 
     public ExtraOptionDTO create(ExtraOptionDTO extraOptionDTO){
         ExtraOption extraOption = new ExtraOption();

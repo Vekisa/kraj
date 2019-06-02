@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {ObjectTypesService} from "../services/object-types.service";
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {AccommodationTypesService} from "../services/accommodation-types.service";
+import {AccommodationType} from "../model";
 
 @Component({
   selector: 'app-accommodation-types',
@@ -7,9 +11,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccommodationTypesComponent implements OnInit {
 
-  constructor() { }
+  accommodationTypeForm : FormGroup;
+  accommodationTypes : AccommodationType[];
+
+  constructor(private accommodationTypesService: AccommodationTypesService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+    this.accommodationTypeForm = this.formBuilder.group({
+      name: [''],
+      description: ['']
+    });
+
+    this.accommodationTypesService.allObjectTypes().subscribe(data =>{
+      this.accommodationTypes = data;
+    })
   }
 
+  onSubmit(){
+      console.log(this.accommodationTypeForm.value);
+    this.accommodationTypesService.createAccommodationType(this.accommodationTypeForm.value);
+  }
+
+  remove(id : number){
+    this.accommodationTypesService.remove(id);
+  }
 }

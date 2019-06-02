@@ -1,15 +1,15 @@
-<form class="centeredForms">
+<form class="centeredForms" [formGroup]="extraOptionsForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
     <label for="name">Name</label>
-    <input type="text" class="form-control" id="name" placeholder="Enter name">
+    <input type="text" class="form-control" id="name" placeholder="Enter name" [formControlName]="'name'">
   </div>
   <div class="form-group">
     <label for="price">Price(&euro;)</label>
-    <input type="text" class="form-control" id="price" placeholder="Enter price">
+    <input type="text" class="form-control" id="price" placeholder="Enter price" [formControlName]="'price'">
   </div>
   <div class="form-group">
     <label for="description">Description</label>
-    <textarea class="form-control rounded-1" id="description" rows="10" placeholder="Enter description"></textarea>
+    <textarea class="form-control rounded-1" id="description" rows="10" placeholder="Enter description" [formControlName]="'description'"></textarea>
   </div>
   <button type="submit" class="btn btn-primary">Add</button>
 </form>
@@ -22,17 +22,19 @@
       <th scope="col">#</th>
       <th scope="col">Name</th>
       <th scope="col">Description</th>
-      <th scope="col">Price</th>
+      <th scope="col">Price(&euro;)</th>
     </tr>
     </thead>
     <tbody>
-    <!--<tr *ngFor="let cert of cert ; let i = index " (click)="rowSelected(cert.serialNumber);">
+    <tr *ngFor="let extOpt of extraOptions ; let i = index ">
       <td>{{i + 1}}</td>
-      <td>{{cert.alias}}</td>
-      <td>{{cert.country}}</td>
-      <td>{{cert.locality}}</td>
-      <td>{{cert.serialNumber}}</td>
-    </tr>-->
+      <td>{{extOpt.name}}</td>
+      <td>{{extOpt.description}}</td>
+      <td>{{extOpt.price}}</td>
+      <td>
+        <button (click)="remove(extOpt.id)" class="btn btn-danger"> Remove</button>
+      </td>
+    </tr>
     </tbody>
   </table>
 

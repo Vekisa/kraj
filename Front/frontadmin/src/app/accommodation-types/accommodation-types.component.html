@@ -1,11 +1,11 @@
-<form class="centeredForms">
+<form class="centeredForms"[formGroup]="accommodationTypeForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
     <label for="name">Name</label>
-    <input type="text" class="form-control" id="name" placeholder="Enter name">
+    <input type="text" class="form-control" id="name" placeholder="Enter name" [formControlName]="'name'">
   </div>
   <div class="form-group">
     <label for="description">Description</label>
-    <textarea class="form-control rounded-1" id="description" rows="10" placeholder="Enter description"></textarea>
+    <textarea class="form-control rounded-1" id="description" rows="10" placeholder="Enter description" [formControlName]="'description'"></textarea>
   </div>
   <button type="submit" class="btn btn-primary">Add</button>
 </form>
@@ -20,13 +20,14 @@
     </tr>
     </thead>
     <tbody>
-    <!--<tr *ngFor="let cert of cert ; let i = index " (click)="rowSelected(cert.serialNumber);">
+    <tr *ngFor="let acmType of accommodationTypes ; let i = index ">
       <td>{{i + 1}}</td>
-      <td>{{cert.alias}}</td>
-      <td>{{cert.country}}</td>
-      <td>{{cert.locality}}</td>
-      <td>{{cert.serialNumber}}</td>
-    </tr>-->
+      <td>{{acmType.name}}</td>
+      <td>{{acmType.description}}</td>
+      <td>
+        <button (click)="remove(acmType.id)" class="btn btn-danger"> Remove</button>
+      </td>
+    </tr>
     </tbody>
   </table>
 

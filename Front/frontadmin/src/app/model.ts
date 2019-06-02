@@ -10,3 +10,92 @@ export class ObjectType {
   }
 
 }
+
+export class AccommodationType {
+  id: number;
+  name: string;
+  description: string;
+
+  constructor(id: number, name: string, description: string){
+    this.id = id;
+    this.name = name;
+    this.description = description;
+  }
+}
+
+export class ExtraOption{
+  id: number;
+  name: string;
+  price: number;
+  description: string;
+
+  constructor(id: number, name: string, price: number, description: string){
+    this.id = id;
+    this.name = name;
+    this.price = price;
+    this.description = this.description;
+  }
+}
+
+export class Commenta{
+  id: number;
+  text: string;
+  dateOfPublication: any;
+  object: Object;
+  user: RegisteredUser;
+
+  constructor(id: number, text: string, dateOfPublication: any, object: Object, user: RegisteredUser){
+    this.id = id;
+    this.text = text;
+    this.dateOfPublication = dateOfPublication;
+    this.object = object;
+    this.user = user;
+  }
+
+}
+
+export class Object{
+  id: number;
+  name: string;
+  description: string;
+  cancellation: number;
+  category: number;
+
+  constructor(id: number, name: string, description: string, cancellation: number, category: number){
+    this.id = id;
+    this.name = name;
+    this.description = description;
+    this.cancellation = cancellation;
+    this.category = category;
+  }
+}
+
+export class RegisteredUser{
+  id: number;
+  firstName: string;
+  lastName: string;
+  email:string;
+
+  constructor(id: number, firstName: string, lastName: string, email: string){
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+  }
+}
+
+export class Agent{
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  bussinesRegistrationNumber: string;
+
+  constructor(id: number, firstName: string, lastName: string, email: string, bussinesRegistrationNumber: string){
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.bussinesRegistrationNumber = bussinesRegistrationNumber;
+  }
+}

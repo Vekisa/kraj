@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,6 +16,11 @@ public class RegisteredUSerService {
 
     @Autowired
     private RegisteredUserRepository registeredUserRepository;
+
+    public List<RegisteredUserDTO> getAll(){
+        return DTOList.registeredUsers(registeredUserRepository.findAll());
+    }
+
 
     public RegisteredUserDTO activate(Long id){
         Optional<RegisteredUser> user = registeredUserRepository.findById(id);

@@ -10,13 +10,15 @@
     </tr>
     </thead>
     <tbody>
-    <!--<tr *ngFor="let cert of cert ; let i = index " (click)="rowSelected(cert.serialNumber);">
+    <tr *ngFor="let comm of comments ; let i = index ">
       <td>{{i + 1}}</td>
-      <td>{{cert.alias}}</td>
-      <td>{{cert.country}}</td>
-      <td>{{cert.locality}}</td>
-      <td>{{cert.serialNumber}}</td>
-    </tr>-->
+      <td>{{comm.text}}</td>
+      <td>{{comm.object.name}}</td>
+      <td>{{comm.user.email}}</td>
+      <td>
+        <button (click)="approve(comm.id)" class="btn btn-danger"> Approve</button>
+      </td>
+    </tr>
     </tbody>
   </table>
 

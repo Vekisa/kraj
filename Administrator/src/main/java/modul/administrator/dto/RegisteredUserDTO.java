@@ -18,7 +18,8 @@ public class RegisteredUserDTO {
         this.setFirstName(firstName);
         this.setLastName(lastName);
         this.setEmail(email);
-        this.setAddressDTO(new AddressDTO(adress));
+        if(adress!=null)
+             this.setAddressDTO(new AddressDTO(adress));
         this.setAktivan(aktivan);
     }
 

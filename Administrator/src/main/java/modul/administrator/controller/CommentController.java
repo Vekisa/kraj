@@ -8,12 +8,21 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/comment")
 public class CommentController {
 
     @Autowired
     private CommentService commentService;
+
+    @RequestMapping( method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<CommentDTO>> getNotApproved() {
+
+        return new ResponseEntity<>(commentService.getNotApproved(), HttpStatus.OK);
+    }
 
     @RequestMapping( value = "/approve/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CommentDTO> approve(@PathVariable(value = "id") Long id) {

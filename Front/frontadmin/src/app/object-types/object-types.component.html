@@ -1,11 +1,11 @@
-<form class="centeredForms">
+<form class="centeredForms" [formGroup]="objectTypesForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
     <label for="name">Name</label>
-    <input type="text" class="form-control" id="name" placeholder="Enter name">
+    <input type="text" class="form-control" id="name" placeholder="Enter name" [formControlName]="'name'">
   </div>
   <div class="form-group">
     <label for="description">Description</label>
-    <textarea class="form-control rounded-1" id="description" rows="10" placeholder="Enter description"></textarea>
+    <textarea class="form-control rounded-1" id="description" rows="10" placeholder="Enter description" [formControlName]="'description'"></textarea>
   </div>
   <button type="submit" class="btn btn-primary">Add</button>
 </form>
@@ -26,6 +26,9 @@
       <td>{{i + 1}}</td>
       <td>{{objType.name}}</td>
       <td>{{objType.description}}</td>
+      <td>
+        <button (click)="remove(objType.id)" class="btn btn-danger"> Remove</button>
+      </td>
     </tr>
     </tbody>
   </table>

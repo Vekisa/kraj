@@ -10,13 +10,12 @@
     </tr>
     </thead>
     <tbody>
-    <!--<tr *ngFor="let cert of cert ; let i = index " (click)="rowSelected(cert.serialNumber);">
+    <tr *ngFor="let user of users ; let i = index ">
       <td>{{i + 1}}</td>
-      <td>{{cert.alias}}</td>
-      <td>{{cert.country}}</td>
-      <td>{{cert.locality}}</td>
-      <td>{{cert.serialNumber}}</td>
-    </tr>-->
+      <td>{{user.firstName}}</td>
+      <td>{{user.lastName}}</td>
+      <td>{{user.email}}</td>
+    </tr>
     </tbody>
   </table>
 

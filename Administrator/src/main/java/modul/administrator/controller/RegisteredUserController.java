@@ -8,12 +8,21 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/registered_user")
 public class RegisteredUserController {
 
     @Autowired
     private RegisteredUSerService registeredUSerService;
+
+    @RequestMapping( method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<RegisteredUserDTO>> getAll() {
+
+        return new ResponseEntity<>(registeredUSerService.getAll(), HttpStatus.OK);
+    }
 
     @RequestMapping( value="/activate/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RegisteredUserDTO> activate(@PathVariable("id") Long id) {
