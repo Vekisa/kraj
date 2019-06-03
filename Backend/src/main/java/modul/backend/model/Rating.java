@@ -45,7 +45,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 @XmlRootElement(name = "Rating", namespace = "http://megatravell.com/object")
 @Entity
-@Table
+@Table(name = "rating")
 public class Rating {
 
     @Id

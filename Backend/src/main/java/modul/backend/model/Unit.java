@@ -1,17 +1,12 @@
 
 package modul.backend.model;
 
+import javax.persistence.*;
+import javax.xml.bind.annotation.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
 
 
 /**
@@ -63,8 +58,12 @@ import javax.xml.bind.annotation.XmlType;
 })
 @XmlRootElement(name = "Unit", namespace = "http://megatravell.com/object")
 @Entity
-@Table
+@Table(name = "unit")
 public class Unit {
+
+    public Long getId() {
+        return id;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

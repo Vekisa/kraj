@@ -49,7 +49,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 @XmlRootElement(name = "ObjectType", namespace = "http://megatravell.com/object")
 @Entity
-@Table
+@Table(name = "objectType")
 public class ObjectType {
 
     @Id

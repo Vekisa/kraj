@@ -32,6 +32,7 @@ public class Company {
     @JsonIgnore
     private List<Certificate> certificates;
 
+
     public Company() {
         admins = new ArrayList<>();
         certificates = new ArrayList<>();

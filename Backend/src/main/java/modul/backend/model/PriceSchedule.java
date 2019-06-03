@@ -43,7 +43,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 })
 @XmlRootElement(name = "Price_schedule", namespace = "http://megatravell.com/object")
 @Entity
-@Table
+@Table(name = "priceSchedule")
 public class PriceSchedule {
 
     @Id
