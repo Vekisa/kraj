@@ -10,7 +10,6 @@
       <module fileurl="file://$PROJECT_DIR$/Front/frontadmin/frontadmin.iml" filepath="$PROJECT_DIR$/Front/frontadmin/frontadmin.iml" />
       <module fileurl="file://$PROJECT_DIR$/kraj.iml" filepath="$PROJECT_DIR$/kraj.iml" />
       <module fileurl="file://$PROJECT_DIR$/Reservation/reservation.iml" filepath="$PROJECT_DIR$/Reservation/reservation.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Reservation/reservation.iml" filepath="$PROJECT_DIR$/Reservation/reservation.iml" />
       <module fileurl="file://$PROJECT_DIR$/Server/zuul/zuul.iml" filepath="$PROJECT_DIR$/Server/zuul/zuul.iml" />
     </modules>
   </component>

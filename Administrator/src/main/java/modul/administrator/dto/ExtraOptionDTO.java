@@ -9,6 +9,9 @@ public class ExtraOptionDTO {
     private String description;
     private Double price;
 
+    public ExtraOptionDTO() {
+    }
+
     public ExtraOptionDTO(Long id, String name, String description, Double price){
         this.setId(id);
         this.setName(name);

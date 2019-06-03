@@ -16,6 +16,9 @@ public class AddressDTO {
     private BigDecimal longitude;
     private BigDecimal latitude;
 
+    public AddressDTO() {
+    }
+
     public AddressDTO(Long id, String state, String city, String street, BigInteger number, Integer zip, BigDecimal longitude, BigDecimal latitude){
         this.setId(id);
         this.setState(state);

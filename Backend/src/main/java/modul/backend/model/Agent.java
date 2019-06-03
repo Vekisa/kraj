@@ -44,6 +44,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 @XmlRootElement(name = "Agent", namespace = "http://www.megatravell.com/user")
 @Entity
+@PrimaryKeyJoinColumn(name = "id")
 @Table(name = "agent")
 public class Agent
     extends User

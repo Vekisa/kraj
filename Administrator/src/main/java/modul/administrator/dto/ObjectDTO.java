@@ -14,6 +14,9 @@ public class ObjectDTO {
     private Integer category;
     private AddressDTO address;
 
+    public ObjectDTO() {
+    }
+
     public ObjectDTO(Long id, String name, String description, BigInteger cancellation, Integer category, Adress address){
         this.setId(id);
         this.setName(name);

@@ -12,6 +12,8 @@ public class RegisteredUserDTO {
     private AddressDTO addressDTO;
     private Boolean active;
 
+    public RegisteredUserDTO() {
+    }
 
     public RegisteredUserDTO(Long id, String firstName, String lastName, String email, Adress adress, Boolean aktivan){
         this.setId(id);
