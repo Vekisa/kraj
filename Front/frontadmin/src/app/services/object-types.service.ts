@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {Observable, throwError} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ObjectType} from "../model";
-import {catchError} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -18,13 +17,11 @@ export class ObjectTypesService {
   }
 
   createObjectType(obj : ObjectType): Observable<any> {
-
-    return this.http.put<any>(this.baseUrl, obj);
+    return this.http.put(this.baseUrl, obj);
   };
 
-  delete(id : number): Observable<any>{
-    console.log("obr2");
-    return this.http.delete<any>(this.baseUrl+"/"+id);
+  delete(id : number): Observable<void>{
+    return this.http.delete<void>(this.baseUrl+"/"+id);
   }
 
 }

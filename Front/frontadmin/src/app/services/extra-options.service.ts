@@ -20,8 +20,7 @@ export class ExtraOptionsService {
     return this.http.put<any>(this.baseUrl, obj);
   };
 
-  delete(id : number): Observable<any>{
-    console.log("obr2");
-    return this.http.delete<any>(this.baseUrl+"/"+id);
+  delete(id : number): Observable<void>{
+    return this.http.delete<void>(this.baseUrl+"/"+id);
   }
 }

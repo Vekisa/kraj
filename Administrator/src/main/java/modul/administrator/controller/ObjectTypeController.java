@@ -35,7 +35,7 @@ public class ObjectTypeController {
         return new ResponseEntity<>(objectTypeService.update(objectTypeDTO), HttpStatus.OK);
     }
 
-    @RequestMapping( value = "/{id}", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping( value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
         objectTypeService.delete(id);
         return new ResponseEntity<>( HttpStatus.OK);

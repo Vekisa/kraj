@@ -28,11 +28,18 @@ export class AccommodationTypesComponent implements OnInit {
   }
 
   onSubmit(){
-      console.log(this.accommodationTypeForm.value);
-    this.accommodationTypesService.createAccommodationType(this.accommodationTypeForm.value);
+    this.accommodationTypesService.createAccommodationType(this.accommodationTypeForm.value).subscribe(data =>{
+      this.accommodationTypesService.allObjectTypes().subscribe(data=>{
+        this.accommodationTypes = data;
+      })
+    });
   }
 
   remove(id : number){
-    this.accommodationTypesService.remove(id);
+    this.accommodationTypesService.remove(id).subscribe(data =>{
+      this.accommodationTypesService.allObjectTypes().subscribe(data=>{
+        this.accommodationTypes = data;
+      })
+    });
   }
 }

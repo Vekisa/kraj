@@ -17,6 +17,7 @@ public class AgentDTO {
         this.setFirstName(firstName);
         this.setLastName(lastName);
         this.setEmail(email);
+        if(adress!=null)
         this.setAddressDTO(new AddressDTO(adress));
         this.setBussinesRegistrationNumber(bussinesRegistrationNumber);
     }

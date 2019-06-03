@@ -15,6 +15,9 @@ public class AgentService {
     @Autowired
     private AgentRepository agentRepository;
 
+    @Autowired
+    private EmailSenderService emailSenderService;
+
     public List<AgentDTO> getAll(){
         return DTOList.agents(agentRepository.findAll());
     }
@@ -27,6 +30,8 @@ public class AgentService {
         agent.setBussinesRegistrationNumber(agentDTO.getBussinesRegistrationNumber());
 
         agentRepository.save(agent);
+
+        emailSenderService.sendAgentRequest(agentDTO.getEmail());
 
         return new AgentDTO(agent);
     }

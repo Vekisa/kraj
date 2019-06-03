@@ -27,12 +27,19 @@ export class ObjectTypesComponent implements OnInit {
   }
 
   onSubmit() {
-    this.objectTypeService.createObjectType(this.objectTypesForm.value);
+    this.objectTypeService.createObjectType(this.objectTypesForm.value).subscribe(data =>{
+      this.objectTypeService.allObjectTypes().subscribe(data =>{
+        this.objectTypes = data;
+      });
+    });
   }
 
   remove(id:number){
-    console.log("obr1")
-    this.objectTypeService.delete(id);
+    this.objectTypeService.delete(id).subscribe(data =>{
+      this.objectTypeService.allObjectTypes().subscribe(data =>{
+        this.objectTypes = data;
+      })
+    });
   }
 
 }

@@ -16,13 +16,26 @@ export class AgentsComponent implements OnInit {
   constructor(private agentService: AgentService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+
+    this.agentForm = this.formBuilder.group({
+      firstName: [''],
+      lastName: [''],
+      bussinesRegistrationNumber: [''],
+      description: [''],
+      email: ['']
+    });
+
     this.agentService.allAgents().subscribe(data => {
       this.agents = data;
     });
   }
 
   onSubmit(){
-    this.agentService.createAgent(this.agentForm.value);
+    this.agentService.createAgent(this.agentForm.value).subscribe(data =>{
+      this.agentService.allAgents().subscribe(data =>{
+        this.agents = data;
+      })
+    });
   }
 
 }

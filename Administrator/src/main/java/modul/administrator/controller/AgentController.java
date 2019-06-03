@@ -29,4 +29,10 @@ public class AgentController {
 
         return new ResponseEntity<>(agentService.addAgent(agentDTO), HttpStatus.OK);
     }
+
+    @RequestMapping( method = RequestMethod.POST)
+    public ResponseEntity<AgentDTO> activateAgent(@RequestBody AgentDTO agentDTO) {
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

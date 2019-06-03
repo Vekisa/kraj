@@ -17,11 +17,10 @@ export class AccommodationTypesService {
   }
 
   createAccommodationType(obj : AccommodationType): Observable<any> {
-    console.log(obj);
     return this.http.put<any>(this.baseUrl, obj);
   };
 
-  remove(id : number){
-    return this.http.delete(this.baseUrl + "/" + id);
+  remove(id : number): Observable<void>{
+    return this.http.delete<void>(this.baseUrl + "/" + id);
   }
 }

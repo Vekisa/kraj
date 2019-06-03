@@ -29,11 +29,19 @@ export class ExtraOptionsComponent implements OnInit {
   }
 
   onSubmit(){
-    this.extraOptionsService.createExtraOption(this.extraOptionsForm.value);
+    this.extraOptionsService.createExtraOption(this.extraOptionsForm.value).subscribe(data => {
+      this.extraOptionsService.allExtraOptions().subscribe(data =>{
+        this.extraOptions = data;
+      })
+    });
   }
 
   remove(id: number){
-    this.extraOptionsService.delete(id);
+    this.extraOptionsService.delete(id).subscribe(data =>{
+      this.extraOptionsService.allExtraOptions().subscribe(data =>{
+        this.extraOptions = data;
+      })
+    });
   }
 
 }

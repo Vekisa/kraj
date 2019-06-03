@@ -36,7 +36,7 @@ public class ExtraOptionController {
         return new ResponseEntity<>(extraOptionService.update(extraOptionDTO), HttpStatus.OK);
     }
 
-    @RequestMapping( value = "/{id}", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping( value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
         extraOptionService.delete(id);
         return new ResponseEntity<>( HttpStatus.OK);
