@@ -44,15 +44,10 @@ import javax.xml.bind.annotation.XmlType;
 })
 @XmlRootElement(name = "Agent", namespace = "http://www.megatravell.com/user")
 @Entity
-@PrimaryKeyJoinColumn(name = "id")
-@Table(name = "agent")
+@Table
 public class Agent
     extends User
 {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @XmlElement(name = "BussinesRegistrationNumber", namespace = "http://www.megatravell.com/user", required = true)
     @Column
     protected String bussinesRegistrationNumber;

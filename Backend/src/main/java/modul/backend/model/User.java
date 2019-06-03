@@ -73,12 +73,11 @@ import javax.xml.bind.annotation.XmlType;
     RegisteredUser.class
 })
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@Table
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
 
     @XmlElement(name = "FirstName", namespace = "http://www.megatravell.com/user", required = true)
