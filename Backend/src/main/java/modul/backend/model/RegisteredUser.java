@@ -44,14 +44,10 @@ import javax.xml.bind.annotation.XmlType;
 })
 @XmlRootElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user")
 @Entity
-@Table(name = "registredUser")
+@Table
 public class RegisteredUser
     extends User
 {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @XmlElement(name = "Aktivan", namespace = "http://www.megatravell.com/user", defaultValue = "true")
     @Column

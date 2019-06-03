@@ -8,6 +8,9 @@ public class AccommodationTypeDTO {
     private String name;
     private String description;
 
+    public AccommodationTypeDTO() {
+    }
+
     public AccommodationTypeDTO(Long id, String name, String description){
         this.setId(id);
         this.setName(name);

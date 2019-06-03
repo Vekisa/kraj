@@ -12,6 +12,9 @@ public class AgentDTO {
     private AddressDTO addressDTO;
     private String bussinesRegistrationNumber;
 
+    public AgentDTO() {
+    }
+
     public AgentDTO(Long id, String firstName, String lastName, String email, Adress adress, String bussinesRegistrationNumber){
         this.setId(id);
         this.setFirstName(firstName);

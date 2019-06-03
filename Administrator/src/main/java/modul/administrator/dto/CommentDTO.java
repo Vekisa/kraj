@@ -15,6 +15,9 @@ public class CommentDTO {
     private ObjectDTO objectDTO;
     private RegisteredUserDTO registeredUserDTO;
 
+    public CommentDTO() {
+    }
+
     public CommentDTO(Long id, String text, Date dateOfPublication, Boolean approved, Object object, RegisteredUser registeredUser){
         this.setId(id);
         this.setText(text);

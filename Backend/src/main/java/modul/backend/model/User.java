@@ -1,6 +1,7 @@
 
 package modul.backend.model;
 
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -71,17 +72,28 @@ import javax.xml.bind.annotation.XmlType;
     Agent.class,
     RegisteredUser.class
 })
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    private Long id;
+
     @XmlElement(name = "FirstName", namespace = "http://www.megatravell.com/user", required = true)
+    @Column
     protected String firstName;
     @XmlElement(name = "LastName", namespace = "http://www.megatravell.com/user", required = true)
+    @Column
     protected String lastName;
     @XmlElement(name = "Email", namespace = "http://www.megatravell.com/user", required = true)
+    @Column
     protected String email;
     @XmlElement(name = "Password", namespace = "http://www.megatravell.com/user", required = true)
+    @Column
     protected String password;
     @XmlElement(name = "Adress", namespace = "http://www.megatravell.com/address", required = true)
+    @ManyToOne
     protected Adress adress;
 
     /**

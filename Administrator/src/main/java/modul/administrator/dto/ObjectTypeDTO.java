@@ -8,6 +8,9 @@ public class ObjectTypeDTO {
     private String name;
     private String description;
 
+    public ObjectTypeDTO() {
+    }
+
     public ObjectTypeDTO(Long id, String name, String description){
         this.setId(id);
         this.setName(name);
