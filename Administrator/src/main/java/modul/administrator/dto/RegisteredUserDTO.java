@@ -9,7 +9,7 @@ public class RegisteredUserDTO {
     private String firstName;
     private String lastName;
     private String email;
-    private AddressDTO addressDTO;
+    private AddressDTO address;
     private Boolean active;
 
     public RegisteredUserDTO() {
@@ -21,8 +21,8 @@ public class RegisteredUserDTO {
         this.setLastName(lastName);
         this.setEmail(email);
         if(adress!=null)
-             this.setAddressDTO(new AddressDTO(adress));
-        this.setAktivan(aktivan);
+             this.setAddress(new AddressDTO(adress));
+        this.setActive(aktivan);
     }
 
     public RegisteredUserDTO(RegisteredUser registeredUser){
@@ -62,19 +62,23 @@ public class RegisteredUserDTO {
         this.email = email;
     }
 
-    public AddressDTO getAddressDTO() {
-        return addressDTO;
-    }
-
-    public void setAddressDTO(AddressDTO addressDTO) {
-        this.addressDTO = addressDTO;
-    }
-
     public Boolean getAktivan() {
+        return getActive();
+    }
+
+    public Boolean getActive() {
         return active;
     }
 
-    public void setAktivan(Boolean aktivan) {
-        this.active = aktivan;
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public AddressDTO getAddress() {
+        return address;
+    }
+
+    public void setAddress(AddressDTO address) {
+        this.address = address;
     }
 }

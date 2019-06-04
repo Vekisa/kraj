@@ -53,7 +53,7 @@ import java.util.List;
 })
 @XmlRootElement(name = "Reservation", namespace = "http://megatravell.com/object")
 @Entity
-@Table
+@Table(name = "reservation")
 public class Reservation {
 
     @Id
@@ -272,4 +272,11 @@ public class Reservation {
         this.registeredUser = value;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

@@ -1,7 +1,10 @@
 
 package modul.administrator.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,14 +43,10 @@ import java.util.List;
 })
 @XmlRootElement(name = "Agent", namespace = "http://www.megatravell.com/user")
 @Entity
-@Table(name = "agent")
+@Table
 public class Agent
     extends User
 {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @XmlElement(name = "BussinesRegistrationNumber", namespace = "http://www.megatravell.com/user", required = true)
     @Column
     protected String bussinesRegistrationNumber;
@@ -109,11 +108,4 @@ public class Agent
         return this.message;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

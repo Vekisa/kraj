@@ -73,11 +73,11 @@ public class Comment {
     public Comment(){}
     /**
      * Gets the value of the text property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getText() {
         return text;
@@ -85,11 +85,11 @@ public class Comment {
 
     /**
      * Sets the value of the text property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setText(String value) {
         this.text = value;
@@ -97,11 +97,11 @@ public class Comment {
 
     /**
      * Gets the value of the dateOfPublication property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Date }
-     *     
+     *
      */
     public Date getDateOfPublication() {
         return dateOfPublication;
@@ -109,11 +109,11 @@ public class Comment {
 
     /**
      * Sets the value of the dateOfPublication property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Date }
-     *     
+     *
      */
     public void setDateOfPublication(Date value) {
         this.dateOfPublication = value;
@@ -121,7 +121,7 @@ public class Comment {
 
     /**
      * Gets the value of the approved property.
-     * 
+     *
      */
     public boolean isApproved() {
         return approved;
@@ -129,7 +129,7 @@ public class Comment {
 
     /**
      * Sets the value of the approved property.
-     * 
+     *
      */
     public void setApproved(boolean value) {
         this.approved = value;
@@ -137,11 +137,11 @@ public class Comment {
 
     /**
      * Gets the value of the object property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Object }
-     *     
+     *
      */
     public Object getObject() {
         return object;
@@ -149,11 +149,11 @@ public class Comment {
 
     /**
      * Sets the value of the object property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Object }
-     *     
+     *
      */
     public void setObject(Object value) {
         this.object = value;

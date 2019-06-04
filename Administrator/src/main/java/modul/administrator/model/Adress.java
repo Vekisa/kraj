@@ -70,17 +70,17 @@ public class Adress {
     protected String city;
     @XmlElement(name = "Street", namespace = "http://www.megatravell.com/address", required = true)
     @Column
-    private String street;
+    protected String street;
     @XmlElement(name = "Number", namespace = "http://www.megatravell.com/address", required = true)
     @XmlSchemaType(name = "positiveInteger")
     @Column
     protected BigInteger number;
     @XmlElement(name = "ZIP", namespace = "http://www.megatravell.com/address", defaultValue = "0")
     @Column
-    private int zip;
+    protected int zip;
     @XmlElement(name = "Longitude", namespace = "http://www.megatravell.com/address", required = true)
     @Column
-    private BigDecimal longitude;
+    protected BigDecimal longitude;
     @XmlElement(name = "Latitude", namespace = "http://www.megatravell.com/address", required = true)
     @Column
     protected BigDecimal latitude;
@@ -187,7 +187,7 @@ public class Adress {
      * 
      */
     public int getZIP() {
-        return getZip();
+        return zip;
     }
 
     /**
@@ -195,7 +195,7 @@ public class Adress {
      * 
      */
     public void setZIP(int value) {
-        this.setZip(value);
+        this.zip = value;
     }
 
     /**
@@ -252,13 +252,5 @@ public class Adress {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public int getZip() {
-        return zip;
-    }
-
-    public void setZip(int zip) {
-        this.zip = zip;
     }
 }

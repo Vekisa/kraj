@@ -12,8 +12,8 @@ public class CommentDTO {
     private String text;
     private Date dateOfPublication;
     private Boolean approved;
-    private ObjectDTO objectDTO;
-    private RegisteredUserDTO registeredUserDTO;
+    private ObjectDTO object;
+    private RegisteredUserDTO registeredUser;
 
     public CommentDTO() {
     }
@@ -23,8 +23,8 @@ public class CommentDTO {
         this.setText(text);
         this.setDateOfPublication(dateOfPublication);
         this.setApproved(approved);
-        this.setObjectDTO(new ObjectDTO(object));
-        this.setRegisteredUserDTO(new RegisteredUserDTO(registeredUser));
+        this.setObject(new ObjectDTO(object));
+        this.setRegisteredUser(new RegisteredUserDTO(registeredUser));
     }
 
     public CommentDTO(Comment comment){
@@ -63,19 +63,19 @@ public class CommentDTO {
         this.approved = approved;
     }
 
-    public ObjectDTO getObjectDTO() {
-        return objectDTO;
+    public ObjectDTO getObject() {
+        return object;
     }
 
-    public void setObjectDTO(ObjectDTO objectDTO) {
-        this.objectDTO = objectDTO;
+    public void setObject(ObjectDTO object) {
+        this.object = object;
     }
 
-    public RegisteredUserDTO getRegisteredUserDTO() {
-        return registeredUserDTO;
+    public RegisteredUserDTO getRegisteredUser() {
+        return registeredUser;
     }
 
-    public void setRegisteredUserDTO(RegisteredUserDTO registeredUserDTO) {
-        this.registeredUserDTO = registeredUserDTO;
+    public void setRegisteredUser(RegisteredUserDTO registeredUser) {
+        this.registeredUser = registeredUser;
     }
 }

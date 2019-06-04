@@ -38,7 +38,7 @@ import java.util.List;
 })
 @XmlRootElement(name = "Price_schedule", namespace = "http://megatravell.com/object")
 @Entity
-@Table
+@Table(name = "priceSchedule")
 public class PriceSchedule {
 
     @Id
@@ -128,4 +128,11 @@ public class PriceSchedule {
         return this.plan;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

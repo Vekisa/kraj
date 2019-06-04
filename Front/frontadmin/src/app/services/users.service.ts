@@ -23,7 +23,7 @@ export class UsersService {
     return this.http.post(this.baseUrl + "/deactivate/" + id, id);
   }
 
-  delete(id : number): Observable<any>{
-    return this.http.delete<any>(this.baseUrl+"/"+id);
+  delete(id : number): Observable<void>{
+    return this.http.delete<void>(this.baseUrl+"/"+id);
   }
 }

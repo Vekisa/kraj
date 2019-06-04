@@ -58,8 +58,12 @@ import java.util.List;
 })
 @XmlRootElement(name = "Unit", namespace = "http://megatravell.com/object")
 @Entity
-@Table
+@Table(name = "unit")
 public class Unit {
+
+    public Long getId() {
+        return id;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -103,11 +107,11 @@ public class Unit {
 
     /**
      * Gets the value of the adults property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link BigInteger }
-     *     
+     *
      */
     public BigInteger getAdults() {
         return adults;
@@ -115,11 +119,11 @@ public class Unit {
 
     /**
      * Sets the value of the adults property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link BigInteger }
-     *     
+     *
      */
     public void setAdults(BigInteger value) {
         this.adults = value;
@@ -127,7 +131,7 @@ public class Unit {
 
     /**
      * Gets the value of the children property.
-     * 
+     *
      */
     public int getChildren() {
         return children;
@@ -135,7 +139,7 @@ public class Unit {
 
     /**
      * Sets the value of the children property.
-     * 
+     *
      */
     public void setChildren(int value) {
         this.children = value;
@@ -143,11 +147,11 @@ public class Unit {
 
     /**
      * Gets the value of the beds property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link BigInteger }
-     *     
+     *
      */
     public BigInteger getBeds() {
         return beds;
@@ -155,11 +159,11 @@ public class Unit {
 
     /**
      * Sets the value of the beds property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link BigInteger }
-     *     
+     *
      */
     public void setBeds(BigInteger value) {
         this.beds = value;
@@ -167,11 +171,11 @@ public class Unit {
 
     /**
      * Gets the value of the size property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link BigDecimal }
-     *     
+     *
      */
     public BigDecimal getSize() {
         return size;
@@ -179,11 +183,11 @@ public class Unit {
 
     /**
      * Sets the value of the size property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link BigDecimal }
-     *     
+     *
      */
     public void setSize(BigDecimal value) {
         this.size = value;
@@ -191,7 +195,7 @@ public class Unit {
 
     /**
      * Gets the value of the smoking property.
-     * 
+     *
      */
     public boolean isSmoking() {
         return smoking;
@@ -199,7 +203,7 @@ public class Unit {
 
     /**
      * Sets the value of the smoking property.
-     * 
+     *
      */
     public void setSmoking(boolean value) {
         this.smoking = value;
@@ -207,25 +211,25 @@ public class Unit {
 
     /**
      * Gets the value of the priceSchedule property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the priceSchedule property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getPriceSchedule().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link PriceSchedule }
-     * 
-     * 
+     *
+     *
      */
     public List<PriceSchedule> getPriceSchedule() {
         if (priceSchedule == null) {
@@ -236,11 +240,11 @@ public class Unit {
 
     /**
      * Gets the value of the accommodationType property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link AccommodationType }
-     *     
+     *
      */
     public AccommodationType getAccommodationType() {
         return accommodationType;
@@ -248,11 +252,11 @@ public class Unit {
 
     /**
      * Sets the value of the accommodationType property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link AccommodationType }
-     *     
+     *
      */
     public void setAccommodationType(AccommodationType value) {
         this.accommodationType = value;
@@ -260,25 +264,25 @@ public class Unit {
 
     /**
      * Gets the value of the image property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the image property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getImage().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Image }
-     * 
-     * 
+     *
+     *
      */
     public List<Image> getImage() {
         if (image == null) {
@@ -289,25 +293,25 @@ public class Unit {
 
     /**
      * Gets the value of the reservation property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the reservation property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getReservation().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Reservation }
-     * 
-     * 
+     *
+     *
      */
     public List<Reservation> getReservation() {
         if (reservation == null) {
@@ -318,11 +322,11 @@ public class Unit {
 
     /**
      * Gets the value of the object property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Object }
-     *     
+     *
      */
     public Object getObject() {
         return object;
@@ -330,14 +334,17 @@ public class Unit {
 
     /**
      * Sets the value of the object property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Object }
-     *     
+     *
      */
     public void setObject(Object value) {
         this.object = value;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

@@ -15,6 +15,15 @@
       <td>{{user.firstName}}</td>
       <td>{{user.lastName}}</td>
       <td>{{user.email}}</td>
+      <td *ngIf="!user.active">
+        <button (click)="activate(user.id)" class="btn btn-success"> Activate</button>
+      </td>
+      <td *ngIf="user.active">
+        <button (click)="deactivate(user.id)" class="btn btn-warning"> Deactivate</button>
+      </td>
+      <td>
+        <button (click)="delete(user.id)" class="btn btn-danger"> Delete</button>
+      </td>
     </tr>
     </tbody>
   </table>

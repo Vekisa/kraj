@@ -14,9 +14,9 @@
       <td>{{i + 1}}</td>
       <td>{{comm.text}}</td>
       <td>{{comm.object.name}}</td>
-      <td>{{comm.user.email}}</td>
+      <td>{{comm.registeredUser.email}}</td>
       <td>
-        <button (click)="approve(comm.id)" class="btn btn-danger"> Approve</button>
+        <button (click)="approve(comm.id)" class="btn btn-success"> Approve</button>
       </td>
     </tr>
     </tbody>

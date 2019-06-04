@@ -1,7 +1,10 @@
 
 package modul.administrator.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,24 +48,20 @@ public class RegisteredUser
     extends User
 {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @XmlElement(name = "Aktivan", namespace = "http://www.megatravell.com/user", defaultValue = "true")
     @Column
     protected boolean aktivan;
     @XmlElement(name = "Comment", namespace = "http://megatravell.com/object")
-    @OneToMany(mappedBy = "registeredUser")
+    @OneToMany(mappedBy = "registeredUser", orphanRemoval = true)
     protected List<Comment> comment;
     @XmlElement(name = "Reservation", namespace = "http://megatravell.com/object")
-    @OneToMany(mappedBy = "registeredUser")
+    @OneToMany(mappedBy = "registeredUser", orphanRemoval = true)
     protected List<Reservation> reservation;
     @XmlElement(name = "Message", namespace = "http://www.megatravell.com/user")
-    @OneToMany(mappedBy = "registeredUser")
+    @OneToMany(mappedBy = "registeredUser", orphanRemoval = true)
     protected List<Message> message;
     @XmlElement(name = "Rating", namespace = "http://megatravell.com/object")
-    @OneToMany(mappedBy = "registeredUser")
+    @OneToMany(mappedBy = "registeredUser", orphanRemoval = true)
     protected List<Rating> rating;
 
     public RegisteredUser() {
@@ -200,11 +199,4 @@ public class RegisteredUser
         return this.rating;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

@@ -344,4 +344,7 @@ public class Unit {
         this.object = value;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

@@ -42,14 +42,14 @@ export class Commenta{
   text: string;
   dateOfPublication: any;
   object: Object;
-  user: RegisteredUser;
+  registeredUser: RegisteredUser;
 
-  constructor(id: number, text: string, dateOfPublication: any, object: Object, user: RegisteredUser){
+  constructor(id: number, text: string, dateOfPublication: any, object: Object, registeredUser: RegisteredUser){
     this.id = id;
     this.text = text;
     this.dateOfPublication = dateOfPublication;
     this.object = object;
-    this.user = user;
+    this.registeredUser = registeredUser;
   }
 
 }
@@ -75,12 +75,14 @@ export class RegisteredUser{
   firstName: string;
   lastName: string;
   email:string;
+  active: boolean;
 
-  constructor(id: number, firstName: string, lastName: string, email: string){
+  constructor(id: number, firstName: string, lastName: string, email: string, active: boolean){
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
+    this.active = active;
   }
 }
 

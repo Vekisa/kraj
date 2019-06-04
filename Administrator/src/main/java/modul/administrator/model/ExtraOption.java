@@ -68,7 +68,7 @@ public class ExtraOption {
     protected String description;
     @XmlElement(name = "Price", namespace = "http://megatravell.com/object")
     @Column
-    private double price;
+    protected double price;
 
     public ExtraOption(){}
     /**

@@ -1,6 +1,7 @@
 
 package modul.administrator.model;
 
+import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 
 
@@ -67,17 +68,27 @@ import javax.xml.bind.annotation.*;
     Agent.class,
     RegisteredUser.class
 })
+@MappedSuperclass
 public abstract class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     @XmlElement(name = "FirstName", namespace = "http://www.megatravell.com/user", required = true)
+    @Column
     protected String firstName;
     @XmlElement(name = "LastName", namespace = "http://www.megatravell.com/user", required = true)
+    @Column
     protected String lastName;
     @XmlElement(name = "Email", namespace = "http://www.megatravell.com/user", required = true)
+    @Column
     protected String email;
     @XmlElement(name = "Password", namespace = "http://www.megatravell.com/user", required = true)
+    @Column
     protected String password;
     @XmlElement(name = "Adress", namespace = "http://www.megatravell.com/address", required = true)
+    @ManyToOne
     protected Adress adress;
 
     /**
@@ -200,4 +211,11 @@ public abstract class User {
         this.adress = value;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

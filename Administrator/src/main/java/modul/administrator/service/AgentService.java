@@ -1,7 +1,6 @@
 package modul.administrator.service;
 
 import modul.administrator.dto.AgentDTO;
-import modul.administrator.model.Adress;
 import modul.administrator.model.Agent;
 import modul.administrator.repository.AgentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ public class AgentService {
         Agent agent = new Agent();
         agent.setFirstName(agentDTO.getFirstName());
         agent.setLastName(agentDTO.getLastName());
-        //DODATI ADRESU
+        agent.setEmail(agentDTO.getEmail());
         agent.setBussinesRegistrationNumber(agentDTO.getBussinesRegistrationNumber());
 
         agentRepository.save(agent);

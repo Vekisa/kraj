@@ -45,7 +45,7 @@ import java.util.Date;
 })
 @XmlRootElement(name = "Plan", namespace = "http://megatravell.com/object")
 @Entity
-@Table(name="plan")
+@Table(name = "plan")
 public class Plan {
 
     @Id
@@ -169,4 +169,11 @@ public class Plan {
         this.perPerson = value;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

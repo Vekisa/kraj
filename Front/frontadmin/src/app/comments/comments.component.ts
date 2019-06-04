@@ -20,7 +20,11 @@ export class CommentsComponent implements OnInit {
   }
 
   approve(id: number){
-    this.commentService.approve(id);
+    this.commentService.approve(id).subscribe(data=>{
+      this.commentService.allComments().subscribe(data=>{
+        this.comments = data;
+      });
+    });
   }
 
 }

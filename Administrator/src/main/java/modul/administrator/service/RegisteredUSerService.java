@@ -49,8 +49,7 @@ public class RegisteredUSerService {
         if(!user.isPresent())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User option does not exist!");
 
-        //Treba ubaciti polje novoooo i onda srediti
-        registeredUserRepository.save(user.get());
+        registeredUserRepository.delete(user.get());
 
         return new RegisteredUserDTO(user.get());
     }

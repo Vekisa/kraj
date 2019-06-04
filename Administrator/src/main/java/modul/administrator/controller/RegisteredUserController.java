@@ -36,7 +36,7 @@ public class RegisteredUserController {
         return new ResponseEntity<>(registeredUSerService.deactivate(id), HttpStatus.OK);
     }
 
-    @RequestMapping( value="/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping( value="/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<RegisteredUserDTO> delete(@PathVariable("id") Long id) {
 
         return new ResponseEntity<>(registeredUSerService.delete(id), HttpStatus.OK);

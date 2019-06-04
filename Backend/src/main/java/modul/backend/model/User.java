@@ -72,12 +72,11 @@ import javax.xml.bind.annotation.XmlType;
     Agent.class,
     RegisteredUser.class
 })
-@Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@MappedSuperclass
 public abstract class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @XmlElement(name = "FirstName", namespace = "http://www.megatravell.com/user", required = true)
@@ -216,4 +215,11 @@ public abstract class User {
         this.adress = value;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

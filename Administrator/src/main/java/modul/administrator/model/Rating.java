@@ -41,7 +41,7 @@ import javax.xml.bind.annotation.*;
 })
 @XmlRootElement(name = "Rating", namespace = "http://megatravell.com/object")
 @Entity
-@Table
+@Table(name = "rating")
 public class Rating {
 
     @Id
@@ -63,7 +63,7 @@ public class Rating {
 
     /**
      * Gets the value of the mark property.
-     * 
+     *
      */
     public int getMark() {
         return mark;
@@ -71,7 +71,7 @@ public class Rating {
 
     /**
      * Sets the value of the mark property.
-     * 
+     *
      */
     public void setMark(int value) {
         this.mark = value;
@@ -79,11 +79,11 @@ public class Rating {
 
     /**
      * Gets the value of the object property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Object }
-     *     
+     *
      */
     public Object getObject() {
         return object;
@@ -91,11 +91,11 @@ public class Rating {
 
     /**
      * Sets the value of the object property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Object }
-     *     
+     *
      */
     public void setObject(Object value) {
         this.object = value;
@@ -125,4 +125,11 @@ public class Rating {
         this.registeredUser = value;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

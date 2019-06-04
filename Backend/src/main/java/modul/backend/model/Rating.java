@@ -129,4 +129,11 @@ public class Rating {
         this.registeredUser = value;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
