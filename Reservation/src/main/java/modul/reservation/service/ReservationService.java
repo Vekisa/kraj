@@ -13,7 +13,15 @@ public class ReservationService {
     @Autowired
     private ReservationRepository reservationRepository;
 
-    public Reservation save(Reservation reservation){
+    public Reservation save(Reservation reservation) {
+        List<Reservation> lista=findByUnit(reservation.getId());
+        for(Reservation r : lista){
+            if((r.getStart().before(reservation.getStart()) && reservation.getStart().before(r.getEnd()))
+                || (r.getStart().before(reservation.getEnd()) && r.getEnd().after(reservation.getEnd()))
+            || (r.getStart().before(reservation.getStart()) && r.getEnd().after(reservation.getEnd())))
+                return null;
+
+        }
         return reservationRepository.save(reservation);
     }
 
@@ -52,4 +60,5 @@ public class ReservationService {
     public List<Reservation> findAll(){
         return reservationRepository.findAll();
     }
+
 }
