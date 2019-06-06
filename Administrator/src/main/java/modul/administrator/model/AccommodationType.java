@@ -61,6 +61,10 @@ public class AccommodationType {
 
     public AccommodationType(){}
 
+    public Long getId() {
+        return id;
+    }
+
     /**
      * Gets the value of the name property.
      * 
@@ -109,11 +113,4 @@ public class AccommodationType {
         this.description = value;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

@@ -55,13 +55,18 @@ public class Agent
     protected List<Message> message;
 
     public Agent(){}
+
+    public Agent(String username, String firstName, String lastName, String email, String password, Adress adress, Boolean isEnabled, Boolean isVerified, List<Role> roles) {
+        super(username, firstName, lastName, email, password, adress, isEnabled, isVerified, roles);
+    }
+
     /**
      * Gets the value of the bussinesRegistrationNumber property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getBussinesRegistrationNumber() {
         return bussinesRegistrationNumber;
@@ -69,11 +74,11 @@ public class Agent
 
     /**
      * Sets the value of the bussinesRegistrationNumber property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setBussinesRegistrationNumber(String value) {
         this.bussinesRegistrationNumber = value;
@@ -81,25 +86,25 @@ public class Agent
 
     /**
      * Gets the value of the message property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the message property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getMessage().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Message }
-     * 
-     * 
+     *
+     *
      */
     public List<Message> getMessage() {
         if (message == null) {

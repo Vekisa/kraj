@@ -65,6 +65,11 @@ public class Message {
     protected RegisteredUser registeredUser;
 
     public Message(){}
+
+    public Long getId() {
+        return id;
+    }
+
     /**
      * Gets the value of the text property.
      * 
@@ -161,11 +166,4 @@ public class Message {
         this.registeredUser = value;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

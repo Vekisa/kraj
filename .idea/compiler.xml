@@ -6,14 +6,15 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Administrator" />
-        <module name="agent" />
-        <module name="Backend" />
-        <module name="eureka" />
         <module name="reservation" />
-        <module name="search" />
-        <module name="XMLB" />
         <module name="zuul" />
+        <module name="search" />
+        <module name="Backend" />
+        <module name="auth" />
+        <module name="eureka" />
+        <module name="agent" />
+        <module name="Administrator" />
+        <module name="XMLB" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -21,6 +22,7 @@
       <module name="Administrator" target="1.8" />
       <module name="Agent" target="1.8" />
       <module name="agent" target="1.8" />
+      <module name="auth" target="1.8" />
       <module name="Backend" target="1.8" />
       <module name="backend" target="1.8" />
       <module name="demo" target="1.8" />
@@ -39,6 +41,7 @@
       <module name="XMLB" options="-parameters" />
       <module name="admin" options="-parameters" />
       <module name="agent" options="-parameters" />
+      <module name="auth" options="-parameters" />
       <module name="backend" options="-parameters" />
       <module name="demo" options="-parameters" />
       <module name="eureka" options="-parameters" />

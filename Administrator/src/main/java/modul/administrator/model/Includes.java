@@ -58,9 +58,14 @@ public class Includes {
     protected ExtraOption extraOption;
 
     public Includes(){}
+
+    public Long getId() {
+        return id;
+    }
+
     /**
      * Gets the value of the quantity property.
-     * 
+     *
      */
     public int getQuantity() {
         return quantity;
@@ -68,7 +73,7 @@ public class Includes {
 
     /**
      * Sets the value of the quantity property.
-     * 
+     *
      */
     public void setQuantity(int value) {
         this.quantity = value;
@@ -76,11 +81,11 @@ public class Includes {
 
     /**
      * Gets the value of the reservation property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Reservation }
-     *     
+     *
      */
     public Reservation getReservation() {
         return reservation;
@@ -88,11 +93,11 @@ public class Includes {
 
     /**
      * Sets the value of the reservation property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Reservation }
-     *     
+     *
      */
     public void setReservation(Reservation value) {
         this.reservation = value;
@@ -100,11 +105,11 @@ public class Includes {
 
     /**
      * Gets the value of the extraOption property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link ExtraOption }
-     *     
+     *
      */
     public ExtraOption getExtraOption() {
         return extraOption;
@@ -112,7 +117,7 @@ public class Includes {
 
     /**
      * Sets the value of the extraOption property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link ExtraOption }
@@ -122,11 +127,4 @@ public class Includes {
         this.extraOption = value;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

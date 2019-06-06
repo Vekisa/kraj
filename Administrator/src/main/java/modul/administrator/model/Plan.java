@@ -73,6 +73,10 @@ public class Plan {
     public Plan() {
     }
 
+    public Long getId() {
+        return id;
+    }
+
     /**
      * Gets the value of the from property.
      *
@@ -169,11 +173,4 @@ public class Plan {
         this.perPerson = value;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

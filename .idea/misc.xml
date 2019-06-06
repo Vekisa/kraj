@@ -12,6 +12,7 @@
         <option value="$PROJECT_DIR$/Server/zuul/pom.xml" />
         <option value="$PROJECT_DIR$/Reservation/pom.xml" />
         <option value="$PROJECT_DIR$/Search/pom.xml" />
+        <option value="$PROJECT_DIR$/Server/auth/pom.xml" />
       </list>
     </option>
   </component>

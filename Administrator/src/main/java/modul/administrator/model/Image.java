@@ -42,6 +42,11 @@ public class Image {
     protected byte[] source;
 
     public Image(){}
+
+    public Long getId() {
+        return id;
+    }
+
     /**
      * Gets the value of the source property.
      * 
@@ -64,11 +69,4 @@ public class Image {
         this.source = value;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

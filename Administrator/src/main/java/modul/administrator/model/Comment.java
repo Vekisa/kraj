@@ -71,6 +71,10 @@ public class Comment {
 
 
     public Comment(){}
+
+    public Long getId() {
+        return id;
+    }
     /**
      * Gets the value of the text property.
      *
@@ -183,11 +187,4 @@ public class Comment {
         this.registeredUser = value;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

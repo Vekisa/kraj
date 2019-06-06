@@ -85,6 +85,10 @@ public class Adress {
     @Column
     protected BigDecimal latitude;
 
+    public Long getId() {
+        return id;
+    }
+
     public Adress(){}
     /**
      * Gets the value of the state property.
@@ -246,11 +250,4 @@ public class Adress {
         this.latitude = value;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

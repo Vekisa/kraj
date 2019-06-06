@@ -61,6 +61,10 @@ public class Rating {
     public Rating() {
     }
 
+    public Long getId() {
+        return id;
+    }
+
     /**
      * Gets the value of the mark property.
      *
@@ -103,11 +107,11 @@ public class Rating {
 
     /**
      * Gets the value of the registeredUser property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link RegisteredUser }
-     *     
+     *
      */
     public RegisteredUser getRegisteredUser() {
         return registeredUser;
@@ -115,7 +119,7 @@ public class Rating {
 
     /**
      * Sets the value of the registeredUser property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link RegisteredUser }
@@ -125,11 +129,4 @@ public class Rating {
         this.registeredUser = value;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

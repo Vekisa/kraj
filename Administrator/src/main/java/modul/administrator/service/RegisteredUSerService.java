@@ -27,7 +27,7 @@ public class RegisteredUSerService {
         if(!user.isPresent())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User option does not exist!");
 
-        user.get().setAktivan(true);
+        user.get().setEnabled(true);
         registeredUserRepository.save(user.get());
 
         return new RegisteredUserDTO(user.get());
@@ -38,7 +38,7 @@ public class RegisteredUSerService {
         if(!user.isPresent())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User option does not exist!");
 
-        user.get().setAktivan(false);
+        user.get().setEnabled(false);
         registeredUserRepository.save(user.get());
 
         return new RegisteredUserDTO(user.get());

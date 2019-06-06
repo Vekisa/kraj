@@ -26,7 +26,7 @@ public class RegisteredUserDTO {
     }
 
     public RegisteredUserDTO(RegisteredUser registeredUser){
-        this(registeredUser.getId(),registeredUser.getFirstName(),registeredUser.getLastName(),registeredUser.getEmail(),registeredUser.getAdress(),registeredUser.isAktivan());
+        this(registeredUser.getId(),registeredUser.getFirstName(),registeredUser.getLastName(),registeredUser.getEmail(),registeredUser.getAdress(),registeredUser.isEnabled());
     }
 
 

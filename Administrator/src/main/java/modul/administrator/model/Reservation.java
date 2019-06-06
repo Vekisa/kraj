@@ -91,13 +91,17 @@ public class Reservation {
     public Reservation() {
     }
 
+    public Long getId() {
+        return id;
+    }
+
     /**
      * Gets the value of the start property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Date }
-     *     
+     *
      */
     public Date getStart() {
         return start;
@@ -105,11 +109,11 @@ public class Reservation {
 
     /**
      * Sets the value of the start property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Date }
-     *     
+     *
      */
     public void setStart(Date value) {
         this.start = value;
@@ -117,11 +121,11 @@ public class Reservation {
 
     /**
      * Gets the value of the end property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Date }
-     *     
+     *
      */
     public Date getEnd() {
         return end;
@@ -129,11 +133,11 @@ public class Reservation {
 
     /**
      * Sets the value of the end property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Date }
-     *     
+     *
      */
     public void setEnd(Date value) {
         this.end = value;
@@ -141,7 +145,7 @@ public class Reservation {
 
     /**
      * Gets the value of the confirmed property.
-     * 
+     *
      */
     public boolean isConfirmed() {
         return confirmed;
@@ -149,7 +153,7 @@ public class Reservation {
 
     /**
      * Sets the value of the confirmed property.
-     * 
+     *
      */
     public void setConfirmed(boolean value) {
         this.confirmed = value;
@@ -157,11 +161,11 @@ public class Reservation {
 
     /**
      * Gets the value of the possibleCancellationDate property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Date }
-     *     
+     *
      */
     public Date getPossibleCancellationDate() {
         return possibleCancellationDate;
@@ -169,11 +173,11 @@ public class Reservation {
 
     /**
      * Sets the value of the possibleCancellationDate property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Date }
-     *     
+     *
      */
     public void setPossibleCancellationDate(Date value) {
         this.possibleCancellationDate = value;
@@ -181,7 +185,7 @@ public class Reservation {
 
     /**
      * Gets the value of the price property.
-     * 
+     *
      */
     public double getPrice() {
         return price;
@@ -189,7 +193,7 @@ public class Reservation {
 
     /**
      * Sets the value of the price property.
-     * 
+     *
      */
     public void setPrice(double value) {
         this.price = value;
@@ -197,11 +201,11 @@ public class Reservation {
 
     /**
      * Gets the value of the unit property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Unit }
-     *     
+     *
      */
     public Unit getUnit() {
         return unit;
@@ -209,7 +213,7 @@ public class Reservation {
 
     /**
      * Sets the value of the unit property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Unit }
@@ -272,11 +276,4 @@ public class Reservation {
         this.registeredUser = value;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

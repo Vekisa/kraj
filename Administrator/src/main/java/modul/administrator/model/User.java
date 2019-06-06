@@ -1,15 +1,23 @@
 
 package modul.administrator.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 
 /**
  * <p>Java class for User complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="User">
  *   &lt;complexContent>
@@ -53,8 +61,8 @@ import javax.xml.bind.annotation.*;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "User", namespace = "http://www.megatravell.com/user", propOrder = {
@@ -68,12 +76,19 @@ import javax.xml.bind.annotation.*;
     Agent.class,
     RegisteredUser.class
 })
-@MappedSuperclass
-public abstract class User {
+@Entity
+@Table(name="users")
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
     private Long id;
+
+    @Size(max = 15)
+    @Column
+    private String username;
 
     @XmlElement(name = "FirstName", namespace = "http://www.megatravell.com/user", required = true)
     @Column
@@ -91,13 +106,119 @@ public abstract class User {
     @ManyToOne
     protected Adress adress;
 
+    @Column
+    private Boolean isEnabled;
+
+    @Column
+    private Date lastPasswordResetDate;
+
+    @Column
+    private Boolean isVerified;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<Role> roles;
+
+    @JsonIgnore
+    @OneToOne
+    private VerificationToken verificationToken;
+
+    public User() {
+    }
+
+    public User(String username, String firstName, String lastName, String email, String password, Adress adress, Boolean isEnabled, Boolean isVerified, List<Role> roles) {
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.adress = adress;
+        this.isEnabled = isEnabled;
+        this.isVerified = isVerified;
+        this.roles = roles;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Date getLastPasswordResetDate() {
+        return lastPasswordResetDate;
+    }
+
+    public Boolean getVerified() {
+        return isVerified;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public VerificationToken getVerificationToken() {
+        return verificationToken;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        isEnabled = enabled;
+    }
+
+    public void setLastPasswordResetDate(Date lastPasswordResetDate) {
+        this.lastPasswordResetDate = lastPasswordResetDate;
+    }
+
+    public void setVerified(Boolean verified) {
+        isVerified = verified;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public void setVerificationToken(VerificationToken verificationToken) {
+        this.verificationToken = verificationToken;
+    }
+
     /**
      * Gets the value of the firstName property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getFirstName() {
         return firstName;
@@ -105,11 +226,11 @@ public abstract class User {
 
     /**
      * Sets the value of the firstName property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setFirstName(String value) {
         this.firstName = value;
@@ -117,11 +238,11 @@ public abstract class User {
 
     /**
      * Gets the value of the lastName property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getLastName() {
         return lastName;
@@ -129,11 +250,11 @@ public abstract class User {
 
     /**
      * Sets the value of the lastName property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setLastName(String value) {
         this.lastName = value;
@@ -141,11 +262,11 @@ public abstract class User {
 
     /**
      * Gets the value of the email property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getEmail() {
         return email;
@@ -153,11 +274,11 @@ public abstract class User {
 
     /**
      * Sets the value of the email property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setEmail(String value) {
         this.email = value;
@@ -165,11 +286,11 @@ public abstract class User {
 
     /**
      * Gets the value of the password property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getPassword() {
         return password;
@@ -177,11 +298,11 @@ public abstract class User {
 
     /**
      * Sets the value of the password property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setPassword(String value) {
         this.password = value;
@@ -189,11 +310,11 @@ public abstract class User {
 
     /**
      * Gets the value of the adress property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Adress }
-     *     
+     *
      */
     public Adress getAdress() {
         return adress;
@@ -201,7 +322,7 @@ public abstract class User {
 
     /**
      * Sets the value of the adress property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Adress }
@@ -211,11 +332,6 @@ public abstract class User {
         this.adress = value;
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+
 }
