@@ -11,6 +11,7 @@
         <module name="Backend" />
         <module name="eureka" />
         <module name="reservation" />
+        <module name="search" />
         <module name="XMLB" />
         <module name="zuul" />
       </profile>
@@ -25,6 +26,7 @@
       <module name="demo" target="1.8" />
       <module name="eureka" target="1.8" />
       <module name="reservation" target="1.8" />
+      <module name="search" target="1.8" />
       <module name="XMLB" target="1.8" />
       <module name="zuul" target="1.8" />
     </bytecodeTargetLevel>
@@ -41,6 +43,7 @@
       <module name="demo" options="-parameters" />
       <module name="eureka" options="-parameters" />
       <module name="reservation" options="-parameters" />
+      <module name="search" options="-parameters" />
       <module name="zuul" options="-parameters" />
     </option>
   </component>

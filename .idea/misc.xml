@@ -11,6 +11,7 @@
         <option value="$PROJECT_DIR$/Server/eureka/pom.xml" />
         <option value="$PROJECT_DIR$/Server/zuul/pom.xml" />
         <option value="$PROJECT_DIR$/Reservation/pom.xml" />
+        <option value="$PROJECT_DIR$/Search/pom.xml" />
       </list>
     </option>
   </component>

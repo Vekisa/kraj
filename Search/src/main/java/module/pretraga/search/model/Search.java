@@ -4,7 +4,6 @@ package module.pretraga.search.model;
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import java.util.Date;
-
 /**
  * <p>Java class for anonymous complex type.
  *
