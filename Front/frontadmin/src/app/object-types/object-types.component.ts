@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ObjectTypesService} from "../services/object-types.service";
 import {ObjectType} from "../model";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-object-types',

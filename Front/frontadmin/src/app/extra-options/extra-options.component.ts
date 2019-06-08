@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ObjectTypesService} from "../services/object-types.service";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ExtraOption, ObjectType} from "../model";
 import {ExtraOptionsService} from "../services/extra-options.service";
 
