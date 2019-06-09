@@ -13,7 +13,6 @@
       <module fileurl="file://$PROJECT_DIR$/kraj.iml" filepath="$PROJECT_DIR$/kraj.iml" />
       <module fileurl="file://$PROJECT_DIR$/Reservation/reservation.iml" filepath="$PROJECT_DIR$/Reservation/reservation.iml" />
       <module fileurl="file://$PROJECT_DIR$/Search/search.iml" filepath="$PROJECT_DIR$/Search/search.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Search/search.iml" filepath="$PROJECT_DIR$/Search/search.iml" />
       <module fileurl="file://$PROJECT_DIR$/Server/zuul/zuul.iml" filepath="$PROJECT_DIR$/Server/zuul/zuul.iml" />
     </modules>
   </component>
