@@ -5,7 +5,10 @@ import modul.reservation.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReservationService {
@@ -14,19 +17,21 @@ public class ReservationService {
     private ReservationRepository reservationRepository;
 
     public Reservation save(Reservation reservation) {
-        List<Reservation> lista=findByUnit(reservation.getId());
-        for(Reservation r : lista){
-            if((r.getStart().before(reservation.getStart()) && reservation.getStart().before(r.getEnd()))
-                || (r.getStart().before(reservation.getEnd()) && r.getEnd().after(reservation.getEnd()))
-            || (r.getStart().before(reservation.getStart()) && r.getEnd().after(reservation.getEnd())))
+        if(checkReservation(reservation)){
                 return null;
-
         }
         return reservationRepository.save(reservation);
     }
 
+    //proveriti da li brise i iz liste korisnika...
     public void delete(Reservation reservation){
-        reservationRepository.delete(reservation);
+
+        if(reservation.getPossibleCancellationDate().before(new Date())){
+            System.out.println("Datum sada " + new Date() + "  datum za otkaz " + reservation.getPossibleCancellationDate());
+            reservationRepository.delete(reservation);
+
+        }
+
     }
 
     public Optional<Reservation> findByID(Long id){
@@ -59,6 +64,17 @@ public class ReservationService {
 
     public List<Reservation> findAll(){
         return reservationRepository.findAll();
+    }
+
+    public Boolean checkReservation(Reservation reservation){
+        List<Reservation> lista=findByUnit(reservation.getId());
+        for(Reservation r : lista){
+            if((r.getStart().before(reservation.getStart()) && reservation.getStart().before(r.getEnd()))
+                    || (r.getStart().before(reservation.getEnd()) && r.getEnd().after(reservation.getEnd()))
+                    || (r.getStart().before(reservation.getStart()) && r.getEnd().after(reservation.getEnd())))
+                return false;
+        }
+        return true;
     }
 
 }

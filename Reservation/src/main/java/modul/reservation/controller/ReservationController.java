@@ -42,4 +42,27 @@ public class ReservationController {
     public ResponseEntity<List<Reservation>> getReservations(){
         return new ResponseEntity<List<Reservation>>(reservationService.findAll(), HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/checkReservation", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Provera da li je jedinica rezervisana", httpMethod = "PUT", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Reservation.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<Boolean> reservations(@RequestBody Reservation reservation){
+        return new ResponseEntity<>(reservationService.checkReservation(reservation), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/cancel", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Otkaz rezervacije", httpMethod = "DELETE", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Reservation.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity cancelReservation(@RequestBody Reservation reservation){
+        reservationService.delete(reservation);
+        return new ResponseEntity<>( HttpStatus.OK);
+    }
 }

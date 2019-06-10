@@ -1,14 +1,13 @@
 
 package modul.backend.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
 
 /**
@@ -56,7 +55,7 @@ public class RegisteredUser
     @OneToMany(mappedBy = "registeredUser")
     protected List<Comment> comment;
     @XmlElement(name = "Reservation", namespace = "http://megatravell.com/object")
-    @OneToMany(mappedBy = "registeredUser")
+    @OneToMany(mappedBy = "registeredUser", orphanRemoval=true)
     protected List<Reservation> reservation;
     @XmlElement(name = "Message", namespace = "http://www.megatravell.com/user")
     @OneToMany(mappedBy = "registeredUser")
