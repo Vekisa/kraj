@@ -1,9 +1,6 @@
 package modul.backend.controller;
 
-import modul.backend.dto.ObjectDTO;
 import modul.backend.dto.UnitDTO;
-import modul.backend.model.Unit;
-import modul.backend.repository.UnitRepository;
 import modul.backend.service.UnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

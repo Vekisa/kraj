@@ -1,14 +1,17 @@
 package module.pretraga.search.controller;
 
 
-import module.pretraga.search.model.Search;
+import module.pretraga.search.dto.UnitDTO;
 import module.pretraga.search.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Optional;
+import java.util.List;
 
 @CrossOrigin(origins = "https://localhost:4200")
 @RestController
@@ -18,30 +21,13 @@ public class SearchController {
     @Autowired
     private SearchService searchService;
 
-    @RequestMapping("/hotel")
-    public ArrayList<Search> getResult() {
-        return searchService.getall();
-    }
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<UnitDTO>> search(@RequestParam(value = "city") String city, @RequestParam(value = "startDate") Date startDate,
+                                                @RequestParam(value = "endDate") Date endDate, @RequestParam(value = "persons") Integer persons,
+                                                @RequestParam(value = "accommodation_type_id") Long accommodationTypeId,
+                                                @RequestParam(value = "category") Integer category , @RequestParam(value = "distance") Float distance,
+                                                @RequestBody ArrayList<Long> extraOptions) {
 
-    @RequestMapping("/{persons}/persons")
-    public ArrayList<Search> getResult(@PathVariable("persons") Double persons) {
-        return searchService.findByPersons(persons);
+        return new ResponseEntity<>(searchService.search(city,startDate,endDate,persons,accommodationTypeId,category,distance,extraOptions), HttpStatus.OK);
     }
-
-    @RequestMapping("/{category}/category")
-    public ArrayList<Search> getResult(@PathVariable("category") int category) {
-        return searchService.findByCategory(category);
-    }
-
-    @RequestMapping("/{distance}/distance")
-    public ArrayList<Search> getResult(@PathVariable("distance") Long distance) {
-        return searchService.findByDistance(distance);
-    }
-
-/*
-    @RequestMapping("/{start}/start")
-    public ArrayList<Search> getResult(@PathVariable("start") Date start) {
-        return searchService.findByStart(start);
-    }
-*/
 }
