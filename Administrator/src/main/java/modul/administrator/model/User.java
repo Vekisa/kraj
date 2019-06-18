@@ -116,7 +116,7 @@ public abstract class User implements UserDetails {
     private Boolean isVerified;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
 
     @JsonIgnore
@@ -214,11 +214,11 @@ public abstract class User implements UserDetails {
 
     /**
      * Gets the value of the firstName property.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link String }
-     *
+     *     
      */
     public String getFirstName() {
         return firstName;
@@ -226,11 +226,11 @@ public abstract class User implements UserDetails {
 
     /**
      * Sets the value of the firstName property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link String }
-     *
+     *     
      */
     public void setFirstName(String value) {
         this.firstName = value;
@@ -238,11 +238,11 @@ public abstract class User implements UserDetails {
 
     /**
      * Gets the value of the lastName property.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link String }
-     *
+     *     
      */
     public String getLastName() {
         return lastName;
@@ -250,11 +250,11 @@ public abstract class User implements UserDetails {
 
     /**
      * Sets the value of the lastName property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link String }
-     *
+     *     
      */
     public void setLastName(String value) {
         this.lastName = value;
@@ -262,11 +262,11 @@ public abstract class User implements UserDetails {
 
     /**
      * Gets the value of the email property.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link String }
-     *
+     *     
      */
     public String getEmail() {
         return email;
@@ -274,11 +274,11 @@ public abstract class User implements UserDetails {
 
     /**
      * Sets the value of the email property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link String }
-     *
+     *     
      */
     public void setEmail(String value) {
         this.email = value;
@@ -286,11 +286,11 @@ public abstract class User implements UserDetails {
 
     /**
      * Gets the value of the password property.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link String }
-     *
+     *     
      */
     public String getPassword() {
         return password;
@@ -298,11 +298,11 @@ public abstract class User implements UserDetails {
 
     /**
      * Sets the value of the password property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link String }
-     *
+     *     
      */
     public void setPassword(String value) {
         this.password = value;
@@ -310,11 +310,11 @@ public abstract class User implements UserDetails {
 
     /**
      * Gets the value of the adress property.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Adress }
-     *
+     *     
      */
     public Adress getAdress() {
         return adress;
@@ -322,7 +322,7 @@ public abstract class User implements UserDetails {
 
     /**
      * Sets the value of the adress property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Adress }

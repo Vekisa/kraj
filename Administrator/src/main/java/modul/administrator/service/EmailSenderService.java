@@ -1,5 +1,6 @@
 package modul.administrator.service;
 
+import modul.administrator.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -33,6 +34,16 @@ public class EmailSenderService {
         mailMessage.setFrom("bezbednostprojekat@gmail.com");
         mailMessage.setText("To confirm your account, please click here : "
                 + "https://localhost:8080/agent");
+        this.sendEmail(mailMessage);
+    }
+
+    public void sendCompleteRegistration(User user) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(user.getEmail());
+        mailMessage.setSubject("Complete Registration!");
+        mailMessage.setFrom("bezbednostprojekat@gmail.com");
+        mailMessage.setText("To confirm your account, please click here : "
+                + "http://localhost:9100/api/auth/confirmReg?token=" + user.getVerificationToken().getVerificationToken());
         this.sendEmail(mailMessage);
     }
 

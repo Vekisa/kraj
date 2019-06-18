@@ -1,7 +1,7 @@
 package modul.auth.service;
 
 
-import modul.auth.model.User;
+import modul.auth.model.Users.User;
 import modul.auth.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;

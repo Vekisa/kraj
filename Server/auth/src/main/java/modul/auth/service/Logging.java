@@ -4,10 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-
 public class Logging {
 
-    protected final Logger LOGGER;
+    private final Logger LOGGER;
 
     public Logging(Class object) {
         LOGGER = LoggerFactory.getLogger(object);

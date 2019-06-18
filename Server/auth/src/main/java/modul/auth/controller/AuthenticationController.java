@@ -1,9 +1,10 @@
 package modul.auth.controller;
 
-import modul.auth.model.Regex;
-import modul.auth.model.RegisteredUser;
-import modul.auth.model.Role;
-import modul.auth.model.User;
+import modul.auth.model.Users.Regex;
+import modul.auth.model.Users.RegisteredUser;
+import modul.auth.model.Users.Role;
+import modul.auth.model.Users.User;
+import modul.auth.model.Users.VerificationToken;
 import modul.auth.repository.RoleRepository;
 import modul.auth.repository.UserRepository;
 import modul.auth.security.*;
@@ -56,8 +57,13 @@ public class AuthenticationController {
     UserService userService;
 
     @Autowired
+    AuthenticationService authenticationService;
+
+    @Autowired
     UserDetailsCustomService userDetails;
 
+    @Autowired
+    EmailSenderService emailSenderService;
 
     //@Autowired
     //LoginService loginService;
@@ -82,15 +88,8 @@ public class AuthenticationController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad parameters");
         }
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        String jwt = jwtProvider.generateJWToken(authentication);
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         logging.printInfo("IN FUNC: Success");
-        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities()));
+        return ResponseEntity.ok(authenticationService.authenticateUser(loginRequest));
     }
 
     @PostMapping("/signup")
@@ -113,39 +112,16 @@ public class AuthenticationController {
             return new ResponseEntity<>(new ResponseMessage("Email is already in use!"), HttpStatus.BAD_REQUEST);
         }
 
-        String passwordHash = "";
-        try {
-            passwordHash = PasswordHashingService.generateStrongPasswordHash(signUpRequest.getPassword());
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (InvalidKeySpecException e) {
-            e.printStackTrace();
-        }
+        RegisteredUser registeredUser = userService.registerUser(signUpRequest);
 
-        // Creating user's account
+        emailSenderService.sendCompleteRegistration(registeredUser);
 
-        Role role = roleRepository.findByName("ROLE_REG")
-                       .orElseThrow(() -> new RuntimeException("Role can't be found!"));
-
-        RegisteredUser registeredUser = new RegisteredUser(signUpRequest.getUsername(),
-                signUpRequest.getFirstName(), signUpRequest.getLastName(),signUpRequest.getEmail(),passwordHash,null,true,null,new ArrayList<>());
-
-
-        registeredUser.getRoles().add(role);
-        role.getUsers().add(registeredUser);
-
-        String token = UUID.randomUUID().toString();
-        userRepository.save(registeredUser);
-        //userService.createVerificationToken(registeredUser, token);
-
-        //emailSenderService.sendCompleteRegistration(registeredUser);
-        logging.printInfo("IN FUNC: Success");
         return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.OK);
     }
 
-    /*@RequestMapping(value = "/confirmReg")
+    @RequestMapping(value = "/confirmReg")
     public ResponseEntity<?> confirmReg(@RequestParam("token") String token, HttpServletRequest hr) {
-        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + token);
+        //logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + token);
         VerificationToken verificationToken = userService.getToken(token);
         if (verificationToken == null) {
             logging.printError("IN FUNC: Inavlid token");
@@ -165,7 +141,7 @@ public class AuthenticationController {
         logging.printInfo("IN FUNC: Success");
         return new ResponseEntity<>(new ResponseMessage("Account verified successfully!"), HttpStatus.OK);
 
-    }*/
+    }
 
     /*@RequestMapping(value = "/checkIP")
     public ResponseEntity<?> checkIP(HttpServletRequest hr) {

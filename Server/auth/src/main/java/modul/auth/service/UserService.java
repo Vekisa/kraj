@@ -1,9 +1,13 @@
 package modul.auth.service;
 
-import modul.auth.model.User;
-import modul.auth.model.VerificationToken;
+import modul.auth.model.Users.RegisteredUser;
+import modul.auth.model.Users.Role;
+import modul.auth.model.Users.User;
+import modul.auth.model.Users.VerificationToken;
+import modul.auth.repository.RoleRepository;
 import modul.auth.repository.UserRepository;
 import modul.auth.repository.VerificationTokenRepository;
+import modul.auth.security.SignUpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -13,10 +17,13 @@ import org.springframework.web.server.ResponseStatusException;
 
 
 import javax.transaction.Transactional;
+import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -28,13 +35,12 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
+    private RoleRepository roleRepository;
+
+
+    @Autowired
     private VerificationTokenRepository tokenRepository;
 
-    /*@Autowired
-    private RoleService roleService;
-*/
-    /*@Autowired
-    private GroupService groupService;*/
 
     public String getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -74,10 +80,37 @@ public class UserService {
         return tokenRepository.findByVerificationToken(VerificationToken);
     }
 
+    public RegisteredUser registerUser(SignUpRequest signUpRequest) {
 
-    public void saveUser(User user) {
-        userRepository.save(user);
+        String passwordHash = "";
+        try {
+            passwordHash = PasswordHashingService.generateStrongPasswordHash(signUpRequest.getPassword());
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        }
+
+        // Creating user's account
+
+        Role role = roleRepository.findByName("ROLE_REG")
+                .orElseThrow(() -> new RuntimeException("Role can't be found!"));
+
+        RegisteredUser registeredUser = new RegisteredUser(signUpRequest.getUsername(),
+                signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getEmail(), passwordHash, null, true, true, new ArrayList<Role>());
+
+        registeredUser.getRoles().add(role);
+        //role.getUsers().add(registeredUser);
+
+        String token = UUID.randomUUID().toString();
+        userRepository.save(registeredUser);
+        createVerificationToken(registeredUser, token);
+
+        logging.printInfo("User registered.");
+
+        return registeredUser;
     }
+
 
     public void createVerificationToken(User user, String token) {
         VerificationToken myToken = new VerificationToken(token, user);
@@ -115,13 +148,13 @@ public class UserService {
         System.out.println("BBB");
         Optional<User> user = userRepository.findById(id);
         if (!user.isPresent()) {
-            logging.printInfo("IN FUNC: Requested user does not exist");
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Requested user does not exist");
+            logging.printInfo("Requested user does't exist.");
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Requested useruser does't exist");
         }
         user.get().setEnabled(true);
         userRepository.save(user.get());
 
-        logging.printInfo("IN FUNC: Success");
+        logging.printInfo("User enabled.");
         return user.get();
     }
 
@@ -166,67 +199,5 @@ public class UserService {
         return optionalUser.get();
     }
 
-  /*  public User rolesToUser(Long id, List<Long> ids) {
-
-        User user = getUser(id);
-
-        for (Long idRole : ids) {
-
-            Role role = roleService.getRole(idRole);
-
-            role.getUsers().add(user);
-            roleService.saveRole(role);
-
-            user.getRoles().add(role);
-        }
-
-        logging.printInfo("IN FUNC: Success");
-        return userRepository.save(user);
-
-    }
-
-    public User groupsToUser(Long id, List<Long> ids) {
-
-        User user = getUser(id);
-
-        for (Long idGroup : ids) {
-            Group group = groupService.getGroup(idGroup);
-            group.getUsers().add(user);
-
-            groupService.saveGroup(group);
-            user.getGroup().add(group);
-        }
-
-        logging.printInfo("IN FUNC: Success");
-        return userRepository.save(user);
-    }
-
-    public User removeRoleFromUser(Long userId, Long roleId) {
-        User user = getUser(userId);
-        Role role = roleService.getRole(roleId);
-
-        user.getRoles().remove(role);
-        role.getUsers().remove(user);
-
-        roleService.saveRole(role);
-
-        logging.printInfo("IN FUNC: Success");
-        return userRepository.save(user);
-
-    }
-
-    public User removeGroupFromUser(Long userId, Long groupId) {
-        User user = getUser(userId);
-        Group group = groupService.getGroup(groupId);
-
-        user.getGroup().remove(group);
-        group.getUsers().remove(user);
-
-        groupService.saveGroup(group);
-
-        logging.printInfo("IN FUNC: Success");
-        return userRepository.save(user);
-
-    }*/
 
 }

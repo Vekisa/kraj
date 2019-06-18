@@ -11,9 +11,9 @@ import java.util.List;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -40,21 +40,19 @@ import java.util.List;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "adults",
-    "children",
-    "beds",
-    "size",
-    "smoking",
-    "priceSchedule",
-    "accommodationType",
-    "image",
-    "reservation",
-    "object"
+        "adults",
+        "children",
+        "beds",
+        "size",
+        "smoking",
+        "priceSchedule",
+        "accommodationType",
+        "image",
+        "reservation",
+        "object"
 })
 @XmlRootElement(name = "Unit", namespace = "http://megatravell.com/object")
 @Entity
@@ -108,10 +106,8 @@ public class Unit {
     /**
      * Gets the value of the adults property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getAdults() {
         return adults;
@@ -120,10 +116,8 @@ public class Unit {
     /**
      * Sets the value of the adults property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setAdults(BigInteger value) {
         this.adults = value;
@@ -131,7 +125,6 @@ public class Unit {
 
     /**
      * Gets the value of the children property.
-     *
      */
     public int getChildren() {
         return children;
@@ -139,7 +132,6 @@ public class Unit {
 
     /**
      * Sets the value of the children property.
-     *
      */
     public void setChildren(int value) {
         this.children = value;
@@ -148,10 +140,8 @@ public class Unit {
     /**
      * Gets the value of the beds property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getBeds() {
         return beds;
@@ -160,10 +150,8 @@ public class Unit {
     /**
      * Sets the value of the beds property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setBeds(BigInteger value) {
         this.beds = value;
@@ -172,10 +160,8 @@ public class Unit {
     /**
      * Gets the value of the size property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *
+     * @return possible object is
+     * {@link BigDecimal }
      */
     public BigDecimal getSize() {
         return size;
@@ -184,10 +170,8 @@ public class Unit {
     /**
      * Sets the value of the size property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *
+     * @param value allowed object is
+     *              {@link BigDecimal }
      */
     public void setSize(BigDecimal value) {
         this.size = value;
@@ -195,7 +179,6 @@ public class Unit {
 
     /**
      * Gets the value of the smoking property.
-     *
      */
     public boolean isSmoking() {
         return smoking;
@@ -203,7 +186,6 @@ public class Unit {
 
     /**
      * Sets the value of the smoking property.
-     *
      */
     public void setSmoking(boolean value) {
         this.smoking = value;
@@ -228,8 +210,6 @@ public class Unit {
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link PriceSchedule }
-     *
-     *
      */
     public List<PriceSchedule> getPriceSchedule() {
         if (priceSchedule == null) {
@@ -241,10 +221,8 @@ public class Unit {
     /**
      * Gets the value of the accommodationType property.
      *
-     * @return
-     *     possible object is
-     *     {@link AccommodationType }
-     *
+     * @return possible object is
+     * {@link AccommodationType }
      */
     public AccommodationType getAccommodationType() {
         return accommodationType;
@@ -253,10 +231,8 @@ public class Unit {
     /**
      * Sets the value of the accommodationType property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link AccommodationType }
-     *
+     * @param value allowed object is
+     *              {@link AccommodationType }
      */
     public void setAccommodationType(AccommodationType value) {
         this.accommodationType = value;
@@ -281,8 +257,6 @@ public class Unit {
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Image }
-     *
-     *
      */
     public List<Image> getImage() {
         if (image == null) {
@@ -310,8 +284,6 @@ public class Unit {
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Reservation }
-     *
-     *
      */
     public List<Reservation> getReservation() {
         if (reservation == null) {
@@ -323,10 +295,8 @@ public class Unit {
     /**
      * Gets the value of the object property.
      *
-     * @return
-     *     possible object is
-     *     {@link Object }
-     *
+     * @return possible object is
+     * {@link Object }
      */
     public Object getObject() {
         return object;
@@ -335,10 +305,8 @@ public class Unit {
     /**
      * Sets the value of the object property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link Object }
-     *
+     * @param value allowed object is
+     *              {@link Object }
      */
     public void setObject(Object value) {
         this.object = value;

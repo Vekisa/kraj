@@ -9,9 +9,11 @@
       <module fileurl="file://$PROJECT_DIR$/Server/auth/auth.iml" filepath="$PROJECT_DIR$/Server/auth/auth.iml" />
       <module fileurl="file://$PROJECT_DIR$/Server/eureka/eureka.iml" filepath="$PROJECT_DIR$/Server/eureka/eureka.iml" />
       <module fileurl="file://$PROJECT_DIR$/Front/frontadmin/frontadmin.iml" filepath="$PROJECT_DIR$/Front/frontadmin/frontadmin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/server/gateway/gateway.iml" filepath="$PROJECT_DIR$/server/gateway/gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/kraj.iml" filepath="$PROJECT_DIR$/kraj.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Server/oauth/oauth.iml" filepath="$PROJECT_DIR$/Server/oauth/oauth.iml" />
       <module fileurl="file://$PROJECT_DIR$/Reservation/reservation.iml" filepath="$PROJECT_DIR$/Reservation/reservation.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Search/search.iml" filepath="$PROJECT_DIR$/Search/search.iml" />
+      <module fileurl="file://$PROJECT_DIR$/search/search.iml" filepath="$PROJECT_DIR$/search/search.iml" />
       <module fileurl="file://$PROJECT_DIR$/Server/zuul/zuul.iml" filepath="$PROJECT_DIR$/Server/zuul/zuul.iml" />
     </modules>
   </component>

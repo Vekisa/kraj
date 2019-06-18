@@ -6,13 +6,15 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="reservation" />
         <module name="zuul" />
         <module name="search" />
+        <module name="eureka" />
         <module name="Backend" />
         <module name="auth" />
-        <module name="eureka" />
+        <module name="reservation" />
+        <module name="oauth" />
         <module name="agent" />
+        <module name="gateway" />
         <module name="Administrator" />
         <module name="XMLB" />
       </profile>
@@ -27,6 +29,8 @@
       <module name="backend" target="1.8" />
       <module name="demo" target="1.8" />
       <module name="eureka" target="1.8" />
+      <module name="gateway" target="1.8" />
+      <module name="oauth" target="1.8" />
       <module name="reservation" target="1.8" />
       <module name="search" target="1.8" />
       <module name="XMLB" target="1.8" />
@@ -45,6 +49,8 @@
       <module name="backend" options="-parameters" />
       <module name="demo" options="-parameters" />
       <module name="eureka" options="-parameters" />
+      <module name="gateway" options="-parameters" />
+      <module name="oauth" options="-parameters" />
       <module name="reservation" options="-parameters" />
       <module name="search" options="-parameters" />
       <module name="zuul" options="-parameters" />

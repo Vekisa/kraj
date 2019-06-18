@@ -9,9 +9,9 @@ import java.math.BigInteger;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -38,18 +38,16 @@ import java.math.BigInteger;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "state",
-    "city",
-    "street",
-    "number",
-    "zip",
-    "longitude",
-    "latitude"
+        "state",
+        "city",
+        "street",
+        "number",
+        "zip",
+        "longitude",
+        "latitude"
 })
 
 
@@ -89,14 +87,14 @@ public class Adress {
         return id;
     }
 
-    public Adress(){}
+    public Adress() {
+    }
+
     /**
      * Gets the value of the state property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getState() {
         return state;
@@ -104,11 +102,9 @@ public class Adress {
 
     /**
      * Sets the value of the state property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setState(String value) {
         this.state = value;
@@ -116,11 +112,9 @@ public class Adress {
 
     /**
      * Gets the value of the city property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCity() {
         return city;
@@ -128,11 +122,9 @@ public class Adress {
 
     /**
      * Sets the value of the city property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCity(String value) {
         this.city = value;
@@ -140,11 +132,9 @@ public class Adress {
 
     /**
      * Gets the value of the street property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getStreet() {
         return street;
@@ -152,11 +142,9 @@ public class Adress {
 
     /**
      * Sets the value of the street property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setStreet(String value) {
         this.street = value;
@@ -164,11 +152,9 @@ public class Adress {
 
     /**
      * Gets the value of the number property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getNumber() {
         return number;
@@ -176,11 +162,9 @@ public class Adress {
 
     /**
      * Sets the value of the number property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setNumber(BigInteger value) {
         this.number = value;
@@ -188,7 +172,6 @@ public class Adress {
 
     /**
      * Gets the value of the zip property.
-     * 
      */
     public int getZIP() {
         return zip;
@@ -196,7 +179,6 @@ public class Adress {
 
     /**
      * Sets the value of the zip property.
-     * 
      */
     public void setZIP(int value) {
         this.zip = value;
@@ -204,11 +186,9 @@ public class Adress {
 
     /**
      * Gets the value of the longitude property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
+     *
+     * @return possible object is
+     * {@link BigDecimal }
      */
     public BigDecimal getLongitude() {
         return longitude;
@@ -216,11 +196,9 @@ public class Adress {
 
     /**
      * Sets the value of the longitude property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link BigDecimal }
      */
     public void setLongitude(BigDecimal value) {
         this.longitude = value;
@@ -228,11 +206,9 @@ public class Adress {
 
     /**
      * Gets the value of the latitude property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
+     *
+     * @return possible object is
+     * {@link BigDecimal }
      */
     public BigDecimal getLatitude() {
         return latitude;
@@ -240,11 +216,9 @@ public class Adress {
 
     /**
      * Sets the value of the latitude property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link BigDecimal }
      */
     public void setLatitude(BigDecimal value) {
         this.latitude = value;

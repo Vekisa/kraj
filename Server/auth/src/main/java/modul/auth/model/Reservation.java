@@ -1,6 +1,8 @@
 
 package modul.auth.model;
 
+import modul.auth.model.Users.RegisteredUser;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
@@ -10,9 +12,9 @@ import java.util.List;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -37,19 +39,17 @@ import java.util.List;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "start",
-    "end",
-    "confirmed",
-    "possibleCancellationDate",
-    "price",
-    "unit",
-    "includes",
-    "registeredUser"
+        "start",
+        "end",
+        "confirmed",
+        "possibleCancellationDate",
+        "price",
+        "unit",
+        "includes",
+        "registeredUser"
 })
 @XmlRootElement(name = "Reservation", namespace = "http://megatravell.com/object")
 @Entity
@@ -97,11 +97,9 @@ public class Reservation {
 
     /**
      * Gets the value of the start property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Date }
-     *     
+     *
+     * @return possible object is
+     * {@link Date }
      */
     public Date getStart() {
         return start;
@@ -109,11 +107,9 @@ public class Reservation {
 
     /**
      * Sets the value of the start property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Date }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Date }
      */
     public void setStart(Date value) {
         this.start = value;
@@ -121,11 +117,9 @@ public class Reservation {
 
     /**
      * Gets the value of the end property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Date }
-     *     
+     *
+     * @return possible object is
+     * {@link Date }
      */
     public Date getEnd() {
         return end;
@@ -133,11 +127,9 @@ public class Reservation {
 
     /**
      * Sets the value of the end property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Date }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Date }
      */
     public void setEnd(Date value) {
         this.end = value;
@@ -145,7 +137,6 @@ public class Reservation {
 
     /**
      * Gets the value of the confirmed property.
-     * 
      */
     public boolean isConfirmed() {
         return confirmed;
@@ -153,7 +144,6 @@ public class Reservation {
 
     /**
      * Sets the value of the confirmed property.
-     * 
      */
     public void setConfirmed(boolean value) {
         this.confirmed = value;
@@ -161,11 +151,9 @@ public class Reservation {
 
     /**
      * Gets the value of the possibleCancellationDate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Date }
-     *     
+     *
+     * @return possible object is
+     * {@link Date }
      */
     public Date getPossibleCancellationDate() {
         return possibleCancellationDate;
@@ -173,11 +161,9 @@ public class Reservation {
 
     /**
      * Sets the value of the possibleCancellationDate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Date }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Date }
      */
     public void setPossibleCancellationDate(Date value) {
         this.possibleCancellationDate = value;
@@ -185,7 +171,6 @@ public class Reservation {
 
     /**
      * Gets the value of the price property.
-     * 
      */
     public double getPrice() {
         return price;
@@ -193,7 +178,6 @@ public class Reservation {
 
     /**
      * Sets the value of the price property.
-     * 
      */
     public void setPrice(double value) {
         this.price = value;
@@ -201,11 +185,9 @@ public class Reservation {
 
     /**
      * Gets the value of the unit property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Unit }
-     *     
+     *
+     * @return possible object is
+     * {@link Unit }
      */
     public Unit getUnit() {
         return unit;
@@ -213,11 +195,9 @@ public class Reservation {
 
     /**
      * Sets the value of the unit property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Unit }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Unit }
      */
     public void setUnit(Unit value) {
         this.unit = value;
@@ -225,25 +205,23 @@ public class Reservation {
 
     /**
      * Gets the value of the includes property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the includes property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getIncludes().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Includes }
-     * 
-     * 
      */
     public List<Includes> getIncludes() {
         if (includes == null) {
@@ -254,11 +232,9 @@ public class Reservation {
 
     /**
      * Gets the value of the registeredUser property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link RegisteredUser }
-     *     
+     *
+     * @return possible object is
+     * {@link RegisteredUser }
      */
     public RegisteredUser getRegisteredUser() {
         return registeredUser;
@@ -266,11 +242,9 @@ public class Reservation {
 
     /**
      * Sets the value of the registeredUser property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link RegisteredUser }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link RegisteredUser }
      */
     public void setRegisteredUser(RegisteredUser value) {
         this.registeredUser = value;

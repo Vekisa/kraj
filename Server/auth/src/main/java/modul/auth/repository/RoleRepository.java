@@ -1,6 +1,6 @@
 package modul.auth.repository;
 
-import modul.auth.model.Role;
+import modul.auth.model.Users.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
