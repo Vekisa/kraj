@@ -6,13 +6,13 @@
     <file url="file://$PROJECT_DIR$/Agent" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Backend" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Reservation" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Search" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Server/auth" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Server/eureka" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Server/gateway" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Server/oauth" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Server/zuul" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/admin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rating" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/search" charset="UTF-8" />
   </component>
 </project>

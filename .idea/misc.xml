@@ -13,8 +13,7 @@
         <option value="$PROJECT_DIR$/Reservation/pom.xml" />
         <option value="$PROJECT_DIR$/Server/auth/pom.xml" />
         <option value="$PROJECT_DIR$/Server/oauth/pom.xml" />
-        <option value="$PROJECT_DIR$/Server/gateway/pom.xml" />
-        <option value="$PROJECT_DIR$/search/pom.xml" />
+        <option value="$PROJECT_DIR$/rating/pom.xml" />
       </list>
     </option>
   </component>
