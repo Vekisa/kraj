@@ -1,0 +1,1 @@
+INSERT INTO object(category,name) VALUES (4,"Vila Moskva");
