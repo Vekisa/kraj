@@ -6,18 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="administrator" />
-        <module name="Administrator" />
         <module name="agent" />
         <module name="auth" />
-        <module name="backend" />
-        <module name="Backend" />
         <module name="eureka" />
         <module name="gateway" />
         <module name="oauth" />
         <module name="rating" />
         <module name="reservation" />
-        <module name="search" />
         <module name="XMLB" />
         <module name="zuul" />
       </profile>

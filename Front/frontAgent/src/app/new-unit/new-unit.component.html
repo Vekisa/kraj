@@ -1,0 +1,46 @@
+<form [formGroup]="newUnitForm" (ngSubmit)="onSubmit()">
+
+  <div class="form-label-group">
+    <label for="object">Object</label>
+    <select  id="object" class="form-control" [formControlName]="'object'" required>
+      <option *ngFor="let o of objectList" value="{{o.id}}">{{o.name}}</option>
+    </select>
+   <!-- <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" [disabled]="!newUnitForm.valid">
+      Create
+    </button> -->
+  </div>
+  <div class="form-label-group">
+    <label for="adults">Adults</label>
+    <input type="number" id="adults" class="form-control" [formControlName]="'adults'"
+           required>
+  </div>
+  <div class="form-label-group">
+    <label for="size">Size</label>
+    <input type="number" id="size" class="form-control" [formControlName]="'size'"
+           required placeholder="m^2">
+  </div>
+
+  <div class="form-label-group">
+    <label for="children">Children</label>
+    <input type="number" id="children" class="form-control" [formControlName]="'children'"
+           required>
+  </div>
+  <div class="form-label-group">
+    <label for="beds">Beds</label>
+    <input type="number" id="beds" class="form-control" [formControlName]="'beds'"
+           required>
+  </div>
+  <div class="form-label-group">
+    <label for="smoking">Smoking</label>
+    <input type="checkbox" id="smoking" class="form-control" [formControlName]="'smoking'">
+  </div>
+  <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" [disabled]="!newUnitForm.valid">
+    Create
+  </button>
+</form>
+<input
+  style="display: none"
+  type="file" (change)="onSelectedImage($event)"
+  accept=".jpg,.png" #fileInput>
+<button (click)="fileInput.click()">Select File</button>
+<img [src]="logo" alt="Preivew">

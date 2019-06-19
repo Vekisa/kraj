@@ -1,0 +1,21 @@
+<table class="table table-bordered mb-0 table-hover">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Adults</th>
+    <th scope="col">Childern</th>
+    <th scope="col">Beds</th>
+    <th scope="col">Smoking</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let unit of units; let i = index">
+    <td>{{i}}</td>
+    <td>{{unit.adults}}</td>
+    <td>{{unit.children}}</td>
+    <td>{{unit.beds}}</td>
+    <td *ngIf="unit.smoking==true">Allowed</td>
+    <td *ngIf="unit.smoking==false">Not allowed</td>
+  </tr>
+  </tbody>
+</table>
