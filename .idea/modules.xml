@@ -15,6 +15,7 @@
       <module fileurl="file://$PROJECT_DIR$/kraj.iml" filepath="$PROJECT_DIR$/kraj.iml" />
       <module fileurl="file://$PROJECT_DIR$/Server/oauth/oauth.iml" filepath="$PROJECT_DIR$/Server/oauth/oauth.iml" />
       <module fileurl="file://$PROJECT_DIR$/rating/rating.iml" filepath="$PROJECT_DIR$/rating/rating.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rating/rating.iml" filepath="$PROJECT_DIR$/rating/rating.iml" />
       <module fileurl="file://$PROJECT_DIR$/Reservation/reservation.iml" filepath="$PROJECT_DIR$/Reservation/reservation.iml" />
       <module fileurl="file://$PROJECT_DIR$/Search/search.iml" filepath="$PROJECT_DIR$/Search/search.iml" />
       <module fileurl="file://$PROJECT_DIR$/Server/zuul/zuul.iml" filepath="$PROJECT_DIR$/Server/zuul/zuul.iml" />
