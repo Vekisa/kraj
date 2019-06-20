@@ -1,7 +1,7 @@
 package modul.zuul.repository;
 
 
-import modul.zuul.model.Users.User;
+import modul.zuul.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

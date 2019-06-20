@@ -1,7 +1,8 @@
 package modul.zuul.service;
 
 
-import modul.zuul.model.Users.User;
+
+import modul.zuul.model.User;
 import modul.zuul.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;

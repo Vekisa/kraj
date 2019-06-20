@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.*;
 
 /**
  * <p>Java class for anonymous complex type.
- *
+ * 
  * <p>The following schema fragment specifies the expected content contained within this class.
- *
+ * 
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -35,11 +35,13 @@ import javax.xml.bind.annotation.*;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-        "name",
-        "description"
+    "name",
+    "description"
 })
 @XmlRootElement(name = "AccommodationType", namespace = "http://megatravell.com/object")
 @Entity
@@ -57,18 +59,15 @@ public class AccommodationType {
     @Column
     protected String description;
 
-    public AccommodationType() {
-    }
-
-    public Long getId() {
-        return id;
-    }
+    public AccommodationType(){}
 
     /**
      * Gets the value of the name property.
-     *
-     * @return possible object is
-     * {@link String }
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getName() {
         return name;
@@ -76,9 +75,11 @@ public class AccommodationType {
 
     /**
      * Sets the value of the name property.
-     *
-     * @param value allowed object is
-     *              {@link String }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setName(String value) {
         this.name = value;
@@ -86,9 +87,11 @@ public class AccommodationType {
 
     /**
      * Gets the value of the description property.
-     *
-     * @return possible object is
-     * {@link String }
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getDescription() {
         return description;
@@ -96,9 +99,11 @@ public class AccommodationType {
 
     /**
      * Sets the value of the description property.
-     *
-     * @param value allowed object is
-     *              {@link String }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setDescription(String value) {
         this.description = value;

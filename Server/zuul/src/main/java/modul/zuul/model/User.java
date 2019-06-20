@@ -1,9 +1,7 @@
 
-package modul.oauth.model.Users;
+package modul.zuul.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import modul.oauth.model.Adress;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -63,21 +61,23 @@ import java.util.List;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "User", namespace = "http://www.megatravell.com/user", propOrder = {
-        "firstName",
-        "lastName",
-        "email",
-        "password",
-        "adress"
+    "firstName",
+    "lastName",
+    "email",
+    "password",
+    "adress"
 })
 @XmlSeeAlso({
-        Agent.class,
-        RegisteredUser.class
+    Agent.class,
+    RegisteredUser.class
 })
 @Entity
-@Table(name = "users")
+@Table(name="users")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User implements UserDetails {
 
@@ -115,8 +115,8 @@ public abstract class User implements UserDetails {
     @Column
     private Boolean isVerified;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
+    @JsonIgnore
+    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Role> roles;
 
     @JsonIgnore
@@ -215,8 +215,10 @@ public abstract class User implements UserDetails {
     /**
      * Gets the value of the firstName property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
      */
     public String getFirstName() {
         return firstName;
@@ -225,8 +227,10 @@ public abstract class User implements UserDetails {
     /**
      * Sets the value of the firstName property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
      */
     public void setFirstName(String value) {
         this.firstName = value;
@@ -235,8 +239,10 @@ public abstract class User implements UserDetails {
     /**
      * Gets the value of the lastName property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
      */
     public String getLastName() {
         return lastName;
@@ -245,8 +251,10 @@ public abstract class User implements UserDetails {
     /**
      * Sets the value of the lastName property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
      */
     public void setLastName(String value) {
         this.lastName = value;
@@ -255,8 +263,10 @@ public abstract class User implements UserDetails {
     /**
      * Gets the value of the email property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
      */
     public String getEmail() {
         return email;
@@ -265,8 +275,10 @@ public abstract class User implements UserDetails {
     /**
      * Sets the value of the email property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
      */
     public void setEmail(String value) {
         this.email = value;
@@ -275,8 +287,10 @@ public abstract class User implements UserDetails {
     /**
      * Gets the value of the password property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
      */
     public String getPassword() {
         return password;
@@ -285,8 +299,10 @@ public abstract class User implements UserDetails {
     /**
      * Sets the value of the password property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
      */
     public void setPassword(String value) {
         this.password = value;
@@ -295,8 +311,10 @@ public abstract class User implements UserDetails {
     /**
      * Gets the value of the adress property.
      *
-     * @return possible object is
-     * {@link Adress }
+     * @return
+     *     possible object is
+     *     {@link Adress }
+     *
      */
     public Adress getAdress() {
         return adress;
@@ -305,12 +323,15 @@ public abstract class User implements UserDetails {
     /**
      * Sets the value of the adress property.
      *
-     * @param value allowed object is
-     *              {@link Adress }
+     * @param value
+     *     allowed object is
+     *     {@link Adress }
+     *     
      */
     public void setAdress(Adress value) {
         this.adress = value;
     }
+
 
 
 }

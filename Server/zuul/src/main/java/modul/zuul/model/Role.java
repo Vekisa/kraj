@@ -1,4 +1,4 @@
-package modul.zuul.model.Users;
+package modul.zuul.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,7 +20,7 @@ public class Role implements GrantedAuthority {
     private String name;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<User> users;
 
     public Role() {

@@ -11,9 +11,9 @@ import java.util.List;
 
 /**
  * <p>Java class for anonymous complex type.
- *
+ * 
  * <p>The following schema fragment specifies the expected content contained within this class.
- *
+ * 
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -27,12 +27,14 @@ import java.util.List;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-        "year",
-        "made",
-        "plan"
+    "year",
+    "made",
+    "plan"
 })
 @XmlRootElement(name = "Price_schedule", namespace = "http://megatravell.com/object")
 @Entity
@@ -57,12 +59,9 @@ public class PriceSchedule {
     public PriceSchedule() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
     /**
      * Gets the value of the year property.
+     * 
      */
     public int getYear() {
         return year;
@@ -70,6 +69,7 @@ public class PriceSchedule {
 
     /**
      * Sets the value of the year property.
+     * 
      */
     public void setYear(int value) {
         this.year = value;
@@ -77,9 +77,11 @@ public class PriceSchedule {
 
     /**
      * Gets the value of the made property.
-     *
-     * @return possible object is
-     * {@link XMLGregorianCalendar }
+     * 
+     * @return
+     *     possible object is
+     *     {@link XMLGregorianCalendar }
+     *     
      */
     public Date getMade() {
         return made;
@@ -87,9 +89,11 @@ public class PriceSchedule {
 
     /**
      * Sets the value of the made property.
-     *
-     * @param value allowed object is
-     *              {@link XMLGregorianCalendar }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link XMLGregorianCalendar }
+     *     
      */
     public void setMade(Date value) {
         this.made = value;
@@ -97,23 +101,25 @@ public class PriceSchedule {
 
     /**
      * Gets the value of the plan property.
-     *
+     * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the plan property.
-     *
+     * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getPlan().add(newItem);
      * </pre>
-     *
-     *
+     * 
+     * 
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Plan }
+     * 
+     * 
      */
     public List<Plan> getPlan() {
         if (plan == null) {

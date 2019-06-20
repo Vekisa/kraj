@@ -35,7 +35,6 @@
       <module name="oauth" target="1.8" />
       <module name="rating" target="1.8" />
       <module name="reservation" target="1.8" />
-      <module name="rtng" target="1.8" />
       <module name="search" target="1.8" />
       <module name="XMLB" target="1.8" />
       <module name="zuul" target="1.8" />
@@ -58,7 +57,6 @@
       <module name="oauth" options="-parameters" />
       <module name="rating" options="-parameters" />
       <module name="reservation" options="-parameters" />
-      <module name="rtng" options="-parameters" />
       <module name="search" options="-parameters" />
       <module name="zuul" options="-parameters" />
     </option>

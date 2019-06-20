@@ -1,4 +1,4 @@
-package modul.zuul.model.Users;
+package modul.zuul.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
