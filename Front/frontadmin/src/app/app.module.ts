@@ -12,6 +12,9 @@ import { AgentsComponent } from './agents/agents.component';
 import {AppRoutingModule} from "./app-routing.module";
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule }         from '@angular/forms';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,10 @@ import { FormsModule, ReactiveFormsModule }         from '@angular/forms';
     ExtraOptionsComponent,
     CommentsComponent,
     UsersComponent,
-    AgentsComponent
+    AgentsComponent,
+    LoginComponent,
+    SignupComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

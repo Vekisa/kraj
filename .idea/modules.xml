@@ -3,17 +3,18 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/admin/XMLB.iml" filepath="$PROJECT_DIR$/admin/XMLB.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Administrator/administrator.iml" filepath="$PROJECT_DIR$/Administrator/administrator.iml" />
       <module fileurl="file://$PROJECT_DIR$/Agent/agent.iml" filepath="$PROJECT_DIR$/Agent/agent.iml" />
       <module fileurl="file://$PROJECT_DIR$/Server/auth/auth.iml" filepath="$PROJECT_DIR$/Server/auth/auth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Backend/backend.iml" filepath="$PROJECT_DIR$/Backend/backend.iml" />
       <module fileurl="file://$PROJECT_DIR$/Server/eureka/eureka.iml" filepath="$PROJECT_DIR$/Server/eureka/eureka.iml" />
       <module fileurl="file://$PROJECT_DIR$/Front/frontadmin/frontadmin.iml" filepath="$PROJECT_DIR$/Front/frontadmin/frontadmin.iml" />
       <module fileurl="file://$PROJECT_DIR$/Server/gateway/gateway.iml" filepath="$PROJECT_DIR$/Server/gateway/gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/kraj.iml" filepath="$PROJECT_DIR$/kraj.iml" />
       <module fileurl="file://$PROJECT_DIR$/Server/oauth/oauth.iml" filepath="$PROJECT_DIR$/Server/oauth/oauth.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Server/oauth/oauth.iml" filepath="$PROJECT_DIR$/Server/oauth/oauth.iml" />
       <module fileurl="file://$PROJECT_DIR$/rating/rating.iml" filepath="$PROJECT_DIR$/rating/rating.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rating/rating.iml" filepath="$PROJECT_DIR$/rating/rating.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Reservation/reservation.iml" filepath="$PROJECT_DIR$/Reservation/reservation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rtng/rtng.iml" filepath="$PROJECT_DIR$/rtng/rtng.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Search/search.iml" filepath="$PROJECT_DIR$/Search/search.iml" />
       <module fileurl="file://$PROJECT_DIR$/Server/zuul/zuul.iml" filepath="$PROJECT_DIR$/Server/zuul/zuul.iml" />
     </modules>
   </component>

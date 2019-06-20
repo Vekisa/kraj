@@ -37,17 +37,23 @@ public class JWTokenFilter extends OncePerRequestFilter {
         try {
 
             String jwt = jwToken.getJwt(request);
+
             if (jwt != null && jwToken.validateJwtToken(jwt)) {
+
                 String username = jwToken.getUserNameFromJwtToken(jwt);
 
+
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception e) {
             logger.error("Can NOT set user authenticationMessage: {}", e);
+            SecurityContextHolder.clearContext();
         }
 
         filterChain.doFilter(request, response);
