@@ -1,0 +1,63 @@
+<form [formGroup]="newAddressForm" (ngSubmit)="onSubmit()">
+  <div class="form-label-group">
+    <label for="state">State</label>
+    <input type="text" id="state" class="form-control" [formControlName]="'state'"
+           required>
+  </div>
+  <div class="form-label-group">
+    <label for="city">City</label>
+    <input type="text" id="city" class="form-control" [formControlName]="'city'"
+           required>
+  </div>
+  <div class="form-label-group">
+    <label for="street">Street</label>
+    <input type="text" id="street" class="form-control" [formControlName]="'street'"
+           required>
+  </div>
+  <div class="form-label-group">
+    <label for="number">Number</label>
+    <input type="number" id="number" class="form-control" [formControlName]="'number'"
+           required>
+  </div>
+  <div class="form-label-group">
+    <label for="zip">Zip</label>
+    <input type="number" id="zip" class="form-control" [formControlName]="'zip'"
+           required>
+  </div>
+  <div class="form-label-group">
+    <label for="longitude">Longitude</label>
+    <input type="number" id="longitude" class="form-control" [formControlName]="'longitude'"
+           required>
+  </div>
+  <div class="form-label-group">
+    <label for="latitude">Latitude</label>
+    <input type="number" id="latitude" class="form-control" [formControlName]="'latitude'"
+           required>
+  </div>
+</form>
+<form [formGroup]="newObjectForm" (ngSubmit)="onSubmit()">
+
+  <div class="form-label-group">
+    <label for="name">Name</label>
+    <input type="text" id="name" class="form-control" [formControlName]="'name'"
+           required>
+  </div>
+  <div class="form-label-group">
+    <label for="description">Description</label>
+    <input type="text" id="description" class="form-control" [formControlName]="'description'"
+           required>
+  </div>
+  <div class="form-label-group">
+    <label for="cancellation">Cancellation</label>
+    <input type="number" id="cancellation" class="form-control" [formControlName]="'cancellation'"
+           required placeholder="In days">
+  </div>
+  <div class="form-label-group">
+    <label for="category">Category</label>
+    <input type="number" id="category" class="form-control" [formControlName]="'category'"
+           required placeholder="In days">
+  </div>
+  <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" [disabled]="!newObjectForm.valid">
+    Create
+  </button>
+</form>
