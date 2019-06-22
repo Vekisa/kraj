@@ -3,10 +3,12 @@ package modul.backend;
 import modul.backend.WebSer.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 import javax.xml.ws.Endpoint;
 
 @SpringBootApplication
+@EnableEurekaClient
 public class BackendApplication {
 
     public static void main(String[] args) {
