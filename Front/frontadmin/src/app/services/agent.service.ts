@@ -8,7 +8,7 @@ import {Agent, ExtraOption} from "../model";
 })
 export class AgentService {
 
-  private baseUrl = 'http://localhost:8080/agent';
+  private baseUrl = 'http://localhost:8762/administrator/agent';
 
   constructor(private http: HttpClient) { }
 

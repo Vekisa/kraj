@@ -8,7 +8,7 @@ import {AccommodationType, ObjectType} from "../model";
 })
 export class AccommodationTypesService {
 
-  private baseUrl = 'http://localhost:8080/accommodation_type';
+  private baseUrl = 'http://localhost:8762/administrator/accommodation_type';
 
   constructor(private http: HttpClient) { }
 

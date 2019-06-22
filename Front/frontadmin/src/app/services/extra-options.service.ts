@@ -8,7 +8,7 @@ import {ExtraOption, ObjectType} from "../model";
 })
 export class ExtraOptionsService {
 
-  private baseUrl = 'http://localhost:8080/extra_option';
+  private baseUrl = 'http://localhost:8762/administrator/extra_option';
 
   constructor(private http: HttpClient) { }
 

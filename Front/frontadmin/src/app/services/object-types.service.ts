@@ -8,7 +8,7 @@ import {ObjectType} from "../model";
 })
 export class ObjectTypesService {
 
-  private baseUrl = 'http://localhost:8080/object_type';
+  private baseUrl = 'http://localhost:8762/administrator/object_type';
 
   constructor(private http: HttpClient) { }
 

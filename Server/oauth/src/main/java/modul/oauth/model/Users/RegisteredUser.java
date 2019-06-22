@@ -1,6 +1,7 @@
 
 package modul.oauth.model.Users;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import modul.oauth.model.*;
 
 import javax.persistence.Entity;
@@ -45,15 +46,19 @@ public class RegisteredUser
         extends User {
 
     @XmlElement(name = "Comment", namespace = "http://megatravell.com/object")
+    @JsonIgnore
     @OneToMany(mappedBy = "registeredUser")
     protected List<Comment> comment;
     @XmlElement(name = "Reservation", namespace = "http://megatravell.com/object")
+    @JsonIgnore
     @OneToMany(mappedBy = "registeredUser")
     protected List<Reservation> reservation;
     @XmlElement(name = "Message", namespace = "http://www.megatravell.com/user")
+    @JsonIgnore
     @OneToMany(mappedBy = "registeredUser")
     protected List<Message> message;
     @XmlElement(name = "Rating", namespace = "http://megatravell.com/object")
+    @JsonIgnore
     @OneToMany(mappedBy = "registeredUser")
     protected List<Rating> rating;
 
