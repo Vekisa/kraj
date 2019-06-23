@@ -4,10 +4,17 @@
   width: 30%;
 }
 
-.myLink{
-  cursor: pointer;
-  background-color : yellow;
-  border-radius: 10px;
-  padding: 5px;
-  margin: 15px;
+.center{
+  position: absolute;
+  left:30%;
+  width: 50%;
+}
+
+#search{
+  background-color: #9ec3ff;
+}
+
+.myImage{
+  width: 150px;
+  height: 120px;
 }
