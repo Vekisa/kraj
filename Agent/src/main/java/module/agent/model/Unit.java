@@ -1,6 +1,8 @@
 
 package module.agent.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import java.math.BigDecimal;
@@ -91,6 +93,7 @@ public class Unit {
     @ManyToOne
     protected AccommodationType accommodationType;
     @XmlElement(name = "Image", namespace = "http://megatravell.com/object")
+    @JsonIgnore
     @OneToMany
     protected List<Image> image;
     @XmlElement(name = "Reservation", namespace = "http://megatravell.com/object")
