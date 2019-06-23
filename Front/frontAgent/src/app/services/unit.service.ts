@@ -10,7 +10,7 @@ import {JwtResponse} from "src/app/response";
   providedIn: 'root'
 })
 export class UnitService {
-  private unitURL = 'http://localhost:8888/unit';
+  private unitURL = 'http://localhost:8764/unit';
 
   constructor(private http: HttpClient) { }
 
@@ -35,6 +35,12 @@ export class UnitService {
   newImage(image: any): Observable<Image>{
     console.log("uslo image");
     return this.http.post<Image>(this.unitURL + "/save_image", image).pipe(catchError(err => {
+      return throwError(err);
+    }));
+  }
+
+  getImage(id: number): Observable<Image[]>{
+    return this.http.get<Image[]>(this.unitURL + "/get_images/" + id).pipe(catchError(err => {
       return throwError(err);
     }));
   }

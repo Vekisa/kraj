@@ -10,7 +10,7 @@ import {Object} from "../model";
 })
 export class ObjectService {
   a: any;
-  private objectURL = 'http://localhost:8888/object';
+  private objectURL = 'http://localhost:8764/object';
   constructor(private http: HttpClient) { }
 
   newAddress(address:Adress):Observable<Adress>{
