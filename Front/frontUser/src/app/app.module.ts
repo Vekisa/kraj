@@ -30,10 +30,10 @@ import {FormsModule,ReactiveFormsModule} from "@angular/forms";
   imports: [
     BrowserModule,
     AppRoutingModule,
+    NgMultiSelectDropDownModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
-    NgMultiSelectDropDownModule.forRoot()
+    HttpClientModule
   ],
   providers: [
     CookieService,

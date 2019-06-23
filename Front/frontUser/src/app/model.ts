@@ -5,6 +5,16 @@ class Image{
   constructor(){}
 }
 
+class ObjectForDropDown{
+  item_id : number;
+  item_text : string;
+
+  constructor(id: number, name : string){
+    this.item_id = id;
+    this.item_text = name;
+  }
+}
+
 export class Plan{
   id: number;
   from: Date;

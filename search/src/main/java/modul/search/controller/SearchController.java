@@ -27,11 +27,11 @@ public class SearchController {
                                                   @RequestParam(value = "end_date") @DateTimeFormat(pattern="MMddyyyy") Date endDate,
                                                   @RequestParam(value = "persons") Integer persons,
                                                   @RequestParam(value = "distance") Long addressId,
-                                                  @RequestParam(value = "accommodation_type_id", required=false) Long accommodationTypeId,
-                                                  @RequestParam(value = "category", required=false) Integer category,
+                                                  @RequestParam(value = "accommodation_types", required=false) List<Long> accommodationTypeIds,
+                                                  @RequestParam(value = "category", required=false) List<Integer> category,
                                                   @RequestParam(value = "distance", required=false) Float distance,
-                                                  @RequestBody(required=false) ArrayList<Long> extraOptions) {
+                                                  @RequestParam(value = "extra_options", required=false) List<Long> extraOptions) {
 
-        return new ResponseEntity<>(searchService.search(city,startDate,endDate,persons,addressId,accommodationTypeId,category,distance,extraOptions), HttpStatus.OK);
+        return new ResponseEntity<>(searchService.search(city,startDate,endDate,persons,addressId,accommodationTypeIds,category,distance,extraOptions), HttpStatus.OK);
     }
 }
