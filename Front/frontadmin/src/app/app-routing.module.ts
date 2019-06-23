@@ -6,6 +6,11 @@ import {ExtraOptionsComponent} from "./extra-options/extra-options.component";
 import {CommentsComponent} from "./comments/comments.component";
 import {UsersComponent} from "./users/users.component";
 import {AgentsComponent} from "./agents/agents.component";
+import {LoginComponent} from "./login/login.component";
+import {HomeComponent} from "./home/home.component";
+import {SignupComponent} from "./signup/signup.component";
+import {PanelComponent} from "./panel/panel.component";
+import {AuthGuard} from "./security/auth.guard";
 
 const routes: Routes = [
   {

@@ -86,6 +86,17 @@ export class RegisteredUser{
   }
 }
 
+export class UserLogin {
+  username: string;
+  password: string;
+
+  constructor(username: string, password: string) {
+    this.username = username;
+    this.password = password;
+  }
+
+}
+
 export class Agent{
   id: number;
   firstName: string;

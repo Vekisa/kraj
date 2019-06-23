@@ -1,65 +1,75 @@
-export class ObjectType {
+class Image{
   id: number;
-  name: string;
-  description: string;
+  source: Blob;
 
-  constructor(id: number, name: string, description: string) {
-    this.id = id;
-    this.name = name;
-    this.description = description;
-  }
-
+  constructor(){}
 }
 
-export class AccommodationType {
+export class Plan{
   id: number;
-  name: string;
-  description: string;
-
-  constructor(id: number, name: string, description: string){
-    this.id = id;
-    this.name = name;
-    this.description = description;
-  }
-}
-
-export class ExtraOption{
-  id: number;
-  name: string;
+  from: Date;
+  to: Date;
   price: number;
-  description: string;
+  month: number;
+  perPerson: boolean;
 
-  constructor(id: number, name: string, price: number, description: string){
-    this.id = id;
-    this.name = name;
-    this.price = price;
-    this.description = this.description;
+  constructor(id: number, fromDate: Date, toDate: Date, price: number,  perPerson: boolean){
+    this.id=id;
+    this.from=fromDate;
+    this.to=toDate;
+    this.price=price;
+    this.month=0;
+    this.perPerson=perPerson;
   }
 }
 
-export class Commenta{
+class Unit {
   id: number;
-  text: string;
-  dateOfPublication: any;
+  adults: number;
+  children: number;
+  beds: number;
+  smoking: boolean;
+  size: number;
   object: Object;
-  registeredUser: RegisteredUser;
+  image: Image[];
+  priceSchedule: PriceSchedule[]=[];
+  reservation: string[];
+  accommodationType: string;
 
-  constructor(id: number, text: string, dateOfPublication: any, object: Object, registeredUser: RegisteredUser){
-    this.id = id;
-    this.text = text;
-    this.dateOfPublication = dateOfPublication;
-    this.object = object;
-    this.registeredUser = registeredUser;
+  constructor() {
   }
 
 }
 
-export class Object{
+class Adress {
+  id:number;
+  state: string;
+  city: string;
+  street: string;
+  number: number;
+  zip: number;
+  longitude: number;
+  latitude: number;
+
+  constructor(id: number, state: string, city: string, street: string, number: number, zip: number, longitude: number, latitude: number){
+    this.id=id;
+    this.state=state;
+    this.city=city;
+    this.street=street;
+    this.number=number;
+    this.zip=zip;
+    this.longitude=longitude;
+    this.latitude=latitude;
+  }
+}
+
+class Object {
   id: number;
   name: string;
   description: string;
   cancellation: number;
   category: number;
+
 
   constructor(id: number, name: string, description: string, cancellation: number, category: number){
     this.id = id;
@@ -97,18 +107,38 @@ export class UserLogin {
 
 }
 
-export class Agent{
+export class Agent {
   id: number;
   firstName: string;
   lastName: string;
   email: string;
   bussinesRegistrationNumber: string;
 
-  constructor(id: number, firstName: string, lastName: string, email: string, bussinesRegistrationNumber: string){
+  constructor(id: number, firstName: string, lastName: string, email: string, bussinesRegistrationNumber: string) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.bussinesRegistrationNumber = bussinesRegistrationNumber;
   }
+
+}
+class PriceSchedule{
+  id: number;
+  made: Date;
+  plan: Plan[];
+
+  constructor(){}
+}
+
+class Type{
+  id: number;
+  name: string;
+  description: string;
+
+  constructor(name:string){
+    this.name=name;
+  }
+
+
 }

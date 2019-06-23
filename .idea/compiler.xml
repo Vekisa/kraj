@@ -9,13 +9,15 @@
         <module name="reservation" />
         <module name="gateway" />
         <module name="search" />
+        <module name="backend" />
         <module name="eureka" />
         <module name="auth" />
         <module name="agent" />
         <module name="oauth" />
-        <module name="rtng" />
-        <module name="XMLB" />
+        <module name="administrator" />
         <module name="zuul" />
+        <module name="XMLB" />
+        <module name="rtng" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -33,6 +35,7 @@
       <module name="oauth" target="1.8" />
       <module name="rating" target="1.8" />
       <module name="reservation" target="1.8" />
+      <module name="rtng" target="1.8" />
       <module name="search" target="1.8" />
       <module name="XMLB" target="1.8" />
       <module name="zuul" target="1.8" />
@@ -55,6 +58,7 @@
       <module name="oauth" options="-parameters" />
       <module name="rating" options="-parameters" />
       <module name="reservation" options="-parameters" />
+      <module name="rtng" options="-parameters" />
       <module name="search" options="-parameters" />
       <module name="zuul" options="-parameters" />
     </option>
