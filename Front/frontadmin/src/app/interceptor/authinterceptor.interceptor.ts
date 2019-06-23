@@ -23,7 +23,6 @@ export class AuthInterceptor implements HttpInterceptor
 
 
         request = request.clone({headers: request.headers.set('Authorization', 'Bearer ' + token)});
-        request = request.clone({headers: request.headers.set('Content-type', 'application/x-www-form-urlencoded; charset=utf-8 ')});
 
     }
 

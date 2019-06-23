@@ -61,15 +61,34 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .subjectPrincipalRegex("CN=(.*?)(?:,|$)")
 //                .userDetailsService(userDetailsService());
 
-        http.cors().and().csrf().disable().
-                authorizeRequests()
-                .antMatchers("/auth/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//        http.cors().and().csrf().disable().
+//                authorizeRequests()
+//                .antMatchers("/auth/**").permitAll()
+//                .anyRequest().authenticated()
+//                .and()
+//                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//
+//        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
-        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        http
+                .csrf().disable()
+                // make sure we use stateless session; session won't be used to store user's state.
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                // handle an authorized attempts
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+                .and()
+                // Add a filter to validate the tokens with every request
+                .addFilterAfter(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
+                // authorization requests config
+                .authorizeRequests()
+                // allow all who are accessing "auth" service
+                .antMatchers("/auth/**").permitAll()
+                // must be an admin if trying to access admin area (authentication is also required here)
+                // Any other request must be authenticated
+                .anyRequest().authenticated();
+
     }
 
     @Override

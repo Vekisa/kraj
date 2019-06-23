@@ -1,5 +1,7 @@
 
-package modul.zuul.model;
+package modul.zuul.model.Users;
+
+import modul.zuul.model.*;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -8,12 +10,11 @@ import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -29,22 +30,19 @@ import java.util.List;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "comment",
-    "reservation",
-    "message",
-    "rating"
+        "comment",
+        "reservation",
+        "message",
+        "rating"
 })
 @XmlRootElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user")
 @Entity
 @Table
 public class RegisteredUser
-    extends User
-{
+        extends User {
 
     @XmlElement(name = "Comment", namespace = "http://megatravell.com/object")
     @OneToMany(mappedBy = "registeredUser")
@@ -68,25 +66,23 @@ public class RegisteredUser
 
     /**
      * Gets the value of the comment property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the comment property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getComment().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Comment }
-     * 
-     * 
      */
     public List<Comment> getComment() {
         if (comment == null) {
@@ -97,25 +93,23 @@ public class RegisteredUser
 
     /**
      * Gets the value of the reservation property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the reservation property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getReservation().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Reservation }
-     * 
-     * 
      */
     public List<Reservation> getReservation() {
         if (reservation == null) {
@@ -126,25 +120,23 @@ public class RegisteredUser
 
     /**
      * Gets the value of the message property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the message property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getMessage().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Message }
-     * 
-     * 
      */
     public List<Message> getMessage() {
         if (message == null) {
@@ -155,25 +147,23 @@ public class RegisteredUser
 
     /**
      * Gets the value of the rating property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the rating property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getRating().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Rating }
-     * 
-     * 
      */
     public List<Rating> getRating() {
         if (rating == null) {

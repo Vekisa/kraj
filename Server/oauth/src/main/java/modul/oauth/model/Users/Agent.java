@@ -1,5 +1,10 @@
 
-package modul.zuul.model;
+package modul.oauth.model.Users;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import modul.oauth.model.Adress;
+import modul.oauth.model.Message;
+import modul.oauth.model.Adress;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,9 +17,9 @@ import java.util.List;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -33,20 +38,17 @@ import java.util.List;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "bussinesRegistrationNumber",
-    "message"
+        "bussinesRegistrationNumber",
+        "message"
 })
 @XmlRootElement(name = "Agent", namespace = "http://www.megatravell.com/user")
 @Entity
 @Table
 public class Agent
-    extends User
-{
+        extends User {
     @XmlElement(name = "BussinesRegistrationNumber", namespace = "http://www.megatravell.com/user", required = true)
     @Column
     protected String bussinesRegistrationNumber;
@@ -55,7 +57,8 @@ public class Agent
     @OneToMany(mappedBy = "agent")
     protected List<Message> message;
 
-    public Agent(){}
+    public Agent() {
+    }
 
     public Agent(String username, String firstName, String lastName, String email, String password, Adress adress, Boolean isEnabled, Boolean isVerified, List<Role> roles) {
         super(username, firstName, lastName, email, password, adress, isEnabled, isVerified, roles);
@@ -64,10 +67,8 @@ public class Agent
     /**
      * Gets the value of the bussinesRegistrationNumber property.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
+     * @return possible object is
+     * {@link String }
      */
     public String getBussinesRegistrationNumber() {
         return bussinesRegistrationNumber;
@@ -76,10 +77,8 @@ public class Agent
     /**
      * Sets the value of the bussinesRegistrationNumber property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setBussinesRegistrationNumber(String value) {
         this.bussinesRegistrationNumber = value;
@@ -104,8 +103,6 @@ public class Agent
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Message }
-     *
-     *
      */
     public List<Message> getMessage() {
         if (message == null) {

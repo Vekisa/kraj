@@ -69,17 +69,60 @@ class Object {
   description: string;
   cancellation: number;
   category: number;
-  adress: Adress;
-  objectType: Type;
 
-  constructor(name: string, description: string, cancellation: number, category: number){
-    this.name=name;
-    this.description=description;
-    this.cancellation=cancellation;
-    this.category=category;
+
+  constructor(id: number, name: string, description: string, cancellation: number, category: number){
+    this.id = id;
+    this.name = name;
+    this.description = description;
+    this.cancellation = cancellation;
+    this.category = category;
   }
 }
 
+export class RegisteredUser{
+  id: number;
+  firstName: string;
+  lastName: string;
+  email:string;
+  active: boolean;
+
+  constructor(id: number, firstName: string, lastName: string, email: string, active: boolean){
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.active = active;
+  }
+}
+
+export class UserLogin {
+  username: string;
+  password: string;
+
+  constructor(username: string, password: string) {
+    this.username = username;
+    this.password = password;
+  }
+
+}
+
+export class Agent {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  bussinesRegistrationNumber: string;
+
+  constructor(id: number, firstName: string, lastName: string, email: string, bussinesRegistrationNumber: string) {
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.bussinesRegistrationNumber = bussinesRegistrationNumber;
+  }
+
+}
 class PriceSchedule{
   id: number;
   made: Date;
@@ -96,5 +139,6 @@ class Type{
   constructor(name:string){
     this.name=name;
   }
+
 
 }

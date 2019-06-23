@@ -13,6 +13,14 @@ import {AppRoutingModule} from "./app-routing.module";
 import { HttpClientModule ,HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AuthInterceptor } from './interceptor/authinterceptor.interceptor'
 import { FormsModule, ReactiveFormsModule }         from '@angular/forms';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
+import { HomeComponent } from './home/home.component';
+import {CookieService} from "ngx-cookie-service";
+
+import {AuthGuard} from "./security/auth.guard";
+import { PanelComponent } from './panel/panel.component';
+
 
 @NgModule({
   declarations: [
@@ -23,7 +31,12 @@ import { FormsModule, ReactiveFormsModule }         from '@angular/forms';
     ExtraOptionsComponent,
     CommentsComponent,
     UsersComponent,
-    AgentsComponent
+    AgentsComponent,
+    LoginComponent,
+    SignupComponent,
+    HomeComponent,
+    PanelComponent,
+
   ],
   imports: [
     BrowserModule,

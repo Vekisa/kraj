@@ -1,25 +1,30 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="navigationBar">
 
   <div class="collapse navbar-collapse">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="" [routerLink]="['object_types']" >Object Types</a>
+      <li class="nav-item" *ngIf="isLoggedIn">
+        <a class="nav-link" [href]="['panel']">Panel</a>
       </li>
-      <li class="nav-item" >
-        <a class="nav-link" href="" [routerLink]="['accommodation_types']">Accommodation Types</a>
-      </li>
-      <li class="nav-item" >
-        <a class="nav-link"  href="" [routerLink]="['extra_options']">Extra Options</a>
-      </li>
-      <li class="nav-item" >
-        <a class="nav-link"  href="" [routerLink]="['comments']">Comments</a>
-      </li>
-      <li class="nav-item" >
-        <a class="nav-link" href="" [routerLink]="['users']">Users</a>
-      </li>
-      <li class="nav-item" >
-        <a class="nav-link" href="" [routerLink]="['agents']">Agents</a>
-      </li>
+
     </ul>
+    <div *ngIf="!isLoggedIn">
+      <form class="form-inline my-2 my-lg-0">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" [href]="['sign_in']">Sign in</a>
+          </li>
+        </ul>
+      </form>
+    </div>
+
+    <div *ngIf="isLoggedIn">
+      <form class="form-inline my-2 my-lg-0">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="" (click)="logout()">Log out</a>
+          </li>
+        </ul>
+      </form>
+    </div>
   </div>
 </nav>

@@ -1,4 +1,4 @@
-package modul.zuul.model;
+package modul.oauth.model.Users;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,14 +19,9 @@ public class Role implements GrantedAuthority {
     @Column
     private String name;
 
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<User> users;
-
     public Role() {
         super();
     }
-
 
     public Long getId() {
         return id;
@@ -44,17 +39,9 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
-
     @Override
     public String getAuthority() {
         return name;
     }
 
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
 }

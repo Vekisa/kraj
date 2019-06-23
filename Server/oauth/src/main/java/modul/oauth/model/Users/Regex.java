@@ -1,4 +1,4 @@
-package modul.zuul.model;
+package modul.oauth.model.Users;
 
 public class Regex {
 

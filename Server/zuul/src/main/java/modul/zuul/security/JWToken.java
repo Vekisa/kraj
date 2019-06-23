@@ -24,7 +24,6 @@ public class JWToken {
     @Value("6000")
     private int expires;
 
-
     private static final Logger logger = LoggerFactory.getLogger(JWToken.class);
 
 
