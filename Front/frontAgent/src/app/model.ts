@@ -109,3 +109,31 @@ export class Reservation{
   }
 
 }
+
+export class RegisteredUser{
+  id: number;
+  firstName: string;
+  lastName: string;
+  email:string;
+  active: boolean;
+
+  constructor(id: number, firstName: string, lastName: string, email: string, active: boolean){
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.active = active;
+  }
+}
+
+export class UserLogin {
+  username: string;
+  password: string;
+
+  constructor(username: string, password: string) {
+    this.username = username;
+    this.password = password;
+  }
+
+}
+
