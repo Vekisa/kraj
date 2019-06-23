@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Plan, PriceSchedule, Unit} from "../model";
+import {Image, Plan, PriceSchedule, Unit} from "../model";
 import {UnitService} from "../services/unit.service";
 import {ActivatedRoute, Router} from '@angular/router';
 import {ObjectService} from "../services/object.service";
@@ -15,6 +15,7 @@ export class UnitComponent implements OnInit {
   plan: Plan;
   priceSchedule: PriceSchedule;
   planF: boolean;
+  images: Image[]=[];
   constructor(private unitService: UnitService , private activatedRoute: ActivatedRoute, private objectService: ObjectService, private router: Router) { }
 
   ngOnInit() {
@@ -63,5 +64,11 @@ export class UnitComponent implements OnInit {
     let un: Unit;
     un= this.units[i];
     this.router.navigateByUrl('/createReservation/' + i);
+  }
+
+  getImages(id: number){
+    this.unitService.getImage(id).subscribe(data=>{
+      this.images=data;
+    })
   }
 }

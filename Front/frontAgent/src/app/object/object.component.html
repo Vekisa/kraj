@@ -1,0 +1,27 @@
+<table class="table table-bordered mb-0 table-hover">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Name</th>
+    <th scope="col">Category</th>
+    <th scope="col">Object type</th>
+    <th scope="col">State</th>
+    <th scope="col">City</th>
+    <th scope="col">Street</th>
+    <th scope="col">Number</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let object of objects; let i = index">
+    <td>{{i}}</td>
+    <td>{{object.name}}</td>
+    <td>{{object.category}}</td>
+    <td>{{object.objectType}}</td>
+    <td>{{object.adress.state}}</td>
+    <td>{{object.adress.city}}</td>
+    <td>{{object.adress.street}}</td>
+    <td>{{object.adress.number}}</td>
+    <td><button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="showUnits(object.id)" >See units</button></td>
+  </tr>
+  </tbody>
+</table>
