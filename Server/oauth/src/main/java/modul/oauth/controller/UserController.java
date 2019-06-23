@@ -18,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,11 @@ public class UserController {
     @RequestMapping(value = "/info", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> getUser(OAuth2Authentication user){
         return new ResponseEntity<>(userService.getUser(user), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/userPrincipal", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Principal> getPrincipal(Principal user){
+        return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
     @PostMapping("/signup")
