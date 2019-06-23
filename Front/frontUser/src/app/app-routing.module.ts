@@ -5,9 +5,11 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SearchComponent } from './search/search.component';
 import { ReservationsComponent } from './reservations/reservations.component';
 import { LoginComponent } from './login/login.component';
+import {SignupComponent} from "./signup/signup.component";
 
 
 const routes: Routes = [
+
 {path: 'page',
 component: PageComponent },
 {path: 'megatravel',
@@ -19,9 +21,13 @@ component: SearchComponent
 {path: 'reservations',
 component: ReservationsComponent
 },
-{path: 'login',
-component: LoginComponent
-}
+{   path: 'sign_in',
+    component: LoginComponent
+  },
+  {
+    path: 'sign_up',
+    component: SignupComponent
+  }
 
 ];
 

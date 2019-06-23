@@ -22,7 +22,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         // @formatter:off
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
-                .authorizeRequests().anyRequest().authenticated();
+                .authorizeRequests().anyRequest().permitAll();
 //        //@formatter:on
 
 

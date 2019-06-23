@@ -1,6 +1,10 @@
 
 package module.agent.model;
 
+
+
+import module.agent.model.Users.RegisteredUser;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import java.util.Date;
@@ -8,9 +12,9 @@ import java.util.Date;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -32,16 +36,14 @@ import java.util.Date;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "text",
-    "dateOfPublication",
-    "approved",
-    "object",
-    "registeredUser"
+        "text",
+        "dateOfPublication",
+        "approved",
+        "object",
+        "registeredUser"
 })
 @XmlRootElement(name = "Comment", namespace = "http://megatravell.com/object")
 @Entity
@@ -70,14 +72,18 @@ public class Comment {
     protected RegisteredUser registeredUser;
 
 
-    public Comment(){}
+    public Comment() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
     /**
      * Gets the value of the text property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getText() {
         return text;
@@ -85,11 +91,9 @@ public class Comment {
 
     /**
      * Sets the value of the text property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setText(String value) {
         this.text = value;
@@ -97,11 +101,9 @@ public class Comment {
 
     /**
      * Gets the value of the dateOfPublication property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Date }
-     *     
+     *
+     * @return possible object is
+     * {@link Date }
      */
     public Date getDateOfPublication() {
         return dateOfPublication;
@@ -109,11 +111,9 @@ public class Comment {
 
     /**
      * Sets the value of the dateOfPublication property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Date }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Date }
      */
     public void setDateOfPublication(Date value) {
         this.dateOfPublication = value;
@@ -121,7 +121,6 @@ public class Comment {
 
     /**
      * Gets the value of the approved property.
-     * 
      */
     public boolean isApproved() {
         return approved;
@@ -129,7 +128,6 @@ public class Comment {
 
     /**
      * Sets the value of the approved property.
-     * 
      */
     public void setApproved(boolean value) {
         this.approved = value;
@@ -137,11 +135,9 @@ public class Comment {
 
     /**
      * Gets the value of the object property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Object }
-     *     
+     *
+     * @return possible object is
+     * {@link Object }
      */
     public Object getObject() {
         return object;
@@ -149,11 +145,9 @@ public class Comment {
 
     /**
      * Sets the value of the object property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Object }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Object }
      */
     public void setObject(Object value) {
         this.object = value;
@@ -161,11 +155,9 @@ public class Comment {
 
     /**
      * Gets the value of the registeredUser property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link RegisteredUser }
-     *     
+     *
+     * @return possible object is
+     * {@link RegisteredUser }
      */
     public RegisteredUser getRegisteredUser() {
         return registeredUser;
@@ -173,21 +165,12 @@ public class Comment {
 
     /**
      * Sets the value of the registeredUser property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link RegisteredUser }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link RegisteredUser }
      */
     public void setRegisteredUser(RegisteredUser value) {
         this.registeredUser = value;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

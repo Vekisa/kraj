@@ -8,7 +8,7 @@ import {catchError} from "rxjs/operators";
   providedIn: 'root'
 })
 export class SearchService {
-  private baseURL = 'http://localhost:8888/object';
+  private baseURL = 'http://localhost:8762/search';
 
   constructor(private http: HttpClient) { }
 

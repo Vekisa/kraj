@@ -10,6 +10,9 @@ import { ReservationsComponent } from './reservations/reservations.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import {CookieService} from "ngx-cookie-service";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {AuthInterceptor} from "./interceptor/authinterceptor.interceptor";
 
 @NgModule({
   declarations: [
@@ -26,7 +29,12 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     AppRoutingModule,
     NgMultiSelectDropDownModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    CookieService,
+    [
+      { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    ]
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

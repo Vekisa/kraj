@@ -1,22 +1,19 @@
 
 package modul.backend.model;
 
+import modul.oauth.model.Users.Agent;
+import modul.oauth.model.Users.RegisteredUser;
+
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.bind.annotation.*;
 import java.util.Date;
 
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -37,15 +34,13 @@ import java.util.Date;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "text",
-    "postingDate",
-    "agent",
-    "registeredUser"
+        "text",
+        "postingDate",
+        "agent",
+        "registeredUser"
 })
 @XmlRootElement(name = "Message", namespace = "http://www.megatravell.com/user")
 @Entity
@@ -70,14 +65,18 @@ public class Message {
     @ManyToOne
     protected RegisteredUser registeredUser;
 
-    public Message(){}
+    public Message() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
     /**
      * Gets the value of the text property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getText() {
         return text;
@@ -85,11 +84,9 @@ public class Message {
 
     /**
      * Sets the value of the text property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setText(String value) {
         this.text = value;
@@ -97,11 +94,9 @@ public class Message {
 
     /**
      * Gets the value of the postingDate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Date }
-     *     
+     *
+     * @return possible object is
+     * {@link Date }
      */
     public Date getPostingDate() {
         return postingDate;
@@ -109,11 +104,9 @@ public class Message {
 
     /**
      * Sets the value of the postingDate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Date }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Date }
      */
     public void setPostingDate(Date value) {
         this.postingDate = value;
@@ -121,11 +114,9 @@ public class Message {
 
     /**
      * Gets the value of the agent property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Agent }
-     *     
+     *
+     * @return possible object is
+     * {@link Agent }
      */
     public Agent getAgent() {
         return agent;
@@ -133,11 +124,9 @@ public class Message {
 
     /**
      * Sets the value of the agent property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Agent }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Agent }
      */
     public void setAgent(Agent value) {
         this.agent = value;
@@ -145,11 +134,9 @@ public class Message {
 
     /**
      * Gets the value of the registeredUser property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link RegisteredUser }
-     *     
+     *
+     * @return possible object is
+     * {@link RegisteredUser }
      */
     public RegisteredUser getRegisteredUser() {
         return registeredUser;
@@ -157,21 +144,12 @@ public class Message {
 
     /**
      * Sets the value of the registeredUser property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link RegisteredUser }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link RegisteredUser }
      */
     public void setRegisteredUser(RegisteredUser value) {
         this.registeredUser = value;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

@@ -2,20 +2,15 @@
 package modul.backend.model;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 import java.util.Date;
 
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -37,16 +32,14 @@ import java.util.Date;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "price",
-    "month",
-    "fromDate",
-    "toDate",
-    "perPerson"
+        "price",
+        "month",
+        "fromDate",
+        "toDate",
+        "perPerson"
 })
 @XmlRootElement(name = "Plan", namespace = "http://megatravell.com/object")
 @Entity
@@ -78,13 +71,15 @@ public class Plan {
     public Plan() {
     }
 
+    public Long getId() {
+        return id;
+    }
+
     /**
      * Gets the value of the from property.
      *
-     * @return
-     *     possible object is
-     *     {@link Date }
-     *
+     * @return possible object is
+     * {@link Date }
      */
     public Date getFrom() {
         return fromDate;
@@ -93,10 +88,8 @@ public class Plan {
     /**
      * Sets the value of the from property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link Date }
-     *
+     * @param value allowed object is
+     *              {@link Date }
      */
     public void setFrom(Date value) {
         this.fromDate = value;
@@ -105,10 +98,8 @@ public class Plan {
     /**
      * Gets the value of the to property.
      *
-     * @return
-     *     possible object is
-     *     {@link Date }
-     *
+     * @return possible object is
+     * {@link Date }
      */
     public Date getTo() {
         return toDate;
@@ -117,10 +108,8 @@ public class Plan {
     /**
      * Sets the value of the to property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link Date }
-     *
+     * @param value allowed object is
+     *              {@link Date }
      */
     public void setTo(Date value) {
         this.toDate = value;
@@ -128,7 +117,6 @@ public class Plan {
 
     /**
      * Gets the value of the price property.
-     *
      */
     public double getPrice() {
         return price;
@@ -136,7 +124,6 @@ public class Plan {
 
     /**
      * Sets the value of the price property.
-     *
      */
     public void setPrice(double value) {
         this.price = value;
@@ -144,7 +131,6 @@ public class Plan {
 
     /**
      * Gets the value of the month property.
-     *
      */
     public int getMonth() {
         return month;
@@ -152,7 +138,6 @@ public class Plan {
 
     /**
      * Sets the value of the month property.
-     *
      */
     public void setMonth(int value) {
         this.month = value;
@@ -160,7 +145,6 @@ public class Plan {
 
     /**
      * Gets the value of the perPerson property.
-     *
      */
     public boolean isPerPerson() {
         return perPerson;
@@ -168,17 +152,9 @@ public class Plan {
 
     /**
      * Sets the value of the perPerson property.
-     *
      */
     public void setPerPerson(boolean value) {
         this.perPerson = value;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }
