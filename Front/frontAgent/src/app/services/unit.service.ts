@@ -10,7 +10,8 @@ import {JwtResponse} from "src/app/response";
   providedIn: 'root'
 })
 export class UnitService {
-  private unitURL = 'http://localhost:8764/unit';
+  private unitURL = 'http://localhost:8762/agent/unit';
+
 
   constructor(private http: HttpClient) { }
 

@@ -6,18 +6,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="reservation" />
+        <module name="backend" />
         <module name="gateway" />
         <module name="search" />
-        <module name="backend" />
+        <module name="rtng" />
         <module name="eureka" />
         <module name="auth" />
-        <module name="agent" />
+        <module name="reservation" />
         <module name="oauth" />
         <module name="administrator" />
-        <module name="zuul" />
+        <module name="agent" />
         <module name="XMLB" />
-        <module name="rtng" />
+        <module name="zuul" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

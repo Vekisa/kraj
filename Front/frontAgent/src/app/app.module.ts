@@ -5,12 +5,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NewUnitComponent } from './new-unit/new-unit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { UnitComponent } from './unit/unit.component';
 import { NewObjectComponent } from './new-object/new-object.component';
 import { NewPlanComponent } from './new-plan/new-plan.component';
 import { ObjectComponent } from './object/object.component';
 import { NewReservationComponent } from './new-reservation/new-reservation.component';
+import { LoginComponent } from './login/login.component';
+import {CookieService} from "ngx-cookie-service";
+import {AuthInterceptor} from "./interceptor/authinterceptor.interceptor";
+import { NavigationComponent } from './navigation/navigation.component';
+import { HomeComponent } from './home/home.component';
+import { FunctionNavigationComponent } from './function-navigation/function-navigation.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +26,11 @@ import { NewReservationComponent } from './new-reservation/new-reservation.compo
     NewObjectComponent,
     NewPlanComponent,
     ObjectComponent,
-    NewReservationComponent
+    NewReservationComponent,
+    LoginComponent,
+    NavigationComponent,
+    HomeComponent,
+    FunctionNavigationComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +39,13 @@ import { NewReservationComponent } from './new-reservation/new-reservation.compo
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [CookieService,
+
+    [
+      { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    ],
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

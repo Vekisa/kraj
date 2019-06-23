@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="navigationBar">
+
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" *ngIf="isLoggedIn">
+        <a class="nav-link" [href]="['panel']">Panel</a>
+      </li>
+
+    </ul>
+    <div *ngIf="!isLoggedIn">
+      <form class="form-inline my-2 my-lg-0">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" [href]="['sign_in']">Sign in</a>
+          </li>
+        </ul>
+      </form>
+    </div>
+
+    <div *ngIf="isLoggedIn">
+      <form class="form-inline my-2 my-lg-0">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="" (click)="logout()">Log out</a>
+          </li>
+        </ul>
+      </form>
+    </div>
+  </div>
+</nav>

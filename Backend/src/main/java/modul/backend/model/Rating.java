@@ -1,19 +1,17 @@
 
 package modul.backend.model;
 
+import modul.oauth.model.Users.RegisteredUser;
+
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -34,14 +32,12 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "mark",
-    "object",
-    "registeredUser"
+        "mark",
+        "object",
+        "registeredUser"
 })
 @XmlRootElement(name = "Rating", namespace = "http://megatravell.com/object")
 @Entity
@@ -65,9 +61,12 @@ public class Rating {
     public Rating() {
     }
 
+    public Long getId() {
+        return id;
+    }
+
     /**
      * Gets the value of the mark property.
-     * 
      */
     public int getMark() {
         return mark;
@@ -75,7 +74,6 @@ public class Rating {
 
     /**
      * Sets the value of the mark property.
-     * 
      */
     public void setMark(int value) {
         this.mark = value;
@@ -83,11 +81,9 @@ public class Rating {
 
     /**
      * Gets the value of the object property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Object }
-     *     
+     *
+     * @return possible object is
+     * {@link Object }
      */
     public Object getObject() {
         return object;
@@ -95,11 +91,9 @@ public class Rating {
 
     /**
      * Sets the value of the object property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Object }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Object }
      */
     public void setObject(Object value) {
         this.object = value;
@@ -107,11 +101,9 @@ public class Rating {
 
     /**
      * Gets the value of the registeredUser property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link RegisteredUser }
-     *     
+     *
+     * @return possible object is
+     * {@link RegisteredUser }
      */
     public RegisteredUser getRegisteredUser() {
         return registeredUser;
@@ -119,21 +111,12 @@ public class Rating {
 
     /**
      * Sets the value of the registeredUser property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link RegisteredUser }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link RegisteredUser }
      */
     public void setRegisteredUser(RegisteredUser value) {
         this.registeredUser = value;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

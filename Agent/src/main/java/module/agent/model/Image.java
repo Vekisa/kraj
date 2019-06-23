@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.*;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -21,12 +21,10 @@ import javax.xml.bind.annotation.*;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "source"
+        "source"
 })
 @XmlRootElement(name = "Image", namespace = "http://megatravell.com/object")
 @Entity
@@ -38,17 +36,21 @@ public class Image {
     private Long id;
 
     @XmlElement(namespace = "http://megatravell.com/object", required = true)
-    @Lob
     @Column
     protected byte[] source;
 
-    public Image(){}
+    public Image() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
     /**
      * Gets the value of the source property.
-     * 
-     * @return
-     *     possible object is
-     *     byte[]
+     *
+     * @return possible object is
+     * byte[]
      */
     public byte[] getSource() {
         return source;
@@ -56,20 +58,12 @@ public class Image {
 
     /**
      * Sets the value of the source property.
-     * 
-     * @param value
-     *     allowed object is
-     *     byte[]
+     *
+     * @param value allowed object is
+     *              byte[]
      */
     public void setSource(byte[] value) {
         this.source = value;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

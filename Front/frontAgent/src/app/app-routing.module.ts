@@ -7,31 +7,44 @@ import {NewObjectComponent} from "./new-object/new-object.component";
 import {NewPlanComponent} from "./new-plan/new-plan.component";
 import {ObjectComponent} from "./object/object.component";
 import {NewReservationComponent} from "./new-reservation/new-reservation.component";
+import {HomeComponent} from "./home/home.component";
+import {LoginComponent} from "./login/login.component";
 
 const routes: Routes = [
   {
-    path:'newUnit',
-    component: NewUnitComponent
+    path: '',redirectTo:'home',pathMatch:'full'
   },
   {
-    path:'showUnits/:id',
-    component: UnitComponent
+    path:'home', component: HomeComponent,
+    children:[
+      {
+        path:'newUnit',
+        component: NewUnitComponent
+      },
+      {
+        path:'showUnits/:id',
+        component: UnitComponent
+      },
+      {
+        path:'showObjects',
+        component: ObjectComponent
+      },
+      {
+        path:'newObject',
+        component: NewObjectComponent
+      },
+      {
+        path:'newPlan/:id',
+        component: NewPlanComponent
+      },
+      {
+        path:'createReservation/:id',
+        component: NewReservationComponent
+      }
+    ]
   },
   {
-    path:'showObjects',
-    component: ObjectComponent
-  },
-  {
-    path:'newObject',
-    component: NewObjectComponent
-  },
-  {
-    path:'newPlan/:id',
-    component: NewPlanComponent
-  },
-  {
-    path:'createReservation/:id',
-    component: NewReservationComponent
+    path:'sign_in',component:LoginComponent
   }
 ];
 

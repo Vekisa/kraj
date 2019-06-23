@@ -9,7 +9,8 @@ import {catchError} from "rxjs/operators";
   providedIn: 'root'
 })
 export class ReservationService {
-  private reservationURL = 'http://localhost:8764/reservation';
+  private reservationURL = 'http://localhost:8762/reservation/reservation';
+
   constructor(private http: HttpClient) { }
 
   checkReservation(reservation: Reservation): Observable<boolean>{

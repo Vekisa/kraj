@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {Adress} from "../../../../frontAgent/src/app/model";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 
@@ -45,5 +46,4 @@ export class SearchService {
       return throwError(err);
     }));
   }
-
 }
