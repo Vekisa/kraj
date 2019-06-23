@@ -1,0 +1,12 @@
+.float-right{
+    position: absolute;
+    right:0%;
+    width: 90%;
+  }
+
+  .left-side{
+    position: absolute;
+    left:0%;
+    width: 30%;
+  }
+  
