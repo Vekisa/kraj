@@ -12,8 +12,8 @@
         <option value="$PROJECT_DIR$/Server/auth/pom.xml" />
         <option value="$PROJECT_DIR$/Server/oauth/pom.xml" />
         <option value="$PROJECT_DIR$/rtng/pom.xml" />
-        <option value="$PROJECT_DIR$/Reservation/pom.xml" />
         <option value="$PROJECT_DIR$/search/pom.xml" />
+        <option value="$PROJECT_DIR$/Backend/pom.xml" />
       </list>
     </option>
   </component>
