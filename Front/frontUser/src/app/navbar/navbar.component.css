@@ -1,0 +1,19 @@
+.navigation-bar{
+  background-color: #4286f4 !important;
+  border-radius: 10px;
+  margin: 1%;
+}
+
+.item:hover{
+  background-color: white;
+  border-radius: 10px;
+}
+
+.log-in{
+  background-color: white;
+  border-radius: 10px;
+}
+
+.log-in:hover{
+  background-color: yellow;
+}
