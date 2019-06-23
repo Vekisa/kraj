@@ -26,8 +26,7 @@ public class SearchService {
     @Autowired
     private AddressRepository addressRepository;
 
-    public List<UnitDTO> search(String city, Date startDate, Date endDate, Integer persons, Long addressId, Long accommodationTypeId, Integer category, Float distance, ArrayList<Long> extraOptions){
-        System.out.println("PRISTIGLO: " + city + " " + startDate + " " + endDate + " " + persons + " " + accommodationTypeId + " " + category + " " + distance + " " + extraOptions);
+    public List<UnitDTO> search(String city, Date startDate, Date endDate, Integer persons, Long addressId, List<Long> accommodationTypeIds, List<Integer> category, Float distance, List<Long> extraOptions){
         if(city == null || startDate == null || endDate == null || persons == null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad parameters");
 
@@ -38,23 +37,24 @@ public class SearchService {
         for(Unit unit : units){
             if(unit.getObject().getAdress().getCity() != city)
                 continue;
+
             if(!checkReservation(unit,startDate,endDate))
                 continue;
 
             if(unit.getAdults().intValue() <  persons)
                 continue;
 
-            if(accommodationTypeId != null){
-                if(unit.getAccommodationType().getId() != accommodationTypeId)
+            if(accommodationTypeIds != null){
+                if(!accommodationTypeIds.contains(unit.getAccommodationType().getId()))
                     continue;
             }
 
             if(category != null){
-                if(unit.getObject().getCategory() != category)
+                if(!accommodationTypeIds.contains(category))
                     continue;
             }
 
-            if(distance != null){
+            /*if(distance != null){
                 Optional<Adress> address = addressRepository.findById(addressId);
                 if(!address.isPresent())
                     throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Address not found");
@@ -63,7 +63,7 @@ public class SearchService {
                         unit.getObject().getAdress().getLatitude().doubleValue(),unit.getObject().getAdress().getLongitude().doubleValue()) > distance)
                     continue;
 
-            }
+            }*/
 
             Boolean flag = true;
             if(extraOptions != null){
@@ -71,7 +71,8 @@ public class SearchService {
                     if(!hasExtraOption(id,unit))
                         flag = false;
 
-                continue;
+                if(!flag)
+                    continue;
             }
 
             okUnits.add(unit);
