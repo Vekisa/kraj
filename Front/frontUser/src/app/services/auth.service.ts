@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {RegisteredUser} from "../model";
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +45,7 @@ export class AuthService {
     console.log(token.expires_in);
     this.cookie.set("access_token", token.access_token, expireDate);
     console.log('Obtained Access token');
-    this._router.navigate(['panel']);
+    this._router.navigate(['home']);
   }
 
   getToken(){
@@ -72,4 +73,9 @@ export class AuthService {
     }
 
   }
+
+  saveUser(regUser:RegisteredUser):Observable<any>{
+    return this.http.post(this.baseUrl+"uua/user/save",regUser);
+  }
+
 }

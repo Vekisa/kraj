@@ -11,8 +11,10 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import {CookieService} from "ngx-cookie-service";
-import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {HTTP_INTERCEPTORS,HttpClientModule} from "@angular/common/http";
 import {AuthInterceptor} from "./interceptor/authinterceptor.interceptor";
+import { HomeComponent } from './home/home.component';
+import {FormsModule,ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -22,11 +24,15 @@ import {AuthInterceptor} from "./interceptor/authinterceptor.interceptor";
     SearchComponent,
     ReservationsComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
     NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [
