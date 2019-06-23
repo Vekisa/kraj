@@ -3,11 +3,11 @@
   <div class="form-label-group">
     <label for="object">Object</label>
     <select  id="object" class="form-control" [formControlName]="'object'" required>
-      <option *ngFor="let o of objectList" value="{{o.id}}">{{o.name}}</option>
+      <option *ngFor="let o of objectList" value="{{o.id}}">{{o.name}} ", " {{o.adress.city}} ", " {{o.adress.state}}</option>
     </select>
-   <!-- <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" [disabled]="!newUnitForm.valid">
-      Create
-    </button> -->
+   <button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="createObject()">
+      Create new object
+    </button>
   </div>
   <div class="form-label-group">
     <label for="adults">Adults</label>
@@ -35,7 +35,7 @@
     <input type="checkbox" id="smoking" class="form-control" [formControlName]="'smoking'">
   </div>
   <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" [disabled]="!newUnitForm.valid">
-    Create
+    Create price schedule for unit
   </button>
 </form>
 <input

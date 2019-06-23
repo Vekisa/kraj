@@ -3,7 +3,6 @@ package module.agent.model;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
-import java.sql.Blob;
 
 
 /**
@@ -40,8 +39,8 @@ public class Image {
 
     @XmlElement(namespace = "http://megatravell.com/object", required = true)
     @Lob
-    @Column(length=100000)
-    protected Blob source;
+    @Column
+    protected byte[] source;
 
     public Image(){}
     /**
@@ -51,7 +50,7 @@ public class Image {
      *     possible object is
      *     byte[]
      */
-    public Blob getSource() {
+    public byte[] getSource() {
         return source;
     }
 
@@ -62,7 +61,7 @@ public class Image {
      *     allowed object is
      *     byte[]
      */
-    public void setSource(Blob value) {
+    public void setSource(byte[] value) {
         this.source = value;
     }
 

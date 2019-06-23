@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import module.agent.model.Adress;
 import module.agent.model.Object;
+import module.agent.model.Unit;
 import module.agent.services.AdressService;
 import module.agent.services.ObjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +60,17 @@ public class ObjectController {
     public ResponseEntity<Adress> createaAddress(@RequestBody Adress address){
         System.out.println("Uslo address    " );
         return new ResponseEntity<>(adressService.create(address), HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/getUnits/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Sve jedinice u objektu", httpMethod = "GET", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Unit.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<List<Unit>> getUnits(@PathVariable Long id){
+        System.out.println("Uslo object getALl units");
+        return new ResponseEntity<>(objectService.getUnits(id), HttpStatus.OK);
     }
 }

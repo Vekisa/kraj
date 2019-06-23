@@ -3,10 +3,10 @@ package module.agent.controller;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import module.agent.model.Image;
 import module.agent.model.Plan;
 import module.agent.model.PriceSchedule;
 import module.agent.model.Unit;
-import module.agent.model.Image;
 import module.agent.services.ImageService;
 import module.agent.services.PlanService;
 import module.agent.services.PriceScheduleService;
@@ -43,10 +43,33 @@ public class UnitController {
     })
     public ResponseEntity<Unit> createUnit(@RequestBody Unit unit){
         System.out.println("Uslo ");
-        for(Image image : unit.getImage()){
-            imageService.create(image);
-        }
+
         return new ResponseEntity<>(unitService.create(unit), HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/update_unit", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Update smestajne jedinice", httpMethod = "PUT", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Unit.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<Unit> updateUnit(@RequestBody Unit unit){
+        System.out.println("Uslo update ");
+        return new ResponseEntity<>(unitService.create(unit), HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/find_unit/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Pretraga smestajne jedinice", httpMethod = "GET", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Unit.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<Unit> findUnit(@PathVariable Long id){
+        System.out.println("Uslo pretraga " + id);
+
+        return new ResponseEntity<Unit>(unitService.findById(id).get(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -85,5 +108,25 @@ public class UnitController {
             planService.create(plan);
         }
         return new ResponseEntity<>(priceScheduleService.create(priceSchedule), HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/save_image", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Cuvanje slike", httpMethod = "POST", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Image.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<Image> saveImage(@RequestBody byte[] image){
+        System.out.println("image controller");
+        System.out.println(image[0]);
+
+        Image img=new Image();
+        byte[] pom=new byte[image.length];
+        for(int i=0; i<image.length; i++){
+            pom[i]=image[i];
+        }
+        img.setSource(pom);
+        return new ResponseEntity<>(imageService.create(img), HttpStatus.CREATED);
     }
 }

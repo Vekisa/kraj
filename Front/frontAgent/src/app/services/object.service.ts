@@ -27,4 +27,8 @@ export class ObjectService {
   allObjects(): Observable<any>{
     return this.http.get<any>(this.objectURL+ "/getAll");
   }
+
+  findUnits(id: number): Observable<any>{
+    return this.http.get<any>(this.objectURL+"/getUnits/"+id);
+  }
 }

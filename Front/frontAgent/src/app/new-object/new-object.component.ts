@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {ObjectService} from "../services/object.service";
 import {Adress, Object, Type} from "../model";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-object',
@@ -14,7 +15,7 @@ export class NewObjectComponent implements OnInit {
   newAddressForm: FormGroup;
   object: Object;
   address: Adress;
-  constructor(private formBuilder: FormBuilder, private objectService: ObjectService) { }
+  constructor(private formBuilder: FormBuilder, private objectService: ObjectService, private router: Router) { }
 
   ngOnInit() {
     this.newObjectForm=this.formBuilder.group({
@@ -45,6 +46,6 @@ export class NewObjectComponent implements OnInit {
         console.log(data)
       );}
     );
-
+    this.router.navigateByUrl('/newUnit');
   }
 }

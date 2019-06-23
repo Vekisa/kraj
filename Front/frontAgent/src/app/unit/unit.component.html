@@ -5,17 +5,25 @@
     <th scope="col">Adults</th>
     <th scope="col">Childern</th>
     <th scope="col">Beds</th>
+    <th scope="col">Size</th>
     <th scope="col">Smoking</th>
+    <th scope="col">Price</th>
+    <th scope="col">Price for </th>
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let unit of units; let i = index">
+  <tr *ngFor="let unit of units; let i = index " (onChange)="getPrice(unit.priceSchedule)">
+
     <td>{{i}}</td>
     <td>{{unit.adults}}</td>
     <td>{{unit.children}}</td>
     <td>{{unit.beds}}</td>
+    <td>{{unit.size}}</td>
     <td *ngIf="unit.smoking==true">Allowed</td>
     <td *ngIf="unit.smoking==false">Not allowed</td>
+    <td>{{getPrice(unit.priceSchedule) }}</td>
+    <td>{{getPerPerson()}}</td>
+    <td><button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="makeRes(i)">Make a reservation</button></td>
   </tr>
   </tbody>
 </table>

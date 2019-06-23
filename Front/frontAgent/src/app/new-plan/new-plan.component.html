@@ -2,8 +2,7 @@
 
   <div class="btn-group" role="group" aria-label="Basic example" id="radio">
     <button type="button" class="btn btn-secondary" (click)="buttonR(1)">Year</button>
-    <button type="button" class="btn btn-secondary" (click)="buttonR(2)">Month</button>
-    <button type="button" class="btn btn-secondary" (click)="buttonR(3)">Custom</button>
+    <button type="button" class="btn btn-secondary" (click)="buttonR(2)">Custom</button>
   </div>
 
   <div *ngIf="fS=='1'">
@@ -35,26 +34,6 @@
   </div>
 
   <div *ngIf="fS=='2'">
-    <form [formGroup]="newPlanForm" (ngSubmit)="onSubmitMonth()">
-    <div  *ngFor="let item of [].constructor(12); let i = index ">
-      Month {{i+1}}
-      <div class="form-label-group" >
-        <label for="price">Price</label>
-        <input type="number"   class="form-control" [formControlName]="'price'"
-               required >
-      </div>
-    </div>
-    <div class="form-label-group" >
-      <label for="perPerson">Price per person: </label>
-      <input type="checkbox"  class="form-control" [formControlName]="'perPerson'">
-    </div>
-      <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">
-        Create
-      </button>
-    </form>
-  </div>
-
-  <div *ngIf="fS=='3'">
     <table class="table table-bordered mb-0 table-hover">
       <thead>
       <tr>
@@ -63,6 +42,7 @@
         <th scope="col">To</th>
         <th scope="col">Price</th>
         <th scope="col">Per person</th>
+        <th scope="col"></th>
       </tr>
       </thead>
       <tbody>
@@ -73,20 +53,21 @@
         <td>{{plan.price}}</td>
         <td *ngIf="plan.perPerson==true">Per person</td>
         <td *ngIf="plan.perPerson==false">Unit</td>
+        <td><button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="editPrice(i)">Edit</button></td>
       </tr>
       </tbody>
     </table>
     <form [formGroup]="newPlanForm" (ngSubmit)="onSubmitCustom()">
       <div class="form-label-group" >
         <label for="from">From date</label>
-        <input type="date" class="form-control"  placeholder="Required"  [formControlName]="'from'"
+        <input type="date" id="fr" class="form-control"  placeholder="Required"  [formControlName]="'from'"
                required  readonly>
 
       </div>
       <div class="form-label-group">
         <label for="to">To date</label>
-        <input type="date" class="form-control" [formControlName]="'to'"
-               required >
+        <input type="date" id="toF" class="form-control" [formControlName]="'to'"
+               required [readOnly]="readonlyP">
       </div>
       <div class="form-label-group" >
         <label for="price">Price</label>
@@ -102,8 +83,11 @@
         Create
       </button>
     </form>
-    <button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="addFnc()">
+    <button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="addFnc()" *ngIf="readonlyP==false">
       Add
+    </button>
+    <button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="editFnc()" *ngIf="readonlyP" >
+      Save changes
     </button>
   </div>
 

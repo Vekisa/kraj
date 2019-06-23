@@ -19,8 +19,8 @@ export class PlanService {
     }));
   }
 
-  newPlanList(priceSchedule: PriceSchedule):Observable<JwtResponse>{
-    return this.http.post<JwtResponse>(this.planURL + "/create_new_priceS", priceSchedule).pipe(catchError(err => {
+  newPlanList(priceSchedule: PriceSchedule):Observable<PriceSchedule>{
+    return this.http.post<PriceSchedule>(this.planURL + "/create_new_priceS", priceSchedule).pipe(catchError(err => {
       return throwError(err);
     }));
   }

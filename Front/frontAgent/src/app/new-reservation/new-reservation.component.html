@@ -1,0 +1,18 @@
+<form [formGroup]="newReservationForm" >
+  <div class="form-label-group" >
+    <label for="start">From date</label>
+    <input type="date" id="start" class="form-control"  placeholder="Required"  [formControlName]="'start'"
+           required  >
+
+  </div>
+  <div class="form-label-group">
+    <label for="end">To date</label>
+    <input type="date" id="end" class="form-control" [formControlName]="'end'"
+           required >
+  </div>
+  <button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="checkReservation()"> Check</button>
+  <div *ngIf="free">Unit is free</div>
+  <div *ngIf="free==false">Unit is reserved</div>
+  <div *ngIf="free">{{calPrice()}}</div>
+</form>
+<button *ngIf="free" (click)="createReservation()">Create reservation</button>

@@ -17,7 +17,7 @@ public class ReservationService {
     private ReservationRepository reservationRepository;
 
     public Reservation save(Reservation reservation) {
-        if(checkReservation(reservation)){
+        if(!checkReservation(reservation)){
                 return null;
         }
         return reservationRepository.save(reservation);
@@ -67,8 +67,9 @@ public class ReservationService {
     }
 
     public Boolean checkReservation(Reservation reservation){
-        List<Reservation> lista=findByUnit(reservation.getId());
+        List<Reservation> lista=findByUnit(reservation.getUnit().getId());
         for(Reservation r : lista){
+            System.out.println("r " + r.getStart() + "   " + r.getEnd());
             if((r.getStart().before(reservation.getStart()) && reservation.getStart().before(r.getEnd()))
                     || (r.getStart().before(reservation.getEnd()) && r.getEnd().after(reservation.getEnd()))
                     || (r.getStart().before(reservation.getStart()) && r.getEnd().after(reservation.getEnd())))

@@ -46,6 +46,7 @@ export class Object {
   category: number;
   adress: Adress;
   objectType: Type;
+  unit: Unit[];
 
   constructor(name: string, description: string, cancellation: number, category: number){
     this.name=name;
@@ -74,13 +75,7 @@ export class Plan{
   month: number;
   perPerson: boolean;
 
-  constructor(id: number, fromDate: Date, toDate: Date, price: number,  perPerson: boolean){
-    this.id=id;
-    this.from=fromDate;
-    this.to=toDate;
-    this.price=price;
-    this.month=0;
-    this.perPerson=perPerson;
+  constructor(){
   }
 }
 
@@ -98,4 +93,19 @@ export class Image{
 
 
   constructor(){}
+}
+
+export class Reservation{
+  id: number;
+  start: Date;
+  end: Date;
+  confirmed: true;
+  possibleCancellationDate: Date;
+  price: number;
+  unit: Unit;
+
+  constructor() {
+
+  }
+
 }

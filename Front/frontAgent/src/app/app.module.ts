@@ -9,6 +9,8 @@ import {HttpClientModule} from "@angular/common/http";
 import { UnitComponent } from './unit/unit.component';
 import { NewObjectComponent } from './new-object/new-object.component';
 import { NewPlanComponent } from './new-plan/new-plan.component';
+import { ObjectComponent } from './object/object.component';
+import { NewReservationComponent } from './new-reservation/new-reservation.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { NewPlanComponent } from './new-plan/new-plan.component';
     NewUnitComponent,
     UnitComponent,
     NewObjectComponent,
-    NewPlanComponent
+    NewPlanComponent,
+    ObjectComponent,
+    NewReservationComponent
   ],
   imports: [
     BrowserModule,

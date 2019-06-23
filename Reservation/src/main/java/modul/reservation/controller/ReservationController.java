@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "https://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/reservation")
 public class ReservationController {
@@ -29,7 +29,7 @@ public class ReservationController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation){
-        return new ResponseEntity<Reservation>(reservationService.save(reservation), HttpStatus.CREATED);
+        return new ResponseEntity<>(reservationService.save(reservation), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

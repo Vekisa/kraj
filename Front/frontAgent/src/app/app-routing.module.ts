@@ -5,6 +5,8 @@ import {NewUnitComponent} from "./new-unit/new-unit.component";
 import {UnitComponent} from "./unit/unit.component";
 import {NewObjectComponent} from "./new-object/new-object.component";
 import {NewPlanComponent} from "./new-plan/new-plan.component";
+import {ObjectComponent} from "./object/object.component";
+import {NewReservationComponent} from "./new-reservation/new-reservation.component";
 
 const routes: Routes = [
   {
@@ -12,16 +14,24 @@ const routes: Routes = [
     component: NewUnitComponent
   },
   {
-    path:'showUnits',
+    path:'showUnits/:id',
     component: UnitComponent
+  },
+  {
+    path:'showObjects',
+    component: ObjectComponent
   },
   {
     path:'newObject',
     component: NewObjectComponent
   },
   {
-    path:'newPlan',
+    path:'newPlan/:id',
     component: NewPlanComponent
+  },
+  {
+    path:'createReservation/:id',
+    component: NewReservationComponent
   }
 ];
 

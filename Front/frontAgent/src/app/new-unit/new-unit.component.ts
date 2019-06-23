@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {UnitService} from "../services/unit.service";
 import {Object, Unit, Image} from "../model";
 import {ObjectService} from "../services/object.service";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-unit',
@@ -17,7 +18,10 @@ export class NewUnitComponent implements OnInit {
   logo: any;
   unit: Unit;
   image: Image;
-  constructor(private formBuilder: FormBuilder, private unitService: UnitService, private objectService: ObjectService) { }
+  formData: FormData = new FormData();
+
+  file: File=null;
+  constructor(private formBuilder: FormBuilder, private unitService: UnitService, private objectService: ObjectService, private router: Router) { }
 
   ngOnInit() {
 
@@ -55,12 +59,27 @@ export class NewUnitComponent implements OnInit {
     }
     console.log(this.unit);
     this.unitService.newUnit(this.unit).subscribe(data=>
-      console.log(data)
+    {this.router.navigateByUrl('/newPlan/' + data.id);
+      console.log(data)}
     );
+
+
+  }
+
+  createObject(){
+    this.router.navigateByUrl('/newObject');
   }
 
   onSelectedImage(event){
-    const reader = new FileReader();
+
+    this.file=<File> event.target.files[0];
+
+    this.formData.append(this.file.name, this.file);
+    this.unitService.newImage(this.file).subscribe(data=>
+    { this.unit.image.push(data);
+      console.log(data)}
+      )
+    /*const reader = new FileReader();
     reader.onload = (eve: any) => {
       this.logo = eve.target.result;
       let pom= eve.target.result;
@@ -68,6 +87,9 @@ export class NewUnitComponent implements OnInit {
       this.image.source= pomS[1];
       this.unit.image.push(this.image);
       console.log(this.image.source);
+
+      this.unitService.newImage(this.image.source).subscribe(data=>
+      console.log(data))
     };
     reader.readAsDataURL(event.target.files[0]);
 
