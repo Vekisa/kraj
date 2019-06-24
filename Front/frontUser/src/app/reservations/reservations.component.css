@@ -1,4 +1,16 @@
-.rating-header {
-    margin-top: -10px;
-    margin-bottom: 10px;
-}
+
+
+.center{
+    position: absolute;
+    
+    width: 80%;
+  }
+  
+  #search{
+    background-color: #9ec3ff;
+  }
+  
+  .myImage{
+    width: 150px;
+    height: 120px;
+  }

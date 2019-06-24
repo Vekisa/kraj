@@ -17,6 +17,8 @@ import { HomeComponent } from './home/home.component';
 import {FormsModule,ReactiveFormsModule} from "@angular/forms";
 import { ProfileComponent } from './profile/profile.component';
 import { AccountComponent } from './account/account.component';
+import { ObjectsComponent } from './objects/objects.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { AccountComponent } from './account/account.component';
     SignupComponent,
     HomeComponent,
     ProfileComponent,
-    AccountComponent
+    AccountComponent,
+    ObjectsComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +40,8 @@ import { AccountComponent } from './account/account.component';
     NgMultiSelectDropDownModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule.forRoot()
   ],
   providers: [
     CookieService,
