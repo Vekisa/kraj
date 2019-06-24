@@ -15,11 +15,6 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit() {
 
-    var state = this.authService.isValid();
-
-    if(state!=true){
-      this.isLoggedIn = true;
-    }
   }
 
   logout(){

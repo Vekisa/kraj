@@ -24,13 +24,13 @@ public class CommentController {
         return new ResponseEntity<>(commentService.getNotApproved(), HttpStatus.OK);
     }
 
-    @RequestMapping( value = "/approve/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping( value = "/approve/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CommentDTO> approve(@PathVariable(value = "id") Long id) {
 
         return new ResponseEntity<>(commentService.approve(id), HttpStatus.OK);
     }
 
-    @RequestMapping( value = "/forbid/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping( value = "/forbid/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CommentDTO> forbid(@PathVariable(value = "id") Long id) {
 
         return new ResponseEntity<>(commentService.forbid(id), HttpStatus.OK);

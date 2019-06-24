@@ -2,7 +2,7 @@ package modul.administrator.dto;
 
 import modul.administrator.model.Comment;
 import modul.administrator.model.Object;
-import modul.administrator.model.RegisteredUser;
+import modul.administrator.model.Users.RegisteredUser;
 
 import java.util.Date;
 

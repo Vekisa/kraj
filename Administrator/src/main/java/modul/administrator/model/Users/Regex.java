@@ -1,4 +1,4 @@
-package modul.administrator.model;
+package modul.administrator.model.Users;
 
 public class Regex {
 

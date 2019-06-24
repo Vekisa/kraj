@@ -2,6 +2,8 @@ package modul.administrator.service;
 
 import modul.administrator.dto.*;
 import modul.administrator.model.*;
+import modul.administrator.model.Users.Agent;
+import modul.administrator.model.Users.RegisteredUser;
 
 import java.util.ArrayList;
 import java.util.List;

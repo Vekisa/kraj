@@ -1,7 +1,7 @@
 package modul.administrator.dto;
 
 import modul.administrator.model.Adress;
-import modul.administrator.model.Agent;
+import modul.administrator.model.Users.Agent;
 
 public class AgentDTO {
 
@@ -16,18 +16,19 @@ public class AgentDTO {
     public AgentDTO() {
     }
 
-    public AgentDTO(Long id, String firstName, String lastName, String email, Adress adress, String bussinesRegistrationNumber){
+    public AgentDTO(Long id, String firstName, String lastName, String email, String username,Adress adress, String bussinesRegistrationNumber){
         this.setId(id);
         this.setFirstName(firstName);
         this.setLastName(lastName);
         this.setEmail(email);
         if(adress!=null)
         this.setAddressDTO(new AddressDTO(adress));
+        this.username = username;
         this.setBussinesRegistrationNumber(bussinesRegistrationNumber);
     }
 
     public AgentDTO(Agent agent){
-        this(agent.getId(), agent.getFirstName(),agent.getLastName(),agent.getEmail(),agent.getAdress(),agent.getBussinesRegistrationNumber());
+        this(agent.getId(), agent.getFirstName(),agent.getLastName(),agent.getEmail(),agent.getUsername(),agent.getAdress(),agent.getBussinesRegistrationNumber());
     }
 
 

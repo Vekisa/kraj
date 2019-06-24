@@ -24,13 +24,13 @@ public class RegisteredUserController {
         return new ResponseEntity<>(registeredUSerService.getAll(), HttpStatus.OK);
     }
 
-    @RequestMapping( value="/activate/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping( value="/activate/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RegisteredUserDTO> activate(@PathVariable("id") Long id) {
 
         return new ResponseEntity<>(registeredUSerService.activate(id), HttpStatus.OK);
     }
 
-    @RequestMapping( value="/deactivate/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping( value="/deactivate/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RegisteredUserDTO> deactivate(@PathVariable("id") Long id) {
 
         return new ResponseEntity<>(registeredUSerService.deactivate(id), HttpStatus.OK);

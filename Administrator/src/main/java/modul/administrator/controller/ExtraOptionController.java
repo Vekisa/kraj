@@ -24,13 +24,13 @@ public class ExtraOptionController {
         return new ResponseEntity<>(extraOptionService.getAll(), HttpStatus.OK);
     }
 
-    @RequestMapping( method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping( method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ExtraOptionDTO> create(@RequestBody ExtraOptionDTO extraOptionDTO) {
 
         return new ResponseEntity<>(extraOptionService.create(extraOptionDTO), HttpStatus.OK);
     }
 
-    @RequestMapping( method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping( method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ExtraOptionDTO> update(@RequestBody ExtraOptionDTO extraOptionDTO) {
 
         return new ResponseEntity<>(extraOptionService.update(extraOptionDTO), HttpStatus.OK);

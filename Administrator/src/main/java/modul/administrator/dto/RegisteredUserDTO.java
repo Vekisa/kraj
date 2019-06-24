@@ -1,13 +1,14 @@
 package modul.administrator.dto;
 
 import modul.administrator.model.Adress;
-import modul.administrator.model.RegisteredUser;
+import modul.administrator.model.Users.RegisteredUser;
 
 public class RegisteredUserDTO {
 
     private Long id;
     private String firstName;
     private String lastName;
+    private String username;
     private String email;
     private AddressDTO address;
     private Boolean active;
@@ -15,7 +16,7 @@ public class RegisteredUserDTO {
     public RegisteredUserDTO() {
     }
 
-    public RegisteredUserDTO(Long id, String firstName, String lastName, String email, Adress adress, Boolean aktivan){
+    public RegisteredUserDTO(Long id, String firstName, String lastName,String username, String email, Adress adress, Boolean aktivan){
         this.setId(id);
         this.setFirstName(firstName);
         this.setLastName(lastName);
@@ -26,7 +27,7 @@ public class RegisteredUserDTO {
     }
 
     public RegisteredUserDTO(RegisteredUser registeredUser){
-        this(registeredUser.getId(),registeredUser.getFirstName(),registeredUser.getLastName(),registeredUser.getEmail(),registeredUser.getAdress(),registeredUser.isEnabled());
+        this(registeredUser.getId(),registeredUser.getFirstName(),registeredUser.getLastName(),registeredUser.getUsername(),registeredUser.getEmail(),registeredUser.getAdress(),registeredUser.isEnabled());
     }
 
 

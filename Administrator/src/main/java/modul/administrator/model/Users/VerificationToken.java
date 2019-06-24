@@ -1,4 +1,4 @@
-package modul.administrator.model;
+package modul.administrator.model.Users;
 
 import javax.persistence.*;
 import java.sql.Timestamp;

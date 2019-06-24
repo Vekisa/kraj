@@ -25,13 +25,13 @@ public class AgentController {
         return new ResponseEntity<>(agentService.getAll(), HttpStatus.OK);
     }
 
-    @RequestMapping( method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping( method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AgentDTO> addAgent(@RequestBody AgentDTO agentDTO) {
 
         return new ResponseEntity<>(agentService.addAgent(agentDTO), HttpStatus.OK);
     }
 
-    @RequestMapping( method = RequestMethod.POST)
+    @RequestMapping( method = RequestMethod.PUT)
     public ResponseEntity<AgentDTO> activateAgent(@RequestBody AgentDTO agentDTO) {
 
         return new ResponseEntity<>(HttpStatus.OK);

@@ -23,13 +23,13 @@ public class ObjectTypeController {
         return new ResponseEntity<>(objectTypeService.getAll(), HttpStatus.OK);
     }
 
-    @RequestMapping( method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping( method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ObjectTypeDTO> create(@RequestBody ObjectTypeDTO objectTypeDTO) {
 
         return new ResponseEntity<>(objectTypeService.create(objectTypeDTO), HttpStatus.OK);
     }
 
-    @RequestMapping( method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping( method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ObjectTypeDTO> update(@RequestBody ObjectTypeDTO objectTypeDTO) {
 
         return new ResponseEntity<>(objectTypeService.update(objectTypeDTO), HttpStatus.OK);

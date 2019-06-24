@@ -1,7 +1,9 @@
 
-package modul.administrator.model;
+package modul.administrator.model.Users;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import modul.administrator.model.Adress;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -61,23 +63,21 @@ import java.util.List;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "User", namespace = "http://www.megatravell.com/user", propOrder = {
-    "firstName",
-    "lastName",
-    "email",
-    "password",
-    "adress"
+        "firstName",
+        "lastName",
+        "email",
+        "password",
+        "adress"
 })
 @XmlSeeAlso({
-    Agent.class,
-    RegisteredUser.class
+        Agent.class,
+        RegisteredUser.class
 })
 @Entity
-@Table(name="users")
+@Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User implements UserDetails {
 
@@ -101,22 +101,27 @@ public abstract class User implements UserDetails {
     protected String email;
     @XmlElement(name = "Password", namespace = "http://www.megatravell.com/user", required = true)
     @Column
+    @JsonIgnore
     protected String password;
     @XmlElement(name = "Adress", namespace = "http://www.megatravell.com/address", required = true)
     @ManyToOne
     protected Adress adress;
 
     @Column
+    @JsonIgnore
     private Boolean isEnabled;
 
     @Column
+    @JsonIgnore
     private Date lastPasswordResetDate;
 
     @Column
+    @JsonIgnore
     private Boolean isVerified;
 
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
     private List<Role> roles;
 
     @JsonIgnore
@@ -139,6 +144,7 @@ public abstract class User implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
     }
@@ -149,16 +155,19 @@ public abstract class User implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
@@ -214,11 +223,9 @@ public abstract class User implements UserDetails {
 
     /**
      * Gets the value of the firstName property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getFirstName() {
         return firstName;
@@ -226,11 +233,9 @@ public abstract class User implements UserDetails {
 
     /**
      * Sets the value of the firstName property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setFirstName(String value) {
         this.firstName = value;
@@ -238,11 +243,9 @@ public abstract class User implements UserDetails {
 
     /**
      * Gets the value of the lastName property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getLastName() {
         return lastName;
@@ -250,11 +253,9 @@ public abstract class User implements UserDetails {
 
     /**
      * Sets the value of the lastName property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setLastName(String value) {
         this.lastName = value;
@@ -262,11 +263,9 @@ public abstract class User implements UserDetails {
 
     /**
      * Gets the value of the email property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getEmail() {
         return email;
@@ -274,11 +273,9 @@ public abstract class User implements UserDetails {
 
     /**
      * Sets the value of the email property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setEmail(String value) {
         this.email = value;
@@ -286,11 +283,9 @@ public abstract class User implements UserDetails {
 
     /**
      * Gets the value of the password property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getPassword() {
         return password;
@@ -298,11 +293,9 @@ public abstract class User implements UserDetails {
 
     /**
      * Sets the value of the password property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setPassword(String value) {
         this.password = value;
@@ -310,11 +303,9 @@ public abstract class User implements UserDetails {
 
     /**
      * Gets the value of the adress property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Adress }
-     *     
+     *
+     * @return possible object is
+     * {@link Adress }
      */
     public Adress getAdress() {
         return adress;
@@ -322,16 +313,13 @@ public abstract class User implements UserDetails {
 
     /**
      * Sets the value of the adress property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Adress }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Adress }
      */
     public void setAdress(Adress value) {
         this.adress = value;
     }
-
 
 
 }

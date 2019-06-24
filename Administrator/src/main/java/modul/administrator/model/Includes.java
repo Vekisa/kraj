@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.*;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -29,14 +29,12 @@ import javax.xml.bind.annotation.*;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "quantity",
-    "reservation",
-    "extraOption"
+        "quantity",
+        "reservation",
+        "extraOption"
 })
 @XmlRootElement(name = "Includes", namespace = "http://megatravell.com/object")
 @Entity
@@ -57,7 +55,8 @@ public class Includes {
     @ManyToOne
     protected ExtraOption extraOption;
 
-    public Includes(){}
+    public Includes() {
+    }
 
     public Long getId() {
         return id;
@@ -65,7 +64,6 @@ public class Includes {
 
     /**
      * Gets the value of the quantity property.
-     *
      */
     public int getQuantity() {
         return quantity;
@@ -73,7 +71,6 @@ public class Includes {
 
     /**
      * Sets the value of the quantity property.
-     *
      */
     public void setQuantity(int value) {
         this.quantity = value;
@@ -82,10 +79,8 @@ public class Includes {
     /**
      * Gets the value of the reservation property.
      *
-     * @return
-     *     possible object is
-     *     {@link Reservation }
-     *
+     * @return possible object is
+     * {@link Reservation }
      */
     public Reservation getReservation() {
         return reservation;
@@ -94,10 +89,8 @@ public class Includes {
     /**
      * Sets the value of the reservation property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link Reservation }
-     *
+     * @param value allowed object is
+     *              {@link Reservation }
      */
     public void setReservation(Reservation value) {
         this.reservation = value;
@@ -106,10 +99,8 @@ public class Includes {
     /**
      * Gets the value of the extraOption property.
      *
-     * @return
-     *     possible object is
-     *     {@link ExtraOption }
-     *
+     * @return possible object is
+     * {@link ExtraOption }
      */
     public ExtraOption getExtraOption() {
         return extraOption;
@@ -118,10 +109,8 @@ public class Includes {
     /**
      * Sets the value of the extraOption property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link ExtraOption }
-     *     
+     * @param value allowed object is
+     *              {@link ExtraOption }
      */
     public void setExtraOption(ExtraOption value) {
         this.extraOption = value;

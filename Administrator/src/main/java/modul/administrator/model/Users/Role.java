@@ -1,11 +1,9 @@
-package modul.administrator.model;
+package modul.administrator.model.Users;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.List;
 
 @Entity
 @Table
@@ -19,14 +17,9 @@ public class Role implements GrantedAuthority {
     @Column
     private String name;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "roles")
-    private List<User> users;
-
     public Role() {
         super();
     }
-
 
     public Long getId() {
         return id;
@@ -44,17 +37,9 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
-
     @Override
     public String getAuthority() {
         return name;
     }
 
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
 }

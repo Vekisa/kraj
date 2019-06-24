@@ -25,13 +25,13 @@ public class AccommodationTypeController {
         return new ResponseEntity<>(accommodationTypeService.getAll(), HttpStatus.OK);
     }
 
-    @RequestMapping( method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping( method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AccommodationTypeDTO> create(@RequestBody AccommodationTypeDTO accommodationTypeDTO) {
 
         return new ResponseEntity<>(accommodationTypeService.create(accommodationTypeDTO), HttpStatus.OK);
     }
 
-    @RequestMapping( method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping( method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AccommodationTypeDTO> update(@RequestBody AccommodationTypeDTO accommodationTypeDTO) {
 
         return new ResponseEntity<>(accommodationTypeService.update(accommodationTypeDTO), HttpStatus.OK);
