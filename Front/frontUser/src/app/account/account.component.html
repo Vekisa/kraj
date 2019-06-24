@@ -1,0 +1,84 @@
+<div class="container">
+  <div class="mt-2 "></div>
+  <div class="row">
+
+    <div class="col-md-6">
+
+      <div class="card">
+
+        <div class="card-header">
+          <h4>Personal info</h4>
+        </div>
+
+        <div class="card-body">
+          <div *ngIf="user">
+
+            <div class="d-flex justify-content-between ">
+              <h5>Name </h5>
+              <p> {{user.firstName}} {{user.lastName}} </p>
+              <div>
+                <button class="btn" type="button" (click)="editName()"><i class="far fa-edit"></i></button>
+              </div>
+            </div>
+
+
+            <div class="d-flex justify-content-between ">
+              <h5>Username </h5>
+              <p>{{user.username}} </p>
+              <div>
+                <button class="btn" type="button" (click)="editUsername()"><i class="far fa-edit"></i></button>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between ">
+              <h5>Email </h5>
+              <p>{{ user.email }} </p>
+              <div>
+                <button class="btn" type="button" (click)="editEmail()"><i class="far fa-edit"></i></button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="mt-2 "></div>
+
+      <div class="card">
+
+        <div class="card-header">
+          <h4>Security</h4>
+        </div>
+
+        <div class="card-body">
+
+          <div *ngIf="user">
+
+            <div class="d-flex justify-content-between ">
+              <h5>Password </h5>
+              <p> </p>
+              <div>
+                <button class="btn" type="button" (click)="editPass()"><i class="far fa-edit"></i></button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mt-2 "></div>
+
+
+  </div>
+
+
+
+
+
+
+
+
+</div>

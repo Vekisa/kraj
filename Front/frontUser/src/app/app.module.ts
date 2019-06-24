@@ -15,6 +15,8 @@ import {HTTP_INTERCEPTORS,HttpClientModule} from "@angular/common/http";
 import {AuthInterceptor} from "./interceptor/authinterceptor.interceptor";
 import { HomeComponent } from './home/home.component';
 import {FormsModule,ReactiveFormsModule} from "@angular/forms";
+import { ProfileComponent } from './profile/profile.component';
+import { AccountComponent } from './account/account.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import {FormsModule,ReactiveFormsModule} from "@angular/forms";
     ReservationsComponent,
     LoginComponent,
     SignupComponent,
-    HomeComponent
+    HomeComponent,
+    ProfileComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,

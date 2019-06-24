@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {RegisteredUser} from "../model";
 import {AuthService} from "../services/auth.service";
 import {ConfirmPasswordValidator} from "../validation/confirm-pass.validator";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-signup',
@@ -19,9 +20,16 @@ export class SignupComponent implements OnInit {
 
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService) { }
+  constructor(private route:Router,private formBuilder: FormBuilder, private authService: AuthService) { }
 
   ngOnInit() {
+
+    var state = this.authService.isValid();
+
+    if(state==true){
+      this.route.navigate(['/home']);
+    }
+
     this.signUpForm = this.formBuilder.group({
 
       firstName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.maxLength(30)]],

@@ -78,4 +78,8 @@ export class AuthService {
     return this.http.post(this.baseUrl+"uua/user/save",regUser);
   }
 
+  logout(){
+    this.cookie.delete('access_token');
+  }
+
 }

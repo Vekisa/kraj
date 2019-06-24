@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UserLogin} from "../model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../services/auth.service";
+import {Route, Router} from "@angular/router";
 
 
 @Component({
@@ -24,9 +25,15 @@ export class LoginComponent implements OnInit {
   checkIP = false;
   checkU = false;
 
-  constructor(private formBuilder:FormBuilder,private authService:AuthService) { }
+  constructor(private route:Router,private formBuilder:FormBuilder,private authService:AuthService) { }
 
   ngOnInit() {
+
+    var state = this.authService.isValid();
+
+    if(state==true){
+      this.route.navigate(['/home']);
+    }
 
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_ ]*')]],

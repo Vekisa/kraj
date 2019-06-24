@@ -1,26 +1,98 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light navigation-bar">
+<!--<nav class="navbar navbar-expand-lg navbar-light bg-light navigation-bar">-->
+
+<!--    <div class="collapse navbar-collapse">-->
+<!--      <ul class="navbar-nav mr-auto">-->
+<!--        <li class="nav-item">-->
+<!--          <a class="nav-link item" href="" [routerLink]="['']" >Megatravel</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item" >-->
+<!--          <a class="nav-link item" href="" [routerLink]="['search']">Search</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item item" >-->
+<!--          <a class="nav-link"  href="" [routerLink]="['reservations']">Reservations</a>-->
+<!--        </li>-->
+<!--        -->
+<!--      </ul>-->
+<!--    </div>-->
+
+<!--    <div class="nav-item  mr-sm-2">-->
+<!-- -->
+<!--        <a *ngIf="!isLoggedIn" class="nav-link log-in" href="" [href]="['sign_in']">Log in</a>-->
+
+<!--        <a *ngIf="isLoggedIn" class="nav-link log-in" href="" (click)="logout()">Log out</a>-->
+
+<!-- -->
+<!--      </div>-->
+
+<!--  </nav>-->
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="navigationBar">
+  <div class="container">
 
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link item" href="" [routerLink]="['']" >Megatravel</a>
+          <a class="nav-link " [href]="['']">Megatravel</a>
         </li>
-        <li class="nav-item" >
-          <a class="nav-link item" href="" [routerLink]="['search']">Search</a>
+        <li class="nav-item">
+          <a class="nav-link " href="" [routerLink]="['search']">Search</a>
         </li>
-        <li class="nav-item item" >
-          <a class="nav-link"  href="" [routerLink]="['reservations']">Reservations</a>
+        <li class="nav-item ">
+          <a class="nav-link " href="" [routerLink]="['reservations']">Reservations</a>
         </li>
-        
-      </ul>
-    </div>
 
-    <div class="nav-item  mr-sm-2">
- 
-        <a class="nav-link log-in" href="" [href]="['sign_in']">Log in</a>
- 
+      </ul>
+      <div *ngIf="!isLoggedIn">
+        <form class="form-inline my-2 my-lg-0">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" [href]="['sign_in']">Sign in</a>
+            </li>
+
+          </ul>
+        </form>
       </div>
 
-  </nav>
-  
+      <div *ngIf="isLoggedIn">
+        <form class="form-inline my-2 my-lg-0">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
 
+              <div class="dropdown">
+                <a id="showUsername" class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+                   data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">{{username}}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" [routerLink]="['profile']">Profile</a>
+                  <a class="dropdown-item" [routerLink]="['reservations']">Reservations</a>
+                  <a class="dropdown-item" [routerLink]="['friends']">Friends</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" [routerLink]="['settings']">Settings</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" (click)="logout()">Log out</a>
+                </div>
+              </div>
+
+            </li>
+
+          </ul>
+        </form>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<!--<nav class="navbar navbar-light bg-light">-->
+<!--  <div class="container">-->
+<!--    <a class="navbar-brand" [routerLink]="['home']">Navbar</a>-->
+<!--    <form class="form-inline">-->
+<!--      <button *ngIf="!isLoggedIn" class="btn btn-outline-primary" (click)="open(content)"> {{ isLoggedIn == true ? 'Logout' : 'Login' }}-->
+<!--      </button>-->
+
+
+<!--    </form>-->
+<!--  </div>-->
+<!--</nav>-->

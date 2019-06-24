@@ -7,30 +7,29 @@ import {ReservationsComponent} from './reservations/reservations.component';
 import {LoginComponent} from './login/login.component';
 import {SignupComponent} from "./signup/signup.component";
 import {HomeComponent} from "./home/home.component";
+import {ProfileComponent} from "./profile/profile.component";
+import {AccountComponent} from "./account/account.component";
 
 
 const routes: Routes = [
 
+
   {
-    path:'',redirectTo:'home',pathMatch:'full'
-  },
-  {
-    path: 'home', component: HomeComponent,children:[
+    path: '', component: HomeComponent,children:[
       {
         path: 'page', component: PageComponent
       },
-
       {
-        path: 'megatravel',
-        component: NavbarComponent
+        path: 'search', component: SearchComponent
       },
       {
-        path: 'search',
-        component: SearchComponent
+        path: 'reservations', component: ReservationsComponent
       },
       {
-        path: 'reservations',
-        component: ReservationsComponent
+        path:'profile',component:ProfileComponent
+      },
+      {
+        path:'account',component:AccountComponent
       }
     ]
   },
