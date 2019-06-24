@@ -45,7 +45,7 @@ export class AuthService {
     console.log(token.expires_in);
     this.cookie.set("access_token", token.access_token, expireDate);
     console.log('Obtained Access token');
-    this._router.navigate(['home']);
+    window.location.href='';
   }
 
   getToken(){
@@ -60,7 +60,7 @@ export class AuthService {
     return this.http.get(this.baseUrl+"uua/user/roles");
   }
 
-  isValid(){
+  isValid():boolean{
 
     if(this.getToken()==null){
       return false;

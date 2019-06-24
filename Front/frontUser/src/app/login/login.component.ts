@@ -29,10 +29,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
-    var state = this.authService.isValid();
 
-    if(state==true){
-      this.route.navigate(['/home']);
+    if(this.authService.isValid()){
+      console.log('Ulogovan ')
+      window.location.href='';
     }
 
     this.loginForm = this.formBuilder.group({

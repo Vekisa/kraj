@@ -27,7 +27,7 @@ export class SignupComponent implements OnInit {
     var state = this.authService.isValid();
 
     if(state==true){
-      this.route.navigate(['/home']);
+      this.route.navigate(['']);
     }
 
     this.signUpForm = this.formBuilder.group({
@@ -50,6 +50,7 @@ export class SignupComponent implements OnInit {
       data=>{
         this.isSignedUp = true;
         this.isSignUpFailed = false;
+        window.location.href='';
       },error =>{
         this.errorMessage = error.error.message;
         this.isSignUpFailed = true;
