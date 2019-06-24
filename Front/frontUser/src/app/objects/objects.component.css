@@ -1,0 +1,23 @@
+ul {
+  text-align: center;
+ 
+}
+.star {
+  font-size: 1.5rem;
+  color: #5590dd;
+}
+.filled {
+  color: #1e90ff;
+}
+
+.left-side{
+  position: absolute;
+  left:0%;
+  width: 60%;
+}
+
+.float-right{
+  position: absolute;
+  right:0%;
+  width: 40%;
+}
