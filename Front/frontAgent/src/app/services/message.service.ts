@@ -23,6 +23,9 @@ export class MessageService {
   allMessages(): Observable<any> {
     return this.http.get<any>(this.unitURL + "/getAll");
   }
+  allUsers(): Observable<any> {
+    return this.http.get<any>(this.unitURL + "/getAllUSers");
+  }
 
   allMessagesFromUser(id: number): Observable<any> {
     return this.http.get<any>(this.unitURL + "/getFromUser/" + id);

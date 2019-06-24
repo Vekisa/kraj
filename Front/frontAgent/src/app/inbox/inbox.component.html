@@ -3,15 +3,13 @@
   <thead align="center" >
   <tr>
     <th scope="col">#</th>
-    <th scope="col">Date</th>
-    <th scope="col">From</th>
+    <th scope="col">User</th>
   </tr>
   </thead >
   <tbody align="center">
-      <tr *ngFor="let mes of messages; let i = index" (click)=readMessage(i)>
+      <tr *ngFor="let user of users; let i = index" (click)=readMessage(user.id)>
         <td>{{i}}</td>
-        <td>{{getDate(i)}}</td>
-        <td>{{mes.registeredUser.firstName}} {{mes.registeredUser.lastName}}</td>
+        <td>{{user.firstName}} {{user.lastName}}</td>
       </tr>
   </tbody>
 </table>
