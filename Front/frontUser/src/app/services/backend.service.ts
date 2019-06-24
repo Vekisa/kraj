@@ -7,8 +7,8 @@ import {catchError} from "rxjs/operators";
   providedIn: 'root'
 })
 export class BackendService {
-  private baseExtraOptionsURL = 'http://localhost:8762/exta_options';
-  private baseAccommodationTypesURL = 'http://localhost:8762/accommodation_types';
+  private baseExtraOptionsURL = 'http://localhost:8762/backend/extra_option';
+  private baseAccommodationTypesURL = 'http://localhost:8762/backend/accommodation_type';
 
   constructor(private http: HttpClient) { }
 

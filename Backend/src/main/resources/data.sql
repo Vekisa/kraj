@@ -18,3 +18,7 @@ insert into accommodation_type(name,description) values ("BedAndBreakfast", "Sve
 insert into unit(adults,beds,size,smoking,accommodation_type_id,object_id) values (4,3,30,b'0',1,1);
 insert into unit(adults,beds,size,smoking,accommodation_type_id,object_id) values (5,5,60,b'0',2,1);
 insert into unit(adults,beds,size,smoking,accommodation_type_id,object_id) values (4,4,40,b'0',1,2);
+
+insert into role(name) values ("ROLE_ADMIN");
+insert into role(name) values ("ROLE_REG");
+insert into role(name) values ("ROLE_AGENT");
