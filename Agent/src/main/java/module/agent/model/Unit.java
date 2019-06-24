@@ -93,10 +93,10 @@ public class Unit {
     @ManyToOne
     protected AccommodationType accommodationType;
     @XmlElement(name = "Image", namespace = "http://megatravell.com/object")
-    @JsonIgnore
     @OneToMany
     protected List<Image> image;
     @XmlElement(name = "Reservation", namespace = "http://megatravell.com/object")
+    @JsonIgnore
     @OneToMany
     protected List<Reservation> reservation;
     @XmlElement(name = "Object", namespace = "http://megatravell.com/object", required = true)

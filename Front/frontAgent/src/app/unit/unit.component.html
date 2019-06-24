@@ -1,5 +1,5 @@
-<table class="table table-bordered mb-0 table-hover">
-  <thead>
+<table class="table table-bordered mb-0 table-hover" >
+  <thead align="center" >
   <tr>
     <th scope="col">#</th>
     <th scope="col">Adults</th>
@@ -10,23 +10,19 @@
     <th scope="col">Price</th>
     <th scope="col">Price for </th>
   </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let unit of units; let i = index " (onChange)="getPrice(unit.priceSchedule)">
-
-    <td>{{i}}</td>
-    <td>{{unit.adults}}</td>
-    <td>{{unit.children}}</td>
-    <td>{{unit.beds}}</td>
-    <td>{{unit.size}}</td>
-    <td *ngIf="unit.smoking==true">Allowed</td>
-    <td *ngIf="unit.smoking==false">Not allowed</td>
-    <td>{{getPrice(unit.priceSchedule) }}</td>
-    <td>{{getPerPerson()}}</td>
-    <td><button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="makeRes(i)">Make a reservation</button></td>
-    <div *ngFor="let img of getImages(unit.id)">
-      <img [src]=img.source alt="Preivew">
-    </div>
+  </thead >
+  <tbody align="center" >
+  <tr *ngFor="let unit of units; let i = index " >
+    <td ><img *ngIf="unit.image[0]!=undifinded" src="data:image/png;base64,{{unit.image[0].source}}" alt="{{i}}" style="width: 200px; height: 200px"/></td>
+    <td style="vertical-align: middle">{{unit.adults}}</td>
+    <td style="vertical-align: middle">{{unit.children}}</td>
+    <td style="vertical-align: middle">{{unit.beds}}</td>
+    <td style="vertical-align: middle">{{unit.size}}</td>
+    <td *ngIf="unit.smoking==true" style="vertical-align: middle">Allowed</td>
+    <td *ngIf="unit.smoking==false" style="vertical-align: middle">Not allowed</td>
+    <td style="vertical-align: middle">{{getPrice(unit.priceSchedule) }}</td>
+    <td style="vertical-align: middle">{{getPerPerson()}}</td>
+    <td style="vertical-align: middle"><button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="makeRes(i)">Make a reservation</button></td>
   </tr>
   </tbody>
 </table>

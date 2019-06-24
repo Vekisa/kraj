@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:5000")
+
 @RestController
 @RequestMapping("/unit")
 public class UnitController {
@@ -129,4 +129,17 @@ public class UnitController {
         img.setSource(pom);
         return new ResponseEntity<>(imageService.create(img), HttpStatus.CREATED);
     }
+
+    @RequestMapping(value = "/get_images/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Sve smestajne jedinice", httpMethod = "GET", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Image.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<List<Image>> getAllImages(@PathVariable Long id){
+        System.out.println(" images "+id);
+        return new ResponseEntity<>(unitService.getImages(id), HttpStatus.OK);
+    }
+
 }

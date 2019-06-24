@@ -3,6 +3,8 @@ package module.agent.model;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import java.math.BigInteger;
@@ -98,18 +100,23 @@ public class Object {
     @ManyToOne
     protected Adress adress;
     @XmlElement(name = "Image", namespace = "http://megatravell.com/object")
+    @JsonIgnore
     @OneToMany
     protected List<Image> image;
     @XmlElement(name = "Comment", namespace = "http://megatravell.com/object")
+    @JsonIgnore
     @OneToMany(mappedBy = "object")
     protected List<Comment> comment;
     @XmlElement(name = "ExtraOption", namespace = "http://megatravell.com/object")
+    @JsonIgnore
     @OneToMany
     protected List<ExtraOption> extraOption;
     @XmlElement(name = "Unit", namespace = "http://megatravell.com/object")
+    @JsonIgnore
     @OneToMany(mappedBy = "object")
     protected List<Unit> unit;
     @XmlElement(name = "Rating", namespace = "http://megatravell.com/object")
+    @JsonIgnore
     @OneToMany(mappedBy = "object")
     protected List<Rating> rating;
     @XmlElement(name = "ObjectType", namespace = "http://megatravell.com/object", required = true)

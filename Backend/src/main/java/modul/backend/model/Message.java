@@ -1,8 +1,8 @@
 
 package modul.backend.model;
 
-import modul.oauth.model.Users.Agent;
-import modul.oauth.model.Users.RegisteredUser;
+import modul.backend.model.Users.Agent;
+import modul.backend.model.Users.RegisteredUser;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;

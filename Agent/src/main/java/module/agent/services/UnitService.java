@@ -1,5 +1,6 @@
 package module.agent.services;
 
+import module.agent.model.Image;
 import module.agent.model.Unit;
 import module.agent.repository.UnitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,5 +26,9 @@ public class UnitService {
     public List<Unit> getAll(){
         return unitRepository.findAll();
     }
-
+    public List<Image> getImages(Long id){
+        Unit unit=unitRepository.findById(id).get();
+        System.out.println("unit " + unit.getId() + " br fotki " + unit.getImage().size() + " id je " + id);
+        return unit.getImage();
+    }
 }

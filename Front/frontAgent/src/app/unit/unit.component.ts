@@ -24,7 +24,10 @@ export class UnitComponent implements OnInit {
     this.activatedRoute.params.subscribe(data=>{
       console.log(data['id']);
       this.objectService.findUnits(data['id']).subscribe(data=>
-       this.units=data )
+      {this.units=data;
+      console.log("unit");
+      console.log(data.id);
+      } )
     });
     this.plan=new Plan();
 
@@ -66,9 +69,5 @@ export class UnitComponent implements OnInit {
     this.router.navigateByUrl('/createReservation/' + i);
   }
 
-  getImages(id: number){
-    this.unitService.getImage(id).subscribe(data=>{
-      this.images=data;
-    })
-  }
+
 }

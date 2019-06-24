@@ -40,8 +40,8 @@ export class UnitService {
     }));
   }
 
-  getImage(id: number): Observable<Image[]>{
-    return this.http.get<Image[]>(this.unitURL + "/get_images/" + id).pipe(catchError(err => {
+  getImage(id: number): Observable<any>{
+    return this.http.get<any>(this.unitURL + "/get_images/" + id).pipe(catchError(err => {
       return throwError(err);
     }));
   }

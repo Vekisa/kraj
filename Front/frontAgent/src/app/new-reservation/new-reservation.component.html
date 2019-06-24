@@ -16,3 +16,7 @@
   <div *ngIf="free">{{calPrice()}}</div>
 </form>
 <button *ngIf="free" (click)="createReservation()">Create reservation</button>
+
+<div *ngFor="let img of unit.image">
+  <img src="data:image/png;base64,{{img.source}}" style="width: 30%; height: 30%">
+</div>
