@@ -1,0 +1,17 @@
+<h1>Inbox</h1>
+<table class="table table-bordered mb-0 table-hover" >
+  <thead align="center" >
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Date</th>
+    <th scope="col">From</th>
+  </tr>
+  </thead >
+  <tbody align="center">
+      <tr *ngFor="let mes of messages; let i = index" (click)=readMessage(i)>
+        <td>{{i}}</td>
+        <td>{{getDate(i)}}</td>
+        <td>{{mes.registeredUser.firstName}} {{mes.registeredUser.lastName}}</td>
+      </tr>
+  </tbody>
+</table>

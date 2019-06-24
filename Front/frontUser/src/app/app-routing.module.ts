@@ -40,6 +40,10 @@ const routes: Routes = [
   {
     path: 'sign_up',
     component: SignupComponent
+  },
+  {
+    path: 'reservations',
+    component: ReservationsComponent
   }
 
 

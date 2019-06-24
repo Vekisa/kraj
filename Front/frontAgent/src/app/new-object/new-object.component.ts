@@ -46,6 +46,6 @@ export class NewObjectComponent implements OnInit {
         console.log(data)
       );}
     );
-    this.router.navigateByUrl('/newUnit');
+    this.router.navigateByUrl('/home/newUnit');
   }
 }

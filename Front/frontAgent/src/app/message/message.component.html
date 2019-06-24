@@ -1,0 +1,10 @@
+<h3>{{messages[0].registeredUser.firstName}} {{messages[0].registeredUser.lastName}}</h3>
+
+<div *ngFor="let mes of messages; let i=index">
+  <div>{{mes.text}}</div>
+  <div style="color: #525D76">{{getDate(i)}}</div>
+</div>
+<div>
+  <input type="text" id="textMessage" placeholder="Type Your message..." [(ngModel)]="message.text" />
+  <button (click)="sendMessage()" >Replay</button>
+</div>

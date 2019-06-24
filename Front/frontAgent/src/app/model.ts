@@ -110,6 +110,16 @@ export class Reservation{
 
 }
 
+export class Message{
+  id: number;
+  text: string;
+  postingDate: Date;
+  agent: Agent;
+  registeredUser: RegisteredUser;
+
+  constructor(){}
+}
+
 export class RegisteredUser{
   id: number;
   firstName: string;
@@ -135,5 +145,11 @@ export class UserLogin {
     this.password = password;
   }
 
+}
+
+export class Agent {
+  bussinesRegistrationNumber: number;
+
+  constructor(){}
 }
 

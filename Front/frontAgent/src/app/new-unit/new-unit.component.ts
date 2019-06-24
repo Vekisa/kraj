@@ -59,7 +59,7 @@ export class NewUnitComponent implements OnInit {
     }
     console.log(this.unit);
     this.unitService.newUnit(this.unit).subscribe(data=>
-    {this.router.navigateByUrl('/newPlan/' + data.id);
+    {this.router.navigateByUrl('/home/newPlan/' + data.id);
       console.log(data)}
     );
 
@@ -67,7 +67,7 @@ export class NewUnitComponent implements OnInit {
   }
 
   createObject(){
-    this.router.navigateByUrl('/newObject');
+    this.router.navigateByUrl('/home/newObject');
   }
 
   onSelectedImage(event){

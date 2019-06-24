@@ -52,8 +52,10 @@ export class NewPlanComponent implements OnInit {
 
     this.activatedRoute.params.subscribe(data=>{
       console.log(data['id']);
-      this.unitService.findById(data['id']).subscribe(data=>
-        this.unit=data)
+      this.unitService.findById(data['id']).subscribe(data=>{
+        this.unit=data;
+        console.log(data);
+      })
     });
     this.fS=1;
     this.readonlyP=false;

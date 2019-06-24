@@ -17,6 +17,8 @@ import {AuthInterceptor} from "./interceptor/authinterceptor.interceptor";
 import { NavigationComponent } from './navigation/navigation.component';
 import { HomeComponent } from './home/home.component';
 import { FunctionNavigationComponent } from './function-navigation/function-navigation.component';
+import { InboxComponent } from './inbox/inbox.component';
+import { MessageComponent } from './message/message.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { FunctionNavigationComponent } from './function-navigation/function-navi
     LoginComponent,
     NavigationComponent,
     HomeComponent,
-    FunctionNavigationComponent
+    FunctionNavigationComponent,
+    InboxComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,

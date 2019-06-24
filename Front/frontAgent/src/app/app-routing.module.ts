@@ -9,6 +9,8 @@ import {ObjectComponent} from "./object/object.component";
 import {NewReservationComponent} from "./new-reservation/new-reservation.component";
 import {HomeComponent} from "./home/home.component";
 import {LoginComponent} from "./login/login.component";
+import {InboxComponent} from "./inbox/inbox.component";
+import {MessageComponent} from "./message/message.component";
 
 const routes: Routes = [
   {
@@ -40,6 +42,14 @@ const routes: Routes = [
       {
         path:'createReservation/:id',
         component: NewReservationComponent
+      },
+      {
+        path:'inbox',
+        component: InboxComponent
+      },
+      {
+        path:'readMessages/:id',
+        component: MessageComponent
       }
     ]
   },

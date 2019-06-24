@@ -18,6 +18,6 @@ export class ObjectComponent implements OnInit {
   }
 
   showUnits(i: number){
-    this.router.navigateByUrl('/showUnits/' + i);
+    this.router.navigateByUrl('home/showUnits/' + i);
   }
 }
