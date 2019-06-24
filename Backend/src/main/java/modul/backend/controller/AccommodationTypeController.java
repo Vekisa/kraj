@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@CrossOrigin("http://localhost:4200")
+
 @RestController
 @RequestMapping("/accommodation_type")
 public class AccommodationTypeController {
