@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {SearchService} from "../services/search.service";
 import {BackendService} from "../services/backend.service";
+import {Unit} from "../../../../frontAgent/src/app/model";
 
 @Component({
   selector: 'app-search',
@@ -14,28 +15,38 @@ export class SearchComponent implements OnInit {
   dropdownListCategory = [];
   selectedItems = [];
   dropdownSettings = {};
-  hiddenElements;
-  extraOptions = [];
-  accommodationTypes = [];
-
+  hiddenElements = true;
+  extraOptions : any[];
+  accommodationTypes : any[];
+  pom1 = [];
+  pom2 = [];
   searchForm: FormGroup;
+  units: Unit[];
 
   constructor(private formBuilder: FormBuilder, private searchService:SearchService, private backendService: BackendService) { }
 
   ngOnInit() {
+    this.pom1 = [];
+    this.pom2 = [];
 
     this.backendService.getAllAccommodationTypes().subscribe(data =>{
       this.accommodationTypes = data;
+
       this.accommodationTypes.forEach(value=>{
-        this.dropdownListAccommodationTypes.push({item_id: value.id, item_text: value.name});
+        this.pom1.push({item_id: value.id, item_text: value.name});
       });
+      this.dropdownListAccommodationTypes = this.pom1;
     });
 
     this.backendService.getAllExtraOptions().subscribe(data =>{
+      console.log("preuzeo2");
+      console.log(data);
       this.extraOptions = data;
       this.extraOptions.forEach(value=>{
-        this.dropdownListExtraOptions.push({item_id: value.id, item_text: value.name});
+        this.pom2.push({item_id: value.id, item_text: value.name});
       });
+
+      this.dropdownListExtraOptions = this.pom2;
     });
 
     this.dropdownListCategory = [
@@ -45,6 +56,7 @@ export class SearchComponent implements OnInit {
       {item_id : 4, item_text : '4'},
       {item_id : 5, item_text : '5'},
     ]
+
 
     this.searchForm = this.formBuilder.group({
       city: [''],
@@ -57,7 +69,6 @@ export class SearchComponent implements OnInit {
       additionalTypes:['']
     });
 
-    this.hiddenElements = false;
     console.log("ovoo:" + this.hiddenElements);
 
     this.dropdownSettings = {
@@ -92,6 +103,7 @@ export class SearchComponent implements OnInit {
       this.searchForm.value.category,this.searchForm.value.distance,this.searchForm.value.additionalTypes).subscribe( data =>{
         console.log("DATA: ");
         console.log(data);
+        this.units = data;
     });
   }
 }

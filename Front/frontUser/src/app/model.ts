@@ -44,11 +44,31 @@ class Unit {
   image: Image[];
   priceSchedule: PriceSchedule[]=[];
   reservation: string[];
-  accommodationType: string;
+  accommodationType: AccommodationType;
 
-  constructor() {
+  constructor(id: number, adults: number, beds: number, smoking : boolean, size: number, object :Object, image: Image[], accommodationType : AccommodationType) {
+    this.id = id;
+    this.adults = adults;
+    this.beds = beds;
+    this.smoking = smoking;
+    this.size = size;
+    this.object = object;
+    this.image = image;
+    this.accommodationType = accommodationType;
   }
 
+}
+
+class AccommodationType{
+  id: number;
+  name: string;
+  description: string;
+
+  constructor(id:number,name:string,description:string){
+    this.id = id;
+    this.name = name;
+    this.description = description;
+  }
 }
 
 class Adress {

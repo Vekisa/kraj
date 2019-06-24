@@ -10,9 +10,9 @@ import java.util.List;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -54,23 +54,21 @@ import java.util.List;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "name",
-    "description",
-    "cancellation",
-    "category",
-    "adress",
-    "image",
-    "comment",
-    "extraOption",
-    "unit",
-    "rating",
-    "objectType"
-    //"agent"
+        "name",
+        "description",
+        "cancellation",
+        "category",
+        "adress",
+        "image",
+        "comment",
+        "extraOption",
+        "unit",
+        "rating",
+        "objectType"
+        //"agent"
 })
 @XmlRootElement(name = "Object", namespace = "http://megatravell.com/object")
 @Entity
@@ -115,20 +113,25 @@ public class Object {
     @XmlElement(name = "ObjectType", namespace = "http://megatravell.com/object", required = true)
     @ManyToOne
     protected ObjectType objectType;
+
     /**
      * @XmlElement(name = "Agent", namespace = "http://www.megatravell.com/user")
-    @OneToMany
-    protected List<Agent> agent;
+     * @OneToMany protected List<Agent> agent;
      */
 
-    public Object(){}
+    public Object() {
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
     /**
      * Gets the value of the name property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getName() {
         return name;
@@ -136,11 +139,9 @@ public class Object {
 
     /**
      * Sets the value of the name property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setName(String value) {
         this.name = value;
@@ -148,11 +149,9 @@ public class Object {
 
     /**
      * Gets the value of the description property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getDescription() {
         return description;
@@ -160,11 +159,9 @@ public class Object {
 
     /**
      * Sets the value of the description property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setDescription(String value) {
         this.description = value;
@@ -172,11 +169,9 @@ public class Object {
 
     /**
      * Gets the value of the cancellation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @return possible object is
+     * {@link BigInteger }
      */
     public BigInteger getCancellation() {
         return cancellation;
@@ -184,11 +179,9 @@ public class Object {
 
     /**
      * Sets the value of the cancellation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link BigInteger }
      */
     public void setCancellation(BigInteger value) {
         this.cancellation = value;
@@ -196,7 +189,6 @@ public class Object {
 
     /**
      * Gets the value of the category property.
-     * 
      */
     public int getCategory() {
         return category;
@@ -204,7 +196,6 @@ public class Object {
 
     /**
      * Sets the value of the category property.
-     * 
      */
     public void setCategory(int value) {
         this.category = value;
@@ -212,11 +203,9 @@ public class Object {
 
     /**
      * Gets the value of the adress property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Adress }
-     *     
+     *
+     * @return possible object is
+     * {@link Adress }
      */
     public Adress getAdress() {
         return adress;
@@ -224,11 +213,9 @@ public class Object {
 
     /**
      * Sets the value of the adress property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Adress }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Adress }
      */
     public void setAdress(Adress value) {
         this.adress = value;
@@ -236,25 +223,23 @@ public class Object {
 
     /**
      * Gets the value of the image property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the image property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getImage().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Image }
-     * 
-     * 
      */
     public List<Image> getImage() {
         if (image == null) {
@@ -265,25 +250,23 @@ public class Object {
 
     /**
      * Gets the value of the comment property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the comment property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getComment().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Comment }
-     * 
-     * 
      */
     public List<Comment> getComment() {
         if (comment == null) {
@@ -294,25 +277,23 @@ public class Object {
 
     /**
      * Gets the value of the extraOption property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the extraOption property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getExtraOption().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link ExtraOption }
-     * 
-     * 
      */
     public List<ExtraOption> getExtraOption() {
         if (extraOption == null) {
@@ -323,25 +304,23 @@ public class Object {
 
     /**
      * Gets the value of the unit property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the unit property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getUnit().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Unit }
-     * 
-     * 
      */
     public List<Unit> getUnit() {
         if (unit == null) {
@@ -352,25 +331,23 @@ public class Object {
 
     /**
      * Gets the value of the rating property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the rating property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getRating().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Rating }
-     * 
-     * 
      */
     public List<Rating> getRating() {
         if (rating == null) {
@@ -381,11 +358,9 @@ public class Object {
 
     /**
      * Gets the value of the objectType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ObjectType }
-     *     
+     *
+     * @return possible object is
+     * {@link ObjectType }
      */
     public ObjectType getObjectType() {
         return objectType;
@@ -393,51 +368,41 @@ public class Object {
 
     /**
      * Sets the value of the objectType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ObjectType }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link ObjectType }
      */
     public void setObjectType(ObjectType value) {
         this.objectType = value;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     /**
      * Gets the value of the agent property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the agent property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getAgent().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Agent }
-     * 
-     * 
+     *
+     *
      */
-   /** public List<Agent> getAgent() {
-        if (agent == null) {
-            agent = new ArrayList<Agent>();
-        }
-        return this.agent;
-    }*/
+    /** public List<Agent> getAgent() {
+     if (agent == null) {
+     agent = new ArrayList<Agent>();
+     }
+     return this.agent;
+     }*/
 
 }

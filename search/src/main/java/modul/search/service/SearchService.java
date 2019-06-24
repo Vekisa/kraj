@@ -1,7 +1,6 @@
 package modul.search.service;
 
 import modul.search.dto.UnitDTO;
-import modul.search.model.Adress;
 import modul.search.model.ExtraOption;
 import modul.search.model.Reservation;
 import modul.search.model.Unit;
@@ -15,7 +14,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SearchService {
@@ -35,14 +33,25 @@ public class SearchService {
         List<Unit> okUnits = new ArrayList<>();
 
         for(Unit unit : units){
-            if(unit.getObject().getAdress().getCity() != city)
-                continue;
+            System.out.println(unit.getObject().getAdress().getCity() + " " + unit.getAdults());
+            String city1 = ((unit.getObject().getAdress().getCity().replaceAll("\\s+","")).trim()).toLowerCase();
+            String city2 = ((city.replaceAll("\\s+","")).trim()).toLowerCase();
 
-            if(!checkReservation(unit,startDate,endDate))
+            System.out.println(city1.length() + " " + city2.length());
+            if(city1.equals(city2)) {
+                System.out.println("IZBACIO ZBOG CITY: " + city1 + " " + city2);
                 continue;
+            }
 
-            if(unit.getAdults().intValue() <  persons)
+            if(!checkReservation(unit,startDate,endDate)) {
+                System.out.println("IZBACIO ZBOG DATUMA");
                 continue;
+            }
+
+            if(unit.getAdults().intValue() <  persons) {
+                System.out.println("IZBACIO ZBOG PERSONS");
+                continue;
+            }
 
             if(accommodationTypeIds != null){
                 if(!accommodationTypeIds.contains(unit.getAccommodationType().getId()))

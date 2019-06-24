@@ -22,8 +22,8 @@ public class SearchController {
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<UnitDTO>> findById(@RequestParam(value = "city") String city,
-                                                  @RequestParam(value = "start_date") @DateTimeFormat(pattern="MMddyyyy") Date startDate,
-                                                  @RequestParam(value = "end_date") @DateTimeFormat(pattern="MMddyyyy") Date endDate,
+                                                  @RequestParam(value = "start_date") @DateTimeFormat(pattern="yyyy-mm-dd") Date startDate,
+                                                  @RequestParam(value = "end_date") @DateTimeFormat(pattern="yyyy-mm-dd") Date endDate,
                                                   @RequestParam(value = "persons") Integer persons,
                                                   @RequestParam(value = "distance") Long addressId,
                                                   @RequestParam(value = "accommodation_types", required=false) List<Long> accommodationTypeIds,

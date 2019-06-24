@@ -2,6 +2,7 @@
   position: absolute;
   left:0%;
   width: 30%;
+
 }
 
 .center{
@@ -12,6 +13,7 @@
 
 #search{
   background-color: #9ec3ff;
+  border-radius: 10px;
 }
 
 .myImage{

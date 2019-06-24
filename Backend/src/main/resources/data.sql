@@ -15,6 +15,11 @@ insert into accommodation_type(name,description) values ("Apartman", "Sa kuhinjo
 insert into accommodation_type(name,description) values ("Soba", "Bez kuhinje");
 insert into accommodation_type(name,description) values ("BedAndBreakfast", "Svedski sto");
 
+insert into extra_option (name,description,price) values ("Pranje nogu","Sa vrelom vodom",10.3);
+insert into extra_option (name,description,price) values ("Jagode sa slagom","Svako jutro",5.4);
+insert into extra_option (name,description,price) values ("Cupanje obrva","Sa koncem",2.3);
+
+
 insert into unit(adults,beds,size,smoking,accommodation_type_id,object_id) values (4,3,30,b'0',1,1);
 insert into unit(adults,beds,size,smoking,accommodation_type_id,object_id) values (5,5,60,b'0',2,1);
 insert into unit(adults,beds,size,smoking,accommodation_type_id,object_id) values (4,4,40,b'0',1,2);

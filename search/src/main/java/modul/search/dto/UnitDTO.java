@@ -2,6 +2,7 @@ package modul.search.dto;
 
 
 
+import modul.search.model.AccommodationType;
 import modul.search.model.Object;
 import modul.search.model.Unit;
 
@@ -17,8 +18,9 @@ public class UnitDTO {
     private BigDecimal size;
     private Boolean smoking;
     private ObjectDTO object;
+    private AccommodationTypeDTO accommodationType;
 
-    public UnitDTO(Long id, BigInteger adults, Integer children, BigInteger beds, BigDecimal size, Boolean smoking, Object object){
+    public UnitDTO(Long id, BigInteger adults, Integer children, BigInteger beds, BigDecimal size, Boolean smoking, Object object, AccommodationType accommodationType){
         this.setId(id);
         this.setAdults(adults);
         this.setChildren(children);
@@ -26,10 +28,11 @@ public class UnitDTO {
         this.setSize(size);
         this.setSmoking(smoking);
         this.setObject(new ObjectDTO(object));
+        this.setAccommodationType(new AccommodationTypeDTO(accommodationType));
     }
 
     public UnitDTO(Unit unit){
-        this(unit.getId(),unit.getAdults(),unit.getChildren(),unit.getBeds(),unit.getSize(),unit.isSmoking(),unit.getObject());
+        this(unit.getId(),unit.getAdults(),unit.getChildren(),unit.getBeds(),unit.getSize(),unit.isSmoking(),unit.getObject(),unit.getAccommodationType());
     }
 
     public Long getId() {
@@ -86,5 +89,13 @@ public class UnitDTO {
 
     public void setObject(ObjectDTO object) {
         this.object = object;
+    }
+
+    public AccommodationTypeDTO getAccommodationType() {
+        return accommodationType;
+    }
+
+    public void setAccommodationType(AccommodationTypeDTO accommodationType) {
+        this.accommodationType = accommodationType;
     }
 }
