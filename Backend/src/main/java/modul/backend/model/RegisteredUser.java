@@ -1,13 +1,20 @@
 
 package modul.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
@@ -39,19 +46,36 @@ import javax.xml.bind.annotation.XmlType;
     "message",
     "rating"
 })
+@Entity
+@Table
 @XmlRootElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user")
 public class RegisteredUser
     extends User
 {
 
     @XmlElement(name = "Comment", namespace = "http://megatravell.com/object")
+    @JsonIgnore
+    @OneToMany(mappedBy = "registeredUser")
     protected List<Comment> comment;
+    @JsonIgnore
+    @OneToMany(mappedBy = "registeredUser")
     @XmlElement(name = "Reservation", namespace = "http://megatravell.com/object")
     protected List<Reservation> reservation;
+    @JsonIgnore
+    @OneToMany(mappedBy = "registeredUser")
     @XmlElement(name = "Message", namespace = "http://www.megatravell.com/user")
     protected List<Message> message;
+    @JsonIgnore
+    @OneToMany(mappedBy = "registeredUser")
     @XmlElement(name = "Rating", namespace = "http://megatravell.com/object")
     protected List<Rating> rating;
+
+    public RegisteredUser() {
+    }
+
+    public RegisteredUser(String firstName, String lastName, String email, @Size(max = 15) String username, String password, Adress adress, boolean isEnabled, XMLGregorianCalendar lastPasswordResetDate, boolean isVerified, VerificationToken verificationToken, List<Role> role) {
+        super(firstName, lastName, email, username, password, adress, isEnabled, lastPasswordResetDate, isVerified, verificationToken, role);
+    }
 
     /**
      * Gets the value of the comment property.

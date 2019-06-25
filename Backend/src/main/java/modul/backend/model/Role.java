@@ -1,6 +1,10 @@
 
 package modul.backend.model;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthoritiesContainer;
+
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -33,13 +37,21 @@ import javax.xml.bind.annotation.XmlType;
     "id",
     "name"
 })
+@Entity
+@Table
 @XmlRootElement(name = "Role", namespace = "http://www.megatravell.com/user")
-public class Role {
+public class Role implements GrantedAuthority {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @XmlElement(namespace = "http://www.megatravell.com/user")
     protected long id;
+    @Column
     @XmlElement(namespace = "http://www.megatravell.com/user", required = true)
     protected String name;
+
+    public Role() {
+    }
 
     /**
      * Gets the value of the id property.
@@ -81,4 +93,9 @@ public class Role {
         this.name = value;
     }
 
+
+    @Override
+    public String getAuthority() {
+        return name;
+    }
 }

@@ -1,9 +1,12 @@
 
 package modul.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -49,27 +52,43 @@ import javax.xml.bind.annotation.XmlType;
     "object",
     "id"
 })
+@Entity
+@Table(name = "unit")
 @XmlRootElement(name = "Unit", namespace = "http://megatravell.com/object")
 public class Unit {
 
     @XmlElement(name = "Person", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "positiveInteger")
+    @Column
     protected BigInteger person;
+    @Column
     @XmlElement(name = "Beds", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger beds;
+    @OneToMany
     @XmlElement(name = "Price_schedule", namespace = "http://megatravell.com/object")
     protected List<PriceSchedule> priceSchedule;
+    @ManyToOne
     @XmlElement(name = "AccommodationType", namespace = "http://megatravell.com/object", required = true)
     protected AccommodationType accommodationType;
+    @OneToMany
     @XmlElement(name = "Image", namespace = "http://megatravell.com/object")
     protected List<Image> image;
+    @JsonIgnore
+    @OneToMany
     @XmlElement(name = "Reservation", namespace = "http://megatravell.com/object")
     protected List<Reservation> reservation;
+    @ManyToOne
     @XmlElement(name = "Object", namespace = "http://megatravell.com/object", required = true)
     protected Object object;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @XmlElement(namespace = "http://megatravell.com/object")
     protected long id;
+
+    public Unit() {
+    }
 
     /**
      * Gets the value of the person property.
