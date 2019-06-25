@@ -107,7 +107,20 @@ export class NewPlanComponent implements OnInit {
     console.log("uslo");
     this.plans.push(this.newPlanForm.value);
     console.log(this.plans);
-    this.newPlanForm.controls['from'].setValue(this.newPlanForm.value.to);
+    let pomD : Date=new Date(new Date(this.newPlanForm.value.to).getTime() + 24*60*60*1000);
+  //  pomD=this.newPlanForm.value.to;
+   // pomD=new Date(new Date(pomD).setDate(new Date(pomD).getDate()+1));
+    if(new Date(pomD).getMonth()<10 && new Date(pomD).getDate()>=10)
+      this.newPlanForm.controls['from'].setValue(new Date(pomD).getFullYear()+"-0"+ new Date(pomD).getMonth()+"-"+ new Date(pomD).getDate());
+    else if(new Date(pomD).getDate()<10 && new Date(pomD).getMonth()>=10)
+      this.newPlanForm.controls['from'].setValue(new Date(pomD).getFullYear()+"-"+ new Date(pomD).getMonth()+"-0"+ new Date(pomD).getDate());
+
+    else if(new Date(pomD).getMonth()<10 && new Date(pomD).getDate()<10 )
+      this.newPlanForm.controls['from'].setValue(new Date(pomD).getFullYear()+"-0"+ new Date(pomD).getMonth()+"-0"+ new Date(pomD).getDate());
+    else
+      this.newPlanForm.controls['from'].setValue(new Date(pomD).getFullYear()+"-"+ new Date(pomD).getMonth()+"-"+ new Date(pomD).getDate());
+
+
     this.readonlyP=false;
   }
 

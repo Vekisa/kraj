@@ -13,12 +13,30 @@ export class ReservationService {
 
   constructor(private http: HttpClient) { }
 
-  checkReservation(reservation: Reservation): Observable<boolean>{
-    return this.http.put<boolean>(this.reservationURL + "/checkReservation", reservation);
+  checkReservation(reservation: Reservation): Observable<number>{
+    return this.http.put<number>(this.reservationURL + "/checkReservationAndCal", reservation);
   }
 
   createReservation(reservation: Reservation): Observable<JwtResponse>{
     return this.http.post<JwtResponse>(this.reservationURL+"/create", reservation).pipe(catchError(err => {
+      return throwError(err);
+    }));
+  }
+
+  updateReservation(reservation: Reservation): Observable<JwtResponse>{
+    return this.http.put<JwtResponse>(this.reservationURL+"/update", reservation).pipe(catchError(err => {
+      return throwError(err);
+    }));
+  }
+
+  getReservations(): Observable<any>{
+    return this.http.get<any>(this.reservationURL+"/getAll").pipe(catchError(err => {
+      return throwError(err);
+    }));
+  }
+
+  cancelReservations(reservation: number): Observable<JwtResponse>{
+    return this.http.delete<JwtResponse>(this.reservationURL+"/cancel/"+reservation).pipe(catchError(err => {
       return throwError(err);
     }));
   }

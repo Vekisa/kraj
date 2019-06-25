@@ -11,6 +11,7 @@ import {HomeComponent} from "./home/home.component";
 import {LoginComponent} from "./login/login.component";
 import {InboxComponent} from "./inbox/inbox.component";
 import {MessageComponent} from "./message/message.component";
+import {ReservationComponent} from "./reservation/reservation.component";
 
 const routes: Routes = [
   {
@@ -50,6 +51,10 @@ const routes: Routes = [
       {
         path:'readMessages/:id',
         component: MessageComponent
+      },
+      {
+        path:'reservations',
+        component: ReservationComponent
       }
     ]
   },

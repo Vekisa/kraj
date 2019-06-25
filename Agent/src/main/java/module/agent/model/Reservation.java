@@ -3,6 +3,7 @@ package module.agent.model;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import module.agent.model.Users.RegisteredUser;
 
 import javax.persistence.*;
@@ -84,6 +85,7 @@ public class Reservation {
     @ManyToOne
     protected Unit unit;
     @XmlElement(name = "Includes", namespace = "http://megatravell.com/object")
+    @JsonIgnore
     @OneToMany(mappedBy = "reservation")
     protected List<Includes> includes;
     @XmlElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user", required = true)

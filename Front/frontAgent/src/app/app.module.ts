@@ -19,6 +19,7 @@ import { HomeComponent } from './home/home.component';
 import { FunctionNavigationComponent } from './function-navigation/function-navigation.component';
 import { InboxComponent } from './inbox/inbox.component';
 import { MessageComponent } from './message/message.component';
+import { ReservationComponent } from './reservation/reservation.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { MessageComponent } from './message/message.component';
     HomeComponent,
     FunctionNavigationComponent,
     InboxComponent,
-    MessageComponent
+    MessageComponent,
+    ReservationComponent
   ],
   imports: [
     BrowserModule,

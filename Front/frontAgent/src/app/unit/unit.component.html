@@ -13,7 +13,7 @@
   </thead >
   <tbody align="center" >
   <tr *ngFor="let unit of units; let i = index " >
-    <td ><img *ngIf="unit.image[0]!=undifinded" src="data:image/png;base64,{{unit.image[0].source}}" alt="{{i}}" style="width: 200px; height: 200px"/></td>
+    <td ><img *ngIf="unit.image[0]!=undefined" src="data:image/png;base64,{{unit.image[0].source}}" alt="{{i}}" style="width: 200px; height: 200px"/></td>
     <td style="vertical-align: middle">{{unit.adults}}</td>
     <td style="vertical-align: middle">{{unit.children}}</td>
     <td style="vertical-align: middle">{{unit.beds}}</td>

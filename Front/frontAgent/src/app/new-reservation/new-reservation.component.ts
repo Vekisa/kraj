@@ -15,11 +15,11 @@ export class NewReservationComponent implements OnInit {
   newReservationForm: FormGroup;
   priceUk: number;
   reservation: Reservation;
-  free: boolean;
+  price: number;
   constructor(private formBuilder: FormBuilder, private unitService: UnitService, private activatedRoute: ActivatedRoute, private reservationService: ReservationService) { }
 
   ngOnInit() {
-    this.free=false;
+    this.price=-1;
     this.newReservationForm=this.formBuilder.group({
       start: [''],
       end:['']
@@ -38,11 +38,11 @@ export class NewReservationComponent implements OnInit {
     this.reservation.start=this.newReservationForm.value.start;
     this.reservation.end=this.newReservationForm.value.end;
     this.reservationService.checkReservation(this.reservation).subscribe(data=>
-    { this.free=data;
+    { this.price=data;
     console.log(data)})
   }
 
-  calPrice(){
+  /*calPrice(){
     let pS=this.unit.priceSchedule;
     for(let i=0; i<pS.length; i++){
       if(new Date(pS[i].plan[0].from).getTime()<=new Date(this.newReservationForm.value.start).getTime() && new Date(pS[i].plan[pS[i].plan.length-1].to).getTime()>= new Date(this.newReservationForm.value.end).getTime()){
@@ -57,12 +57,13 @@ export class NewReservationComponent implements OnInit {
         }
       }
     }
-  }
+  }*/
 
   createReservation(){
-    this.reservation.price=this.calPrice();
+    this.reservation.price=this.price;
     console.log("saljem ");
     console.log(this.reservation);
+    this.reservation.possibleCancellationDate=new Date(new Date(this.reservation.start).getTime()- this.reservation.unit.object.cancellation*(1000*60*60*24.0) );
     this.reservationService.createReservation(this.reservation).subscribe(data=>
     console.log(data))
   }

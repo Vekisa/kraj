@@ -1,0 +1,25 @@
+<table class="table table-bordered mb-0 table-hover" >
+  <thead align="center" >
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Start</th>
+    <th scope="col">End</th>
+    <th scope="col">Price</th>
+    <th scope="col">Days to cancel</th>
+    <th scope="col">Confirmed</th>
+  </tr>
+  </thead >
+  <tbody>
+  <tr *ngFor="let res of reservations; let i =index">
+    <td>{{i}}</td>
+    <td>{{getDate(res.start)}}</td>
+    <td>{{getDate(res.end)}}</td>
+    <td>{{res.price}}</td>
+    <td>{{calDateC(res.possibleCancellationDate)}}</td>
+    <td *ngIf="res.confirmed==true">Confirmed</td>
+    <td *ngIf="res.confirmed==false"><button (click)="confirm(i)">Confirme</button></td>
+    <td *ngIf="calDateC(res.possibleCancellationDate)>0"><button (click)="cancelR(i)" >Cancel reservation</button></td>
+  </tr>
+  </tbody>
+
+</table>

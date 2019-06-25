@@ -11,11 +11,11 @@
            required >
   </div>
   <button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="checkReservation()"> Check</button>
-  <div *ngIf="free">Unit is free</div>
-  <div *ngIf="free==false">Unit is reserved</div>
-  <div *ngIf="free">{{calPrice()}}</div>
+  <div *ngIf="price>0">Unit is free</div>
+  <div *ngIf="price==0">Unit is reserved</div>
+  <div *ngIf="price>0">Price:{{price}}</div>
 </form>
-<button *ngIf="free" (click)="createReservation()">Create reservation</button>
+<button *ngIf="price>0" (click)="createReservation()">Create reservation</button>
 
 <div *ngFor="let img of unit.image">
   <img src="data:image/png;base64,{{img.source}}" style="width: 30%; height: 30%">

@@ -66,7 +66,7 @@ export class UnitComponent implements OnInit {
   makeRes(i: number){
     let un: Unit;
     un= this.units[i];
-    this.router.navigateByUrl('/home/createReservation/' + i);
+    this.router.navigateByUrl('/home/createReservation/' + un.id);
   }
 
 

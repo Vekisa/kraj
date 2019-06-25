@@ -1,6 +1,9 @@
 package modul.reservation.service;
 
+import modul.reservation.model.Plan;
+import modul.reservation.model.PriceSchedule;
 import modul.reservation.model.Reservation;
+import modul.reservation.model.Unit;
 import modul.reservation.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,10 +27,13 @@ public class ReservationService {
     }
 
     //proveriti da li brise i iz liste korisnika...
-    public void delete(Reservation reservation){
-
+    public void delete(Long id){
+        System.out.println("brisanje   " + id);
+        Reservation reservation= reservationRepository.findById(id).get();
+        System.out.println(reservation.getPossibleCancellationDate());
         if(reservation.getPossibleCancellationDate().before(new Date())){
             System.out.println("Datum sada " + new Date() + "  datum za otkaz " + reservation.getPossibleCancellationDate());
+
             reservationRepository.delete(reservation);
 
         }
@@ -38,7 +44,7 @@ public class ReservationService {
         return reservationRepository.findById(id);
     }
 
-    public void update(Reservation reservation, Long id){
+    public Reservation update(Reservation reservation, Long id){
         Optional<Reservation> pom= findByID(id);
         if(pom.isPresent()){
             pom.get().setEnd(reservation.getEnd());
@@ -48,7 +54,10 @@ public class ReservationService {
             pom.get().setRegisteredUser(reservation.getRegisteredUser());
             pom.get().setStart(reservation.getStart());
             pom.get().setUnit(reservation.getUnit());
+            reservationRepository.save(pom.get());
+            return pom.get();
         }
+        return null;
     }
 
     public List<Reservation> findByUnit(Long id){
@@ -78,4 +87,55 @@ public class ReservationService {
         return true;
     }
 
+    public double calculatePrice(Reservation reservation){
+        Unit u=reservation.getUnit();
+        double price=0;
+        Date s=reservation.getStart();
+        for(PriceSchedule ps: u.getPriceSchedule()){
+            for(Plan p: ps.getPlan()){
+                if(p.getFrom().before(reservation.getStart()) && p.getTo().after(reservation.getStart())){
+                    while(s.before(p.getTo())){
+                        if(p.isPerPerson()){
+                            price+=u.getAdults().doubleValue()*p.getPrice();
+                        }else
+                            price+=p.getPrice();
+                        s=new Date(s.getTime() + (1000 * 60 * 60 * 24));
+                        if(s.equals(reservation.getEnd()))
+                            return price;
+                    }
+                } else if(p.getFrom().after(reservation.getStart()) && p.getTo().before(reservation.getEnd())){
+                    while(s.before(p.getTo())){
+                        if(p.isPerPerson()){
+                            price+=u.getAdults().doubleValue()*p.getPrice();
+                        }else
+                            price+=p.getPrice();
+                        s=new Date(s.getTime() + (1000 * 60 * 60 * 24));
+                        if(s.equals(reservation.getEnd()))
+                            return price;
+                    }
+                }else if(p.getFrom().after(reservation.getStart()) && p.getTo().after(reservation.getEnd())){
+                    while(s.before(p.getTo())){
+                        if(p.isPerPerson()){
+                            price+=u.getAdults().doubleValue()*p.getPrice();
+                        }else
+                            price+=p.getPrice();
+                        s=new Date(s.getTime() + (1000 * 60 * 60 * 24));
+                        if(s.equals(reservation.getEnd()))
+                            return price;
+                    }
+                }else if(p.getFrom().before(reservation.getStart()) && p.getTo().after(reservation.getEnd())){
+                    while(s.before(p.getTo())){
+                        if(p.isPerPerson()){
+                            price+=u.getAdults().doubleValue()*p.getPrice();
+                        }else
+                            price+=p.getPrice();
+                        s=new Date(s.getTime() + (1000 * 60 * 60 * 24));
+                        if(s.equals(reservation.getEnd()))
+                            return price;
+                    }
+                }
+            }
+        }
+        return  0;
+    }
 }

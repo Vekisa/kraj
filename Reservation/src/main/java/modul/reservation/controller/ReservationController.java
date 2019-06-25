@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/reservation")
 public class ReservationController {
@@ -41,7 +40,7 @@ public class ReservationController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<List<Reservation>> getReservations(){
-        return new ResponseEntity<List<Reservation>>(reservationService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(reservationService.findAll(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/checkReservation", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -55,14 +54,39 @@ public class ReservationController {
         return new ResponseEntity<>(reservationService.checkReservation(reservation), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/cancel", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/checkReservationAndCal", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Provera da li je jedinica rezervisana i racuna cenu", httpMethod = "PUT", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Reservation.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<Double> reservationsAndCal(@RequestBody Reservation reservation){
+        if(reservationService.checkReservation(reservation)){
+            return new ResponseEntity<>(reservationService.calculatePrice(reservation), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new Double(0), HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Update rezervacije", httpMethod = "PUT", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Reservation.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<Reservation> updateReservation(@RequestBody Reservation reservation){
+        return new ResponseEntity<Reservation>(reservationService.update(reservation, reservation.getId()), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/cancel/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Otkaz rezervacije", httpMethod = "DELETE", produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Reservation.class),
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity cancelReservation(@RequestBody Reservation reservation){
+    public ResponseEntity cancelReservation(@PathVariable Long reservation){
         reservationService.delete(reservation);
         return new ResponseEntity<>( HttpStatus.OK);
     }
