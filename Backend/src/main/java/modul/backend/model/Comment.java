@@ -1,6 +1,7 @@
 
 package modul.backend.model;
 
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -8,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.Date;
 
 
 /**
@@ -50,22 +52,32 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "id"
 })
 @XmlRootElement(name = "Comment", namespace = "http://megatravell.com/object")
+@Entity
+@Table
 public class Comment {
 
     @XmlElement(name = "Text", namespace = "http://megatravell.com/object", required = true)
+    @Column
     protected String text;
     @XmlElement(name = "DateOfPublication", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "dateTime")
-    protected XMLGregorianCalendar dateOfPublication;
+    @Column
+    protected Date dateOfPublication;
     @XmlElement(namespace = "http://megatravell.com/object", defaultValue = "false")
+    @Column
     protected boolean approved;
     @XmlElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user", required = true)
+    @ManyToOne
     protected RegisteredUser registeredUser;
     @XmlElement(name = "Unit", namespace = "http://megatravell.com/object", required = true)
+    @ManyToOne
     protected Unit unit;
     @XmlElement(namespace = "http://megatravell.com/object")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected long id;
 
+    public Comment(){}
     /**
      * Gets the value of the text property.
      * 
@@ -98,7 +110,7 @@ public class Comment {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public XMLGregorianCalendar getDateOfPublication() {
+    public Date getDateOfPublication() {
         return dateOfPublication;
     }
 
@@ -110,7 +122,7 @@ public class Comment {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setDateOfPublication(XMLGregorianCalendar value) {
+    public void setDateOfPublication(Date value) {
         this.dateOfPublication = value;
     }
 

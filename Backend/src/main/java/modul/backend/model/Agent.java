@@ -1,13 +1,15 @@
 
 package modul.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
 
 /**
@@ -42,15 +44,21 @@ import javax.xml.bind.annotation.XmlType;
     "message"
 })
 @XmlRootElement(name = "Agent", namespace = "http://www.megatravell.com/user")
+@Entity
+@Table
 public class Agent
     extends User
 {
 
     @XmlElement(name = "BussinesRegistrationNumber", namespace = "http://www.megatravell.com/user", required = true)
+    @Column
     protected String bussinesRegistrationNumber;
     @XmlElement(name = "Message", namespace = "http://www.megatravell.com/user")
+    @JsonIgnore
+    @OneToMany(mappedBy = "agent")
     protected List<Message> message;
 
+    public Agent(){}
     /**
      * Gets the value of the bussinesRegistrationNumber property.
      * 

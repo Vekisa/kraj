@@ -1,4 +1,4 @@
-insert into object_type(description,name) values ("Vila","Poveca kuca cesto na obali mora");
+/*insert into object_type(description,name) values ("Vila","Poveca kuca cesto na obali mora");
 insert into object_type(description,name) values ("Hotel","Mnogo dobra stvaar");
 insert into object_type(description,name) values ("Motel","Malo losije od hotelaa");
 insert into object_type(description,name) values ("Hostel","Uglaavnom je nekkaa babaa gaaazdddaricaaa");
@@ -26,4 +26,4 @@ insert into unit(adults,beds,size,smoking,accommodation_type_id,object_id) value
 
 insert into role(name) values ("ROLE_ADMIN");
 insert into role(name) values ("ROLE_REG");
-insert into role(name) values ("ROLE_AGENT");
+insert into role(name) values ("ROLE_AGENT");*/

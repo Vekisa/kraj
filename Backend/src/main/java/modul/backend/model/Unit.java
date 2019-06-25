@@ -3,16 +3,11 @@ package modul.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.*;
+import javax.xml.bind.annotation.*;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
 
 
 /**
@@ -78,8 +73,9 @@ public class Unit {
     @OneToMany
     @XmlElement(name = "Reservation", namespace = "http://megatravell.com/object")
     protected List<Reservation> reservation;
-    @ManyToOne
+
     @XmlElement(name = "Object", namespace = "http://megatravell.com/object", required = true)
+    @ManyToOne
     protected Object object;
 
     @Id

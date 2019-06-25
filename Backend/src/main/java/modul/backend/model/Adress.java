@@ -1,6 +1,7 @@
 
 package modul.backend.model;
 
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -52,25 +53,38 @@ import javax.xml.bind.annotation.XmlType;
     "id"
 })
 @XmlRootElement(name = "Adress", namespace = "http://www.megatravell.com/address")
+@Entity
+@Table
 public class Adress {
 
     @XmlElement(name = "State", namespace = "http://www.megatravell.com/address", required = true)
+    @Column
     protected String state;
     @XmlElement(name = "City", namespace = "http://www.megatravell.com/address", required = true)
+    @Column
     protected String city;
     @XmlElement(name = "Street", namespace = "http://www.megatravell.com/address", required = true)
+    @Column
     protected String street;
     @XmlElement(name = "Number", namespace = "http://www.megatravell.com/address")
+    @Column
     protected int number;
     @XmlElement(name = "ZIP", namespace = "http://www.megatravell.com/address", required = true, defaultValue = "0")
+    @Column
     protected String zip;
     @XmlElement(name = "Longitude", namespace = "http://www.megatravell.com/address")
+    @Column
     protected double longitude;
     @XmlElement(name = "Latitude", namespace = "http://www.megatravell.com/address")
+    @Column
     protected double latitude;
     @XmlElement(namespace = "http://www.megatravell.com/address")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected long id;
 
+
+    public Adress(){}
     /**
      * Gets the value of the state property.
      * 

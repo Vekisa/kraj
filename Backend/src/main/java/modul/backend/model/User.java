@@ -5,18 +5,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -123,7 +119,7 @@ public abstract class User implements UserDetails {
     @Column
     @XmlElement(name = "Password", namespace = "http://www.megatravell.com/user", required = true)
     protected String password;
-    @Column
+    @ManyToOne
     @XmlElement(name = "Adress", namespace = "http://www.megatravell.com/address", required = true)
     protected Adress adress;
     @JsonIgnore
@@ -133,14 +129,13 @@ public abstract class User implements UserDetails {
     @Column
     @XmlElement(namespace = "http://www.megatravell.com/user", required = true)
     @XmlSchemaType(name = "date")
-    protected XMLGregorianCalendar lastPasswordResetDate;
+    protected Date lastPasswordResetDate;
     @JsonIgnore
     @Column
     @XmlElement(namespace = "http://www.megatravell.com/user")
     protected boolean isVerified;
     @JsonIgnore
     @OneToOne
-    @Column
     @XmlElement(name = "VerificationToken", namespace = "http://www.megatravell.com/user", required = true)
     protected VerificationToken verificationToken;
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
@@ -374,7 +369,7 @@ public abstract class User implements UserDetails {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public XMLGregorianCalendar getLastPasswordResetDate() {
+    public Date getLastPasswordResetDate() {
         return lastPasswordResetDate;
     }
 
@@ -386,7 +381,7 @@ public abstract class User implements UserDetails {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setLastPasswordResetDate(XMLGregorianCalendar value) {
+    public void setLastPasswordResetDate(Date value) {
         this.lastPasswordResetDate = value;
     }
 

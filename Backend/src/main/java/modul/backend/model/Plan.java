@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.Date;
 
 
 /**
@@ -57,11 +58,11 @@ public class Plan {
     @Column
     @XmlElement(name = "FromDate", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
-    protected XMLGregorianCalendar fromDate;
+    protected Date fromDate;
     @Column
     @XmlElement(name = "ToDate", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
-    protected XMLGregorianCalendar toDate;
+    protected Date toDate;
     @Column
     @XmlElement(name = "Price", namespace = "http://megatravell.com/object")
     protected double price;
@@ -84,7 +85,7 @@ public class Plan {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public XMLGregorianCalendar getFromDate() {
+    public Date getFromDate() {
         return fromDate;
     }
 
@@ -96,7 +97,7 @@ public class Plan {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setFromDate(XMLGregorianCalendar value) {
+    public void setFromDate(Date value) {
         this.fromDate = value;
     }
 
@@ -108,7 +109,7 @@ public class Plan {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public XMLGregorianCalendar getToDate() {
+    public Date getToDate() {
         return toDate;
     }
 
@@ -120,7 +121,7 @@ public class Plan {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setToDate(XMLGregorianCalendar value) {
+    public void setToDate(Date value) {
         this.toDate = value;
     }
 

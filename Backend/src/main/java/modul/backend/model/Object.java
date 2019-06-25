@@ -1,13 +1,10 @@
 
 package modul.backend.model;
 
+import javax.persistence.*;
+import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
 
 /**
@@ -63,7 +60,6 @@ import javax.xml.bind.annotation.XmlType;
     "description",
     "category",
     "adress",
-    "comment",
     "extraOption",
     "unit",
     "rating",
@@ -71,29 +67,43 @@ import javax.xml.bind.annotation.XmlType;
     "id"
 })
 @XmlRootElement(name = "Object", namespace = "http://megatravell.com/object")
+@Entity
+@Table
 public class Object {
 
     @XmlElement(name = "Name", namespace = "http://megatravell.com/object", required = true)
+    @Column
     protected String name;
     @XmlElement(name = "Description", namespace = "http://megatravell.com/object", required = true)
+    @Column
     protected String description;
     @XmlElement(name = "Category", namespace = "http://megatravell.com/object")
+    @Column
     protected int category;
     @XmlElement(name = "Adress", namespace = "http://www.megatravell.com/address", required = true)
+    @ManyToOne
     protected Adress adress;
-    @XmlElement(name = "Comment", namespace = "http://megatravell.com/object")
-    protected List<Comment> comment;
+    //@XmlElement(name = "Comment", namespace = "http://megatravell.com/object")
+   // @OneToMany(mappedBy = "object")
+  //  protected List<Comment> comment;
     @XmlElement(name = "ExtraOption", namespace = "http://megatravell.com/object")
+    @OneToMany
     protected List<ExtraOption> extraOption;
     @XmlElement(name = "Unit", namespace = "http://megatravell.com/object")
+    @OneToMany(mappedBy = "object")
     protected List<Unit> unit;
     @XmlElement(name = "Rating", namespace = "http://megatravell.com/object")
+    @OneToMany(mappedBy = "object")
     protected List<Rating> rating;
     @XmlElement(name = "ObjectType", namespace = "http://megatravell.com/object", required = true)
+    @ManyToOne
     protected ObjectType objectType;
     @XmlElement(namespace = "http://megatravell.com/object")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected long id;
 
+    public Object(){}
     /**
      * Gets the value of the name property.
      * 
@@ -204,13 +214,13 @@ public class Object {
      * 
      * 
      */
-    public List<Comment> getComment() {
+ /*   public List<Comment> getComment() {
         if (comment == null) {
             comment = new ArrayList<Comment>();
         }
         return this.comment;
     }
-
+*/
     /**
      * Gets the value of the extraOption property.
      * 

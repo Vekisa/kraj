@@ -2,6 +2,7 @@
 package modul.backend.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -48,7 +49,7 @@ public class PriceSchedule {
     @Column
     @XmlElement(name = "Made", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
-    protected XMLGregorianCalendar made;
+    protected Date made;
     @OneToMany
     @XmlElement(name = "Plan", namespace = "http://megatravell.com/object")
     protected List<Plan> plan;
@@ -68,7 +69,7 @@ public class PriceSchedule {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public XMLGregorianCalendar getMade() {
+    public Date getMade() {
         return made;
     }
 
@@ -80,7 +81,7 @@ public class PriceSchedule {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setMade(XMLGregorianCalendar value) {
+    public void setMade(Date value) {
         this.made = value;
     }
 

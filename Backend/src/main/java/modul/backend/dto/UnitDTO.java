@@ -3,31 +3,24 @@ package modul.backend.dto;
 import modul.backend.model.Object;
 import modul.backend.model.Unit;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 
 public class UnitDTO {
 
     private Long id;
     private BigInteger adults;
-    private Integer children;
     private BigInteger beds;
-    private BigDecimal size;
-    private Boolean smoking;
     private ObjectDTO object;
 
-    public UnitDTO(Long id, BigInteger adults, Integer children, BigInteger beds, BigDecimal size, Boolean smoking, Object object){
+    public UnitDTO(Long id, BigInteger adults,BigInteger beds,  Object object){
         this.setId(id);
         this.setAdults(adults);
-        this.setChildren(children);
         this.setBeds(beds);
-        this.setSize(size);
-        this.setSmoking(smoking);
         this.setObject(new ObjectDTO(object));
     }
 
     public UnitDTO(Unit unit){
-        this(unit.getId(),unit.getAdults(),unit.getChildren(),unit.getBeds(),unit.getSize(),unit.isSmoking(),unit.getObject());
+        this(unit.getId(),unit.getPerson(),unit.getBeds(),unit.getObject());
     }
 
     public Long getId() {
@@ -46,14 +39,6 @@ public class UnitDTO {
         this.adults = adults;
     }
 
-    public Integer getChildren() {
-        return children;
-    }
-
-    public void setChildren(Integer children) {
-        this.children = children;
-    }
-
     public BigInteger getBeds() {
         return beds;
     }
@@ -62,21 +47,6 @@ public class UnitDTO {
         this.beds = beds;
     }
 
-    public BigDecimal getSize() {
-        return size;
-    }
-
-    public void setSize(BigDecimal size) {
-        this.size = size;
-    }
-
-    public Boolean getSmoking() {
-        return smoking;
-    }
-
-    public void setSmoking(Boolean smoking) {
-        this.smoking = smoking;
-    }
 
     public ObjectDTO getObject() {
         return object;

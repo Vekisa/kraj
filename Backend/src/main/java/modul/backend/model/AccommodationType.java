@@ -1,6 +1,7 @@
 
 package modul.backend.model;
 
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -49,15 +50,23 @@ import javax.xml.bind.annotation.XmlType;
     "id"
 })
 @XmlRootElement(name = "AccommodationType", namespace = "http://megatravell.com/object")
+@Entity
+@Table
 public class AccommodationType {
 
     @XmlElement(name = "Name", namespace = "http://megatravell.com/object", required = true)
+    @Column
     protected String name;
     @XmlElement(name = "Description", namespace = "http://megatravell.com/object", required = true)
+    @Column
     protected String description;
+
     @XmlElement(namespace = "http://megatravell.com/object")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected long id;
 
+    public AccommodationType(){}
     /**
      * Gets the value of the name property.
      * 
