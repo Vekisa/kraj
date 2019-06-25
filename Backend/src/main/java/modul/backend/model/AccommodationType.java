@@ -1,15 +1,18 @@
 
 package modul.backend.model;
 
-import javax.persistence.*;
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 
 /**
  * <p>Java class for anonymous complex type.
- *
+ * 
  * <p>The following schema fragment specifies the expected content contained within this class.
- *
+ * 
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -30,47 +33,38 @@ import javax.xml.bind.annotation.*;
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-        "id",
-        "name",
-        "description"
+    "name",
+    "description",
+    "id"
 })
 @XmlRootElement(name = "AccommodationType", namespace = "http://megatravell.com/object")
-@Entity
-@Table(name = "accommodationType")
 public class AccommodationType {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @XmlElement(name="id",namespace = "http://megatravell.com/object", required = true)
-    private Long id;
-
     @XmlElement(name = "Name", namespace = "http://megatravell.com/object", required = true)
-    @Column
     protected String name;
     @XmlElement(name = "Description", namespace = "http://megatravell.com/object", required = true)
-    @Column
     protected String description;
-
-    public AccommodationType() {
-    }
-
-    public Long getId() {
-        return id;
-    }
+    @XmlElement(namespace = "http://megatravell.com/object")
+    protected long id;
 
     /**
      * Gets the value of the name property.
-     *
-     * @return possible object is
-     * {@link String }
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getName() {
         return name;
@@ -78,9 +72,11 @@ public class AccommodationType {
 
     /**
      * Sets the value of the name property.
-     *
-     * @param value allowed object is
-     *              {@link String }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setName(String value) {
         this.name = value;
@@ -88,9 +84,11 @@ public class AccommodationType {
 
     /**
      * Gets the value of the description property.
-     *
-     * @return possible object is
-     * {@link String }
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
     public String getDescription() {
         return description;
@@ -98,12 +96,30 @@ public class AccommodationType {
 
     /**
      * Sets the value of the description property.
-     *
-     * @param value allowed object is
-     *              {@link String }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
     public void setDescription(String value) {
         this.description = value;
+    }
+
+    /**
+     * Gets the value of the id property.
+     * 
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     */
+    public void setId(long value) {
+        this.id = value;
     }
 
 }

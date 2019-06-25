@@ -18,8 +18,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="source" type="{http://www.w3.org/2001/XMLSchema}base64Binary"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -30,38 +30,16 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "source",
-    "id"
+    "id",
+    "name"
 })
-@XmlRootElement(name = "Image", namespace = "http://megatravell.com/object")
-public class Image {
+@XmlRootElement(name = "Role", namespace = "http://www.megatravell.com/user")
+public class Role {
 
-    @XmlElement(namespace = "http://megatravell.com/object", required = true)
-    protected byte[] source;
-    @XmlElement(namespace = "http://megatravell.com/object")
+    @XmlElement(namespace = "http://www.megatravell.com/user")
     protected long id;
-
-    /**
-     * Gets the value of the source property.
-     * 
-     * @return
-     *     possible object is
-     *     byte[]
-     */
-    public byte[] getSource() {
-        return source;
-    }
-
-    /**
-     * Sets the value of the source property.
-     * 
-     * @param value
-     *     allowed object is
-     *     byte[]
-     */
-    public void setSource(byte[] value) {
-        this.source = value;
-    }
+    @XmlElement(namespace = "http://www.megatravell.com/user", required = true)
+    protected String name;
 
     /**
      * Gets the value of the id property.
@@ -77,6 +55,30 @@ public class Image {
      */
     public void setId(long value) {
         this.id = value;
+    }
+
+    /**
+     * Gets the value of the name property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Sets the value of the name property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setName(String value) {
+        this.name = value;
     }
 
 }
