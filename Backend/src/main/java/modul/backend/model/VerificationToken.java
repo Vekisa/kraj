@@ -1,6 +1,7 @@
 
 package modul.backend.model;
 
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -8,6 +9,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 
 /**
@@ -37,16 +42,50 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "verificationToken",
     "expiryDate"
 })
+@Entity
 @XmlRootElement(name = "VerificationToken", namespace = "http://www.megatravell.com/user")
 public class VerificationToken {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @XmlElement(namespace = "http://www.megatravell.com/user")
     protected long id;
+
+    @Column
     @XmlElement(namespace = "http://www.megatravell.com/user", required = true)
     protected String verificationToken;
+
+    @Column
     @XmlElement(namespace = "http://www.megatravell.com/user", required = true)
     @XmlSchemaType(name = "date")
     protected XMLGregorianCalendar expiryDate;
+
+    @OneToOne
+    private User user;
+
+    public VerificationToken() {
+    }
+
+    public VerificationToken(String verificationToken, XMLGregorianCalendar expiryDate, User user) {
+        this.verificationToken = verificationToken;
+        this.expiryDate = expiryDate;
+        this.user = user;
+    }
+
+
+    private Date expirationTime(int minutes) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Timestamp(cal.getTime().getTime()));
+        cal.add(Calendar.MINUTE, minutes);
+        return new Date(cal.getTime().getTime());
+    }
+
+    public VerificationToken(String token, User user) {
+        this.user = user;
+        verificationToken = token;
+
+    }
+
 
     /**
      * Gets the value of the id property.
