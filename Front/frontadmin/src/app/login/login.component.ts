@@ -29,6 +29,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
+    if(!this.authService.isValid()){
+      console.log('Ulogovan ')
+      window.location.href='';
+    }
+
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_ ]*')]],
       password: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_!?*#/]*')]]

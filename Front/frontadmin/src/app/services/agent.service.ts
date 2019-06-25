@@ -13,10 +13,10 @@ export class AgentService {
   constructor(private http: HttpClient) { }
 
   allAgents(): Observable<any> {
-    return this.http.get<any>(this.baseUrl);
+    return this.http.get<any>(this.baseUrl+"/all");
   }
 
   createAgent(obj : Agent): Observable<any> {
-    return this.http.put<any>(this.baseUrl, obj);
+    return this.http.post<any>(this.baseUrl, obj);
   };
 }

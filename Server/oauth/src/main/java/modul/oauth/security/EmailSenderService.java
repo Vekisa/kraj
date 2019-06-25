@@ -1,6 +1,8 @@
 package modul.oauth.security;
 
+import modul.oauth.dto.AgentDTO;
 import modul.oauth.model.Users.User;
+import modul.oauth.model.Users.VerificationToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -32,6 +34,18 @@ public class EmailSenderService {
         mailMessage.setFrom("bezbednostprojekat@gmail.com");
         mailMessage.setText("To confirm your account, please click here : "
                 + "http://localhost:8762/uua/user/confirmToken?token=" + user.getVerificationToken().getVerificationToken());
+        this.sendEmail(mailMessage);
+    }
+
+    public void sendCompleteAgentRegistration(AgentDTO user, VerificationToken verificationToken) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(user.getEmail());
+        mailMessage.setSubject("Complete Registration!");
+        mailMessage.setFrom("bezbednostprojekat@gmail.com");
+        mailMessage.setText("Hello " + user.getUsername() + " Welcome to MegaTravel ," +
+                " To confirm your Agent account, please click here : " + "http://localhost:8762/uua/user/confirmToken?token=" + verificationToken.getVerificationToken() +
+        "Your temporary password :" +user.getPassword() );
+
         this.sendEmail(mailMessage);
     }
 

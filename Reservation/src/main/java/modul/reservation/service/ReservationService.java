@@ -1,6 +1,6 @@
 package modul.reservation.service;
 
-import modul.backend.model.Reservation;
+import modul.reservation.model.Reservation;
 import modul.reservation.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

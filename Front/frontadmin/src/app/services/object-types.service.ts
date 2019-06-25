@@ -17,7 +17,7 @@ export class ObjectTypesService {
   }
 
   createObjectType(obj : ObjectType): Observable<any> {
-    return this.http.put(this.baseUrl, obj);
+    return this.http.post(this.baseUrl, obj);
   };
 
   delete(id : number): Observable<void>{

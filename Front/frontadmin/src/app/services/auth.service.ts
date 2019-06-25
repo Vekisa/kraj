@@ -59,9 +59,10 @@ export class AuthService {
     return this.http.get(this.baseUrl+"uua/user/roles");
   }
 
-  isValid(){
+  isValid():boolean{
 
-    if(this.getToken()==null){
+    if(!this.getToken()){
+      console.log("Nema tokena")
       return false;
     }else{
       this.roles().subscribe(data=>{
@@ -71,6 +72,10 @@ export class AuthService {
       });
     }
 
+  }
+
+  logout(){
+    this.cookie.delete('access_token');
   }
 
 

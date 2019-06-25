@@ -16,11 +16,11 @@ export class CommentsService {
   }
 
   approve(id: number): Observable<any> {
-    return this.http.post<any>(this.baseUrl + "/approve/" + id, id);
+    return this.http.put<any>(this.baseUrl + "/approve/" + id, id);
   };
 
   forbid(id : number): Observable<any>{
     console.log("obr2");
-    return this.http.post<any>(this.baseUrl+"/forbid/"+id,id);
+    return this.http.put<any>(this.baseUrl+"/forbid/"+id,id);
   }
 }

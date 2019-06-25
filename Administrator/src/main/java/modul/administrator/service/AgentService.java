@@ -8,12 +8,19 @@ import modul.administrator.repository.AgentRepository;
 import modul.administrator.repository.RoleRepository;
 import modul.administrator.repository.VerificationTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
+import javax.xml.ws.Response;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 @Service
@@ -32,45 +39,60 @@ public class AgentService {
     @Autowired
     private EmailSenderService emailSenderService;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
     @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
     public List<AgentDTO> getAll(){
         return DTOList.agents(agentRepository.findAll());
     }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-    public AgentDTO addAgent(AgentDTO agentDTO){
-        Agent agent = new Agent();
-        agent.setFirstName(agentDTO.getFirstName());
-        agent.setLastName(agentDTO.getLastName());
-        agent.setEmail(agentDTO.getEmail());
-        agent.setBussinesRegistrationNumber(agentDTO.getBussinesRegistrationNumber());
-        agent.setEnabled(false);
-        agent.setVerified(false);
+    public String addAgent(AgentDTO agentDTO){
 
-        Role roleReg = roleRepository.findByName("ROLE_REG")
-                .orElseThrow(() -> new RuntimeException("Role can't be found!"));
+        agentDTO.setPassword(generatePassword(10));
 
-        Role roleAgent = roleRepository.findByName("ROLE_AGENT")
-                .orElseThrow(() -> new RuntimeException("Role can't be found!"));
+//        Role roleReg = roleRepository.findByName("ROLE_REG")
+//                .orElseThrow(() -> new RuntimeException("Role can't be found!"));
+//
+//        Role roleAgent = roleRepository.findByName("ROLE_AGENT")
+//                .orElseThrow(() -> new RuntimeException("Role can't be found!"));
+//
+//        ArrayList<Role> roles = new ArrayList<>();
+//
+//        roles.add(roleReg);
+//        roles.add(roleAgent);
+//
+//        agent.setRoles(roles);
+//
+//        agentRepository.save(agent);
+//
+//        String token = UUID.randomUUID().toString();
+//
+//        VerificationToken myToken = new VerificationToken(token, agent);
+//        agent.setVerificationToken(myToken);
+//        tokenRepository.save(myToken);
+//
+//        emailSenderService.sendCompleteRegistration(agent);
 
-        ArrayList<Role> roles = new ArrayList<>();
-        
-        roles.add(roleReg);
-        roles.add(roleAgent);
+        HttpEntity<AgentDTO> requestEntity = new HttpEntity<>(agentDTO);
 
-        agent.setRoles(roles);
+        ResponseEntity<String> exchange = restTemplate.exchange("http://oauth-service/user/saveAgent", HttpMethod.POST, requestEntity, String.class);
 
-        agentRepository.save(agent);
+        System.out.println(exchange.getBody());
 
-        String token = UUID.randomUUID().toString();
+        return exchange.getBody();
+    }
 
-        VerificationToken myToken = new VerificationToken(token, agent);
-        agent.setVerificationToken(myToken);
-        tokenRepository.save(myToken);
 
-        emailSenderService.sendCompleteRegistration(agent);
-
-        return new AgentDTO(agent);
+    public static String generatePassword(int length) {
+        Random RANDOM = new SecureRandom();
+        String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        StringBuilder returnValue = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            returnValue.append(ALPHABET.charAt(RANDOM.nextInt(ALPHABET.length())));
+        }
+        return new String(returnValue);
     }
 
 

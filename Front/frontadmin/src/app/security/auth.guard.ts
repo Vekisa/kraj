@@ -20,25 +20,24 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     let snapshot = this.route.snapshot;
 
-    var value = this.authService.isValid();
-    if (value != false ){
-
-      this.authService.roles().subscribe(data=>{
-
-        console.log();
-
-        if (data.authorities.indexOf("ROLE_ADMIN")!==-1) {
-          console.log("RIGHTS");
-
-            return true;
-        }
-
-      });
-
+    if (this.authService.isValid()){
+      console.log("NAVIGACIJA")
+      this.router.navigate(['sign_in']);
+      return false;
     }
 
-    this.router.navigate(['sign_in']);
-    return false;
+    this.authService.roles().subscribe(data=>{
+      console.log(data);
+
+      if (data.authorities.indexOf("ROLE_ADMIN")==-1) {
+        console.log("NO RIGHTS");
+
+        return false;
+      }
+
+    });
+
+    return true;
 
   }
   

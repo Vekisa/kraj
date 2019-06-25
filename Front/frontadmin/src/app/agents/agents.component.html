@@ -8,12 +8,16 @@
     <input type="text" class="form-control" id="lName" placeholder="Enter last name" [formControlName]="'lastName'">
   </div>
   <div class="form-group">
-    <label for="bussinesRegistrationNumber">Bussines Registration Number</label>
-    <input type="text" class="form-control" id="bussinesRegistrationNumber" placeholder="Enter bussines registration number" [formControlName]="'bussinesRegistrationNumber'">
+    <label for="bussinesRegistrationNumber">Business Registration Number</label>
+    <input type="text" class="form-control" id="bussinesRegistrationNumber" placeholder="Enter business registration number" [formControlName]="'bussinesRegistrationNumber'">
   </div>
   <div class="form-group">
     <label for="email">Email</label>
     <input type="email" class="form-control" id="email" placeholder="Enter Email" [formControlName]="'email'">
+  </div>
+  <div class="form-group">
+    <label for="email">Username</label>
+    <input type="email" class="form-control" id="username" placeholder="Enter username" [formControlName]="'username'">
   </div>
   <button type="submit" class="btn btn-primary">Add</button>
 </form>
@@ -25,7 +29,7 @@
       <th scope="col">#</th>
       <th scope="col">First Name</th>
       <th scope="col">Last Name</th>
-      <th scope="col">Bussines Registration Number</th>
+      <th scope="col">Business Registration Number</th>
       <th scope="col">Email</th>
     </tr>
     </thead>

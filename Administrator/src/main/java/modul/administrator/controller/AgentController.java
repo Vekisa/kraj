@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 
@@ -26,8 +27,9 @@ public class AgentController {
     }
 
     @RequestMapping( method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<AgentDTO> addAgent(@RequestBody AgentDTO agentDTO) {
+    public ResponseEntity<?> addAgent(Principal user,@RequestBody AgentDTO agentDTO) {
 
+        System.out.println(user);
         return new ResponseEntity<>(agentService.addAgent(agentDTO), HttpStatus.OK);
     }
 

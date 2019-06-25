@@ -1,5 +1,5 @@
 
-package modul.oauth.model;
+package modul.reservation.model;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;

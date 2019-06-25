@@ -14,7 +14,7 @@ import { HttpClientModule ,HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AuthInterceptor } from './interceptor/authinterceptor.interceptor'
 import { FormsModule, ReactiveFormsModule }         from '@angular/forms';
 import { LoginComponent } from './login/login.component';
-import { SignupComponent } from './signup/signup.component';
+
 import { HomeComponent } from './home/home.component';
 import {CookieService} from "ngx-cookie-service";
 
@@ -33,7 +33,6 @@ import { PanelComponent } from './panel/panel.component';
     UsersComponent,
     AgentsComponent,
     LoginComponent,
-    SignupComponent,
     HomeComponent,
     PanelComponent,
 

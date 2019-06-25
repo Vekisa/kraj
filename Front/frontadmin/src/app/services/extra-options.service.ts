@@ -17,7 +17,7 @@ export class ExtraOptionsService {
   }
 
   createExtraOption(obj : ExtraOption): Observable<any> {
-    return this.http.put<any>(this.baseUrl, obj);
+    return this.http.post<any>(this.baseUrl, obj);
   };
 
   delete(id : number): Observable<void>{

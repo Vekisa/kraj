@@ -1,10 +1,10 @@
 
-package modul.oauth.model.Users;
+package modul.reservation.model.Users;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import modul.oauth.model.Adress;
-import modul.oauth.model.Message;
-import modul.oauth.model.Adress;
+import modul.reservation.model.Adress;
+import modul.reservation.model.Message;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -60,7 +60,7 @@ public class Agent
     public Agent() {
     }
 
-    public Agent(String username, String firstName, String lastName, String email, String password, Adress adress, Boolean isEnabled, Boolean isVerified, List<Role> roles,String bussinesRegistrationNumber) {
+    public Agent(String username, String firstName, String lastName, String email, String password, Adress adress, Boolean isEnabled, Boolean isVerified, List<Role> roles, String bussinesRegistrationNumber) {
         super(username, firstName, lastName, email, password, adress, isEnabled, isVerified, roles);
         this.bussinesRegistrationNumber = bussinesRegistrationNumber;
     }

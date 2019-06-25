@@ -1,9 +1,7 @@
 package modul.oauth.controller;
 
-import modul.oauth.model.Users.Regex;
-import modul.oauth.model.Users.RegisteredUser;
-import modul.oauth.model.Users.User;
-import modul.oauth.model.Users.VerificationToken;
+import modul.oauth.dto.AgentDTO;
+import modul.oauth.model.Users.*;
 import modul.oauth.security.ResponseMessage;
 import modul.oauth.security.SignUpRequest;
 import modul.oauth.service.Logging;
@@ -32,6 +30,11 @@ public class UserController {
 
     @Autowired
     UserServiceImpl userService;
+
+    @RequestMapping(value = "/test", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getUserInfo(){
+        return new ResponseEntity<>("TESTTTTTT", HttpStatus.OK);
+    }
 
     @RequestMapping(value = "/roles", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> getUserInfo(OAuth2Authentication user){
@@ -72,6 +75,32 @@ public class UserController {
 
         return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.OK);
     }
+
+    @PostMapping("/saveAgent")
+    public ResponseEntity<?> saveAgent(@Valid @RequestBody AgentDTO agent, HttpServletRequest hr) {
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + agent.getUsername() + " IP ADDRESS: "
+                + hr.getRemoteAddr() + " PARAMETERS: " + agent.getEmail() + ", " + agent.getFirstName() + ", " + agent.getLastName() + ", " + agent.getEmail());
+        if (!Pattern.matches(Regex.flNames, agent.getFirstName()) || !Pattern.matches(Regex.flNames, agent.getLastName()) ||
+                !Pattern.matches(Regex.password, agent.getPassword()) || !Pattern.matches(Regex.email, agent.getEmail())) {
+            logging.printError("IN FUNC: Bad parameters");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad parameters");
+        }
+
+        if (userService.checkByUsername(agent.getUsername())) {
+            logging.printError("IN FUNC: Username is already taken");
+            return new ResponseEntity<>(new ResponseMessage("Username is already taken!"), HttpStatus.BAD_REQUEST);
+        }
+
+        if (userService.checkByEmail(agent.getEmail())) {
+            logging.printError("IN FUNC: Email is already in use");
+            return new ResponseEntity<>(new ResponseMessage("Email is already in use!"), HttpStatus.BAD_REQUEST);
+        }
+
+        userService.addAgent(agent);
+
+        return new ResponseEntity<>(new ResponseMessage("Agent registered successfully!"), HttpStatus.OK);
+    }
+
 
     @RequestMapping(value = "/confirmToken")
     public ResponseEntity<?> confirmReg(@RequestParam("token") String token, HttpServletRequest hr) {

@@ -22,15 +22,18 @@ export class AgentsComponent implements OnInit {
       lastName: [''],
       bussinesRegistrationNumber: [''],
       description: [''],
-      email: ['']
+      email: [''],
+      username: ['']
     });
 
     this.agentService.allAgents().subscribe(data => {
+      console.log(data)
       this.agents = data;
     });
   }
 
   onSubmit(){
+    console.log(this.agentForm.value);
     this.agentService.createAgent(this.agentForm.value).subscribe(data =>{
       this.agentService.allAgents().subscribe(data =>{
         this.agents = data;

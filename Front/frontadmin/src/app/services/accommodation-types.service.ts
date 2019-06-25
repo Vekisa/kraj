@@ -17,7 +17,7 @@ export class AccommodationTypesService {
   }
 
   createAccommodationType(obj : AccommodationType): Observable<any> {
-    return this.http.put<any>(this.baseUrl, obj);
+    return this.http.post<any>(this.baseUrl, obj);
   };
 
   remove(id : number): Observable<void>{

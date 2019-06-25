@@ -6,8 +6,6 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-
-@ComponentScan({"modul.backend", "modul.reservation"})
 @EnableEurekaClient
 @SpringBootApplication
 public class ReservationApplication {

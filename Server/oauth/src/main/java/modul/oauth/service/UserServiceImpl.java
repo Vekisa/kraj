@@ -1,10 +1,9 @@
 package modul.oauth.service;
 
 import com.sun.org.apache.regexp.internal.RE;
-import modul.oauth.model.Users.RegisteredUser;
-import modul.oauth.model.Users.Role;
-import modul.oauth.model.Users.User;
-import modul.oauth.model.Users.VerificationToken;
+import modul.oauth.dto.AgentDTO;
+import modul.oauth.model.Adress;
+import modul.oauth.model.Users.*;
 import modul.oauth.repository.RoleRepository;
 import modul.oauth.repository.UserRepository;
 import modul.oauth.repository.VerificationTokenRepository;
@@ -106,6 +105,36 @@ public class UserServiceImpl implements UserDetailsService {
 
         return registeredUser;
     }
+
+    public Agent addAgent(AgentDTO agentDto){
+
+        String passwordHash = "";
+
+        passwordHash = passwordEncoder.encode(agentDto.getPassword());
+
+        Role role_agent = roleRepository.findByName("ROLE_AGENT")
+                .orElseThrow(() -> new RuntimeException("Role can't be found!"));
+
+        Role role_reg = roleRepository.findByName("ROLE_REG")
+                .orElseThrow(() -> new RuntimeException("Role can't be found!"));
+
+        Agent agent = new Agent(agentDto.getUsername(),agentDto.getFirstName(),agentDto.getLastName(),
+                agentDto.getEmail(),passwordHash,null,false,false,new ArrayList<Role>(),agentDto.getBussinesRegistrationNumber());
+
+        agent.getRoles().add(role_agent);
+        agent.getRoles().add(role_reg);
+
+        String token = UUID.randomUUID().toString();
+        userRepository.save(agent);
+        createVerificationToken(agent, token);
+
+        emailSenderService.sendCompleteAgentRegistration(agentDto,agent.getVerificationToken());
+
+        logging.printInfo("Agent "+ agent.getUsername() +  " registered.");
+
+        return agent;
+    }
+
 
     public void createVerificationToken(User user, String token) {
         VerificationToken myToken = new VerificationToken(token, user);

@@ -8,7 +8,6 @@ import {UsersComponent} from "./users/users.component";
 import {AgentsComponent} from "./agents/agents.component";
 import {LoginComponent} from "./login/login.component";
 import {HomeComponent} from "./home/home.component";
-import {SignupComponent} from "./signup/signup.component";
 import {PanelComponent} from "./panel/panel.component";
 import {AuthGuard} from "./security/auth.guard";
 
@@ -57,10 +56,7 @@ const routes: Routes = [
     path: 'sign_in',
     component: LoginComponent
   },
-  {
-    path: 'sign_up',
-    component: SignupComponent
-  }
+
 ];
 
 @NgModule({

@@ -1,7 +1,8 @@
-package modul.administrator.dto;
+package modul.oauth.dto;
 
-import modul.administrator.model.Adress;
-import modul.administrator.model.Users.Agent;
+
+import modul.oauth.model.Adress;
+import modul.oauth.model.Users.Agent;
 
 public class AgentDTO {
 
@@ -17,7 +18,7 @@ public class AgentDTO {
     public AgentDTO() {
     }
 
-    public AgentDTO(Long id, String firstName, String lastName, String email,String username,Adress adress, String bussinesRegistrationNumber){
+    public AgentDTO(Long id, String firstName, String lastName, String email, String username, Adress adress, String bussinesRegistrationNumber){
         this.setId(id);
         this.setFirstName(firstName);
         this.setLastName(lastName);

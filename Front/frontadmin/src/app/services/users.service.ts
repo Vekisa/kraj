@@ -16,11 +16,11 @@ export class UsersService {
   }
 
   activate(id: number): Observable<any>{
-    return this.http.post(this.baseUrl + "/activate/" + id, id);
+    return this.http.put(this.baseUrl + "/activate/" + id, id);
   }
 
   deactivate(id: number): Observable<any>{
-    return this.http.post(this.baseUrl + "/deactivate/" + id, id);
+    return this.http.put(this.baseUrl + "/deactivate/" + id, id);
   }
 
   delete(id : number): Observable<void>{

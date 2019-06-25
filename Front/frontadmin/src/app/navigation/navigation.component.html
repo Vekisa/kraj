@@ -1,30 +1,49 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navigationBar">
+  <div class="container">
 
-  <div class="collapse navbar-collapse">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item" *ngIf="isLoggedIn">
-        <a class="nav-link" [href]="['panel']">Panel</a>
-      </li>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item" *ngIf="isLoggedIn">
+          <a class="nav-link" [href]="['panel']">Panel</a>
+        </li>
+      </ul>
+      <div *ngIf="!isLoggedIn">
+        <form class="form-inline my-2 my-lg-0">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" [href]="['sign_in']">Sign in</a>
+            </li>
 
-    </ul>
-    <div *ngIf="!isLoggedIn">
-      <form class="form-inline my-2 my-lg-0">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" [href]="['sign_in']">Sign in</a>
-          </li>
-        </ul>
-      </form>
-    </div>
+          </ul>
+        </form>
+      </div>
 
-    <div *ngIf="isLoggedIn">
-      <form class="form-inline my-2 my-lg-0">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="" (click)="logout()">Log out</a>
-          </li>
-        </ul>
-      </form>
+      <div *ngIf="isLoggedIn">
+        <form class="form-inline my-2 my-lg-0">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+
+              <div class="dropdown">
+                <a id="showUsername" class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+                   data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">{{username}}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" [href]="['profile']">Profile</a>
+                  <a class="dropdown-item" [href]="['reservations']">Reservations</a>
+                  <a class="dropdown-item" [href]="['friends']">Friends</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" [href]="['account']">Account</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" [href]="['']" (click)="logout()">Log out</a>
+                </div>
+              </div>
+
+            </li>
+
+          </ul>
+        </form>
+      </div>
     </div>
   </div>
 </nav>

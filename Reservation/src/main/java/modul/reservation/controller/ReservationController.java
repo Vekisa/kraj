@@ -3,7 +3,8 @@ package modul.reservation.controller;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import modul.backend.model.Reservation;
+
+import modul.reservation.model.Reservation;
 import modul.reservation.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
