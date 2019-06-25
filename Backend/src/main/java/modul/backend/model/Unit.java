@@ -67,7 +67,7 @@ public class Unit {
     @XmlElement(name = "Reservation", namespace = "http://megatravell.com/object")
     protected List<Reservation> reservation;
     @XmlElement(name = "Object", namespace = "http://megatravell.com/object", required = true)
-    protected java.lang.Object object;
+    protected Object object;
     @XmlElement(namespace = "http://megatravell.com/object")
     protected long id;
 
@@ -238,7 +238,7 @@ public class Unit {
      *     {@link Object }
      *     
      */
-    public java.lang.Object getObject() {
+    public Object getObject() {
         return object;
     }
 
@@ -250,7 +250,7 @@ public class Unit {
      *     {@link Object }
      *     
      */
-    public void setObject(java.lang.Object value) {
+    public void setObject(Object value) {
         this.object = value;
     }
 
