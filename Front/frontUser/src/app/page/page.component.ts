@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./page.component.css']
 })
 export class PageComponent implements OnInit {
-
+  title = 'MegaTravel';
   constructor() { }
 
   ngOnInit() {
