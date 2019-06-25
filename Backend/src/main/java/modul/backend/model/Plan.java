@@ -1,6 +1,7 @@
 
 package modul.backend.model;
 
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -47,21 +48,33 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "perPerson",
     "id"
 })
+
+@Entity
+@Table(name = "plan")
 @XmlRootElement(name = "Plan", namespace = "http://megatravell.com/object")
 public class Plan {
 
+    @Column
     @XmlElement(name = "FromDate", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
     protected XMLGregorianCalendar fromDate;
+    @Column
     @XmlElement(name = "ToDate", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
     protected XMLGregorianCalendar toDate;
+    @Column
     @XmlElement(name = "Price", namespace = "http://megatravell.com/object")
     protected double price;
+    @Column
     @XmlElement(name = "Per_person", namespace = "http://megatravell.com/object")
     protected boolean perPerson;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @XmlElement(namespace = "http://megatravell.com/object")
     protected long id;
+
+    public Plan() {
+    }
 
     /**
      * Gets the value of the fromDate property.

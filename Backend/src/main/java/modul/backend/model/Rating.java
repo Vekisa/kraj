@@ -1,6 +1,7 @@
 
 package modul.backend.model;
 
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -44,17 +45,28 @@ import javax.xml.bind.annotation.XmlType;
     "registeredUser",
     "id"
 })
+@Entity
+@Table(name = "rating")
 @XmlRootElement(name = "Rating", namespace = "http://megatravell.com/object")
 public class Rating {
 
+    @Column
     @XmlElement(namespace = "http://megatravell.com/object")
     protected int mark;
+    @ManyToOne
     @XmlElement(name = "Object", namespace = "http://megatravell.com/object", required = true)
-    protected java.lang.Object object;
+    protected Object object;
+    @ManyToOne
     @XmlElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user", required = true)
     protected RegisteredUser registeredUser;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @XmlElement(namespace = "http://megatravell.com/object")
     protected long id;
+
+    public Rating() {
+    }
 
     /**
      * Gets the value of the mark property.
@@ -80,7 +92,7 @@ public class Rating {
      *     {@link Object }
      *     
      */
-    public java.lang.Object getObject() {
+    public Object getObject() {
         return object;
     }
 
@@ -92,7 +104,7 @@ public class Rating {
      *     {@link Object }
      *     
      */
-    public void setObject(java.lang.Object value) {
+    public void setObject(Object value) {
         this.object = value;
     }
 

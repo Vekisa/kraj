@@ -3,6 +3,7 @@ package modul.backend.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -57,30 +58,47 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "registeredUser",
     "id"
 })
+@Entity
+@Table(name = "reservation")
 @XmlRootElement(name = "Reservation", namespace = "http://megatravell.com/object")
 public class Reservation {
 
     @XmlElement(name = "Start", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
+    @Column
     protected XMLGregorianCalendar start;
     @XmlElement(name = "End", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
+    @Column
     protected XMLGregorianCalendar end;
     @XmlElement(name = "Confirmed", namespace = "http://megatravell.com/object", defaultValue = "false")
+    @Column
     protected boolean confirmed;
+
     @XmlElement(name = "PossibleCancellationDate", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
+    @Column
     protected XMLGregorianCalendar possibleCancellationDate;
     @XmlElement(name = "Price", namespace = "http://megatravell.com/object")
     protected double price;
+
+    @ManyToOne
     @XmlElement(name = "Unit", namespace = "http://megatravell.com/object", required = true)
     protected Unit unit;
+    @OneToMany(mappedBy = "reservation")
     @XmlElement(name = "Includes", namespace = "http://megatravell.com/object")
     protected List<Includes> includes;
+
+    @ManyToOne
     @XmlElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user", required = true)
     protected RegisteredUser registeredUser;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @XmlElement(namespace = "http://megatravell.com/object")
     protected long id;
+
+    public Reservation() {
+    }
 
     /**
      * Gets the value of the start property.

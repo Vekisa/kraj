@@ -1,8 +1,15 @@
 
 package modul.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import javax.persistence.*;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -47,6 +54,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
+ *         &lt;element name="username" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="Password">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -75,6 +83,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "firstName",
     "lastName",
     "email",
+    "username",
     "password",
     "adress",
     "isEnabled",
@@ -84,34 +93,102 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "role"
 })
 @XmlSeeAlso({
-    Agent.class,
-    RegisteredUser.class
+    RegisteredUser.class,
+    Agent.class
 })
-public abstract class User {
+@Entity
+@Table(name = "users")
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class User implements UserDetails {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
     @XmlElement(namespace = "http://www.megatravell.com/user")
     protected long id;
+    @Column
     @XmlElement(name = "FirstName", namespace = "http://www.megatravell.com/user", required = true)
     protected String firstName;
+    @Column
     @XmlElement(name = "LastName", namespace = "http://www.megatravell.com/user", required = true)
     protected String lastName;
+    @Column
     @XmlElement(name = "Email", namespace = "http://www.megatravell.com/user", required = true)
     protected String email;
+    @Size(max = 15)
+    @Column
+    @XmlElement(namespace = "http://www.megatravell.com/user", required = true)
+    protected String username;
+    @JsonIgnore
+    @Column
     @XmlElement(name = "Password", namespace = "http://www.megatravell.com/user", required = true)
     protected String password;
+    @Column
     @XmlElement(name = "Adress", namespace = "http://www.megatravell.com/address", required = true)
     protected Adress adress;
+    @JsonIgnore
+    @Column
     @XmlElement(namespace = "http://www.megatravell.com/user")
     protected boolean isEnabled;
+    @Column
     @XmlElement(namespace = "http://www.megatravell.com/user", required = true)
     @XmlSchemaType(name = "date")
     protected XMLGregorianCalendar lastPasswordResetDate;
+    @JsonIgnore
+    @Column
     @XmlElement(namespace = "http://www.megatravell.com/user")
     protected boolean isVerified;
+    @JsonIgnore
+    @OneToOne
+    @Column
     @XmlElement(name = "VerificationToken", namespace = "http://www.megatravell.com/user", required = true)
     protected VerificationToken verificationToken;
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JsonIgnore
+    @JoinTable(joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
     @XmlElement(name = "Role", namespace = "http://www.megatravell.com/user")
     protected List<Role> role;
+
+    @JsonIgnore
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return role;
+    }
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+    @JsonIgnore
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public User() {
+    }
+
+    public User(String firstName, String lastName, String email, @Size(max = 15) String username, String password, Adress adress, boolean isEnabled, XMLGregorianCalendar lastPasswordResetDate, boolean isVerified, VerificationToken verificationToken, List<Role> role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.adress = adress;
+        this.isEnabled = isEnabled;
+        this.isVerified = isVerified;
+        this.role = role;
+    }
 
     /**
      * Gets the value of the id property.
@@ -199,6 +276,30 @@ public abstract class User {
      */
     public void setEmail(String value) {
         this.email = value;
+    }
+
+    /**
+     * Gets the value of the username property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * Sets the value of the username property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setUsername(String value) {
+        this.username = value;
     }
 
     /**

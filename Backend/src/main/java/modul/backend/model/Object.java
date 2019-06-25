@@ -73,9 +73,6 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "Object", namespace = "http://megatravell.com/object")
 public class Object {
 
-
-
-
     @XmlElement(name = "Name", namespace = "http://megatravell.com/object", required = true)
     protected String name;
     @XmlElement(name = "Description", namespace = "http://megatravell.com/object", required = true)

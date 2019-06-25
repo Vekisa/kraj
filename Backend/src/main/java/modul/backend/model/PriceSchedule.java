@@ -3,6 +3,7 @@ package modul.backend.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -39,16 +40,25 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "plan",
     "id"
 })
+@Entity
+@Table(name = "priceSchedule")
 @XmlRootElement(name = "Price_schedule", namespace = "http://megatravell.com/object")
 public class PriceSchedule {
 
+    @Column
     @XmlElement(name = "Made", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
     protected XMLGregorianCalendar made;
+    @OneToMany
     @XmlElement(name = "Plan", namespace = "http://megatravell.com/object")
     protected List<Plan> plan;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @XmlElement(namespace = "http://megatravell.com/object")
     protected long id;
+
+    public PriceSchedule() {
+    }
 
     /**
      * Gets the value of the made property.
