@@ -33,6 +33,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
+            <xs:element name="username" type="xs:string"/>
             <xs:element name="Password">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
@@ -64,6 +65,7 @@
                 <xs:element ref="user:RegisteredUser"/>
                 <xs:element name="seen" type="xs:boolean"/>
                 <xs:element name="from" type="xs:long"/>
+                <xs:element name="id" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
