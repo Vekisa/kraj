@@ -41,6 +41,7 @@ import java.math.BigInteger;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+        "id",
         "state",
         "city",
         "street",
@@ -58,6 +59,7 @@ public class Adress {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @XmlElement(name="id",namespace = "http://megatravell.com/object", required = true)
     private Long id;
 
     @XmlElement(name = "State", namespace = "http://www.megatravell.com/address", required = true)

@@ -1,6 +1,7 @@
 package modul.backend.model.Users;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
@@ -10,6 +11,7 @@ public class VerificationToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @XmlElement(name="id",namespace = "http://megatravell.com/object", required = true)
     private long id;
 
     @Column

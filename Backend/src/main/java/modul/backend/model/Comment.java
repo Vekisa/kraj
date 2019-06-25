@@ -37,6 +37,7 @@ import java.util.Date;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+        "id",
         "text",
         "dateOfPublication",
         "approved",
@@ -50,6 +51,7 @@ public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @XmlElement(name="id",namespace = "http://megatravell.com/object", required = true)
     private Long id;
 
     @XmlElement(name = "Text", namespace = "http://megatravell.com/object", required = true)

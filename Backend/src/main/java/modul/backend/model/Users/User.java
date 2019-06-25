@@ -66,6 +66,7 @@ import java.util.List;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "User", namespace = "http://www.megatravell.com/user", propOrder = {
+        "id",
         "firstName",
         "lastName",
         "email",
@@ -83,6 +84,7 @@ public abstract class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @XmlElement(name="id",namespace = "http://megatravell.com/object", required = true)
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 

@@ -35,6 +35,7 @@ import javax.xml.bind.annotation.*;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+        "id",
         "mark",
         "object",
         "registeredUser"
@@ -46,6 +47,7 @@ public class Rating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @XmlElement(name="id",namespace = "http://megatravell.com/object", required = true)
     private Long id;
 
     @XmlElement(namespace = "http://megatravell.com/object")

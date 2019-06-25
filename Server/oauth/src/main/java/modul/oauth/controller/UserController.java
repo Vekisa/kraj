@@ -2,6 +2,7 @@ package modul.oauth.controller;
 
 import modul.oauth.dto.AgentDTO;
 import modul.oauth.model.Users.*;
+import modul.oauth.security.PasswordChange;
 import modul.oauth.security.ResponseMessage;
 import modul.oauth.security.SignUpRequest;
 import modul.oauth.service.Logging;
@@ -126,6 +127,64 @@ public class UserController {
 
     }
 
+    @RequestMapping(value = "/changeEmail", method = RequestMethod.PUT)
+    public ResponseEntity<?> changeEmail(@RequestBody SignUpRequest signUpRequest) {
+
+        if (signUpRequest.getEmail().isEmpty()) {
+            return new ResponseEntity<>(new ResponseMessage("Can't be empty!"), HttpStatus.BAD_REQUEST);
+        }
+
+        if (signUpRequest.getEmail().length() > 60) {
+            return new ResponseEntity<>(new ResponseMessage("Max 60 characters!"), HttpStatus.BAD_REQUEST);
+        }
+
+        if (userService.checkByEmail(signUpRequest.getEmail())) {
+            return new ResponseEntity<>(new ResponseMessage("Email is already in use!"), HttpStatus.BAD_REQUEST);
+        }
+
+        userService.changeEmail(signUpRequest.getEmail());
+
+        return new ResponseEntity<>(new ResponseMessage("Email changed!"), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/changeName", method = RequestMethod.POST)
+    public ResponseEntity<?> changeName(@RequestBody SignUpRequest signUpRequest) {
+
+
+        String first = signUpRequest.getFirstName();
+        String last = signUpRequest.getLastName();
+
+        if (!Pattern.matches(Regex.flNames, signUpRequest.getFirstName()) || !Pattern.matches(Regex.flNames,signUpRequest.getLastName())) {
+            logging.printError("IN FUNC: Bad parameters");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad parameters");
+        }
+
+        userService.changeName(first, last);
+
+        return new ResponseEntity<>(new ResponseMessage("Name changed!"), HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/changePass", method = RequestMethod.PUT)
+    public ResponseEntity<?> changePass(@RequestBody PasswordChange passwordChange) {
+
+        userService.changePass(passwordChange.getOldPass(), passwordChange.getNewPass());
+
+        return new ResponseEntity<>(new ResponseMessage("Password changed!"), HttpStatus.OK);
+
+    }
+
+    @RequestMapping(value = "/changeUsername", method = RequestMethod.PUT)
+    public ResponseEntity<?> changeUsername(OAuth2Authentication auth2Authentication,@RequestBody RegisteredUser registeredUser) {
+
+        if (userService.checkByUsername(registeredUser.getUsername())) {
+            logging.printError("IN FUNC: Username is already taken");
+            return new ResponseEntity<>(new ResponseMessage("Username is already taken!"), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(userService.changeUsername(auth2Authentication,registeredUser.getUsername()), HttpStatus.OK);
+
+    }
 
 
 }

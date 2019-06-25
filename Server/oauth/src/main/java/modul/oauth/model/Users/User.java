@@ -112,7 +112,6 @@ public abstract class User implements UserDetails {
     private Boolean isEnabled;
 
     @Column
-    @JsonIgnore
     private Date lastPasswordResetDate;
 
     @Column

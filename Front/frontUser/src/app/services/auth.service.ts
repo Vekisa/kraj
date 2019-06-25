@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {RegisteredUser} from "../model";
+import {NewPass, RegisteredUser} from "../model";
 
 @Injectable({
   providedIn: 'root'
@@ -77,6 +77,25 @@ export class AuthService {
   saveUser(regUser:RegisteredUser):Observable<any>{
     return this.http.post(this.baseUrl+"uua/user/save",regUser);
   }
+
+  changeEmail(regUser:RegisteredUser):Observable<any>{
+    return this.http.put(this.baseUrl+"uua/user/changeEmail",regUser);
+  }
+
+  changePass(pass:NewPass):Observable<any>{
+    return this.http.put(this.baseUrl+"uua/user/changePass",pass);
+  }
+
+  changeName(user:RegisteredUser):Observable<any>{
+    return this.http.post(this.baseUrl+"uua/user/changeName",user);
+  }
+
+  changeUserName(user:RegisteredUser):Observable<any>{
+    return this.http.put(this.baseUrl+"uua/user/changeUsername",user);
+  }
+
+
+
 
   logout(){
     this.cookie.delete('access_token');

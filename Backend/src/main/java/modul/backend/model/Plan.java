@@ -35,6 +35,7 @@ import java.util.Date;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+        "id",
         "price",
         "month",
         "fromDate",
@@ -48,6 +49,7 @@ public class Plan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @XmlElement(name="id",namespace = "http://megatravell.com/object", required = true)
     private Long id;
 
     @XmlElement(name = "FromDate", namespace = "http://megatravell.com/object", required = true)

@@ -37,6 +37,7 @@ import java.util.Date;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+        "id",
         "text",
         "postingDate",
         "agent",
@@ -49,6 +50,7 @@ public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @XmlElement(name="id",namespace = "http://megatravell.com/object", required = true)
     private Long id;
 
     @XmlElement(name = "Text", namespace = "http://www.megatravell.com/user", required = true)

@@ -7,19 +7,31 @@ import modul.oauth.model.Users.*;
 import modul.oauth.repository.RoleRepository;
 import modul.oauth.repository.UserRepository;
 import modul.oauth.repository.VerificationTokenRepository;
+import modul.oauth.security.AuthorizationServerConfig;
 import modul.oauth.security.EmailSenderService;
 import modul.oauth.security.PasswordHashingService;
 import modul.oauth.security.SignUpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.common.OAuth2RefreshToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.OAuth2Request;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.SystemException;
 import javax.transaction.Transactional;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -29,6 +41,13 @@ import java.util.*;
 public class UserServiceImpl implements UserDetailsService {
 
     private Logging logging = new Logging(getClass());
+
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private AuthorizationServerConfig authorizationServerConfig;
 
     @Autowired
     UserRepository userRepository;
@@ -61,6 +80,7 @@ public class UserServiceImpl implements UserDetailsService {
     }
 
     public Map<String, Object> getUserInfo (OAuth2Authentication user) {
+
         Map<String, Object> userInfo = new HashMap<>();
         userInfo.put("user", user.getUserAuthentication().getPrincipal());
         userInfo.put("authorities", AuthorityUtils.authorityListToSet(user.getUserAuthentication().getAuthorities()));
@@ -171,6 +191,95 @@ public class UserServiceImpl implements UserDetailsService {
     public VerificationToken getToken(String VerificationToken) {
         return verificationTokenRepository.findByVerificationToken(VerificationToken);
     }
+
+
+    public void changeEmail(String email){
+
+        Authentication current = SecurityContextHolder.getContext().getAuthentication();
+        String username = current.getName();
+
+        if (authenticationManager == null){
+            return;
+        }
+
+        User user = getUser(username);
+        user.setEmail(email);
+
+        userRepository.save(user);
+    }
+
+    public void changeName(String first,String last){
+
+
+        Authentication current = SecurityContextHolder.getContext().getAuthentication();
+        String username = current.getName();
+
+        if (authenticationManager == null){
+            return;
+        }
+
+        User ud = (User) loadUserByUsername(username);
+        ud.setFirstName(first);
+        ud.setLastName(last);
+
+        userRepository.save(ud);
+    }
+
+    public void changePass(String oldPass,String newPass) {
+
+        Authentication current = SecurityContextHolder.getContext().getAuthentication();
+        String username = current.getName();
+
+        User user = (User) loadUserByUsername(username);
+
+        if (!passwordEncoder.matches(oldPass,user.getPassword())) {
+            throw new RuntimeException("Password doesn't match!");
+
+        }else{
+            user.setPassword(passwordEncoder.encode(newPass));
+
+            user.setLastPasswordResetDate(new Date());
+
+            userRepository.save(user);
+        }
+
+
+
+    }
+
+    public OAuth2AccessToken changeUsername(OAuth2Authentication oAuth2Authentication,String username){
+
+
+
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        converter.setSigningKey("as466gf");
+
+        JwtTokenStore tokenStore = new JwtTokenStore(converter);
+
+
+        DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
+        defaultTokenServices.setTokenStore(tokenStore);
+        defaultTokenServices.setTokenEnhancer(converter);
+        defaultTokenServices.setSupportRefreshToken(true);
+
+        User user = getUser(oAuth2Authentication.getUserAuthentication().getName());
+
+        user.setUsername(username);
+
+        userRepository.save(user);
+
+        UserDetails ud = loadUserByUsername(username);
+
+       OAuth2Authentication oAuth2Authentication1 = new OAuth2Authentication(oAuth2Authentication.getOAuth2Request(),new UsernamePasswordAuthenticationToken(
+              ud,"N/A",ud.getAuthorities()
+       ));
+
+        OAuth2AccessToken token = defaultTokenServices.createAccessToken(oAuth2Authentication1);
+
+
+        return token ;
+    }
+
 
     public boolean checkByEmail(String email){
         return userRepository.existsByEmail(email);

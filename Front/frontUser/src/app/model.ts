@@ -118,8 +118,9 @@ export class RegisteredUser{
   username:string;
   password:string;
   active: boolean;
+  lastPasswordResetDate:Date;
 
-  constructor(id: number, firstName: string, lastName: string, password:string,email: string,username:string, active: boolean){
+  constructor(id: number, firstName: string, lastName: string, password:string,email: string,username:string, active: boolean,lastPasswordResetDate:Date){
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -127,6 +128,7 @@ export class RegisteredUser{
     this.email = email;
     this.username = username;
     this.active = active;
+    this.lastPasswordResetDate = lastPasswordResetDate;
   }
 }
 
@@ -174,5 +176,16 @@ class Type{
     this.name=name;
   }
 
+
+}
+
+export class NewPass {
+  oldPass: string;
+  newPass: string;
+
+  constructor(oldPass: string, newPass: string) {
+    this.oldPass = oldPass;
+    this.newPass = newPass;
+  }
 
 }

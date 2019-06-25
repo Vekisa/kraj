@@ -43,6 +43,7 @@ import java.util.List;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+        "id",
         "adults",
         "children",
         "beds",
@@ -65,6 +66,7 @@ public class Unit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @XmlElement(name="id",namespace = "http://megatravell.com/object", required = true)
     private Long id;
 
     @XmlElement(name = "Adults", namespace = "http://megatravell.com/object", required = true)

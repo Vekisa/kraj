@@ -45,6 +45,7 @@ import javax.xml.bind.annotation.*;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+        "id",
         "name",
         "description",
         "price"
@@ -56,6 +57,7 @@ public class ExtraOption {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @XmlElement(name="id",namespace = "http://megatravell.com/object", required = true)
     private Long id;
 
     @XmlElement(name = "Name", namespace = "http://megatravell.com/object", required = true)
