@@ -10,7 +10,7 @@ import java.net.URL;
 public class ObjekatClient {
     public static void main(String[] args) {
         try {
-            URL wsdl = new URL("http://localhost:8082/objekatService?wsdl");
+            URL wsdl = new URL("http://localhost:8765/objekatService?wsdl");
             QName serviceName = new QName("http://www.megatravell.com/ws/objekat", "ObjekatService");
             QName portName = new QName("http://www.megatravell.com/ws/objekat", "ObjekatPort");
 

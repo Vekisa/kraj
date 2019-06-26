@@ -18,4 +18,7 @@ public class CenovnikImpl implements Cenovnik{
         System.out.println("Cenovnik ");
         return "Cenovnik:  " + text;
     }
+
+
+
 }

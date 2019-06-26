@@ -1,5 +1,6 @@
 package modul.backend.service;
 
+import modul.backend.WebSer.Objekat;
 import modul.backend.dto.AccommodationTypeDTO;
 import modul.backend.dto.ExtraOptionDTO;
 import modul.backend.dto.ObjectDTO;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.jws.WebService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +34,7 @@ public class ObjectService {
     }
 
     public List<ObjectDTO> getAll(){
+        System.out.println("Usao u servis");
         return DTOList.objects(objectRepository.findAll());
     }
 
@@ -55,5 +58,6 @@ public class ObjectService {
 
         return DTOList.accommodationTypes(accommodationTypes);
     }
+
 
 }

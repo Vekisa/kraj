@@ -138,8 +138,8 @@ public abstract class User implements UserDetails {
     @OneToOne
     @XmlElement(name = "VerificationToken", namespace = "http://www.megatravell.com/user", required = true)
     protected VerificationToken verificationToken;
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
     @XmlElement(name = "Role", namespace = "http://www.megatravell.com/user")
     protected List<Role> role;

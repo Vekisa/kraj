@@ -1,5 +1,7 @@
 package modul.backend.WebSer;
 
+import modul.backend.dto.ObjectDTO;
+
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
@@ -8,4 +10,5 @@ import javax.jws.soap.SOAPBinding;
 @SOAPBinding(style = SOAPBinding.Style.RPC, use = SOAPBinding.Use.LITERAL)
 public interface Cenovnik {
     public String cenovnikProvera(@WebParam(name = "text") String text);
+
 }
