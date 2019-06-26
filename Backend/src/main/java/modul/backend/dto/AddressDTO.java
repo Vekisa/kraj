@@ -1,7 +1,10 @@
 package modul.backend.dto;
 
 
+
+
 import modul.backend.model.Adress;
+
 
 public class AddressDTO {
 
@@ -9,7 +12,7 @@ public class AddressDTO {
     private String state;
     private String city;
     private String street;
-    private int number;
+    private Integer number;
     private String zip;
     private double longitude;
     private double latitude;
@@ -17,7 +20,7 @@ public class AddressDTO {
     public AddressDTO() {
     }
 
-    public AddressDTO(Long id, String state, String city, String street, int number, String zip, double longitude, double latitude){
+    public AddressDTO(Long id, String state, String city, String street, Integer number, String zip, double longitude, double latitude){
         this.setId(id);
         this.setState(state);
         this.setCity(city);
@@ -65,11 +68,11 @@ public class AddressDTO {
         this.street = street;
     }
 
-    public int getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 

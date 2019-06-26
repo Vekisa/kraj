@@ -1,26 +1,34 @@
 package modul.backend.dto;
 
+
+
+import modul.backend.model.AccommodationType;
+import modul.backend.model.Image;
 import modul.backend.model.Object;
 import modul.backend.model.Unit;
 
-import java.math.BigInteger;
+import java.util.List;
 
 public class UnitDTO {
 
     private Long id;
-    private int adults;
-    private int beds;
+    private Integer person;
+    private Integer beds;
     private ObjectDTO object;
+    private List<Image> image;
+    private AccommodationTypeDTO accommodationType;
 
-    public UnitDTO(Long id, int adults,int beds,  Object object){
+    public UnitDTO(Long id, Integer person, Integer beds, Object object, AccommodationType accommodationType, List<Image> image) {
         this.setId(id);
-        this.setAdults(adults);
+        this.setPerson(person);
         this.setBeds(beds);
         this.setObject(new ObjectDTO(object));
+        this.setImage(image);
+        this.setAccommodationType(new AccommodationTypeDTO(accommodationType));
     }
 
-    public UnitDTO(Unit unit){
-        this(unit.getId(),unit.getPerson(),unit.getBeds(),unit.getObject());
+    public UnitDTO(Unit unit) {
+        this(unit.getId(), unit.getPerson(), unit.getBeds(), unit.getObject(), unit.getAccommodationType(), unit.getImage());
     }
 
     public Long getId() {
@@ -31,19 +39,19 @@ public class UnitDTO {
         this.id = id;
     }
 
-    public int getAdults() {
-        return adults;
+    public Integer getPerson() {
+        return person;
     }
 
-    public void setAdults(int adults) {
-        this.adults = adults;
+    public void setPerson(Integer person) {
+        this.person = person;
     }
 
-    public int getBeds() {
+    public Integer getBeds() {
         return beds;
     }
 
-    public void setBeds(int beds) {
+    public void setBeds(Integer beds) {
         this.beds = beds;
     }
 
@@ -53,5 +61,21 @@ public class UnitDTO {
 
     public void setObject(ObjectDTO object) {
         this.object = object;
+    }
+
+    public List<Image> getImage() {
+        return image;
+    }
+
+    public void setImage(List<Image> image) {
+        this.image = image;
+    }
+
+    public AccommodationTypeDTO getAccommodationType() {
+        return accommodationType;
+    }
+
+    public void setAccommodationType(AccommodationTypeDTO accommodationType) {
+        this.accommodationType = accommodationType;
     }
 }

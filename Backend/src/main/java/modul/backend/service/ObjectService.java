@@ -4,7 +4,6 @@ import modul.backend.dto.AccommodationTypeDTO;
 import modul.backend.dto.ExtraOptionDTO;
 import modul.backend.dto.ObjectDTO;
 import modul.backend.model.AccommodationType;
-import modul.backend.model.ExtraOption;
 import modul.backend.model.Object;
 import modul.backend.model.Unit;
 import modul.backend.repository.ObjectRepository;

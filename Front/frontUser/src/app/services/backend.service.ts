@@ -9,6 +9,8 @@ import {catchError} from "rxjs/operators";
 export class BackendService {
   private baseExtraOptionsURL = 'http://localhost:8762/backend/extra_option';
   private baseAccommodationTypesURL = 'http://localhost:8762/backend/accommodation_type';
+  private baseUnitURL = 'http://localhost:8762/backend/unit';
+  private baseObjectURL = 'http://localhost:8762/backend/object';
 
   constructor(private http: HttpClient) { }
 
@@ -23,4 +25,22 @@ export class BackendService {
       return throwError(err);
     }));
   };
+
+  getUnit(id:number):Observable<any>{
+    return this.http.get<any>(this.baseUnitURL+"/"+id).pipe(catchError(err => {
+      return throwError(err);
+    }));
+  }
+
+  extraOptionsOfObject(id:number):Observable<any>{
+    return this.http.get<any>(this.baseObjectURL+"/"+id + "/extra_options").pipe(catchError(err => {
+      return throwError(err);
+    }));
+  }
+
+  getPlanOfUnit(id: number):Observable<any> {
+    return this.http.get<any>(this.baseUnitURL+"/"+id + "/price_schedule").pipe(catchError(err => {
+      return throwError(err);
+    }));
+  }
 }

@@ -2,25 +2,15 @@
         <h5 class="card-title text-center">Your reservations</h5>
     <table class="table">
       <tbody>
-      <tr>
+      <tr *ngFor="let reservation of reservations; let i = index">
         <th scope="row"> <img src='http://www.hotel-starikrovovi.com/img/galerija/moskva16.jpg' alt='image' class="myImage"></th>
-        <td>Mark</td>
+        <td><b>Object: </b>{{reservation.unit.object.name}}<br>
+          <b>City: </b>{{reservation.unit.object.adress.city}}<br>
+          <b>AccType: </b>{{reservation.unit.accommodationType.name}}<br>
+          <b>Object: </b>{{reservation.unit.object.name}}<br>
+        </td>
         <td>Otto</td>
         <td>@mdo</td>
-        <td><a  href = "objects" class="btn btn-info" role="button">Show</a></td>
-      </tr>
-      <tr>
-        <th scope="row"><img src='http://www.hotel-starikrovovi.com/img/galerija/moskva16.jpg' alt='image' class="myImage"></th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-        <td><a  href = "objects" class="btn btn-info" role="button">Show</a></td>
-      </tr>
-      <tr>
-        <th scope="row"><img src='http://www.hotel-starikrovovi.com/img/galerija/moskva16.jpg' alt='image' class="myImage"></th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
         <td><a  href = "objects" class="btn btn-info" role="button">Show</a></td>
       </tr>
       </tbody>
