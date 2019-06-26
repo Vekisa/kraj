@@ -4,7 +4,7 @@
     width: 90%;
   }
 
-  .carousel-item{
+.carousel-item{
     height: 450px;
 } 
 .carousel-item img{
@@ -15,3 +15,18 @@
     text-align: center;
   }
   
+  .text-center{
+
+    text-align: center;
+    text-transform: uppercase;
+    color: #4286f4;
+  }
+  h5{
+    text-transform: uppercase;
+    color: #000000;
+
+  }
+  p{
+    color: #000000;
+
+  }

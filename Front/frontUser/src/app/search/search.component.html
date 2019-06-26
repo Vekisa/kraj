@@ -85,7 +85,7 @@
                 <hr>
                 <div class="row justify-content-around">
                   <div>
-                    <a class="btn btn-info" role="button" (click)="onSubmit()">Search</a>
+                    <a class="btn btn-primary" role="button" (click)="onSubmit()">Search</a>
                   </div>
                 </div>
               </form>
@@ -95,14 +95,46 @@
     </div>
 </div>
 
+<!--
 <div class="container center" >
+
+  <div class="card text-center card border-primary mb-3"> 
+   <div class="card-header">Sort it out by:</div>
+ <div class="card-body text-primary">
+ <div class="row">
+ <div class="col-md-12 text-center">
+
+
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-outline-primary active">
+          <input type="radio" name="options" id="option1" autocomplete="off"> Price
+        </label>
+        <label class="btn btn-outline-primary">
+          <input type="radio" name="options" id="option2" autocomplete="off"> Distance
+        </label>
+        <label class="btn btn-outline-primary">
+          <input type="radio" name="options" id="option3" autocomplete="off"> Rating
+        </label>
+        <label class="btn btn-outline-primary">
+            <input type="radio" name="options" id="option3" autocomplete="off"> Category
+          </label>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+
+
+
   <table class="table table-hover">
     <tbody>
     <tr *ngFor="let unit of units; let i = index">
       <th scope="row"> <img src='http://www.hotel-starikrovovi.com/img/galerija/moskva16.jpg' alt='image' class="myImage"></th>
-      <td><b>{{unit.object.name}}</b><br><b>{{unit.accommodationType.name}}</b><br>
+      <td><b>{{unit.object.name}}</b>
+        <br><b>{{unit.accommodationType.name}}</b><br>
         {{unit.object.description}}<br>
-        <a class="btn btn-warning" role="button" (click)="showUnit(unit.id)">View</a>
+
+        <a href = "objects" class="btn btn-warning" role="button">View</a>
       </td>
       <td><b>Max guests:&nbsp;</b>{{unit.adults}}<br>
         <b>Beds:</b>&nbsp;{{unit.beds}}<br>
@@ -113,3 +145,4 @@
     </tbody>
   </table>
 </div>
+-->
