@@ -20,6 +20,7 @@ import { FunctionNavigationComponent } from './function-navigation/function-navi
 import { InboxComponent } from './inbox/inbox.component';
 import { MessageComponent } from './message/message.component';
 import { ReservationComponent } from './reservation/reservation.component';
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ReservationComponent } from './reservation/reservation.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [CookieService,
 

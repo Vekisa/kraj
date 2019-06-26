@@ -63,7 +63,7 @@ export class NewReservationComponent implements OnInit {
     this.reservation.price=this.price;
     console.log("saljem ");
     console.log(this.reservation);
-    this.reservation.possibleCancellationDate=new Date(new Date(this.reservation.start).getTime()- this.reservation.unit.object.cancellation*(1000*60*60*24.0) );
+    this.reservation.possibleCancellationDate=new Date(new Date(this.reservation.start).getTime()- this.reservation.unit.cancellation*(1000*60*60*24.0) );
     this.reservationService.createReservation(this.reservation).subscribe(data=>
     console.log(data))
   }

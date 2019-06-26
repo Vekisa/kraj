@@ -2,11 +2,9 @@
   <thead align="center" >
   <tr>
     <th scope="col">#</th>
-    <th scope="col">Adults</th>
-    <th scope="col">Childern</th>
+    <th scope="col">Persons</th>
     <th scope="col">Beds</th>
     <th scope="col">Size</th>
-    <th scope="col">Smoking</th>
     <th scope="col">Price</th>
     <th scope="col">Price for </th>
   </tr>
@@ -14,12 +12,9 @@
   <tbody align="center" >
   <tr *ngFor="let unit of units; let i = index " >
     <td ><img *ngIf="unit.image[0]!=undefined" src="data:image/png;base64,{{unit.image[0].source}}" alt="{{i}}" style="width: 200px; height: 200px"/></td>
-    <td style="vertical-align: middle">{{unit.adults}}</td>
-    <td style="vertical-align: middle">{{unit.children}}</td>
+    <td style="vertical-align: middle">{{unit.person}}</td>
     <td style="vertical-align: middle">{{unit.beds}}</td>
     <td style="vertical-align: middle">{{unit.size}}</td>
-    <td *ngIf="unit.smoking==true" style="vertical-align: middle">Allowed</td>
-    <td *ngIf="unit.smoking==false" style="vertical-align: middle">Not allowed</td>
     <td style="vertical-align: middle">{{getPrice(unit.priceSchedule) }}</td>
     <td style="vertical-align: middle">{{getPerPerson()}}</td>
     <td style="vertical-align: middle"><button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="makeRes(i)">Make a reservation</button></td>

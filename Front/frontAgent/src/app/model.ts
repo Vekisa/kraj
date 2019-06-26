@@ -1,14 +1,12 @@
 export class Unit {
   id: number;
-  adults: number;
-  children: number;
+  person: number;
   beds: number;
-  smoking: boolean;
-  size: number;
+  cancellation: number;
   object: Object;
   image: Image[];
   priceSchedule: PriceSchedule[]=[];
-  reservation: string[];
+  reservation: Reservation[]=[];
   accommodationType: string;
 
   constructor() {
@@ -22,11 +20,11 @@ export class Adress {
   city: string;
   street: string;
   number: number;
-  zip: number;
+  zip: string;
   longitude: number;
   latitude: number;
 
-  constructor(id: number, state: string, city: string, street: string, number: number, zip: number, longitude: number, latitude: number){
+  constructor(id: number, state: string, city: string, street: string, number: number, zip: string, longitude: number, latitude: number){
     this.id=id;
     this.state=state;
     this.city=city;
@@ -42,16 +40,14 @@ export class Object {
   id: number;
   name: string;
   description: string;
-  cancellation: number;
   category: number;
   adress: Adress;
   objectType: Type;
   unit: Unit[];
 
-  constructor(name: string, description: string, cancellation: number, category: number){
+  constructor(name: string, description: string, category: number){
     this.name=name;
     this.description=description;
-    this.cancellation=cancellation;
     this.category=category;
   }
 }
@@ -72,7 +68,6 @@ export class Plan{
   from: Date;
   to: Date;
   price: number;
-  month: number;
   perPerson: boolean;
 
   constructor(){
@@ -103,6 +98,7 @@ export class Reservation{
   possibleCancellationDate: Date;
   price: number;
   unit: Unit;
+  registeredUser: RegisteredUser;
 
   constructor() {
 
@@ -116,12 +112,15 @@ export class Message{
   postingDate: Date;
   agent: Agent;
   registeredUser: RegisteredUser;
+  seen: boolean;
+  fromUser: number;
 
   constructor(){}
 }
 
 export class RegisteredUser{
   id: number;
+  username: string;
   firstName: string;
   lastName: string;
   email:string;
@@ -149,7 +148,7 @@ export class UserLogin {
 
 export class Agent {
   bussinesRegistrationNumber: number;
-
+  id: number;
   constructor(){}
 }
 
