@@ -110,6 +110,6 @@ export class SearchComponent implements OnInit {
 
   showUnit(id:number){
     console.log("ID: " +id);
-    this.router.navigateByUrl('/objects/'+ id);
+    this.router.navigateByUrl('objects/'+ id);
   }
 }

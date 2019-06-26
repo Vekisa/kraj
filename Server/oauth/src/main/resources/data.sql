@@ -20,9 +20,9 @@ insert into extra_option (name,description,price) values ("Jagode sa slagom","Sv
 insert into extra_option (name,description,price) values ("Cupanje obrva","Sa koncem",2.3);
 
 
-insert into unit(cancellation,person,beds,accommodation_type_id,object_id) values (10,4,3,1,1);
-insert into unit(cancellation,person,beds,accommodation_type_id,object_id) values (20,5,5,2,1);
-insert into unit(cancellation,person,beds,accommodation_type_id,object_id) values (30,4,4,1,2);
+insert into unit(person,beds,accommodation_type_id,object_id) values (4,3,1,1);
+insert into unit(person,beds,accommodation_type_id,object_id) values (5,5,2,1);
+insert into unit(person,beds,accommodation_type_id,object_id) values (4,4,1,2);
 
 insert into role(name) values ("ROLE_ADMIN");
 insert into role(name) values ("ROLE_REG");
@@ -40,5 +40,3 @@ INSERT INTO unit_price_schedule(unit_id,price_schedule_id) VALUES(1,1);
 
 INSERT INTO price_schedule_plan(plan_id,price_schedule_id) VALUES(1,1);
 INSERT INTO price_schedule_plan(plan_id,price_schedule_id) VALUES(2,1);
-
-INSERT INTO comment(approved,date_of_publication,text,registered_user_id,unit_id) VALUES (b'1',DATE'2019-06-26',"Skroz koretkno. Lepo smo se proveli!",1,1);

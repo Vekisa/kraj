@@ -1,15 +1,12 @@
 package modul.oauth.service;
 
-import com.sun.org.apache.regexp.internal.RE;
 import modul.oauth.dto.AgentDTO;
-import modul.oauth.model.Adress;
 import modul.oauth.model.*;
 import modul.oauth.repository.RoleRepository;
 import modul.oauth.repository.UserRepository;
 import modul.oauth.repository.VerificationTokenRepository;
 import modul.oauth.security.AuthorizationServerConfig;
 import modul.oauth.security.EmailSenderService;
-import modul.oauth.security.PasswordHashingService;
 import modul.oauth.security.SignUpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,22 +17,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.security.oauth2.common.OAuth2RefreshToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.OAuth2Request;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.SystemException;
-import javax.transaction.Transactional;
 import java.lang.Object;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.util.*;
 
 @Service("userService")

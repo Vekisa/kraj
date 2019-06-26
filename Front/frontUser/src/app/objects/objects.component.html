@@ -75,31 +75,17 @@
   <div class="card" style="width: 200%;">
 
     <ul class="list-unstyled card ">
-      <li class="media">
+      <li class="media" *ngFor="let comment of comments; let i = index">
         <img src="https://image.flaticon.com/icons/svg/149/149071.svg" class="mr-3" alt="..." style="width: 7%; height: 7%">
-        <p><b>Username</b><br> commented 20.18.28</p>
+        <p><b>{{comment.registeredUser.firstName}}&nbsp;{{comment.registeredUser.lastName}}</b><br> Commented: <br> {{comment.dateOfPublication| date: 'medium'}}</p>
         <div class="media-body">
           <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="5" style="margin: 2%; width:95%;">
-          Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+            {{comment.text}}
           </textarea>
         </div>
+        <hr>
       </li>
-      <hr>
-      <li class="media my-4">
-        <img src="https://image.flaticon.com/icons/svg/149/149071.svg" class="mr-3" alt="..." style="width: 7%; height: 7%">
-        <div class="media-body">
-          <h5 class="mt-0 mb-1">List-based media object</h5>
-          Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-        </div>
-      </li>
-      <hr>
-      <li class="media">
-        <img src="https://image.flaticon.com/icons/svg/149/149071.svg" class="mr-3" alt="..." style="width: 7%; height: 7%">
-        <div class="media-body">
-          <h5 class="mt-0 mb-1">List-based media object</h5>
-          Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-        </div>
-      </li>
+
     </ul>
 </div>
 
@@ -134,7 +120,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let plan of plans; let i = index">
-            <td><b>{{plan.fromDate | date: "dd-mm-yyyy"}} - <br>{{plan.toDate | date: "dd-mm-yyyy"}}</b></td>
+            <td><b>{{plan.fromDate | date: 'short'}} - <br>{{plan.toDate | date: 'short'}}</b></td>
             <td> {{plan.price}} &euro;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i *ngIf="plan.perPerson" class="fas fa-user-alt" title="Per Person"></i>
               <i class="fas fa-home" *ngIf="!plan.perPerson" title="Per Unit"></i>
             </td>

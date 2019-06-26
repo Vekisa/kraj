@@ -19,6 +19,7 @@ export class ObjectsComponent implements OnInit {
   extraOptions: any;
   isLoggedIn = false;
   plans :Plan[];
+  comments : Comment[];
 
   constructor(private backendService: BackendService, private activatedRoute: ActivatedRoute,private authService:AuthService) { }
 
@@ -33,16 +34,25 @@ export class ObjectsComponent implements OnInit {
     this.activatedRoute.params.subscribe(data=>{
       this.backendService.getUnit(data['id']).subscribe(data =>{
         this.unit = data;
+        console.log(data);
       });
 
       this.backendService.extraOptionsOfObject(data['id']).subscribe(data =>{
         this.extraOptions = data;
+        console.log(data);
       });
 
       this.backendService.getPlanOfUnit(data['id']).subscribe(data => {
         this.plans = data;
         console.log(data);
       });
+
+      this.backendService.getComments(data['id']).subscribe(data => {
+        this.comments = data;
+        console.log("COMMENTS: ");
+        console.log(data);
+      });
+
     });
   }
 

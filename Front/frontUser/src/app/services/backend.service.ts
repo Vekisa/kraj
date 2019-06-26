@@ -43,4 +43,10 @@ export class BackendService {
       return throwError(err);
     }));
   }
+
+  getComments(id: number):Observable<any> {
+    return this.http.get<any>(this.baseUnitURL+"/"+id + "/comments").pipe(catchError(err => {
+      return throwError(err);
+    }));
+  }
 }

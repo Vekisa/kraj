@@ -95,7 +95,7 @@
     </div>
 </div>
 
-<!--
+
 <div class="container center" >
 
   <div class="card text-center card border-primary mb-3"> 
@@ -116,7 +116,7 @@
           <input type="radio" name="options" id="option3" autocomplete="off"> Rating
         </label>
         <label class="btn btn-outline-primary">
-            <input type="radio" name="options" id="option3" autocomplete="off"> Category
+            <input type="radio" name="options" id="option4" autocomplete="off"> Category
           </label>
  </div>
  </div>
@@ -134,7 +134,7 @@
         <br><b>{{unit.accommodationType.name}}</b><br>
         {{unit.object.description}}<br>
 
-        <a href = "objects" class="btn btn-warning" role="button">View</a>
+        <a href = "objects" class="btn btn-warning" role="button" (click)="showUnit(unit.id)">View</a>
       </td>
       <td><b>Max guests:&nbsp;</b>{{unit.adults}}<br>
         <b>Beds:</b>&nbsp;{{unit.beds}}<br>
@@ -145,4 +145,3 @@
     </tbody>
   </table>
 </div>
--->

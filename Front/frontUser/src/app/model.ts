@@ -198,3 +198,16 @@ export class NewPass {
   }
 
 }
+
+class Comment{
+  id: number;
+  text : string;
+  dateOfPublication: Date;
+  registeredUser: RegisteredUser;
+  constructor(id:number,text:string,dateOfPublication: Date,registeredUser: RegisteredUser){
+    this.id = id;
+    this.dateOfPublication = dateOfPublication;
+    this.text = text;
+    this.registeredUser = registeredUser;
+  }
+}

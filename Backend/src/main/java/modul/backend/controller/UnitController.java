@@ -1,4 +1,5 @@
 package modul.backend.controller;
+import modul.backend.model.Comment;
 import modul.backend.model.Plan;
 import modul.backend.service.UnitService;
 import modul.backend.dto.UnitDTO;
@@ -34,6 +35,12 @@ public class UnitController {
     public ResponseEntity<List<Plan>> getPlanForYear(@PathVariable(value = "id") Long id) {
 
         return new ResponseEntity<>(unitService.getPlanForYear(id), HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/{id}/comments", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Comment>> getComments(@PathVariable(value = "id") Long id) {
+
+        return new ResponseEntity<>(unitService.getComments(id), HttpStatus.OK);
     }
 
 }
