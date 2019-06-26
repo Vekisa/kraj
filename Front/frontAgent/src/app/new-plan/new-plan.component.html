@@ -9,13 +9,13 @@
     <form [formGroup]="newPlanForm" (ngSubmit)="onSubmitYear()">
       <div class="form-label-group" >
         <label for="from">From date</label>
-        <input type="text" id="from" value="{{dateN}}" class="form-control" [formControlName]="'from'"
+        <input type="text" value="{{dateN}}" class="form-control" [formControlName]="'from'"
                required readonly>
 
       </div>
       <div class="form-label-group">
         <label for="to">To date</label>
-        <input type="text" id="to" value="{{dateOY}}" class="form-control" [formControlName]="'to'"
+        <input type="text"  value="{{dateOY}}" class="form-control" [formControlName]="'to'"
                required readonly>
       </div>
       <div class="form-label-group" >
@@ -48,8 +48,8 @@
       <tbody>
       <tr *ngFor="let plan of plans; let i = index">
         <td>{{i}}</td>
-        <td>{{plan.from}}</td>
-        <td>{{plan.to}}</td>
+        <td>{{plan.from.getFullYear()}}-{{plan.from.getMonth()}}-{{plan.from.getDate()}}</td>
+        <td>{{plan.to.getFullYear()}}-{{plan.to.getMonth()}}-{{plan.to.getDate()}}</td>
         <td>{{plan.price}}</td>
         <td *ngIf="plan.perPerson==true">Per person</td>
         <td *ngIf="plan.perPerson==false">Unit</td>
@@ -57,18 +57,41 @@
       </tr>
       </tbody>
     </table>
-    <form [formGroup]="newPlanForm" (ngSubmit)="onSubmitCustom()">
-      <div class="form-label-group" >
-        <label for="from">From date</label>
-        <input type="date" id="fr" class="form-control"  placeholder="Required"  [formControlName]="'from'"
-               required  readonly>
+   <form [formGroup]="newPlanForm" (ngSubmit)="onSubmitCustom()">
+     <!--    <div class="form-label-group" >
+          <label for="from">From date</label>
+          <input type="date" id="fr" class="form-control"  placeholder="Required"  [formControlName]="'from'"
+                 required  readonly>
 
+        </div>
+        <div class="form-label-group">
+          <label for="to">To date</label>
+          <input type="date" id="toF" class="form-control" [formControlName]="'to'"
+                 required [readOnly]="readonlyP" >
+        </div>-->
+
+      <div class="form-label-group">
+        <label for="from">From date</label>
+        <div class="input-group">
+          <input id="from" class="form-control" placeholder="Required" readonly
+                  [formControlName]="'from'">
+        </div>
       </div>
+
       <div class="form-label-group">
         <label for="to">To date</label>
-        <input type="date" id="toF" class="form-control" [formControlName]="'to'"
-               required [readOnly]="readonlyP">
+        <div class="input-group">
+          <input id="to" class="form-control" [readonly]="true" [minDate]="toDate"
+                 name="d3" ngbDatepicker #d3="ngbDatepicker"
+                 [formControlName]="'to'">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="d3.toggle()" type="button"><i
+              class="fas fa-calendar"></i></button>
+          </div>
+        </div>
       </div>
+
+
       <div class="form-label-group" >
         <label for="price">Price</label>
         <input type="number" class="form-control" [formControlName]="'price'"

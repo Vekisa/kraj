@@ -1,10 +1,18 @@
 <h3>{{messages[0].registeredUser.firstName}} {{messages[0].registeredUser.lastName}}</h3>
 
-<div *ngFor="let mes of messages; let i=index">
-  <div>{{mes.text}}</div>
-  <div style="color: #525D76">{{getDate(i)}}</div>
+<div *ngFor="let mes of messages; let i=index" style="width: 1000px; alignment: center">
+  <div *ngIf="mes.fromUser==mes.registeredUser.id" style="float: left; width: 600px ">
+    <span style="color: #ffdc75; font-size: 20px;  " >{{mes.text}}</span>
+    <span style="color: #525D76; font-size: 10px; ">{{getDate(i)}}</span>
+    <br/>
+  </div>
+  <div *ngIf="mes.fromUser==mes.agent.id" style="float: right; width: 600px">
+    <span style="color: #525D76; font-size: 10px; float: right">{{getDate(i)}}</span>
+    <span  style="color: orchid; font-size: 20px; float: right"  >{{mes.text}}</span>
+    <br/>
+  </div>
 </div>
-<div>
-  <input type="text" id="textMessage" placeholder="Type Your message..." [(ngModel)]="message.text" />
+<div style="width: 900px; float: left" >
+  <input type="text" id="textMessage" placeholder="Type Your message..." [(ngModel)]="message.text" style="width: 700px;"/>
   <button (click)="sendMessage()" >Replay</button>
 </div>

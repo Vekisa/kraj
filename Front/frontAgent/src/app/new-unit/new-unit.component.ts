@@ -34,11 +34,9 @@ export class NewUnitComponent implements OnInit {
 
     this.newUnitForm=this.formBuilder.group({
       object: [''],
-      adults: [''],
-      children: [''],
+      person: [''],
       beds: [''],
-      size: [''],
-      smoking: ['']
+      cancellation: ['']
     });
 
     this.unit=new Unit();
@@ -47,10 +45,8 @@ export class NewUnitComponent implements OnInit {
   }
   onSubmit() {
     console.log(this.newUnitForm.value);
-    this.unit.size=this.newUnitForm.value.size;
-    this.unit.smoking=this.newUnitForm.value.smoking;
-    this.unit.adults=this.newUnitForm.value.adults;
-    this.unit.children=this.newUnitForm.value.childern;
+    this.unit.person=this.newUnitForm.value.person;
+    this.unit.cancellation=this.newUnitForm.value.cancellation;
     this.unit.beds=this.newUnitForm.value.beds;
     for(let object of this.objectList){
       if(object.id==this.newUnitForm.value.object){

@@ -1,7 +1,7 @@
 package module.agent.services;
 
 import module.agent.model.Message;
-import module.agent.model.Users.RegisteredUser;
+import module.agent.model.RegisteredUser;
 import module.agent.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,5 +37,11 @@ public class MessageService {
                 mes.add(m.getRegisteredUser());
         }
         return mes;
+    }
+
+    public boolean messageSeen(Message m){
+        m.setSeen(true);
+        messageRepository.save(m);
+        return true;
     }
 }

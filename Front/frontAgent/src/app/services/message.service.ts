@@ -30,4 +30,8 @@ export class MessageService {
   allMessagesFromUser(id: number): Observable<any> {
     return this.http.get<any>(this.unitURL + "/getFromUser/" + id);
   }
+
+  messageSeen(message: Message): Observable<any> {
+    return this.http.put<any>(this.unitURL + "/seen/" , message);
+  }
 }

@@ -4,8 +4,7 @@ import {PlanService} from "../services/plan.service";
 import {Plan, PriceSchedule, Unit} from "../model";
 import {UnitService} from "../services/unit.service";
 import {ActivatedRoute} from '@angular/router';
-
-
+import {NgbDate, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-new-plan',
   templateUrl: './new-plan.component.html',
@@ -27,17 +26,18 @@ export class NewPlanComponent implements OnInit {
   plans: Plan[]=[];
   readonlyP: boolean;
   brojUListi: number;
-  constructor(private formBuilder: FormBuilder, private planService: PlanService, private unitService: UnitService, private activatedRoute: ActivatedRoute) {
+  fromDate: NgbDate;
+  toDate: NgbDate;
+  constructor(private formBuilder: FormBuilder, private planService: PlanService, private unitService: UnitService, private activatedRoute: ActivatedRoute, private calendar: NgbCalendar) {
 
   }
 
   ngOnInit() {
     this.newPlanForm=this.formBuilder.group({
-      from: [new Date()],
-      to: [''],
+      from: null,
+      to: null,
       price: [''],
-      perPerson: [''],
-      month: ['0']
+      perPerson: ['']
 
     })
     this.dateNow=new Date();
@@ -60,6 +60,8 @@ export class NewPlanComponent implements OnInit {
     this.fS=1;
     this.readonlyP=false;
     this.brojUListi=0;
+    this.fromDate = this.calendar.getToday();
+    this.toDate = this.calendar.getNext(this.calendar.getToday(), 'd', 1);
   }
 
 
@@ -73,7 +75,6 @@ export class NewPlanComponent implements OnInit {
     this.priceSchedule.plan=[];
     this.priceSchedule.made=new Date();
     this.plan=this.newPlanForm.value;
-    this.plan.month=0;
     this.plan.from=new Date(this.dateNow.getFullYear(), this.dateNow.getMonth(), this.dateNow.getDate(), 0,0,0,0);
     this.plan.to=new Date(this.dateOneYear.getFullYear()+1, this.dateOneYear.getMonth(), this.dateOneYear.getDate(), 0,0,0,0);
     console.log("ovde ");
@@ -105,21 +106,33 @@ export class NewPlanComponent implements OnInit {
 
   addFnc(){
     console.log("uslo");
+    const fromDate = this.newPlanForm.get('from').value.toString();
+    const toDate = this.newPlanForm.get('to').value;
+    this.toDate=this.newPlanForm.get('to').value;
+    console.log(fromDate);
+    console.log("********");
+    console.log(toDate);
+    console.log("---------------");
+
+    const fromDateDate = new Date(fromDate);
+    const toDateDate = new Date(toDate.year, toDate.month , toDate.day, 0, 0, 0);
+    console.log(fromDateDate);
+    console.log("**********");
+    console.log(toDateDate);
+
+    this.newPlanForm.patchValue({
+     // from: fromDateDate.getFullYear()+"-"+fromDateDate.getMonth()+"-"+fromDateDate.getDate(),
+      from: fromDateDate,
+      //to: toDateDate.getFullYear()+"-"+toDateDate.getMonth()+"-"+toDateDate.getDate()
+      to: toDateDate
+    });
+    //const pom = new Date(toDate.year, toDate.month, toDate.day+1, 0, 0, 0);
+    const pom=this.calendar.getNext(this.toDate, 'd',1);
     this.plans.push(this.newPlanForm.value);
     console.log(this.plans);
-    let pomD : Date=new Date(new Date(this.newPlanForm.value.to).getTime() + 24*60*60*1000);
-  //  pomD=this.newPlanForm.value.to;
-   // pomD=new Date(new Date(pomD).setDate(new Date(pomD).getDate()+1));
-    if(new Date(pomD).getMonth()<10 && new Date(pomD).getDate()>=10)
-      this.newPlanForm.controls['from'].setValue(new Date(pomD).getFullYear()+"-0"+ new Date(pomD).getMonth()+"-"+ new Date(pomD).getDate());
-    else if(new Date(pomD).getDate()<10 && new Date(pomD).getMonth()>=10)
-      this.newPlanForm.controls['from'].setValue(new Date(pomD).getFullYear()+"-"+ new Date(pomD).getMonth()+"-0"+ new Date(pomD).getDate());
+    //this.newPlanForm.controls['from'].setValue(new Date(pom).getFullYear()+"-"+new Date(pom).getMonth()+"-"+new Date(pom).getDate());
 
-    else if(new Date(pomD).getMonth()<10 && new Date(pomD).getDate()<10 )
-      this.newPlanForm.controls['from'].setValue(new Date(pomD).getFullYear()+"-0"+ new Date(pomD).getMonth()+"-0"+ new Date(pomD).getDate());
-    else
-      this.newPlanForm.controls['from'].setValue(new Date(pomD).getFullYear()+"-"+ new Date(pomD).getMonth()+"-"+ new Date(pomD).getDate());
-
+    this.newPlanForm.controls['from'].setValue(pom.year+"-"+pom.month+"-"+pom.day);
 
     this.readonlyP=false;
   }
@@ -145,5 +158,18 @@ export class NewPlanComponent implements OnInit {
     this.plans[this.brojUListi].price=this.newPlanForm.value.price;
     this.readonlyP=false;
     this.newPlanForm.controls['from'].setValue(this.plans[this.plans.length-1].to);
+  }
+
+  onDateSelected() {
+
+    console.log('Promena');
+
+    this.toDate = this.calendar.getNext(this.newPlanForm.get('from').value, 'd', 1);
+
+    this.newPlanForm.patchValue({
+      endDate: this.toDate
+
+    });
+
   }
 }

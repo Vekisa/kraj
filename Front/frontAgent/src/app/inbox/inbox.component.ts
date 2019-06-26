@@ -28,4 +28,19 @@ export class InboxComponent implements OnInit {
     this.router.navigateByUrl('/home/readMessages/' + id);
   }
 
+
+  unseenMessage(id: number): boolean{
+    this.messageService.allMessagesFromUser(id).subscribe(data=>
+      {
+        this.messages=data;
+        console.log(this.messages[0].text);
+          if(this.messages[0].seen==false){
+
+            return true;
+          }
+
+      }
+    )
+    return false;
+  }
 }

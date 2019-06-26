@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import module.agent.model.Message;
-import module.agent.model.Users.RegisteredUser;
+import module.agent.model.RegisteredUser;
 import module.agent.services.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -63,5 +63,17 @@ public class MessageController {
     })
     public ResponseEntity<List<Message>> getFromUser(@PathVariable Long id){
         return new ResponseEntity<>(messageService.fromUser(id), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/seen", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Poruka procitana", httpMethod = "PUT", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Message.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<Boolean> seenMessage(@RequestBody Message m){
+        System.out.println("Uslo update ");
+        return new ResponseEntity<Boolean>(messageService.messageSeen(m), HttpStatus.OK);
     }
 }

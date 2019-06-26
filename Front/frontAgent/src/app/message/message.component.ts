@@ -20,8 +20,12 @@ export class MessageComponent implements OnInit {
       console.log(data['id']);
       this.messageService.allMessagesFromUser(data['id']).subscribe(data=>
       {this.messages=data;
+        this.messageService.messageSeen(this.messages[0]).subscribe(data=>
+          {console.log(data)}
+        );
       } )
     });
+
     this.message=new Message();
   }
 
@@ -33,6 +37,8 @@ export class MessageComponent implements OnInit {
   sendMessage(){
     this.message.postingDate=new Date();
     this.message.registeredUser=this.messages[0].registeredUser;
+    this.message.fromUser=this.messages[0].agent.id;
+    this.message.agent=this.messages[0].agent;
     this.messageService.newMessage(this.message).subscribe(data=>
     console.log(data));
     this.router.navigateByUrl('/home/showMessages'+this.messages[0].registeredUser.id);
