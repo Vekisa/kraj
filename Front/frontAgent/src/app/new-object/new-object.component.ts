@@ -21,7 +21,6 @@ export class NewObjectComponent implements OnInit {
     this.newObjectForm=this.formBuilder.group({
       name: [''],
       description: [''],
-      cancellation: [''],
       category: ['']
     })
     this.newAddressForm=this.formBuilder.group({

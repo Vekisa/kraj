@@ -7,7 +7,7 @@
 
   <div *ngIf="fS=='1'">
     <form [formGroup]="newPlanForm" (ngSubmit)="onSubmitYear()">
-      <div class="form-label-group" >
+   <!--   <div class="form-label-group" >
         <label for="from">From date</label>
         <input type="text" value="{{dateN}}" class="form-control" [formControlName]="'from'"
                required readonly>
@@ -17,7 +17,29 @@
         <label for="to">To date</label>
         <input type="text"  value="{{dateOY}}" class="form-control" [formControlName]="'to'"
                required readonly>
+      </div>-->
+      <div class="form-label-group">
+        <label for="from">From date</label>
+        <div class="input-group">
+          <input  class="form-control" readonly
+                 [formControlName]="'from'" name="d1" ngbDatepicker #d1="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button" disabled><i
+              class="fas fa-calendar"></i></button>
+          </div>
+        </div>
       </div>
+        <div class="form-label-group">
+          <label for="to">From date</label>
+          <div class="input-group">
+            <input  class="form-control" readonly
+                    [formControlName]="'to'" name="d0" ngbDatepicker #d0="ngbDatepicker">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary calendar" (click)="d0.toggle()" type="button" disabled><i
+                class="fas fa-calendar"></i></button>
+            </div>
+          </div>
+        </div>
       <div class="form-label-group" >
         <label for="price">Price</label>
         <input type="number" id="price"  class="form-control" [formControlName]="'price'"
@@ -73,9 +95,14 @@
       <div class="form-label-group">
         <label for="from">From date</label>
         <div class="input-group">
-          <input id="from" class="form-control" placeholder="Required" readonly
-                  [formControlName]="'from'">
+          <input id="from" class="form-control" readonly
+                  [formControlName]="'from'" name="d2" ngbDatepicker #d2="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button" disabled><i
+              class="fas fa-calendar"></i></button>
+          </div>
         </div>
+
       </div>
 
       <div class="form-label-group">

@@ -18,7 +18,7 @@ export class NewPlanComponent implements OnInit {
   fS: number;
 
   dateNow: Date;
-  dateOneYear: Date;
+  dateOneYear: NgbDate;
   dateN: String;
   dateOY: String;
   priceSchedule: PriceSchedule;
@@ -40,14 +40,15 @@ export class NewPlanComponent implements OnInit {
       perPerson: ['']
 
     })
-    this.dateNow=new Date();
+   /* this.dateNow=new Date();
     this.dateN=this.dateNow.getFullYear().toString() + '-'+this.dateNow.getMonth().toString()+ '-'+this.dateNow.getDate().toString();
     this.dateOneYear=this.dateNow;
     this.dateOneYear.setFullYear(this.dateNow.getFullYear()+1, this.dateNow.getMonth(), this.dateNow.getDate());
     this.dateNow.setFullYear(this.dateNow.getFullYear()-1, this.dateNow.getMonth(), this.dateNow.getDate())
     this.dateOY=this.dateOneYear.getFullYear().toString()+ '-'+this.dateOneYear.getMonth().toString()+ '-'+this.dateOneYear.getDate().toString();
-    this.priceSchedule=new PriceSchedule();
-    this.newPlanForm.controls['from'].setValue(this.dateNow.toISOString().substring(0,10));
+    */
+   this.priceSchedule=new PriceSchedule();
+    //this.newPlanForm.controls['from'].setValue(this.dateNow.toISOString().substring(0,10));
     this.unit=new Unit();
 
     this.activatedRoute.params.subscribe(data=>{
@@ -61,7 +62,10 @@ export class NewPlanComponent implements OnInit {
     this.readonlyP=false;
     this.brojUListi=0;
     this.fromDate = this.calendar.getToday();
+    this.newPlanForm.controls['from'].setValue(this.fromDate);
     this.toDate = this.calendar.getNext(this.calendar.getToday(), 'd', 1);
+    this.dateOneYear=this.calendar.getNext(this.calendar.getToday(), 'd', 365);
+    this.newPlanForm.controls['to'].setValue(this.dateOneYear);
   }
 
 
@@ -76,7 +80,7 @@ export class NewPlanComponent implements OnInit {
     this.priceSchedule.made=new Date();
     this.plan=this.newPlanForm.value;
     this.plan.from=new Date(this.dateNow.getFullYear(), this.dateNow.getMonth(), this.dateNow.getDate(), 0,0,0,0);
-    this.plan.to=new Date(this.dateOneYear.getFullYear()+1, this.dateOneYear.getMonth(), this.dateOneYear.getDate(), 0,0,0,0);
+    this.plan.to=new Date(this.dateOneYear.year, this.dateOneYear.month, this.dateOneYear.day,0,0,0);
     console.log("ovde ");
     console.log(this.plan);
     this.priceSchedule.plan.push(this.plan);
@@ -105,34 +109,20 @@ export class NewPlanComponent implements OnInit {
   }
 
   addFnc(){
-    console.log("uslo");
-    const fromDate = this.newPlanForm.get('from').value.toString();
+    const fromDate = this.newPlanForm.get('from').value;
     const toDate = this.newPlanForm.get('to').value;
     this.toDate=this.newPlanForm.get('to').value;
-    console.log(fromDate);
-    console.log("********");
-    console.log(toDate);
-    console.log("---------------");
 
-    const fromDateDate = new Date(fromDate);
+    const fromDateDate = new Date(fromDate.year, fromDate.month , fromDate.day, 0, 0, 0);
     const toDateDate = new Date(toDate.year, toDate.month , toDate.day, 0, 0, 0);
-    console.log(fromDateDate);
-    console.log("**********");
-    console.log(toDateDate);
-
     this.newPlanForm.patchValue({
-     // from: fromDateDate.getFullYear()+"-"+fromDateDate.getMonth()+"-"+fromDateDate.getDate(),
       from: fromDateDate,
-      //to: toDateDate.getFullYear()+"-"+toDateDate.getMonth()+"-"+toDateDate.getDate()
       to: toDateDate
     });
-    //const pom = new Date(toDate.year, toDate.month, toDate.day+1, 0, 0, 0);
     const pom=this.calendar.getNext(this.toDate, 'd',1);
     this.plans.push(this.newPlanForm.value);
-    console.log(this.plans);
-    //this.newPlanForm.controls['from'].setValue(new Date(pom).getFullYear()+"-"+new Date(pom).getMonth()+"-"+new Date(pom).getDate());
 
-    this.newPlanForm.controls['from'].setValue(pom.year+"-"+pom.month+"-"+pom.day);
+    this.newPlanForm.controls['from'].setValue(pom);
 
     this.readonlyP=false;
   }
