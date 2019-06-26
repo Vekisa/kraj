@@ -92,7 +92,7 @@ public class UnitController {
             @ApiResponse(code = 400, message = "Bad Request.")
     })
     public ResponseEntity<Plan> createPlan(@RequestBody Plan plan){
-        System.out.println("Uslo plan " + plan.getFrom() + " fromat " + new Date());
+        System.out.println("Uslo plan " + plan.getFromDate() + " fromat " + new Date());
         return new ResponseEntity<>(planService.create(plan), HttpStatus.CREATED);
     }
 
