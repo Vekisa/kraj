@@ -3,36 +3,34 @@ package modul.search.dto;
 
 
 import modul.search.model.AccommodationType;
+import modul.search.model.Image;
 import modul.search.model.Object;
 import modul.search.model.Unit;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.List;
 
 public class UnitDTO {
 
     private Long id;
-    private BigInteger adults;
-    private Integer children;
-    private BigInteger beds;
-    private BigDecimal size;
-    private Boolean smoking;
+    private Integer person;
+    private Integer beds;
     private ObjectDTO object;
+    private List<Image> image;
     private AccommodationTypeDTO accommodationType;
 
-    public UnitDTO(Long id, BigInteger adults, Integer children, BigInteger beds, BigDecimal size, Boolean smoking, Object object, AccommodationType accommodationType){
+    public UnitDTO(Long id, Integer person, Integer beds, Object object, AccommodationType accommodationType, List<Image> image) {
         this.setId(id);
-        this.setAdults(adults);
-        this.setChildren(children);
+        this.setPerson(person);
         this.setBeds(beds);
-        this.setSize(size);
-        this.setSmoking(smoking);
         this.setObject(new ObjectDTO(object));
+        this.setImage(image);
         this.setAccommodationType(new AccommodationTypeDTO(accommodationType));
     }
 
-    public UnitDTO(Unit unit){
-        this(unit.getId(),unit.getAdults(),unit.getChildren(),unit.getBeds(),unit.getSize(),unit.isSmoking(),unit.getObject(),unit.getAccommodationType());
+    public UnitDTO(Unit unit) {
+        this(unit.getId(), unit.getPerson(), unit.getBeds(), unit.getObject(), unit.getAccommodationType(), unit.getImage());
     }
 
     public Long getId() {
@@ -43,44 +41,20 @@ public class UnitDTO {
         this.id = id;
     }
 
-    public BigInteger getAdults() {
-        return adults;
+    public Integer getPerson() {
+        return person;
     }
 
-    public void setAdults(BigInteger adults) {
-        this.adults = adults;
+    public void setPerson(Integer person) {
+        this.person = person;
     }
 
-    public Integer getChildren() {
-        return children;
-    }
-
-    public void setChildren(Integer children) {
-        this.children = children;
-    }
-
-    public BigInteger getBeds() {
+    public Integer getBeds() {
         return beds;
     }
 
-    public void setBeds(BigInteger beds) {
+    public void setBeds(Integer beds) {
         this.beds = beds;
-    }
-
-    public BigDecimal getSize() {
-        return size;
-    }
-
-    public void setSize(BigDecimal size) {
-        this.size = size;
-    }
-
-    public Boolean getSmoking() {
-        return smoking;
-    }
-
-    public void setSmoking(Boolean smoking) {
-        this.smoking = smoking;
     }
 
     public ObjectDTO getObject() {
@@ -89,6 +63,14 @@ public class UnitDTO {
 
     public void setObject(ObjectDTO object) {
         this.object = object;
+    }
+
+    public List<Image> getImage() {
+        return image;
+    }
+
+    public void setImage(List<Image> image) {
+        this.image = image;
     }
 
     public AccommodationTypeDTO getAccommodationType() {

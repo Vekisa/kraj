@@ -86,7 +86,7 @@ public class Unit {
     protected boolean smoking;
     @XmlElement(name = "Price_schedule", namespace = "http://megatravell.com/object")
     @OneToMany
-    protected List<PriceSchedule> priceSchedule;
+    private List<PriceSchedule> priceSchedule;
     @XmlElement(name = "AccommodationType", namespace = "http://megatravell.com/object", required = true)
     @ManyToOne
     protected AccommodationType accommodationType;
@@ -312,4 +312,7 @@ public class Unit {
         this.object = value;
     }
 
+    public void setPriceSchedule(List<PriceSchedule> priceSchedule) {
+        this.priceSchedule = priceSchedule;
+    }
 }

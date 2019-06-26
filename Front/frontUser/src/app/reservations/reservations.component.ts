@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Reservation} from "../../../../frontAgent/src/app/model";
+import {ReservationService} from "../services/reservation.service";
 
 @Component({
   selector: 'app-reservations',
@@ -6,10 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./reservations.component.css']
 })
 export class ReservationsComponent implements OnInit {
-
-  constructor() { }
+  reservations : Reservation[];
+  constructor(private reservationService : ReservationService) { }
 
   ngOnInit() {
+    this.reservationService.getAllForUser().subscribe(data =>{
+      this.reservations = data;
+    });
   }
 
 }

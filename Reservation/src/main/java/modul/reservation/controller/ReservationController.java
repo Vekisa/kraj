@@ -10,10 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/reservation")
 public class ReservationController {
@@ -41,6 +43,17 @@ public class ReservationController {
     })
     public ResponseEntity<List<Reservation>> getReservations(){
         return new ResponseEntity<>(reservationService.findAll(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get_all_for_user", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Ispis rezervacija", httpMethod = "GET", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Reservation.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<List<Reservation>> getReservationsForUser(OAuth2Authentication user){
+        return new ResponseEntity<>(reservationService.getReservationsForUser(user), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/checkReservation", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)

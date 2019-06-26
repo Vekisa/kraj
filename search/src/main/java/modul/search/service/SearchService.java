@@ -33,7 +33,7 @@ public class SearchService {
         List<Unit> okUnits = new ArrayList<>();
 
         for(Unit unit : units){
-            System.out.println(unit.getObject().getAdress().getCity() + " " + unit.getAdults());
+            System.out.println(unit.getObject().getAdress().getCity());
             String city1 = ((unit.getObject().getAdress().getCity().replaceAll("\\s+","")).trim()).toLowerCase();
             String city2 = ((city.replaceAll("\\s+","")).trim()).toLowerCase();
 
@@ -48,7 +48,7 @@ public class SearchService {
                 continue;
             }
 
-            if(unit.getAdults().intValue() <  persons) {
+            if(unit.getPerson() <  persons) {
                 System.out.println("IZBACIO ZBOG PERSONS");
                 continue;
             }

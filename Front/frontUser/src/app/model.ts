@@ -17,19 +17,30 @@ class ObjectForDropDown{
 
 export class Plan{
   id: number;
-  from: Date;
-  to: Date;
+  fromDate: Date;
+  toDate: Date;
   price: number;
   month: number;
   perPerson: boolean;
 
   constructor(id: number, fromDate: Date, toDate: Date, price: number,  perPerson: boolean){
     this.id=id;
-    this.from=fromDate;
-    this.to=toDate;
+    this.fromDate = fromDate;
+    this.toDate = toDate;
     this.price=price;
     this.month=0;
     this.perPerson=perPerson;
+  }
+}
+
+class ExtraOption{
+  id: number;
+  name: string;
+  description: string;
+  constructor(id:number,name:string,description:string){
+    this.id = id;
+    this.name = name;
+    this.description = description;
   }
 }
 
@@ -175,8 +186,6 @@ class Type{
   constructor(name:string){
     this.name=name;
   }
-
-
 }
 
 export class NewPass {

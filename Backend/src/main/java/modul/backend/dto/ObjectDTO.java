@@ -1,5 +1,6 @@
 package modul.backend.dto;
 
+
 import modul.backend.model.Adress;
 import modul.backend.model.Object;
 
@@ -14,7 +15,7 @@ public class ObjectDTO {
     public ObjectDTO() {
     }
 
-    public ObjectDTO(Long id, String name, String description,  Integer category, Adress address){
+    public ObjectDTO(Long id, String name, String description, Integer category, Adress address){
         this.setId(id);
         this.setName(name);
         this.setDescription(description);
@@ -49,7 +50,6 @@ public class ObjectDTO {
     public void setDescription(String description) {
         this.description = description;
     }
-
 
     public Integer getCategory() {
         return category;

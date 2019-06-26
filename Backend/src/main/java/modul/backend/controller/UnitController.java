@@ -1,7 +1,7 @@
 package modul.backend.controller;
-
-import modul.backend.dto.UnitDTO;
+import modul.backend.model.Plan;
 import modul.backend.service.UnitService;
+import modul.backend.dto.UnitDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,4 +29,11 @@ public class UnitController {
 
         return new ResponseEntity<>(unitService.getAll(), HttpStatus.OK);
     }
+
+    @RequestMapping(value="/{id}/price_schedule", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Plan>> getPlanForYear(@PathVariable(value = "id") Long id) {
+
+        return new ResponseEntity<>(unitService.getPlanForYear(id), HttpStatus.OK);
+    }
+
 }

@@ -4,10 +4,19 @@ import modul.reservation.model.Plan;
 import modul.reservation.model.PriceSchedule;
 import modul.reservation.model.Reservation;
 import modul.reservation.model.Unit;
+import modul.reservation.model.Users.RegisteredUser;
+import modul.reservation.model.Users.User;
+import modul.reservation.repository.RegisteredUserRepository;
 import modul.reservation.repository.ReservationRepository;
+import modul.reservation.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,11 +28,35 @@ public class ReservationService {
     @Autowired
     private ReservationRepository reservationRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private RegisteredUserRepository registeredUserRepository;
+
     public Reservation save(Reservation reservation) {
         if(!checkReservation(reservation)){
                 return null;
         }
         return reservationRepository.save(reservation);
+    }
+
+    public List<Reservation> getReservationsForUser(OAuth2Authentication user){
+        String username = user.getUserAuthentication().getName();
+
+        User userObj = getUser(username);
+        Optional<RegisteredUser> usr = registeredUserRepository.findById(userObj.getId());
+        if(!usr.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"User is not logged in");
+
+        return usr.get().getReservation();
+
+    }
+
+    public User getUser(String username){
+        User user = userRepository.findByUsername(username).orElseThrow(
+                () -> new UsernameNotFoundException("User Not Found with username or email : " + username));
+        return user;
     }
 
     //proveriti da li brise i iz liste korisnika...
@@ -88,7 +121,7 @@ public class ReservationService {
     }
 
     public double calculatePrice(Reservation reservation){
-        Unit u=reservation.getUnit();
+        Unit u = reservation.getUnit();
         double price=0;
         Date s=reservation.getStart();
         for(PriceSchedule ps: u.getPriceSchedule()){

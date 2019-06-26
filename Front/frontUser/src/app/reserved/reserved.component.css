@@ -1,0 +1,57 @@
+ul {
+  text-align: center;
+ 
+}
+
+.star {
+  font-size: 1.5rem;
+  color: #5590dd;
+}
+.filled {
+  color: #1e90ff;
+}
+
+.left-side{
+  position: absolute;
+  left:0%;
+  width: 60%;
+}
+
+.float-right{
+  position: absolute;
+  right:0%;
+  width: 40%;
+}
+
+
+ul {
+  text-align: center;
+}
+
+.carousel-item{
+  height: 450px;
+} 
+.carousel-item img{
+  height: 450px;
+}
+
+.text-center{
+
+  text-align: center;
+  text-transform: uppercase;
+  color: #4286f4;
+}
+
+.btn {
+  background-color: DodgerBlue; /* Blue background */
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  padding: 12px 16px; /* Some padding */
+  font-size: 16px; /* Set a font size */
+  cursor: pointer; /* Mouse pointer on hover */
+}
+
+/* Darker background on mouse-over */
+.btn:hover {
+  background-color: RoyalBlue;
+}
