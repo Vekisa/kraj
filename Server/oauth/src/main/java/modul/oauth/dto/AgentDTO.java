@@ -2,7 +2,7 @@ package modul.oauth.dto;
 
 
 import modul.oauth.model.Adress;
-import modul.oauth.model.Users.Agent;
+import modul.oauth.model.Agent;
 
 public class AgentDTO {
 

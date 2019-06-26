@@ -7,7 +7,7 @@
       <excludeFolder url="file://$MODULE_DIR$/Front/front_security/dist" />
       <excludeFolder url="file://$MODULE_DIR$/Front/front_security/tmp" />
     </content>
-    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
+    <orderEntry type="jdk" jdkName="1.8.0_152" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

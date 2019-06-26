@@ -1,8 +1,9 @@
 package modul.oauth.controller;
 
 import modul.oauth.dto.AgentDTO;
-import modul.oauth.model.Users.*;
+import modul.oauth.model.*;
 import modul.oauth.security.PasswordChange;
+import modul.oauth.security.Regex;
 import modul.oauth.security.ResponseMessage;
 import modul.oauth.security.SignUpRequest;
 import modul.oauth.service.Logging;
@@ -17,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.lang.Object;
 import java.security.Principal;
 import java.util.Calendar;
 import java.util.List;

@@ -1,5 +1,5 @@
 
-package modul.backend.model;
+package modul.oauth.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,7 +1,7 @@
 package modul.oauth.repository;
 
-import modul.oauth.model.Users.User;
-import modul.oauth.model.Users.VerificationToken;
+import modul.oauth.model.User;
+import modul.oauth.model.VerificationToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

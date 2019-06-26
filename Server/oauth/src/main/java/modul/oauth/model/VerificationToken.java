@@ -1,5 +1,5 @@
 
-package modul.backend.model;
+package modul.oauth.model;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;

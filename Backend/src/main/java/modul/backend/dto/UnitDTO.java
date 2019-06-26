@@ -8,11 +8,11 @@ import java.math.BigInteger;
 public class UnitDTO {
 
     private Long id;
-    private BigInteger adults;
-    private BigInteger beds;
+    private int adults;
+    private int beds;
     private ObjectDTO object;
 
-    public UnitDTO(Long id, BigInteger adults,BigInteger beds,  Object object){
+    public UnitDTO(Long id, int adults,int beds,  Object object){
         this.setId(id);
         this.setAdults(adults);
         this.setBeds(beds);
@@ -31,22 +31,21 @@ public class UnitDTO {
         this.id = id;
     }
 
-    public BigInteger getAdults() {
+    public int getAdults() {
         return adults;
     }
 
-    public void setAdults(BigInteger adults) {
+    public void setAdults(int adults) {
         this.adults = adults;
     }
 
-    public BigInteger getBeds() {
+    public int getBeds() {
         return beds;
     }
 
-    public void setBeds(BigInteger beds) {
+    public void setBeds(int beds) {
         this.beds = beds;
     }
-
 
     public ObjectDTO getObject() {
         return object;

@@ -64,8 +64,8 @@
     <xs:element name="Unit">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="Person" type="xs:int"/>
-                <xs:element name="Beds" type="xs:int"/>
+                <xs:element name="Person" type="xs:positiveInteger"/>
+                <xs:element name="Beds" type="xs:positiveInteger"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="object:Price_schedule"/>
                 <xs:element ref="object:AccommodationType"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="object:Image"/>

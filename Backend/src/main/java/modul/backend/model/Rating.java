@@ -2,11 +2,7 @@
 package modul.backend.model;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 
 
 /**
@@ -70,7 +66,7 @@ public class Rating {
 
     /**
      * Gets the value of the mark property.
-     * 
+     *
      */
     public int getMark() {
         return mark;
@@ -78,7 +74,7 @@ public class Rating {
 
     /**
      * Sets the value of the mark property.
-     * 
+     *
      */
     public void setMark(int value) {
         this.mark = value;
@@ -86,11 +82,11 @@ public class Rating {
 
     /**
      * Gets the value of the object property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Object }
-     *     
+     *
      */
     public Object getObject() {
         return object;
@@ -98,11 +94,11 @@ public class Rating {
 
     /**
      * Sets the value of the object property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Object }
-     *     
+     *
      */
     public void setObject(Object value) {
         this.object = value;

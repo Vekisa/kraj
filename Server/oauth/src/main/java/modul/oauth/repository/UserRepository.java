@@ -1,6 +1,6 @@
 package modul.oauth.repository;
 
-import modul.oauth.model.Users.User;
+import modul.oauth.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

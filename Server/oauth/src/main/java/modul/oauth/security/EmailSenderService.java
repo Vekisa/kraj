@@ -1,8 +1,8 @@
 package modul.oauth.security;
 
 import modul.oauth.dto.AgentDTO;
-import modul.oauth.model.Users.User;
-import modul.oauth.model.Users.VerificationToken;
+import modul.oauth.model.User;
+import modul.oauth.model.VerificationToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;

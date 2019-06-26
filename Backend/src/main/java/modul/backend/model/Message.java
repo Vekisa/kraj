@@ -1,4 +1,3 @@
-
 package modul.backend.model;
 
 import javax.persistence.*;
@@ -9,9 +8,9 @@ import java.util.Date;
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -28,56 +27,55 @@ import java.util.Date;
  *         &lt;element ref="{http://www.megatravell.com/user}Agent"/>
  *         &lt;element ref="{http://www.megatravell.com/user}RegisteredUser"/>
  *         &lt;element name="seen" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
- *         &lt;element name="from" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="fromUser" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "text",
-    "postingDate",
-    "agent",
-    "registeredUser",
-    "seen",
-    "from",
-    "id"
+        "text",
+        "postingDate",
+        "agent",
+        "registeredUser",
+        "seen",
+        "fromUser",
+        "id"
 })
-@XmlRootElement(name = "Message", namespace = "http://www.megatravell.com/user")
 @Entity
-@Table
+@XmlRootElement(name = "Message", namespace = "http://www.megatravell.com/user")
 public class Message {
 
-    @XmlElement(name = "Text", namespace = "http://www.megatravell.com/user", required = true)
-    @Column
-    protected String text;
-    @XmlElement(namespace = "http://www.megatravell.com/user", required = true)
-    @XmlSchemaType(name = "dateTime")
-    @Column
-    protected Date postingDate;
-    @XmlElement(name = "Agent", namespace = "http://www.megatravell.com/user", required = true)
-    @ManyToOne
-    protected Agent agent;
-    @XmlElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user", required = true)
-    @ManyToOne
-    protected RegisteredUser registeredUser;
-    @XmlElement(namespace = "http://www.megatravell.com/user")
-    @Column
-    protected boolean seen;
-    @XmlElement(namespace = "http://www.megatravell.com/user")
-    @Column
-    protected long from;
-    @XmlElement(namespace = "http://www.megatravell.com/user")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @XmlElement(namespace = "http://www.megatravell.com/user")
     protected long id;
+    @Column
+    @XmlElement(name = "Text", namespace = "http://www.megatravell.com/user", required = true)
+    protected String text;
+    @Column
+    @XmlElement(namespace = "http://www.megatravell.com/user", required = true)
+    @XmlSchemaType(name = "dateTime")
+    protected Date postingDate;
+    @ManyToOne
+    @XmlElement(name = "Agent", namespace = "http://www.megatravell.com/user", required = true)
+    protected Agent agent;
+    @ManyToOne
+    @XmlElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user", required = true)
+    protected RegisteredUser registeredUser;
+    @Column
+    @XmlElement(namespace = "http://www.megatravell.com/user")
+    protected boolean seen;
+    @Column
+    @XmlElement(namespace = "http://www.megatravell.com/user")
+    protected long fromUser;
 
-    public Message(){}
+
     /**
      * Gets the value of the text property.
      *
@@ -168,7 +166,7 @@ public class Message {
      * @param value
      *     allowed object is
      *     {@link RegisteredUser }
-     *     
+     *
      */
     public void setRegisteredUser(RegisteredUser value) {
         this.registeredUser = value;
@@ -176,7 +174,7 @@ public class Message {
 
     /**
      * Gets the value of the seen property.
-     * 
+     *
      */
     public boolean isSeen() {
         return seen;
@@ -184,31 +182,31 @@ public class Message {
 
     /**
      * Sets the value of the seen property.
-     * 
+     *
      */
     public void setSeen(boolean value) {
         this.seen = value;
     }
 
     /**
-     * Gets the value of the from property.
-     * 
+     * Gets the value of the fromUser property.
+     *
      */
-    public long getFrom() {
-        return from;
+    public long getFromUser() {
+        return fromUser;
     }
 
     /**
-     * Sets the value of the from property.
-     * 
+     * Sets the value of the fromUser property.
+     *
      */
-    public void setFrom(long value) {
-        this.from = value;
+    public void setFromUser(long value) {
+        this.fromUser = value;
     }
 
     /**
      * Gets the value of the id property.
-     * 
+     *
      */
     public long getId() {
         return id;
@@ -216,7 +214,7 @@ public class Message {
 
     /**
      * Sets the value of the id property.
-     * 
+     *
      */
     public void setId(long value) {
         this.id = value;

@@ -7,7 +7,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,6 +61,12 @@ public class Agent
     protected List<Message> message;
 
     public Agent(){}
+
+    public Agent(String firstName, String lastName, String email, @Size(max = 15) String username, String password, Adress adress, boolean isEnabled, XMLGregorianCalendar lastPasswordResetDate, boolean isVerified, List<Role> role,String bussinesRegistrationNumber) {
+        super(firstName, lastName, email, username, password, adress, isEnabled, lastPasswordResetDate, isVerified, role);
+        this.bussinesRegistrationNumber = bussinesRegistrationNumber;
+    }
+
     /**
      * Gets the value of the bussinesRegistrationNumber property.
      * 

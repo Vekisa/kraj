@@ -3,7 +3,7 @@ package modul.oauth.service;
 import com.sun.org.apache.regexp.internal.RE;
 import modul.oauth.dto.AgentDTO;
 import modul.oauth.model.Adress;
-import modul.oauth.model.Users.*;
+import modul.oauth.model.*;
 import modul.oauth.repository.RoleRepository;
 import modul.oauth.repository.UserRepository;
 import modul.oauth.repository.VerificationTokenRepository;
@@ -33,6 +33,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.SystemException;
 import javax.transaction.Transactional;
+import java.lang.Object;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.*;
@@ -81,7 +82,7 @@ public class UserServiceImpl implements UserDetailsService {
 
     public Map<String, Object> getUserInfo (OAuth2Authentication user) {
 
-        Map<String, Object> userInfo = new HashMap<>();
+        Map<String, java.lang.Object> userInfo = new HashMap<>();
         userInfo.put("user", user.getUserAuthentication().getPrincipal());
         userInfo.put("authorities", AuthorityUtils.authorityListToSet(user.getUserAuthentication().getAuthorities()));
         return userInfo;
@@ -109,10 +110,10 @@ public class UserServiceImpl implements UserDetailsService {
         Role role = roleRepository.findByName("ROLE_REG")
                 .orElseThrow(() -> new RuntimeException("Role can't be found!"));
 
-        RegisteredUser registeredUser = new RegisteredUser(signUpRequest.getUsername(),
-                signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getEmail(), passwordHash, null, false, false, new ArrayList<Role>());
+        RegisteredUser registeredUser = new RegisteredUser(
+                signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getEmail(),signUpRequest.getUsername(),passwordHash,null,false,null, false, new ArrayList<Role>());
 
-        registeredUser.getRoles().add(role);
+        registeredUser.getRole().add(role);
         //role.getUsers().add(registeredUser);
 
         String token = UUID.randomUUID().toString();
@@ -138,11 +139,11 @@ public class UserServiceImpl implements UserDetailsService {
         Role role_reg = roleRepository.findByName("ROLE_REG")
                 .orElseThrow(() -> new RuntimeException("Role can't be found!"));
 
-        Agent agent = new Agent(agentDto.getUsername(),agentDto.getFirstName(),agentDto.getLastName(),
-                agentDto.getEmail(),passwordHash,null,false,false,new ArrayList<Role>(),agentDto.getBussinesRegistrationNumber());
+        Agent agent = new Agent(agentDto.getFirstName(),agentDto.getLastName(),
+                agentDto.getEmail(),agentDto.getUsername(),passwordHash,null,false,null,false,new ArrayList<Role>(),agentDto.getBussinesRegistrationNumber());
 
-        agent.getRoles().add(role_agent);
-        agent.getRoles().add(role_reg);
+        agent.getRole().add(role_agent);
+        agent.getRole().add(role_reg);
 
         String token = UUID.randomUUID().toString();
         userRepository.save(agent);
@@ -180,8 +181,8 @@ public class UserServiceImpl implements UserDetailsService {
 
         logging.printInfo("User " + user.getUsername() + " confirming email .");
 
-        user.setVerified(true);
-        user.setEnabled(true);
+        user.setIsVerified(true);
+        user.setIsEnabled(true);
         userRepository.save(user);
 
         return "pass";
