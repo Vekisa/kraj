@@ -19,8 +19,10 @@ export class NewUnitComponent implements OnInit {
   unit: Unit;
   image: Image;
   formData: FormData = new FormData();
-
+  slike: File[]=[];
   file: File=null;
+
+  nn: number;
   constructor(private formBuilder: FormBuilder, private unitService: UnitService, private objectService: ObjectService, private router: Router) { }
 
   ngOnInit() {
@@ -42,8 +44,26 @@ export class NewUnitComponent implements OnInit {
     this.unit=new Unit();
     this.image=new Image();
     this.unit.image=[];
+    this.nn=0;
   }
   onSubmit() {
+    for(let l=0; l<this.slike.length; l++){
+      if(this.slike[l]!=null && l<this.slike.length) {
+        this.formData.append(this.slike[l].name, this.slike[l]);
+        this.unitService.newImage(this.slike[l]).subscribe(data => {
+            this.unit.image.push(data)
+            console.log(data);
+          console.log("unti l " + this.unit.image.length + " n " +this.nn);
+            if(this.unit.image.length==this.slike.length-this.nn){
+              this.createUnit();
+            }
+          }
+        )
+      }
+    }
+  }
+
+  createUnit(){
     console.log(this.newUnitForm.value);
     this.unit.person=this.newUnitForm.value.person;
     this.unit.cancellation=this.newUnitForm.value.cancellation;
@@ -55,11 +75,9 @@ export class NewUnitComponent implements OnInit {
     }
     console.log(this.unit);
     this.unitService.newUnit(this.unit).subscribe(data=>
-    {this.router.navigateByUrl('/home/newPlan/' + data.id);
-      console.log(data)}
+      {this.router.navigateByUrl('/home/newPlan/' + data.id);
+        console.log(data)}
     );
-
-
   }
 
   createObject(){
@@ -69,36 +87,36 @@ export class NewUnitComponent implements OnInit {
   onSelectedImage(event){
 
     this.file=<File> event.target.files[0];
+    this.slike.push(this.file);
+    /* this.formData.append(this.file.name, this.file);
+   * this.unitService.newImage(this.file).subscribe(data=>
+     { this.unit.image.push(data);
+       console.log(data)}
+       )
+     /*const reader = new FileReader();
+     reader.onload = (eve: any) => {
+       this.logo = eve.target.result;
+       let pom= eve.target.result;
+       let pomS= pom.split(",");
+       this.image.source= pomS[1];
+       this.unit.image.push(this.image);
+       console.log(this.image.source);
 
-    this.formData.append(this.file.name, this.file);
-    this.unitService.newImage(this.file).subscribe(data=>
-    { this.unit.image.push(data);
-      console.log(data)}
-      )
-    /*const reader = new FileReader();
-    reader.onload = (eve: any) => {
-      this.logo = eve.target.result;
-      let pom= eve.target.result;
-      let pomS= pom.split(",");
-      this.image.source= pomS[1];
-      this.unit.image.push(this.image);
-      console.log(this.image.source);
+       this.unitService.newImage(this.image.source).subscribe(data=>
+       console.log(data))
+     };
+     reader.readAsDataURL(event.target.files[0]);
 
-      this.unitService.newImage(this.image.source).subscribe(data=>
-      console.log(data))
-    };
-    reader.readAsDataURL(event.target.files[0]);
+    /* let fileList: FileList = event.target.files;
+     if(fileList.length > 0) {
+       let file: File = fileList[0];
+       let formData:FormData = new FormData();
+       formData.append('uploadFile', file, file.name);
+       this.image.source=this.logo;
+       console.log(this.logo);
+       this.unit.image.push(this.image);
 
-   /* let fileList: FileList = event.target.files;
-    if(fileList.length > 0) {
-      let file: File = fileList[0];
-      let formData:FormData = new FormData();
-      formData.append('uploadFile', file, file.name);
-      this.image.source=this.logo;
-      console.log(this.logo);
-      this.unit.image.push(this.image);
-
-    }*/
+     }*/
   }
 
   /*onUpload(){
@@ -109,5 +127,8 @@ export class NewUnitComponent implements OnInit {
     console.log(this.image);
   }*/
 
-
+  ukloni(i: number){
+    this.slike[i]=null;
+    this.nn++;
+  }
 }

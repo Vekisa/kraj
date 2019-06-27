@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {ObjectService} from "../services/object.service";
-import {Adress, Object, Type} from "../model";
+import {Adress, Object} from "../model";
 import { Router } from '@angular/router';
 
 @Component({
@@ -19,17 +19,16 @@ export class NewObjectComponent implements OnInit {
 
   ngOnInit() {
     this.newObjectForm=this.formBuilder.group({
-      name: [''],
-      description: [''],
-      cancellation: [''],
-      category: ['']
+      name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9 ]*'), Validators.maxLength(50)]],
+      description: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9,.!?: ]*'), Validators.maxLength(250)]],
+      category: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(2)]]
     })
     this.newAddressForm=this.formBuilder.group({
-      state: [''],
-      city: [''],
-      street: [''],
-      number: [''],
-      zip: [''],
+      state: ['', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.maxLength(30)]],
+      city: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9- ]*'), Validators.maxLength(30)]],
+      street: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9,.-/ ]*'), Validators.maxLength(50)]],
+      number: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(4)]],
+      zip: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9 ]*'), Validators.maxLength(10)]],
       longitude: [''],
       latitude: ['']
     })

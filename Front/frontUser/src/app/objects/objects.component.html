@@ -72,6 +72,7 @@
       </div>
     </div>
 
+    <!--
   <div class="card" style="width: 200%;">
 
     <ul class="list-unstyled card ">
@@ -89,7 +90,7 @@
     </ul>
 </div>
 
-
+-->
   </div>
 
 </div>
@@ -127,8 +128,56 @@
           </tr>
         </tbody>
       </table>
-      <a class="btn btn-primary" *ngIf="isLoggedIn">Reserve</a>
+      <a class="btn btn-primary" *ngIf="isLoggedIn" data-toggle="modal" data-target="#myModal">Reserve</a>
     </div>
   </div>
 </div>
 </div>
+
+
+
+<div class="modal" id="myModal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Only a few more details</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body form-row">
+          <form class="form-inline ">
+              <div class="form-group  mx-sm-4">
+                <ejs-daterangepicker id='daterangepicker' placeholder='Select a range' [startDate]='start' [endDate]='end'></ejs-daterangepicker>
+              </div>
+
+              <div class="form-row align-items-center justify-content-center">
+                <div class="form-group mx-sm-4">
+                <!--  <label class="mr-sm-2" for="inlineFormCustomSelect">Extra options:</label> -->
+                  <ng-multiselect-dropdown
+                  [placeholder]="'Select additional'"
+                  [data]="dropdownList"
+                  [(ngModel)]="selectedItems"
+                  [settings]="dropdownSettings"
+                  (onSelect)="onItemSelect($event)"
+                  (onSelectAll)="onSelectAll($event)"
+                >
+                </ng-multiselect-dropdown>
+                </div>
+              </div>
+            </form>
+            
+            <hr/>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+          <button type="button" class="btn btn-outline-primary text-right" data-dismiss="modal">Confirm</button>
+        </div>
+
+    </div>
+  </div>
+</div>
+

@@ -1,6 +1,6 @@
 package modul.reservation.repository;
 
-import modul.reservation.model.Users.User;
+import modul.reservation.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

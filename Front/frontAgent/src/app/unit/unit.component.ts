@@ -69,5 +69,8 @@ export class UnitComponent implements OnInit {
     this.router.navigateByUrl('/home/createReservation/' + un.id);
   }
 
+  newPriceSchedule(i: number){
+    this.router.navigateByUrl('/home/newPlan/' + this.units[i].id);
+  }
 
 }
