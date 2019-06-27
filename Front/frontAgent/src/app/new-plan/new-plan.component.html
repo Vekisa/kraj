@@ -46,8 +46,8 @@
                required >
       </div>
       <div class="form-label-group" >
-        <label for="perPerson">Price per person: </label>
-        <input type="checkbox" id="perPerson"  class="form-control" [formControlName]="'perPerson'">
+        <span> <label for="perPerson">Price per person: </label></span>
+       <span> <input type="checkbox" id="perPerson"  class="form-control" [formControlName]="'perPerson'"></span>
       </div>
       <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">
         Create
@@ -125,18 +125,18 @@
                required >
       </div>
       <div class="form-label-group" >
-        <label for="perPerson">Price per person: </label>
-        <input type="checkbox"  class="form-control" [formControlName]="'perPerson'">
+        <span><label for="perPerson">Price per person: </label></span>
+        <span><input type="checkbox"  class="form-control" [formControlName]="'perPerson'"></span>
       </div>
 
       <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">
         Create
       </button>
     </form>
-    <button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="addFnc()" *ngIf="readonlyP==false">
+    <button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="addFnc()" *ngIf="readonlyP==false" [disabled]="!newPlanForm.valid">
       Add
     </button>
-    <button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="editFnc()" *ngIf="readonlyP" >
+    <button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="editFnc()" *ngIf="readonlyP" [disabled]="!newPlanForm.valid">
       Save changes
     </button>
   </div>

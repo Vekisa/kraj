@@ -29,9 +29,16 @@
     Create price schedule for unit
   </button>
 </form>
+
+<table>
+  <tr *ngFor="let im of slike; let i=index" >
+    <td *ngIf="im!=null">{{im.name}}</td>
+    <td *ngIf="im!=null"><button (click)="ukloni(i)">X</button></td>
+  </tr>
+</table>
 <input
   style="display: none"
   type="file" (change)="onSelectedImage($event)"
   accept=".jpg,.png" #fileInput>
-<button (click)="fileInput.click()">Select File</button>
+<button (click)="fileInput.click()"> Select File</button>
 
