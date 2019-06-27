@@ -75,7 +75,7 @@ export class AuthService {
   }
 
   saveUser(regUser:RegisteredUser):Observable<any>{
-    return this.http.post(this.baseUrl+"uua/user/save",regUser);
+    return this.http.post(this.baseUrl+"uua/user/auth/save",regUser);
   }
 
   changeEmail(regUser:RegisteredUser):Observable<any>{

@@ -43,8 +43,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests().antMatchers("/user/save","user/confirmToken/").permitAll()
-                .anyRequest().authenticated().and().formLogin().permitAll();
+        http.authorizeRequests().antMatchers("/user/auth/**").permitAll()
+                .anyRequest().authenticated();
 
     }
 

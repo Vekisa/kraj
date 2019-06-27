@@ -96,6 +96,15 @@ public class Reservation {
     public Reservation() {
     }
 
+    public Reservation(Date start, Date end, boolean confirmed, Date possibleCancellationDate, double price, Unit unit) {
+        this.start = start;
+        this.end = end;
+        this.confirmed = confirmed;
+        this.possibleCancellationDate = possibleCancellationDate;
+        this.price = price;
+        this.unit = unit;
+    }
+
     /**
      * Gets the value of the start property.
      * 

@@ -33,7 +33,7 @@ public class EmailSenderService {
         mailMessage.setSubject("Complete Registration!");
         mailMessage.setFrom("bezbednostprojekat@gmail.com");
         mailMessage.setText("To confirm your account, please click here : "
-                + "http://localhost:8762/uua/user/confirmToken?token=" + user.getVerificationToken().getVerificationToken());
+                + "http://localhost:8762/uua/user/auth/confirmToken?token=" + user.getVerificationToken().getVerificationToken());
         this.sendEmail(mailMessage);
     }
 
@@ -43,7 +43,7 @@ public class EmailSenderService {
         mailMessage.setSubject("Complete Registration!");
         mailMessage.setFrom("bezbednostprojekat@gmail.com");
         mailMessage.setText("Hello " + user.getUsername() + " Welcome to MegaTravel ," +
-                " To confirm your Agent account, please click here : " + "http://localhost:8762/uua/user/confirmToken?token=" + verificationToken.getVerificationToken() +
+                " To confirm your Agent account, please click here : " + "http://localhost:8762/uua/user/auth/confirmToken?token=" + verificationToken.getVerificationToken() +
         "Your temporary password :" +user.getPassword() );
 
         this.sendEmail(mailMessage);

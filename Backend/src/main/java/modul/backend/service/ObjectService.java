@@ -34,7 +34,7 @@ public class ObjectService {
 
     public List<ObjectDTO> getAll(){
         System.out.println("Usao u servis");
-        return DTOList.objects(objectRepository.findAll());
+        return null;
     }
 
     public  List<ExtraOptionDTO> getExtraOptions(Long id){

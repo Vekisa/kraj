@@ -54,7 +54,7 @@ public class UserController {
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
-    @PostMapping("/save")
+    @PostMapping("/auth/save")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest, HttpServletRequest hr) {
         logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + signUpRequest.getUsername() + " IP ADDRESS: "
                 + hr.getRemoteAddr() + " PARAMETERS: " + signUpRequest.getEmail() + ", " + signUpRequest.getFirstName() + ", " + signUpRequest.getLastName() + ", " + signUpRequest.getEmail());
@@ -105,7 +105,7 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = "/confirmToken")
+    @RequestMapping(value = "/auth/confirmToken")
     public ResponseEntity<?> confirmReg(@RequestParam("token") String token, HttpServletRequest hr) {
         //logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + token);
 
