@@ -3,6 +3,14 @@ ul {
  
 }
 
+h4{
+  color: #1e90ff;
+
+}
+
+.filled {
+  color: #1e90ff;
+}
 .star {
   font-size: 1.5rem;
   color: #5590dd;
@@ -42,7 +50,7 @@ ul {
   color: #4286f4;
 }
 
-.btn {
+.btn-com {
   background-color: DodgerBlue; /* Blue background */
   border: none; /* Remove borders */
   color: white; /* White text */

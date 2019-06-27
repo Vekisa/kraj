@@ -75,7 +75,7 @@
 
 
 
-    <div class="card" style="width: 165%;">
+    <div class="card" style="width: 167%;">
 
         <ul class="list-unstyled card ">
           <li class="media">
@@ -103,8 +103,41 @@
               Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
             </div>
           </li>
-          <li class="list-group-item"> <button class="btn  btn-lg active"><i class="fa fa-comments"></i> Leave a comment</button></li>
+          <li class="list-group-item"> <button class="btn-com  btn-lg active" data-toggle="modal" data-target="#myModal"><i class="fa fa-comments"></i> Leave a comment</button></li>
    
+          <!-- The Modal -->
+  <div class="modal" id="myModal">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+    
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Add comment</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+    
+          <!-- Modal body -->
+          <div class="modal-body">
+              <form>
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Comment:</label>
+                    <div class="col-sm-10">
+                      <input class="form-control form-control-lg"  placeholder="Comment...">
+                    </div>
+                  </div>
+                </form>
+          </div>
+    
+          <!-- Modal footer -->
+          <div class="modal-footer">
+              <button type="button" class="btn btn-outline-primary text-right" data-dismiss="modal">Summit</button>
+            </div>
+    
+        </div>
+      </div>
+    </div>
+
+
         </ul>
     </div>
     

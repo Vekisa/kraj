@@ -20,6 +20,7 @@ import { AccountComponent } from './account/account.component';
 import { ObjectsComponent } from './objects/objects.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ReservedComponent } from './reserved/reserved.component';
+import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { ReservedComponent } from './reserved/reserved.component';
     NgMultiSelectDropDownModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
+    DateRangePickerModule,
     HttpClientModule,
     NgbModule.forRoot()
   ],
