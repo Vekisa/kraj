@@ -6,8 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ReservationImplementation implements IReservation {
-
+public class ReservationWebServiceImpl implements ReservationWebService {
     @Autowired
     ReservationRepository reservationRepository;
 
