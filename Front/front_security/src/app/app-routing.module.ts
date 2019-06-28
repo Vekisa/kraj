@@ -15,6 +15,7 @@ import {CertificatePanelComponent} from "./certificate/certificate-panel/certifi
 import {GroupService} from "./service/group.service";
 import {GroupComponent} from "./user/group/group.component";
 import {UserRolesComponent} from "./user/user-roles/user-roles.component";
+import {AuthGuard} from "./security/auth.guard";
 
 const routes: Routes = [
   {
@@ -34,7 +35,7 @@ const routes: Routes = [
     component: HomeComponent
   },
   {
-    path: 'user_panel', component: UserPanelComponent,
+    path: 'user_panel', component: UserPanelComponent,canActivate:[AuthGuard],data: { roles: ["ROLE_MAIN_ADMIN"] },
     children: [
       {path: '', redirectTo: 'users', pathMatch: 'full'},
       {path: 'users', component: UsersComponent},
@@ -44,7 +45,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'certificate_panel', component: CertificatePanelComponent,
+    path: 'certificate_panel', component: CertificatePanelComponent,canActivate:[AuthGuard],data: { roles: ["ROLE_MAIN_ADMIN","ROLE_ADMIN"] },
     children: [
       {path: '', redirectTo: 'all', pathMatch: 'full'},
       {path: 'all', component: NewCertificateComponent},

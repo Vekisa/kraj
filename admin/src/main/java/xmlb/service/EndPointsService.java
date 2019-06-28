@@ -33,6 +33,9 @@ public class EndPointsService {
     private RoleService roleService;
 
     public void updateDatabase(Map<RequestMappingInfo, HandlerMethod> map) {
+
+        endPointRepository.deleteAll();
+
         EndPoint endPoint;
         String path = "";
         String[] parts;

@@ -71,13 +71,19 @@ export class NewCertificateComponent implements OnInit {
     const fromDate = this.certForm.get('startDate').value;
     const toDate = this.certForm.get('endDate').value;
 
-    const fromDateDate = new Date(fromDate.year, fromDate.month - 1, fromDate.day, 0, 0, 0);
-    const toDateDate = new Date(toDate.year, toDate.month - 1, toDate.day, 0, 0, 0);
+    let hours = new Date().getHours();
+    let min = new Date().getMinutes()+2;
+
+    console.log(hours+" "+ min)
+
+    const fromDateDate = new Date(fromDate.year, fromDate.month - 1, fromDate.day, hours, min, 0);
+    const toDateDate = new Date(toDate.year, toDate.month - 1, toDate.day, hours, min, 0);
+
+    console.log(fromDateDate);
 
     this.certForm.patchValue({
       startDate: fromDateDate,
       endDate: toDateDate
-
     });
 
     console.log(this.certForm.value);
@@ -88,6 +94,7 @@ export class NewCertificateComponent implements OnInit {
         this.certificateService.allCertificatesWithoutLeafs().subscribe(data => {
           this.cert = data;
           this.certTemp = data;
+          this.certForm.reset();
         }), err => {
         alert(err.error.message);
       }

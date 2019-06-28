@@ -27,6 +27,7 @@ import {UserPanelComponent} from './user/user-panel/user-panel.component';
 import {CertificatePanelComponent} from './certificate/certificate-panel/certificate-panel.component';
 import {GroupComponent} from './user/group/group.component';
 import {UserRolesComponent} from './user/user-roles/user-roles.component';
+import {AuthGuard} from "./security/auth.guard";
 
 
 @NgModule({
@@ -59,7 +60,7 @@ import {UserRolesComponent} from './user/user-roles/user-roles.component';
     NgbModule,
     AppRoutingModule
   ],
-  providers: [httpInterceptorProviders],
+  providers: [httpInterceptorProviders,AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {

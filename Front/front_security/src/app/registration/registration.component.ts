@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {User} from "../model";
 import {AuthService} from "../authentication/auth.service";
 import {ConfirmPasswordValidator} from "../validation/confirm-pass.validator";
+import {TokenService} from "../authentication/token.service";
 
 @Component({
   selector: 'app-registration',
@@ -19,10 +20,14 @@ export class RegistrationComponent implements OnInit {
 
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService) {
+  constructor(private formBuilder: FormBuilder, private authService: AuthService,private tokenStorage: TokenService) {
   }
 
   ngOnInit() {
+    if (this.tokenStorage.getToken()) {
+
+      this.reloadPage();
+    }
 
     this.signUpForm = this.formBuilder.group({
 

@@ -136,7 +136,8 @@ public class CertificateService {
         List<Certificate> certificateWithoutLeafs = new ArrayList<>();
 
         for (Certificate certificate : certificates) {
-            System.out.println("PROVERAMA: " + certificate.getAlias());
+            System.out.println("IF VALID: " + checkIfValid(certificate.getSerialNumber()));
+            System.out.println("IF LEAF: " +certificate.getLeaf() );
             if (!certificate.getLeaf() && checkIfValid(certificate.getSerialNumber())) {
                 System.out.println("UBACIO: " + certificate.getAlias());
                 certificateWithoutLeafs.add(certificate);
@@ -229,6 +230,8 @@ public class CertificateService {
     }
 
     public void createNewIssuedCertificate(CertificateDTO certificateDTO) throws CertIOException, OperatorCreationException, CertificateException {
+
+        System.out.println("DATUM "+certificateDTO.getStartDate());
 
         //VALIDACIJA
         validateCertificateFromFront(certificateDTO);
@@ -351,6 +354,8 @@ public class CertificateService {
 
     public boolean checkIfValid(String serialNumber) {
 
+        System.out.println("CHECK IF VALID");
+
         String pass = "";
 
         if (serialNumber.equals("1")) {
@@ -360,7 +365,7 @@ public class CertificateService {
         }
 
         if (checkRevokeStatus(serialNumber)) {
-            logging.printInfo("IN FUNC: FALSE");
+            logging.printInfo("IN FUNC: FALSE REVOKED");
             return false;
         }
 
@@ -436,14 +441,18 @@ public class CertificateService {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
         Certificate certificate = getCertificateFromDB(serialNumber);
+        certificate.getCompany().getFilePath();
 
         String name = certificate.getCompany().getFilePath();
 
+
         System.out.println(name);
+
+
 
         KeyStoreReader keyStoreReader = new KeyStoreReader();
 
-        logging.printInfo("IN FUNC: Success");
+        logging.printInfo("IN FUNC: Read Success");
         return keyStoreReader.readCertificate(name, pass, certificate.getAlias());
     }
 

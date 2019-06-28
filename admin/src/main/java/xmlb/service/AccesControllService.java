@@ -47,6 +47,7 @@ public class AccesControllService {
 
         String[] parts = s.split("/");
         String url = "/" + s.substring(3 + parts[0].length() + parts[1].length() + parts[2].length(), s.length());
+        System.out.println();
         EndPoint endPoint = endPointRepository.findByUrl(url);
         List<Role> endPointRoles = endPoint.getRoles();
 

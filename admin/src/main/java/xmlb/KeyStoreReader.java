@@ -90,15 +90,15 @@ public class KeyStoreReader {
                 return cert;
             }
         } catch (KeyStoreException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Something went wrong");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Something went wrong EXP");
         } catch (NoSuchProviderException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Something went wrong");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Something went wrong NOSUH");
         } catch (FileNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Something went wrong");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Something went wrong FILE");
         } catch (NoSuchAlgorithmException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Something went wrong");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Something went wrong ALG");
         } catch (CertificateException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Something went wrong");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Something went wrong CERT");
         } catch (IOException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong password");
 

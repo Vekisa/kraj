@@ -30,10 +30,10 @@ public class XmlbApplication implements ApplicationListener {
 
     @Override
     public void onApplicationEvent(ApplicationEvent applicationEvent) {
-        if (applicationEvent instanceof ContextRefreshedEvent) {
-            ApplicationContext applicationContext = ((ContextRefreshedEvent) applicationEvent).getApplicationContext();
-            Map<RequestMappingInfo, HandlerMethod> map = applicationContext.getBean(RequestMappingHandlerMapping.class).getHandlerMethods();
-            endPointsService.updateDatabase(map);
-        }
+//        if (applicationEvent instanceof ContextRefreshedEvent) {
+//            ApplicationContext applicationContext = ((ContextRefreshedEvent) applicationEvent).getApplicationContext();
+//            Map<RequestMappingInfo, HandlerMethod> map = applicationContext.getBean(RequestMappingHandlerMapping.class).getHandlerMethods();
+//            endPointsService.updateDatabase(map);
+//        }
     }
 }

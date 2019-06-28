@@ -145,7 +145,7 @@ public class AuthenticationController {
 
     @RequestMapping(value = "/confirmReg")
     public ResponseEntity<?> confirmReg(@RequestParam("token") String token, HttpServletRequest hr) {
-        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + token);
+        logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + token);
         VerificationToken verificationToken = userService.getToken(token);
         if (verificationToken == null) {
             logging.printError("IN FUNC: Inavlid token");

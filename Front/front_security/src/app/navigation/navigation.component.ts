@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TokenService} from "../authentication/token.service";
+import {User} from "../model";
 
 @Component({
   selector: 'app-navigation',
@@ -10,6 +11,7 @@ export class NavigationComponent implements OnInit {
 
   isLoggedIn = false;
   mainAdmin = null;
+  username:any;
 
   constructor(private tokenStorage: TokenService) {
   }
@@ -18,6 +20,7 @@ export class NavigationComponent implements OnInit {
 
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
+      this.username = this.tokenStorage.getUsername();
       this.mainAdmin = this.tokenStorage.getAuthorities().includes("ROLE_MAIN_ADMIN");
       console.log(this.mainAdmin);
     }
