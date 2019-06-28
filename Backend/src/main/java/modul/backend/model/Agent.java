@@ -53,6 +53,7 @@ public class Agent
 {
 
     @XmlElement(name = "BussinesRegistrationNumber", namespace = "http://www.megatravell.com/user", required = true)
+    @Size(min = 3, max = 30)
     @Column
     protected String bussinesRegistrationNumber;
     @XmlElement(name = "Message", namespace = "http://www.megatravell.com/user")
