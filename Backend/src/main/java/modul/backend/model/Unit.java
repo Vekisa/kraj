@@ -82,6 +82,9 @@ public class Unit {
     @Column
     protected int cancellation;
 
+    public Unit() {
+    }
+
     /**
      * Gets the value of the person property.
      *

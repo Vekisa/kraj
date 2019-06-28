@@ -16,7 +16,6 @@ import org.springframework.xml.xsd.XsdSchema;
 @Configuration
 public class ConfigWebService extends WsConfigurerAdapter {
 
-
     @Bean
     public ServletRegistrationBean messageDispatcherServlet(ApplicationContext applicationContext) {
         MessageDispatcherServlet servlet = new MessageDispatcherServlet();
@@ -25,7 +24,7 @@ public class ConfigWebService extends WsConfigurerAdapter {
         return new ServletRegistrationBean(servlet, "/soapws/*");
     }
     @Bean(name = "reservation")
-    public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema reservationSchema) {
+    public DefaultWsdl11Definition defaultWsdl11DefinitionReservation(XsdSchema reservationSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("ReservationPort");
         wsdl11Definition.setLocationUri("/soapws");
@@ -38,6 +37,24 @@ public class ConfigWebService extends WsConfigurerAdapter {
         return new SimpleXsdSchema(new ClassPathResource("xsd/reservation.xsd"));
 
     }
+
+    @Bean(name = "wobject")
+    public DefaultWsdl11Definition defaultWsdl11DefinitionObject(XsdSchema objectSchema) {
+        DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
+        wsdl11Definition.setPortTypeName("ObjectPort");
+        wsdl11Definition.setLocationUri("/soapws");
+        wsdl11Definition.setTargetNamespace("http://www.megatravell.com/wobject");
+        wsdl11Definition.setSchema(objectSchema);
+        return wsdl11Definition;
+    }
+    @Bean
+    public XsdSchema objectSchema() {
+        return new SimpleXsdSchema(new ClassPathResource("xsd/WObject.xsd"));
+
+    }
+
+
+
 
 
 }

@@ -75,6 +75,8 @@ public class Message {
     @XmlElement(namespace = "http://www.megatravell.com/user")
     protected long fromUser;
 
+    public Message() {
+    }
 
     /**
      * Gets the value of the text property.

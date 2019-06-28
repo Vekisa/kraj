@@ -4,6 +4,7 @@ package modul.backend.model;
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -57,7 +58,9 @@ import java.util.List;
 @Entity
 @Table(name = "reservation")
 @XmlRootElement(name = "Reservation", namespace = "http://megatravell.com/object")
-public class Reservation {
+public class Reservation implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @XmlElement(name = "Start", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")

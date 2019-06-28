@@ -16,7 +16,9 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="ReservationAllRequest"/>
+    <xs:element name="ReservationAllRequest">
+        <xs:complexType/>
+    </xs:element>
     <xs:element name="ReservationAllResponse">
         <xs:complexType>
             <xs:sequence>

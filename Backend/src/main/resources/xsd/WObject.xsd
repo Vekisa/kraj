@@ -1,106 +1,110 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="http://www.megatravell.com/reservation"
-    xmlns:service="http://www.megatravell.com/reservation">
-    <xs:element name="ReservationRequest">
+    targetNamespace="http://www.megatravell.com/wobject"
+    xmlns:address="http://www.megatravell.com/address"
+    xmlns:service="http://www.megatravell.com/reservation"
+    xmlns:wobject="http://www.megatravell.com/wobject">
+    <xs:import namespace="http://www.megatravell.com/reservation" schemaLocation="reservation.xsd"/>
+    <xs:import namespace="http://www.megatravell.com/address" schemaLocation="Adress.xsd"/>
+    <xs:element name="ObjectRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="id" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="ReservationResponse">
+    <xs:element name="ObjectResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element maxOccurs="1" name="Reservation" type="service:ReservationWS"/>
+                <xs:element name="Object" type="wobject:ObjectWS"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="ReservationAllRequest"/>
-    <xs:element name="ReservationAllResponse">
+    <xs:element name="ObjectAllRequest"/>
+    <xs:element name="ObjectAllResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="Reservation"
-                    type="service:ReservationWS"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="Object"
+                    type="wobject:ObjectWS"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="ReservationAddRequest">
+    <xs:element name="ObjectAddRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element maxOccurs="1" name="Reservation" type="service:ReservationWS"/>
+                <xs:element name="Object" type="wobject:ObjectWS"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="ReservationAddResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="ResponseMessage" type="service:ResponseMessage"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="ReservationUpdateRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element maxOccurs="1" name="Reservation" type="service:ReservationWS"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="ReservationUpdateResponse">
+    <xs:element name="ObjectAddResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="ResponseMessage" type="service:ResponseMessage"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="ReservationDeleteRequest">
+    <xs:element name="ObjectDeleteRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="id" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="ReservationDeleteResponse">
+    <xs:element name="ObjectDeleteResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="ResponseMessage" type="service:ResponseMessage"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:complexType name="ReservationWS">
+    <xs:element name="ObjectUpdateRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Object" type="wobject:ObjectWS"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ObjectUpdateResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ResponseMessage" type="service:ResponseMessage"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="ObjectWS">
         <xs:sequence>
-            <xs:element name="Start" type="xs:date"/>
-            <xs:element name="End" type="xs:date"/>
-            <xs:element default="false" name="Confirmed" type="xs:boolean"/>
-            <xs:element name="PossibleCancellationDate" type="xs:date"/>
-            <xs:element name="Price">
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="Name">
                 <xs:simpleType>
-                    <xs:restriction base="xs:double">
-                        <xs:minInclusive value="0"/>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="id" type="xs:long"/>
-            <xs:element name="ObjectId" type="xs:long"/>
-            <xs:element name="RegisteredUserId" type="xs:long"/>
-            <xs:element maxOccurs="unbounded" name="IncludesId" type="xs:long"/>
-        </xs:sequence>
-    </xs:complexType>
-    <xs:complexType name="IncludesWS">
-        <xs:sequence>
-            <xs:element name="id" type="xs:long"/>
-            <xs:element name="quantity">
+            <xs:element name="Description">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="150"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Category">
                 <xs:simpleType>
                     <xs:restriction base="xs:int">
                         <xs:minInclusive value="0"/>
+                        <xs:maxInclusive value="5"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="ExtraOption" type="service:ExtraOption"/>
-            <xs:element name="ReservationId" type="xs:long"/>
+            <xs:element ref="address:Adress"/>
+            <xs:element name="ObjectTypeId" type="wobject:ObjectType"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="CommentId" type="xs:long"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="ExtraOptionId" type="xs:long"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="UnitId" type="xs:long"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="RatingId" type="xs:long"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="ExtraOption">
+    <xs:complexType name="ObjectType">
         <xs:sequence>
             <xs:element name="Name">
                 <xs:simpleType>
@@ -117,19 +121,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="Price">
-                <xs:simpleType>
-                    <xs:restriction base="xs:double">
-                        <xs:minInclusive value="0"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
             <xs:element name="id" type="xs:long"/>
-        </xs:sequence>
-    </xs:complexType>
-    <xs:complexType name="ResponseMessage">
-        <xs:sequence>
-            <xs:element name="Message" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>

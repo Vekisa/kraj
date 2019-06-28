@@ -1,5 +1,5 @@
 
-package modul.backend.model;
+package modul.backend.model.web;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{http://megatravell.com/object}Reservation"/>
+ *         &lt;element name="Object" type="{http://www.megatravell.com/wobject}ObjectWS"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -29,36 +29,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "reservation"
+    "object"
 })
-@XmlRootElement(name = "ReservationResponse", namespace = "http://www.megatravell.com/service")
-public class ReservationResponse {
+@XmlRootElement(name = "ObjectAddRequest", namespace = "http://www.megatravell.com/wobject")
+public class ObjectAddRequest {
 
-    @XmlElement(name = "Reservation", namespace = "http://megatravell.com/object", required = true)
-    protected Reservation reservation;
+    @XmlElement(name = "Object", namespace = "http://www.megatravell.com/wobject", required = true)
+    protected ObjectWS object;
 
     /**
-     * Gets the value of the reservation property.
+     * Gets the value of the object property.
      * 
      * @return
      *     possible object is
-     *     {@link Reservation }
+     *     {@link ObjectWS }
      *     
      */
-    public Reservation getReservation() {
-        return reservation;
+    public ObjectWS getObject() {
+        return object;
     }
 
     /**
-     * Sets the value of the reservation property.
+     * Sets the value of the object property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Reservation }
+     *     {@link ObjectWS }
      *     
      */
-    public void setReservation(Reservation value) {
-        this.reservation = value;
+    public void setObject(ObjectWS value) {
+        this.object = value;
     }
 
 }

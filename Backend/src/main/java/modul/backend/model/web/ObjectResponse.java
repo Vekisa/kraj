@@ -1,5 +1,5 @@
 
-package modul.backend.model;
+package modul.backend.model.web;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="Object" type="{http://www.megatravell.com/wobject}ObjectWS"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -29,28 +29,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "id"
+    "object"
 })
-@XmlRootElement(name = "ReservationRequest", namespace = "http://www.megatravell.com/service")
-public class ReservationRequest {
+@XmlRootElement(name = "ObjectResponse", namespace = "http://www.megatravell.com/wobject")
+public class ObjectResponse {
 
-    @XmlElement(namespace = "http://www.megatravell.com/service")
-    protected long id;
+    @XmlElement(name = "Object", namespace = "http://www.megatravell.com/wobject", required = true)
+    protected ObjectWS object;
 
     /**
-     * Gets the value of the id property.
+     * Gets the value of the object property.
      * 
+     * @return
+     *     possible object is
+     *     {@link ObjectWS }
+     *     
      */
-    public long getId() {
-        return id;
+    public ObjectWS getObject() {
+        return object;
     }
 
     /**
-     * Sets the value of the id property.
+     * Sets the value of the object property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link ObjectWS }
+     *     
      */
-    public void setId(long value) {
-        this.id = value;
+    public void setObject(ObjectWS value) {
+        this.object = value;
     }
 
 }
