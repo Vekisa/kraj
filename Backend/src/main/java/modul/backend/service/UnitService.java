@@ -1,14 +1,14 @@
 package modul.backend.service;
 
 import modul.backend.dto.UnitDTO;
-import modul.backend.model.Comment;
-import modul.backend.model.Plan;
-import modul.backend.model.PriceSchedule;
-import modul.backend.model.Unit;
+import modul.backend.model.*;
 import modul.backend.repository.CommentRepository;
+import modul.backend.repository.RegisteredUserRepository;
 import modul.backend.repository.UnitRepository;
+import modul.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -22,6 +22,12 @@ public class UnitService {
 
     @Autowired
     private CommentRepository commentRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private RegisteredUserRepository registeredUserRepository;
 
     public UnitDTO findById(Long id){
         Optional<Unit> unit = unitRepository.findById(id);
@@ -73,5 +79,40 @@ public class UnitService {
 
         return new ArrayList<>();
 
+    }
+
+    public Comment createComment(Long id, Comment comment,OAuth2Authentication oAuth2Authentication){
+        RegisteredUser user = getRegisteredUser(oAuth2Authentication);
+        Optional<Unit> unit = unitRepository.findById(id);
+        if(!unit.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Unit does not exist!");
+
+        if(!canUserComment(unit.get(),user))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User cannor comment this unit!");
+
+        comment.setRegisteredUser(user);
+        comment.setDateOfPublication(new Date());
+        comment.setUnit(unit.get());
+        comment.setApproved(false);
+        commentRepository.save(comment);
+        return comment;
+    }
+
+    boolean canUserComment(Unit unit,RegisteredUser user){
+        for(Reservation reservation : user.getReservation()){
+            if(reservation.getRegisteredUser().getId() == user.getId() && reservation.isConfirmed() && reservation.getEnd().before(new Date()))
+                return true;
+        }
+        return false;
+    }
+
+    public RegisteredUser getRegisteredUser(OAuth2Authentication oAuth2Authentication){
+
+        String username = oAuth2Authentication.getUserAuthentication().getName();
+
+        Optional<RegisteredUser> user = registeredUserRepository.findByUsername(username);
+        if(!user.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"User not found!");
+        return user.get();
     }
 }

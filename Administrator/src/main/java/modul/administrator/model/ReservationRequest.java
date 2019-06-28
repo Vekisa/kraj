@@ -1,7 +1,6 @@
 
 package modul.administrator.model;
 
-import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 
 
@@ -15,7 +14,6 @@ import javax.xml.bind.annotation.*;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="source" type="{http://www.w3.org/2001/XMLSchema}base64Binary"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -27,44 +25,13 @@ import javax.xml.bind.annotation.*;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "source",
     "id"
 })
-@XmlRootElement(name = "Image", namespace = "http://megatravell.com/object")
-@Entity
-@Table
-public class Image {
+@XmlRootElement(name = "ReservationRequest", namespace = "http://www.megatravell.com/service")
+public class ReservationRequest {
 
-    @XmlElement(namespace = "http://megatravell.com/object", required = true)
-    @Column
-    protected byte[] source;
-    @XmlElement(namespace = "http://megatravell.com/object")
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @XmlElement(namespace = "http://www.megatravell.com/service")
     protected long id;
-
-    public Image(){}
-    /**
-     * Gets the value of the source property.
-     * 
-     * @return
-     *     possible object is
-     *     byte[]
-     */
-    public byte[] getSource() {
-        return source;
-    }
-
-    /**
-     * Sets the value of the source property.
-     * 
-     * @param value
-     *     allowed object is
-     *     byte[]
-     */
-    public void setSource(byte[] value) {
-        this.source = value;
-    }
 
     /**
      * Gets the value of the id property.

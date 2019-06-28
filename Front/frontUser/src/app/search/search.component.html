@@ -107,16 +107,16 @@
 
     <div class="btn-group btn-group-toggle" data-toggle="buttons">
         <label class="btn btn-outline-primary active">
-          <input type="radio" name="options" id="option1" autocomplete="off"> Price
+          <input type="radio" name="options" id="option1" autocomplete="off" (click)="sortByPrice()"> Price
         </label>
         <label class="btn btn-outline-primary">
-          <input type="radio" name="options" id="option2" autocomplete="off"> Distance
+          <input type="radio" name="options" id="option2" autocomplete="off" (click)="sortByDistance()"> Distance
         </label>
         <label class="btn btn-outline-primary">
-          <input type="radio" name="options" id="option3" autocomplete="off"> Rating
+          <input type="radio" name="options" id="option3" autocomplete="off" (click)="sortByRating()"> Rating
         </label>
         <label class="btn btn-outline-primary">
-            <input type="radio" name="options" id="option4" autocomplete="off"> Category
+            <input type="radio" name="options" id="option4" autocomplete="off" (click)="sortByCategory()"> Category
           </label>
  </div>
  </div>
@@ -133,13 +133,19 @@
       <td><b>{{unit.object.name}}</b>
         <br><b>{{unit.accommodationType.name}}</b><br>
         {{unit.object.description}}<br>
+        <i class="fa fa-star" style="font-size:38px;color:yellow" *ngIf="unit.object.category >0"></i>
+        <i class="fa fa-star" style="font-size:38px;color:yellow" *ngIf="unit.object.category >1"></i>
+        <i class="fa fa-star" style="font-size:38px;color:yellow" *ngIf="unit.object.category >2"></i>
+        <i class="fa fa-star" style="font-size:38px;color:yellow" *ngIf="unit.object.category >3"></i>
+        <i class="fa fa-star" style="font-size:38px;color:yellow" *ngIf="unit.object.category >4"></i>
 
-        <a href = "objects" class="btn btn-warning" role="button" (click)="showUnit(unit.id)">View</a>
       </td>
-      <td><b>Max guests:&nbsp;</b>{{unit.adults}}<br>
+      <td><b>Max guests:&nbsp;</b>{{unit.person}}<br>
         <b>Beds:</b>&nbsp;{{unit.beds}}<br>
-        <b>Size:</b>&nbsp;{{unit.size}}&nbsp;m2<br>
-        <b>Smoking:</b>&nbsp;<p *ngIf="unit.smoking">Allowed</p><p *ngIf="!unit.smoking">Not Allowed</p><br>
+        <b>Cancellation:</b>&nbsp;{{unit.cancellation}}&nbsp;<br>
+        <a href = "objects" class="btn btn-warning" role="button" (click)="showUnit(unit.id)">View</a>
+
+
       </td>
     </tr>
     </tbody>

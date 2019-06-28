@@ -1,11 +1,9 @@
 
 package modul.administrator.model;
 
-
-import modul.administrator.model.Users.RegisteredUser;
-
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,9 +11,9 @@ import java.util.List;
 
 /**
  * <p>Java class for anonymous complex type.
- *
+ * 
  * <p>The following schema fragment specifies the expected content contained within this class.
- *
+ * 
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -35,31 +33,31 @@ import java.util.List;
  *         &lt;element ref="{http://megatravell.com/object}Unit"/>
  *         &lt;element ref="{http://megatravell.com/object}Includes" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element ref="{http://www.megatravell.com/user}RegisteredUser"/>
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-        "start",
-        "end",
-        "confirmed",
-        "possibleCancellationDate",
-        "price",
-        "unit",
-        "includes",
-        "registeredUser"
+    "start",
+    "end",
+    "confirmed",
+    "possibleCancellationDate",
+    "price",
+    "unit",
+    "includes",
+    "registeredUser",
+    "id"
 })
-@XmlRootElement(name = "Reservation", namespace = "http://megatravell.com/object")
 @Entity
 @Table(name = "reservation")
+@XmlRootElement(name = "Reservation", namespace = "http://megatravell.com/object")
 public class Reservation {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @XmlElement(name = "Start", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
@@ -72,35 +70,48 @@ public class Reservation {
     @XmlElement(name = "Confirmed", namespace = "http://megatravell.com/object", defaultValue = "false")
     @Column
     protected boolean confirmed;
+
     @XmlElement(name = "PossibleCancellationDate", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
     @Column
     protected Date possibleCancellationDate;
     @XmlElement(name = "Price", namespace = "http://megatravell.com/object")
-    @Column
     protected double price;
+
+    @ManyToOne
     @XmlElement(name = "Unit", namespace = "http://megatravell.com/object", required = true)
-    @ManyToOne
     protected Unit unit;
-    @XmlElement(name = "Includes", namespace = "http://megatravell.com/object")
     @OneToMany(mappedBy = "reservation")
+    @XmlElement(name = "Includes", namespace = "http://megatravell.com/object")
     protected List<Includes> includes;
-    @XmlElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user", required = true)
+
     @ManyToOne
+    @XmlElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user", required = true)
     protected RegisteredUser registeredUser;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @XmlElement(namespace = "http://megatravell.com/object")
+    protected long id;
 
     public Reservation() {
     }
 
-    public Long getId() {
-        return id;
+    public Reservation(Date start, Date end, boolean confirmed, Date possibleCancellationDate, double price, Unit unit) {
+        this.start = start;
+        this.end = end;
+        this.confirmed = confirmed;
+        this.possibleCancellationDate = possibleCancellationDate;
+        this.price = price;
+        this.unit = unit;
     }
 
     /**
      * Gets the value of the start property.
-     *
-     * @return possible object is
-     * {@link Date }
+     * 
+     * @return
+     *     possible object is
+     *     {@link XMLGregorianCalendar }
+     *     
      */
     public Date getStart() {
         return start;
@@ -108,9 +119,11 @@ public class Reservation {
 
     /**
      * Sets the value of the start property.
-     *
-     * @param value allowed object is
-     *              {@link Date }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link XMLGregorianCalendar }
+     *     
      */
     public void setStart(Date value) {
         this.start = value;
@@ -118,9 +131,11 @@ public class Reservation {
 
     /**
      * Gets the value of the end property.
-     *
-     * @return possible object is
-     * {@link Date }
+     * 
+     * @return
+     *     possible object is
+     *     {@link XMLGregorianCalendar }
+     *     
      */
     public Date getEnd() {
         return end;
@@ -128,9 +143,11 @@ public class Reservation {
 
     /**
      * Sets the value of the end property.
-     *
-     * @param value allowed object is
-     *              {@link Date }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link XMLGregorianCalendar }
+     *     
      */
     public void setEnd(Date value) {
         this.end = value;
@@ -138,6 +155,7 @@ public class Reservation {
 
     /**
      * Gets the value of the confirmed property.
+     * 
      */
     public boolean isConfirmed() {
         return confirmed;
@@ -145,6 +163,7 @@ public class Reservation {
 
     /**
      * Sets the value of the confirmed property.
+     * 
      */
     public void setConfirmed(boolean value) {
         this.confirmed = value;
@@ -152,9 +171,11 @@ public class Reservation {
 
     /**
      * Gets the value of the possibleCancellationDate property.
-     *
-     * @return possible object is
-     * {@link Date }
+     * 
+     * @return
+     *     possible object is
+     *     {@link XMLGregorianCalendar }
+     *     
      */
     public Date getPossibleCancellationDate() {
         return possibleCancellationDate;
@@ -162,9 +183,11 @@ public class Reservation {
 
     /**
      * Sets the value of the possibleCancellationDate property.
-     *
-     * @param value allowed object is
-     *              {@link Date }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link XMLGregorianCalendar }
+     *     
      */
     public void setPossibleCancellationDate(Date value) {
         this.possibleCancellationDate = value;
@@ -172,6 +195,7 @@ public class Reservation {
 
     /**
      * Gets the value of the price property.
+     * 
      */
     public double getPrice() {
         return price;
@@ -179,6 +203,7 @@ public class Reservation {
 
     /**
      * Sets the value of the price property.
+     * 
      */
     public void setPrice(double value) {
         this.price = value;
@@ -186,9 +211,11 @@ public class Reservation {
 
     /**
      * Gets the value of the unit property.
-     *
-     * @return possible object is
-     * {@link Unit }
+     * 
+     * @return
+     *     possible object is
+     *     {@link Unit }
+     *     
      */
     public Unit getUnit() {
         return unit;
@@ -196,9 +223,11 @@ public class Reservation {
 
     /**
      * Sets the value of the unit property.
-     *
-     * @param value allowed object is
-     *              {@link Unit }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Unit }
+     *     
      */
     public void setUnit(Unit value) {
         this.unit = value;
@@ -206,23 +235,25 @@ public class Reservation {
 
     /**
      * Gets the value of the includes property.
-     *
+     * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the includes property.
-     *
+     * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getIncludes().add(newItem);
      * </pre>
-     *
-     *
+     * 
+     * 
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Includes }
+     * 
+     * 
      */
     public List<Includes> getIncludes() {
         if (includes == null) {
@@ -233,9 +264,11 @@ public class Reservation {
 
     /**
      * Gets the value of the registeredUser property.
-     *
-     * @return possible object is
-     * {@link RegisteredUser }
+     * 
+     * @return
+     *     possible object is
+     *     {@link RegisteredUser }
+     *     
      */
     public RegisteredUser getRegisteredUser() {
         return registeredUser;
@@ -243,12 +276,30 @@ public class Reservation {
 
     /**
      * Sets the value of the registeredUser property.
-     *
-     * @param value allowed object is
-     *              {@link RegisteredUser }
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link RegisteredUser }
+     *     
      */
     public void setRegisteredUser(RegisteredUser value) {
         this.registeredUser = value;
+    }
+
+    /**
+     * Gets the value of the id property.
+     * 
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     */
+    public void setId(long value) {
+        this.id = value;
     }
 
 }

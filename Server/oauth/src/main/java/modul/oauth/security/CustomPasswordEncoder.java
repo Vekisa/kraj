@@ -11,7 +11,7 @@ public class CustomPasswordEncoder implements PasswordEncoder {
     @Override
     public String encode(CharSequence charSequence) {
         String password = charSequence.toString();
-        System.out.println("USAO U ENCODE");
+        System.out.println("USAO U ENCODE: " + charSequence);
         try {
             return PasswordHashingService.generateStrongPasswordHash(password);
         } catch (NoSuchAlgorithmException e) {
@@ -24,6 +24,7 @@ public class CustomPasswordEncoder implements PasswordEncoder {
 
     @Override
     public boolean matches(CharSequence charSequence, String s) {
+        System.out.println(charSequence + " " + s);
         String storedPassword = s;
         String password = charSequence.toString();
         String[] parts = storedPassword.split(":");

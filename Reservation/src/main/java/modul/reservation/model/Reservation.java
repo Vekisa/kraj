@@ -1,9 +1,12 @@
 
 package modul.reservation.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -57,7 +60,9 @@ import java.util.List;
 @Entity
 @Table(name = "reservation")
 @XmlRootElement(name = "Reservation", namespace = "http://megatravell.com/object")
-public class Reservation {
+public class Reservation implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @XmlElement(name = "Start", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
@@ -81,10 +86,12 @@ public class Reservation {
     @ManyToOne
     @XmlElement(name = "Unit", namespace = "http://megatravell.com/object", required = true)
     protected Unit unit;
+
     @OneToMany(mappedBy = "reservation")
     @XmlElement(name = "Includes", namespace = "http://megatravell.com/object")
     protected List<Includes> includes;
 
+    @JsonIgnore
     @ManyToOne
     @XmlElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user", required = true)
     protected RegisteredUser registeredUser;
@@ -94,6 +101,15 @@ public class Reservation {
     protected long id;
 
     public Reservation() {
+    }
+
+    public Reservation(Date start, Date end, boolean confirmed, Date possibleCancellationDate, double price, Unit unit) {
+        this.start = start;
+        this.end = end;
+        this.confirmed = confirmed;
+        this.possibleCancellationDate = possibleCancellationDate;
+        this.price = price;
+        this.unit = unit;
     }
 
     /**

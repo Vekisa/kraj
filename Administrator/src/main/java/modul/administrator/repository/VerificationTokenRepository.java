@@ -1,8 +1,7 @@
 package modul.administrator.repository;
 
-
-import modul.administrator.model.Users.User;
-import modul.administrator.model.Users.VerificationToken;
+import modul.administrator.model.User;
+import modul.administrator.model.VerificationToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

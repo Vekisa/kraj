@@ -17,6 +17,7 @@ export class SignupComponent implements OnInit {
   isSignedUp = false;
   isSignUpFailed = false;
   errorMessage = '';
+  spinner = false;
 
   submitted = false;
 
@@ -45,7 +46,7 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit(){
-
+    this.spinner = true;
     this.authService.saveUser(this.signUpForm.value).subscribe(
       data=>{
         this.isSignedUp = true;

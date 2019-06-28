@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/reservation")
 public class ReservationController {
@@ -99,7 +98,7 @@ public class ReservationController {
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity cancelReservation(@PathVariable Long reservation){
+    public ResponseEntity cancelReservation(@PathVariable(value = "id") Long reservation){
         reservationService.delete(reservation);
         return new ResponseEntity<>( HttpStatus.OK);
     }

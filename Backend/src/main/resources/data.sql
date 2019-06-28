@@ -42,3 +42,6 @@ INSERT INTO price_schedule_plan(plan_id,price_schedule_id) VALUES(1,1);
 INSERT INTO price_schedule_plan(plan_id,price_schedule_id) VALUES(2,1);
 
 INSERT INTO comment(approved,date_of_publication,text,registered_user_id,unit_id) VALUES (b'1',DATE'2019-06-26',"Skroz koretkno. Lepo smo se proveli!",1,1);
+INSERT INTO comment(approved,date_of_publication,text,registered_user_id,unit_id) values(b'1',DATE'2019-06-27','Brate ko bi jos ovde dosao. Ovo je blaga katastrofa!!!!',1,1);
+
+INSERT INTO reservation(confirmed,end,possible_cancellation_date,price,start,registered_user_id,unit_id) values (b'1',DATE'2019-06-10',DATE'2019-06-2',500,DATE'2019-06-20',1,1);

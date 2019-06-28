@@ -5,6 +5,20 @@ class Image{
   constructor(){}
 }
 
+class Comment{
+  id: number;
+  text : string;
+  dateOfPublication: Date;
+  registeredUser: RegisteredUser;
+  constructor(id:number,text:string,dateOfPublication: Date,registeredUser: RegisteredUser){
+    this.id = id;
+    this.dateOfPublication = dateOfPublication;
+    this.text = text;
+    this.registeredUser = registeredUser;
+  }
+}
+
+
 class ObjectForDropDown{
   item_id : number;
   item_text : string;
@@ -46,26 +60,59 @@ class ExtraOption{
 
 class Unit {
   id: number;
-  adults: number;
-  children: number;
+  person: number;
   beds: number;
-  smoking: boolean;
-  size: number;
   object: Object;
   image: Image[];
   priceSchedule: PriceSchedule[]=[];
   reservation: string[];
   accommodationType: AccommodationType;
+  cancellation: number;
 
-  constructor(id: number, adults: number, beds: number, smoking : boolean, size: number, object :Object, image: Image[], accommodationType : AccommodationType) {
+  constructor(id: number, person: number, beds: number, object :Object, image: Image[], accommodationType : AccommodationType,cancellation: number, priceSchedule : PriceSchedule[]) {
     this.id = id;
-    this.adults = adults;
     this.beds = beds;
-    this.smoking = smoking;
-    this.size = size;
+    this.person = person;
     this.object = object;
     this.image = image;
     this.accommodationType = accommodationType;
+    this.cancellation = cancellation;
+    this.priceSchedule = priceSchedule;
+  }
+}
+class Includes{
+  id: number;
+  quantity: number;
+  reservation: Reservation;
+  extraOption: ExtraOption;
+  constructor(id:number, quantity:number, reservation: Reservation, extraOption : ExtraOption){
+    this.id = id;
+    this.quantity = quantity;
+    this.reservation = reservation;
+    this.extraOption = extraOption;
+  }
+}
+
+class Reservation{
+  id: number;
+  start: Date;
+  end:Date;
+  confirmed: boolean;
+  possibleCancellationDate: Date;
+  price : number;
+  unit : Unit;
+  registeredUser : RegisteredUser;
+  includes : Includes[];
+  constructor(id: number, start: Date, end: Date, confirmed: boolean, possibleCancellationDate: Date, price : number, unit: Unit, registeredUser: RegisteredUser, includes: Includes[]){
+    this.id = id;
+    this.start = start;
+    this.end = end;
+    this.confirmed = confirmed;
+    this.possibleCancellationDate = possibleCancellationDate;
+    this.price = price;
+    this.unit = unit;
+    this.registeredUser = registeredUser;
+    this.includes = includes;
   }
 
 }
@@ -199,15 +246,4 @@ export class NewPass {
 
 }
 
-class Comment{
-  id: number;
-  text : string;
-  dateOfPublication: Date;
-  registeredUser: RegisteredUser;
-  constructor(id:number,text:string,dateOfPublication: Date,registeredUser: RegisteredUser){
-    this.id = id;
-    this.dateOfPublication = dateOfPublication;
-    this.text = text;
-    this.registeredUser = registeredUser;
-  }
-}
+

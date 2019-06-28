@@ -1,6 +1,8 @@
 
 package modul.reservation.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -66,6 +68,7 @@ public class Comment {
     protected RegisteredUser registeredUser;
     @XmlElement(name = "Unit", namespace = "http://megatravell.com/object", required = true)
     @ManyToOne
+    @JsonIgnore
     protected Unit unit;
     @XmlElement(namespace = "http://megatravell.com/object")
     @Id

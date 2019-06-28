@@ -28,7 +28,6 @@ import java.util.List;
  *         &lt;element ref="{http://megatravell.com/object}Object"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="cancellation" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element ref="{http://www.megatravell.com/user}Agent"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -256,7 +255,7 @@ public class Unit {
 
     /**
      * Gets the value of the id property.
-     *
+     * 
      */
     public long getId() {
         return id;
@@ -264,7 +263,7 @@ public class Unit {
 
     /**
      * Sets the value of the id property.
-     *
+     * 
      */
     public void setId(long value) {
         this.id = value;
@@ -272,7 +271,7 @@ public class Unit {
 
     /**
      * Gets the value of the cancellation property.
-     *
+     * 
      */
     public int getCancellation() {
         return cancellation;
@@ -280,7 +279,7 @@ public class Unit {
 
     /**
      * Sets the value of the cancellation property.
-     *
+     * 
      */
     public void setCancellation(int value) {
         this.cancellation = value;
@@ -304,7 +303,7 @@ public class Unit {
      * @param value
      *     allowed object is
      *     {@link Agent }
-     *     
+     *
      */
     public void setAgent(Agent value) {
         this.agent = value;

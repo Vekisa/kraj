@@ -1,13 +1,9 @@
 package modul.reservation.service;
 
-import modul.reservation.model.Plan;
-import modul.reservation.model.PriceSchedule;
-import modul.reservation.model.Reservation;
-import modul.reservation.model.Unit;
-import modul.reservation.model.Users.RegisteredUser;
-import modul.reservation.model.Users.User;
+import modul.reservation.model.*;
 import modul.reservation.repository.RegisteredUserRepository;
 import modul.reservation.repository.ReservationRepository;
+import modul.reservation.repository.UnitRepository;
 import modul.reservation.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +12,6 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,23 +29,28 @@ public class ReservationService {
     @Autowired
     private RegisteredUserRepository registeredUserRepository;
 
+    @Autowired
+    private UnitRepository unitRepository;
+
     public Reservation save(Reservation reservation) {
         if(!checkReservation(reservation)){
-                return null;
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Unit is not available!");
         }
         return reservationRepository.save(reservation);
     }
 
     public List<Reservation> getReservationsForUser(OAuth2Authentication user){
         String username = user.getUserAuthentication().getName();
+        RegisteredUser userObj = getRegisteredUser(username);
 
-        User userObj = getUser(username);
-        Optional<RegisteredUser> usr = registeredUserRepository.findById(userObj.getId());
-        if(!usr.isPresent())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"User is not logged in");
+        return userObj.getReservation();
 
-        return usr.get().getReservation();
+    }
 
+    public RegisteredUser getRegisteredUser(String username){
+          RegisteredUser user = registeredUserRepository.findByUsername(username).orElseThrow(
+                () -> new UsernameNotFoundException("User Not Found with username or email : " + username));
+        return user;
     }
 
     public User getUser(String username){
@@ -121,45 +121,56 @@ public class ReservationService {
     }
 
     public double calculatePrice(Reservation reservation){
-        Unit u = reservation.getUnit();
+        Optional<Unit> unit = unitRepository.findById(reservation.getUnit().getId());
+        if(!unit.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Unit does not exist!");
+        Unit u = unit.get();
         double price=0;
         Date s=reservation.getStart();
+        System.out.println(u.getId() + " " + reservation.getStart() + " " + reservation.getEnd());
+        System.out.println("A");
         for(PriceSchedule ps: u.getPriceSchedule()){
+            System.out.println("A");
             for(Plan p: ps.getPlan()){
-                if(p.getFrom().before(reservation.getStart()) && p.getTo().after(reservation.getStart())){
-                    while(s.before(p.getTo())){
+                System.out.println("A");
+                if(p.getFromDate().before(reservation.getStart()) && p.getToDate().after(reservation.getStart())){
+                    System.out.println("A");
+                    while(s.before(p.getToDate())){
                         if(p.isPerPerson()){
-                            price+=u.getAdults().doubleValue()*p.getPrice();
+                            price+=u.getPerson()*p.getPrice();
                         }else
                             price+=p.getPrice();
                         s=new Date(s.getTime() + (1000 * 60 * 60 * 24));
                         if(s.equals(reservation.getEnd()))
                             return price;
                     }
-                } else if(p.getFrom().after(reservation.getStart()) && p.getTo().before(reservation.getEnd())){
-                    while(s.before(p.getTo())){
+                } else if(p.getFromDate().after(reservation.getStart()) && p.getToDate().before(reservation.getEnd())){
+                    System.out.println("B");
+                    while(s.before(p.getToDate())){
                         if(p.isPerPerson()){
-                            price+=u.getAdults().doubleValue()*p.getPrice();
+                            price+=u.getPerson()*p.getPrice();
                         }else
                             price+=p.getPrice();
                         s=new Date(s.getTime() + (1000 * 60 * 60 * 24));
                         if(s.equals(reservation.getEnd()))
                             return price;
                     }
-                }else if(p.getFrom().after(reservation.getStart()) && p.getTo().after(reservation.getEnd())){
-                    while(s.before(p.getTo())){
+                }else if(p.getFromDate().after(reservation.getStart()) && p.getToDate().after(reservation.getEnd())){
+                    System.out.println("C");
+                    while(s.before(p.getToDate())){
                         if(p.isPerPerson()){
-                            price+=u.getAdults().doubleValue()*p.getPrice();
+                            price+=u.getPerson()*p.getPrice();
                         }else
                             price+=p.getPrice();
                         s=new Date(s.getTime() + (1000 * 60 * 60 * 24));
                         if(s.equals(reservation.getEnd()))
                             return price;
                     }
-                }else if(p.getFrom().before(reservation.getStart()) && p.getTo().after(reservation.getEnd())){
-                    while(s.before(p.getTo())){
+                }else if(p.getFromDate().before(reservation.getStart()) && p.getToDate().after(reservation.getEnd())){
+                    System.out.println("D");
+                    while(s.before(p.getToDate())){
                         if(p.isPerPerson()){
-                            price+=u.getAdults().doubleValue()*p.getPrice();
+                            price+=u.getPerson()*p.getPrice();
                         }else
                             price+=p.getPrice();
                         s=new Date(s.getTime() + (1000 * 60 * 60 * 24));

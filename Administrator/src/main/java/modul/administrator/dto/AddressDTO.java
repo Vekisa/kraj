@@ -1,9 +1,10 @@
 package modul.administrator.dto;
 
+
+
+
 import modul.administrator.model.Adress;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 
 public class AddressDTO {
 
@@ -11,15 +12,15 @@ public class AddressDTO {
     private String state;
     private String city;
     private String street;
-    private BigInteger number;
-    private Integer zip;
-    private BigDecimal longitude;
-    private BigDecimal latitude;
+    private Integer number;
+    private String zip;
+    private double longitude;
+    private double latitude;
 
     public AddressDTO() {
     }
 
-    public AddressDTO(Long id, String state, String city, String street, BigInteger number, Integer zip, BigDecimal longitude, BigDecimal latitude){
+    public AddressDTO(Long id, String state, String city, String street, Integer number, String zip, double longitude, double latitude){
         this.setId(id);
         this.setState(state);
         this.setCity(city);
@@ -67,35 +68,35 @@ public class AddressDTO {
         this.street = street;
     }
 
-    public BigInteger getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(BigInteger number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
-    public Integer getZip() {
+    public String getZip() {
         return zip;
     }
 
-    public void setZip(Integer zip) {
+    public void setZip(String zip) {
         this.zip = zip;
     }
 
-    public BigDecimal getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(BigDecimal longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
-    public BigDecimal getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(BigDecimal latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 }

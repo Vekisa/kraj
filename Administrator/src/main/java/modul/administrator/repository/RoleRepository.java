@@ -1,7 +1,7 @@
 package modul.administrator.repository;
 
 
-import modul.administrator.model.Users.Role;
+import modul.administrator.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

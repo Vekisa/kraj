@@ -1,7 +1,7 @@
 package modul.administrator.service;
 
 import modul.administrator.dto.RegisteredUserDTO;
-import modul.administrator.model.Users.RegisteredUser;
+import modul.administrator.model.RegisteredUser;
 import modul.administrator.repository.RegisteredUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,7 +32,7 @@ public class RegisteredUSerService {
         if(!user.isPresent())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User option does not exist!");
 
-        user.get().setEnabled(true);
+        user.get().setIsEnabled(true);
         registeredUserRepository.save(user.get());
 
         return new RegisteredUserDTO(user.get());
@@ -44,7 +44,7 @@ public class RegisteredUSerService {
         if(!user.isPresent())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User option does not exist!");
 
-        user.get().setEnabled(false);
+        user.get().setIsEnabled(false);
         registeredUserRepository.save(user.get());
 
         return new RegisteredUserDTO(user.get());

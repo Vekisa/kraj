@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,6 +42,12 @@ public class UnitController {
     public ResponseEntity<List<Comment>> getComments(@PathVariable(value = "id") Long id) {
 
         return new ResponseEntity<>(unitService.getComments(id), HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/{unit_id}/comment", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Comment> createComment(@PathVariable(value = "unit_id") Long unitId, @RequestBody Comment comment, OAuth2Authentication oAuth2Authentication) {
+
+        return new ResponseEntity<>(unitService.createComment(unitId,comment,oAuth2Authentication),HttpStatus.OK);
     }
 
 }

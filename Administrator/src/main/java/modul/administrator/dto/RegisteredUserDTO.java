@@ -1,7 +1,7 @@
 package modul.administrator.dto;
 
 import modul.administrator.model.Adress;
-import modul.administrator.model.Users.RegisteredUser;
+import modul.administrator.model.RegisteredUser;
 
 public class RegisteredUserDTO {
 
@@ -16,7 +16,7 @@ public class RegisteredUserDTO {
     public RegisteredUserDTO() {
     }
 
-    public RegisteredUserDTO(Long id, String firstName, String lastName,String username, String email, Adress adress, Boolean aktivan){
+    public RegisteredUserDTO(Long id, String firstName, String lastName, String username, String email, Adress adress, Boolean aktivan){
         this.setId(id);
         this.setFirstName(firstName);
         this.setLastName(lastName);

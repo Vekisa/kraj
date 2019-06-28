@@ -72,12 +72,12 @@
       </div>
     </div>
 
-    
+
   <div class="card" style="width: 200%;">
 
-    <ul class="list-unstyled card ">
-      <li class="media" *ngFor="let comment of comments; let i = index">
-        <img src="https://image.flaticon.com/icons/svg/149/149071.svg" class="mr-3" alt="..." style="width: 7%; height: 7%">
+    <ul class="list-unstyled card">
+      <li class="media" *ngFor="let comment of comments; let i = index" style="background-color:lightskyblue; border:1px solid black; margin: 2%;">
+        <img src="https://image.flaticon.com/icons/svg/149/149071.svg" class="mr-3" alt="..." style="width: 7%; height: 7%; margin: 2%;">
         <p><b>{{comment.registeredUser.firstName}}&nbsp;{{comment.registeredUser.lastName}}</b><br> Commented: <br> {{comment.dateOfPublication| date: 'medium'}}</p>
         <div class="media-body">
           <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="5" style="margin: 2%; width:95%;">
@@ -86,9 +86,20 @@
         </div>
         <hr>
       </li>
+      <form [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+      <li class="media" style="background-color:lightskyblue; border:1px solid black; margin: 2%;" *ngIf="isLoggedIn">
+        <img src="https://image.flaticon.com/icons/svg/149/149071.svg" class="mr-3" alt="..." style="width: 7%; height: 7%; margin: 2%;">
+        <div class="media-body">
+          <textarea class="form-control rounded-0" rows="5" style="margin: 2%; width:95%;" [formControlName]="'text'" placeholder="Left comment here . . .">
 
+          </textarea> <input type="submit" class="btn btn-primary" style="margin: 2%" content="Comment">
+        </div>
+        <hr>
+      </li>
+      </form>
     </ul>
 </div>
+
 
   </div>
 
@@ -133,49 +144,64 @@
 </div>
 </div>
 
-      <!-- Modal -->
-      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-  
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Only a few more details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-  
-              <div class="modal-body form-row">
-                  <form class="form-inline ">
-                      <div class="form-group  mx-sm-4">
-                        <ejs-daterangepicker id='daterangepicker' placeholder='Select a range' [startDate]='start' [endDate]='end'  ></ejs-daterangepicker>
-                      </div>
-      
-                      <div class="form-row align-items-center justify-content-center">
-                        <div class="form-group mx-sm-4">
-                        <!--  <label class="mr-sm-2" for="inlineFormCustomSelect">Extra options:</label> -->
-                          <ng-multiselect-dropdown
-                          [placeholder]="'Select additional'"
-                          [data]="dropdownList"
-                          [(ngModel)]="selectedItems"
-                          [settings]="dropdownSettings"
-                          (onSelect)="onItemSelect($event)"
-                          (onSelectAll)="onSelectAll($event)"
-                        >
-                        </ng-multiselect-dropdown>
-                        </div>
-                      </div>
-                    </form>
-                    
-                    <hr/>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Confirm</button>
-              </div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Only a few more details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <form class="form-inline" [formGroup]="reserveForm" (ngSubmit)="onSubmitReserve()">
+        <div class="modal-body form-row">
+
+          <div class="form-row align-items-center justify-content-center">
+            <div class="form-group col-md-9">
+              <label for="checkIn">Check-in date</label>
+              <input class="form-control" type="date" value="today()" id="checkIn" required [formControlName]="'checkInDate'" (ngModelChange)="changed()">
             </div>
           </div>
+          <div class="form-row align-items-center justify-content-center">
+            <div class="form-group col-md-9">
+              <label for="checkIn">Check-in date</label>
+              <input class="form-control" type="date" value="today()" id="checkOut" required [formControlName]="'checkOutDate'" (ngModelChange)="changed()">
+            </div>
+          </div>
+          <i class="fa fa-check" aria-hidden="false" *ngIf="showIcon && available" title="Available"></i>
+          <i class="fas fa-times" *ngIf="showIcon && !available" title="Not Available"></i>
+
+                <div class="form-row align-items-center justify-content-center">
+                  <div class="form-group mx-sm-4">
+                  <!--  <label class="mr-sm-2" for="inlineFormCustomSelect">Extra options:</label> -->
+                    <ng-multiselect-dropdown [formControlName]="'extra_options'" (ngModelChange)="changed()"
+                    [placeholder]="'Select additional'"
+                    [data]="dropdownList"
+                    [(ngModel)]="selectedItems"
+                    [settings]="dropdownSettings"
+                    (onSelect)="onItemSelect($event)"
+                    (onSelectAll)="onSelectAll($event)"
+                  >
+                  </ng-multiselect-dropdown>
+                  </div>
+                </div>
+              <div class="form-group col-md-9">
+                <input class="form-control" type="text" disabled required placeholder="Price" [formControlName]="'price'" [value]="price">&euro;
+              </div>
+
+              <hr/>
         </div>
-  
-  
-  
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <input type="submit" class="btn btn-primary">
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+

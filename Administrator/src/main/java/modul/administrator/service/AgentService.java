@@ -1,9 +1,6 @@
 package modul.administrator.service;
 
 import modul.administrator.dto.AgentDTO;
-import modul.administrator.model.Users.Agent;
-import modul.administrator.model.Users.Role;
-import modul.administrator.model.Users.VerificationToken;
 import modul.administrator.repository.AgentRepository;
 import modul.administrator.repository.RoleRepository;
 import modul.administrator.repository.VerificationTokenRepository;

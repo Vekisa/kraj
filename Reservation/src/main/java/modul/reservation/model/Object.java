@@ -1,6 +1,9 @@
 
 package modul.reservation.model;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
@@ -83,12 +86,13 @@ public class Object {
     @XmlElement(name = "Adress", namespace = "http://www.megatravell.com/address", required = true)
     @ManyToOne
     protected Adress adress;
-   // @XmlElement(name = "Comment", namespace = "http://megatravell.com/object")
-  //  @OneToMany(mappedBy = "object")
+    //@XmlElement(name = "Comment", namespace = "http://megatravell.com/object")
+   // @OneToMany(mappedBy = "object")
   //  protected List<Comment> comment;
     @XmlElement(name = "ExtraOption", namespace = "http://megatravell.com/object")
     @OneToMany
     protected List<ExtraOption> extraOption;
+    @JsonIgnore
     @XmlElement(name = "Unit", namespace = "http://megatravell.com/object")
     @OneToMany(mappedBy = "object")
     protected List<Unit> unit;
@@ -104,6 +108,16 @@ public class Object {
     protected long id;
 
     public Object(){}
+
+    /*public Object(ObjectWS objectWS){
+        this.id=objectWS.getId();
+        this.adress=objectWS.getAdress();
+        this.category=objectWS.getCategory();
+        this.name = objectWS.getName();
+        this.description=objectWS.getDescription();
+        this.objectType=objectWS.getObjectTypeId();
+    }*/
+
     /**
      * Gets the value of the name property.
      * 

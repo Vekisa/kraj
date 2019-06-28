@@ -7,6 +7,7 @@ import modul.oauth.repository.UserRepository;
 import modul.oauth.repository.VerificationTokenRepository;
 import modul.oauth.security.AuthorizationServerConfig;
 import modul.oauth.security.EmailSenderService;
+import modul.oauth.security.PasswordHashingService;
 import modul.oauth.security.SignUpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,6 +27,8 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.stereotype.Service;
 
 import java.lang.Object;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.*;
 
 @Service("userService")
@@ -91,8 +94,13 @@ public class UserServiceImpl implements UserDetailsService {
     public RegisteredUser addUser(SignUpRequest signUpRequest){
 
         String passwordHash = "";
-
-        passwordHash = passwordEncoder.encode(signUpRequest.getPassword());
+        try {
+            passwordHash = PasswordHashingService.generateStrongPasswordHash(signUpRequest.getPassword());
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        }
 
 
         // Creating user's account

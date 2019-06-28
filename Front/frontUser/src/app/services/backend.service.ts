@@ -49,4 +49,11 @@ export class BackendService {
       return throwError(err);
     }));
   }
+
+  createComment(id: number, comment: any):Observable<any>{
+    console.log("JEBACEMO MU  JOS JENDOM");
+    return this.http.put<any>(this.baseUnitURL+"/"+id + "/comment",comment).pipe(catchError(err => {
+      return throwError(err);
+    }));
+  }
 }

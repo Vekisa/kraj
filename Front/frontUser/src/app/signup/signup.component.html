@@ -114,12 +114,17 @@
             <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit"
                     [disabled]="!signUpForm.valid">Sign Up
             </button>
+            <br>
+            <br>
+            <div class="d-flex justify-content-center" *ngIf="spinner">
+              <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
             <hr class="my-4">
             <div class="form-group">
               <label>Already have account?</label>&nbsp;<a [routerLink]="['/sign_in']">Sign in</a>
             </div>
-
-
           </form>
         </div>
       </div>

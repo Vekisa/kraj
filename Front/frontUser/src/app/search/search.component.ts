@@ -112,4 +112,31 @@ export class SearchComponent implements OnInit {
     console.log("ID: " +id);
     this.router.navigateByUrl('objects/'+ id);
   }
+
+  sortByPrice(){
+
+  }
+
+  sortByDistance(){
+
+  }
+
+  sortByRating(){
+
+  }
+
+  sortByCategory(){
+    let sortedArray: Unit[] = this.units.sort((obj1, obj2) => {
+      if (obj1.object.category > obj2.object.category) {
+        return 1;
+      }
+
+      if (obj1.object.category > obj2.object.category) {
+        return -1;
+      }
+
+      return 0;
+    });
+    this.units = sortedArray;
+  }
 }

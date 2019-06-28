@@ -19,6 +19,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.Resource;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 @Configuration
 @EnableWebSecurity
@@ -49,14 +51,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public BCryptPasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
+    public PasswordEncoder encoder() {
+        return new CustomPasswordEncoder();
     }
 
-
-//    @Bean public PasswordEncoder passwordEncoder() {
-//        return new CustomPasswordEncoder();
-//    }
 
 
 }

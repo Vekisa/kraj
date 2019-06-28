@@ -20,7 +20,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 
     private static final String CLIENT_ID = "oauthorize";
-    private static final String CLIENT_SECRET = "$2a$09$cNAvHgixZITADE2yjWvzkerMeQf4CeyKI1Kwpyvewi9lAuaE/q4Ke";
+    private static final String CLIENT_SECRET = "1000:5b424031323233346534:c91c21051a97244f4cc4fdf73c441296f4ff345b165b0f747d5ef7c30845fb1ea0f3403c6696c60343f6509d660bd49d8d900a9179c43e1bb1ad300131c805dc";
     private static final String GRANT_TYPE_PASSWORD = "password";
     private static final String AUTHORIZATION_CODE = "authorization_code";
     private static final String REFRESH_TOKEN = "refresh_token";
