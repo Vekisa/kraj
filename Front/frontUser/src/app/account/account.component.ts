@@ -1,9 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {AuthService} from "../services/auth.service";
-import {NewPass, RegisteredUser} from "../model";
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {ConfirmPasswordValidator} from "../validation/confirm-pass.validator";
+import {AuthService} from '../services/auth.service';
+import {NewPass, RegisteredUser} from '../model';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ConfirmPasswordValidator} from '../validation/confirm-pass.validator';
 
 @Component({
   selector: 'app-account',
@@ -12,12 +12,12 @@ import {ConfirmPasswordValidator} from "../validation/confirm-pass.validator";
 })
 export class AccountComponent implements OnInit {
 
-  @ViewChild('content',{static: true}) private content;
+  @ViewChild('content', {static: true}) private content;
 
   profileFormGroup: FormGroup;
   passFormGroup: FormGroup;
 
-  user:RegisteredUser;
+  user: RegisteredUser;
 
   openPass = false;
   userDetail = false;
@@ -40,7 +40,7 @@ export class AccountComponent implements OnInit {
 
   modalRef: any;
 
-  constructor(private authService:AuthService,private modalService: NgbModal,private fb: FormBuilder) { }
+  constructor(private authService: AuthService, private modalService: NgbModal, private fb: FormBuilder) { }
 
   ngOnInit() {
 
@@ -56,7 +56,7 @@ export class AccountComponent implements OnInit {
 
   initUser() {
 
-    this.authService.user().subscribe(data=>{
+    this.authService.user().subscribe(data => {
       this.user = data;
     });
 
@@ -160,7 +160,7 @@ export class AccountComponent implements OnInit {
       this.passFormGroup.get('password').value
     );
 
-    this.authService.changePass(newPass).subscribe(data=> {
+    this.authService.changePass(newPass).subscribe(data => {
         this.initUser();
         this.modalRef.close();
 
@@ -201,9 +201,9 @@ export class AccountComponent implements OnInit {
       );
 
 
-      this.authService.changeName(u).subscribe(data=>{
+      this.authService.changeName(u).subscribe(data => {
         this.initUser();
-      },error => {
+      }, error => {
         this.errorSub = error.error.message;
         this.submitError = true;
       });
@@ -223,11 +223,11 @@ export class AccountComponent implements OnInit {
         null
       );
 
-      this.authService.changeUserName(u).subscribe(data=>{
+      this.authService.changeUserName(u).subscribe(data => {
         console.log(data);
         this.authService.saveToken(data);
         this.reloadPage();
-      },error => {
+      }, error => {
         this.errorSub = error.error.message;
         this.submitError = true;
       });
@@ -249,7 +249,7 @@ export class AccountComponent implements OnInit {
 
         this.initUser();
 
-      },error =>{
+      }, error => {
         this.errorSub = error.error.message;
 
         this.submitError = true;
@@ -274,9 +274,9 @@ export class AccountComponent implements OnInit {
   resetPassField() {
 
     this.passFormGroup = this.fb.group({
-      oldPassword: [''],
-      password: [''],
-      passwordConfirm: ['']
+      oldPassword: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_!?*#/]*'), Validators.minLength(10)]],
+      password: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_!?*#/]*'), Validators.minLength(10)]],
+      passwordConfirm: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_!?*#/]*'), Validators.minLength(10)]]
     }, {
       validator: ConfirmPasswordValidator.validate.bind(this)
 
