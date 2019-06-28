@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -41,22 +42,22 @@ public class UnitController {
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<Unit> createUnit(@RequestBody Unit unit){
-        System.out.println("Uslo ");
+    public ResponseEntity<Unit> createUnit(@RequestBody Unit unit, OAuth2Authentication oAuth){
+        System.out.println("Uslo " + oAuth.getName());
 
-        return new ResponseEntity<>(unitService.create(unit), HttpStatus.CREATED);
+        return new ResponseEntity<>(unitService.create(unit, oAuth), HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/update_unit", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/update_unit/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Update smestajne jedinice", httpMethod = "PUT", produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Unit.class),
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<Unit> updateUnit(@RequestBody Unit unit){
+    public ResponseEntity<Unit> updateUnit(@RequestBody PriceSchedule priceSchedule, @PathVariable Long id){
         System.out.println("Uslo update ");
-        return new ResponseEntity<>(unitService.create(unit), HttpStatus.CREATED);
+        return new ResponseEntity<>(unitService.update(id, priceSchedule), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/find_unit/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -66,10 +67,10 @@ public class UnitController {
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<Unit> findUnit(@PathVariable Long id){
+    public ResponseEntity<Unit> findUnit(@PathVariable Long id, OAuth2Authentication oAuth){
         System.out.println("Uslo pretraga " + id);
 
-        return new ResponseEntity<Unit>(unitService.findById(id).get(), HttpStatus.OK);
+        return new ResponseEntity<Unit>(unitService.findById(id, oAuth).get(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -79,9 +80,9 @@ public class UnitController {
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<List<Unit>> getAll(){
+    public ResponseEntity<List<Unit>> getAll(OAuth2Authentication oAuth){
         System.out.println("Uslo getAll");
-        return new ResponseEntity<List<Unit>>(unitService.getAll(), HttpStatus.OK);
+        return new ResponseEntity<List<Unit>>(unitService.getAll(oAuth), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/create_new_plan", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -137,9 +138,9 @@ public class UnitController {
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<List<Image>> getAllImages(@PathVariable Long id){
+    public ResponseEntity<List<Image>> getAllImages(@PathVariable Long id, OAuth2Authentication oAuth){
         System.out.println(" images "+id);
-        return new ResponseEntity<>(unitService.getImages(id), HttpStatus.OK);
+        return new ResponseEntity<>(unitService.getImages(id, oAuth), HttpStatus.OK);
     }
 
 }

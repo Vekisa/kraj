@@ -8,7 +8,7 @@ export class Unit {
   priceSchedule: PriceSchedule[]=[];
   reservation: Reservation[]=[];
   accommodationType: string;
-
+  agent: RegisteredUser;
   constructor() {
   }
 
@@ -65,8 +65,8 @@ export class Type{
 }
 export class Plan{
   id: number;
-  from: Date;
-  to: Date;
+  fromDate: Date;
+  toDate: Date;
   price: number;
   perPerson: boolean;
 

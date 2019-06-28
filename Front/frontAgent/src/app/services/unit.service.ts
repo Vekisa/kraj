@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
-import {Image, Unit} from "../model";
+import {Image, PriceSchedule, Unit} from "../model";
 import {catchError} from "rxjs/operators";
 import {JwtResponse} from "src/app/response";
 
@@ -22,9 +22,9 @@ export class UnitService {
     }));
   }
 
-  updateUnit(unit: Unit): Observable<Unit> {
+  updateUnit(ps: PriceSchedule, id:number): Observable<Unit> {
     console.log("uslo update");
-    return this.http.put<Unit>(this.unitURL + "/update_unit", unit).pipe(catchError(err => {
+    return this.http.put<Unit>(this.unitURL + "/update_unit/" + id, ps).pipe(catchError(err => {
       return throwError(err);
     }));
   }

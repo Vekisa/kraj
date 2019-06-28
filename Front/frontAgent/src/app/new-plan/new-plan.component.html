@@ -19,10 +19,10 @@
                required readonly>
       </div>-->
       <div class="form-label-group">
-        <label for="from">From date</label>
+        <label for="fromDate">From date</label>
         <div class="input-group">
           <input  class="form-control" readonly
-                 [formControlName]="'from'" name="d1" ngbDatepicker #d1="ngbDatepicker">
+                 [formControlName]="'fromDate'" name="d1" ngbDatepicker #d1="ngbDatepicker">
           <div class="input-group-append">
             <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button" disabled><i
               class="fas fa-calendar"></i></button>
@@ -30,10 +30,10 @@
         </div>
       </div>
         <div class="form-label-group">
-          <label for="to">From date</label>
+          <label for="toDate">From date</label>
           <div class="input-group">
             <input  class="form-control" readonly
-                    [formControlName]="'to'" name="d0" ngbDatepicker #d0="ngbDatepicker">
+                    [formControlName]="'toDate'" name="d0" ngbDatepicker #d0="ngbDatepicker">
             <div class="input-group-append">
               <button class="btn btn-outline-secondary calendar" (click)="d0.toggle()" type="button" disabled><i
                 class="fas fa-calendar"></i></button>
@@ -70,8 +70,8 @@
       <tbody>
       <tr *ngFor="let plan of plans; let i = index">
         <td>{{i}}</td>
-        <td>{{plan.from.getFullYear()}}-{{plan.from.getMonth()}}-{{plan.from.getDate()}}</td>
-        <td>{{plan.to.getFullYear()}}-{{plan.to.getMonth()}}-{{plan.to.getDate()}}</td>
+        <td>{{plan.fromDate.getFullYear()}}-{{plan.fromDate.getMonth()}}-{{plan.fromDate.getDate()}}</td>
+        <td>{{plan.toDate.getFullYear()}}-{{plan.toDate.getMonth()}}-{{plan.toDate.getDate()}}</td>
         <td>{{plan.price}}</td>
         <td *ngIf="plan.perPerson==true">Per person</td>
         <td *ngIf="plan.perPerson==false">Unit</td>
@@ -93,10 +93,10 @@
         </div>-->
 
       <div class="form-label-group">
-        <label for="from">From date</label>
+        <label for="fromDate">From date</label>
         <div class="input-group">
-          <input id="from" class="form-control" readonly
-                  [formControlName]="'from'" name="d2" ngbDatepicker #d2="ngbDatepicker">
+          <input id="fromDate" class="form-control" readonly
+                  [formControlName]="'fromDate'" name="d2" ngbDatepicker #d2="ngbDatepicker">
           <div class="input-group-append">
             <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button" disabled><i
               class="fas fa-calendar"></i></button>
@@ -106,11 +106,11 @@
       </div>
 
       <div class="form-label-group">
-        <label for="to">To date</label>
+        <label for="toDate">To date</label>
         <div class="input-group">
-          <input id="to" class="form-control" [readonly]="true" [minDate]="toDate"
+          <input id="toDate" class="form-control" [readonly]="true" [minDate]="toDate"
                  name="d3" ngbDatepicker #d3="ngbDatepicker"
-                 [formControlName]="'to'">
+                 [formControlName]="'toDate'">
           <div class="input-group-append">
             <button class="btn btn-outline-secondary calendar" (click)="d3.toggle()" type="button"><i
               class="fas fa-calendar"></i></button>
