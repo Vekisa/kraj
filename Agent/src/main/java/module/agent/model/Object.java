@@ -1,6 +1,8 @@
 
 package module.agent.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
@@ -90,6 +92,7 @@ public class Object {
     @OneToMany
     protected List<ExtraOption> extraOption;
     @XmlElement(name = "Unit", namespace = "http://megatravell.com/object")
+    @JsonIgnore
     @OneToMany(mappedBy = "object")
     protected List<Unit> unit;
     @XmlElement(name = "Rating", namespace = "http://megatravell.com/object")

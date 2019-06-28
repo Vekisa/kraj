@@ -37,9 +37,9 @@ export class UnitComponent implements OnInit {
   getPrice(pS: PriceSchedule[]){
 
     for(let i=0; i<pS.length; i++){
-      if(new Date(pS[i].plan[0].from).getTime()<=new Date().getTime() && new Date(pS[i].plan[pS[i].plan.length-1].to).getTime()>= new Date().getTime()){
+      if(new Date(pS[i].plan[0].fromDate).getTime()<=new Date().getTime() && new Date(pS[i].plan[pS[i].plan.length-1].toDate).getTime()>= new Date().getTime()){
         for(let j=0; j<pS[i].plan.length; j++){
-          if(new Date(pS[i].plan[j].from).getTime()<=new Date().getTime() && new Date(pS[i].plan[j].to).getTime()>=new Date().getTime()){
+          if(new Date(pS[i].plan[j].fromDate).getTime()<=new Date().getTime() && new Date(pS[i].plan[j].toDate).getTime()>=new Date().getTime()){
             console.log(pS[i].plan[j]);
             this.plan= pS[i].plan[j];
             this.planF=true;

@@ -1,6 +1,13 @@
 
 <h5 class="card-title text-center font-weight-bold text-uppercase">Hotel Petrus</h5>
 
+  <div class="card category" style="width: 84rem;">
+      <div class="card-body">
+        <ngb-rating [rate]="3" [readonly]="true" max="5"></ngb-rating>
+      </div>
+    </div>
+
+
 <div class = "left-side">
 <div
   id="carouselExampleIndicators"
@@ -66,9 +73,9 @@
 </div>
 
   <div class= "left-side">
-  <div class="card" style="width: 49rem;">
-      <div class="card-body">
-          <ngb-rating [(rate)]="currentRate"></ngb-rating><b>   {{currentRate}}</b>
+  <div class="card" style="width: 50rem;">
+      <div class="card-body star">
+          <ngb-rating [(rate)]="currentRate"></ngb-rating><b>{{currentRate}}</b>
       </div>
     </div>
 

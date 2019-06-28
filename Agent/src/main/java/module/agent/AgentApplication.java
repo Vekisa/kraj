@@ -1,7 +1,6 @@
 package module.agent;
 
 import module.agent.model.Adress;
-import module.agent.model.Object;
 import module.agent.model.ObjectType;
 import module.agent.model.web.*;
 import module.agent.services.ObjectClient;
@@ -18,7 +17,6 @@ public class AgentApplication {
     public static void main(String[] args) {
         SpringApplication.run(AgentApplication.class, args);
     }
-
 
     @Bean
     CommandLineRunner lookup(ObjectClient objectClient) {

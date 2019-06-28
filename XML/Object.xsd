@@ -73,6 +73,7 @@
                 <xs:element ref="object:Object"/>
                 <xs:element name="id" type="xs:long"/>
                 <xs:element name="cancellation" type="xs:int"/>
+                <xs:element ref="user:Agent"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -211,8 +212,8 @@
                 <xs:element name="DateOfPublication" type="xs:dateTime"/>
                 <xs:element default="false" name="approved" type="xs:boolean"/>
                 <xs:element ref="user:RegisteredUser"/>
-                <xs:element ref="object:Unit"/>
                 <xs:element name="id" type="xs:long"/>
+                <xs:element ref="object:Object"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

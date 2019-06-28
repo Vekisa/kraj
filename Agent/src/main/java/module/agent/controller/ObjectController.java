@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -68,8 +69,8 @@ public class ObjectController {
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<List<Unit>> getUnits(@PathVariable Long id){
+    public ResponseEntity<List<Unit>> getUnits(@PathVariable Long id, OAuth2Authentication oAuth2Authentication){
         System.out.println("Uslo object getALl units");
-        return new ResponseEntity<>(objectService.getUnits(id), HttpStatus.OK);
+        return new ResponseEntity<>(objectService.getUnits(id, oAuth2Authentication), HttpStatus.OK);
     }
 }

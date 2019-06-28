@@ -19,10 +19,8 @@ export class MessageComponent implements OnInit {
       console.log(data['id']);
       this.messageService.allMessagesFromUser(data['id']).subscribe(data=>
       {this.messages=data;
-        this.messageService.messageSeen(this.messages[0]).subscribe(data=>
-          {console.log(data)}
-        );
-      } )
+      console.log(data);
+      })
     });
 
     this.message=new Message();

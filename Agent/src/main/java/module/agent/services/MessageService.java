@@ -1,9 +1,13 @@
 package module.agent.services;
 
+import module.agent.model.Agent;
 import module.agent.model.Message;
 import module.agent.model.RegisteredUser;
+import module.agent.model.User;
+import module.agent.repository.AgentRepository;
 import module.agent.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,28 +17,51 @@ public class MessageService {
     @Autowired
     private MessageRepository messageRepository;
 
-    public Message createMessage(Message message){
+    @Autowired
+    private UserServiceImpl userService;
+
+    @Autowired
+    private AgentRepository agentRepository;
+
+    public Message createMessage(Message message, OAuth2Authentication oAuth2Authentication){
+        message.setFromUser(userService.getUser(oAuth2Authentication.getName()).getId());
         return messageRepository.save(message);
     }
 
-    public List<Message> getMessages(){
-        return messageRepository.findAll();
+    public List<Message> getMessages(OAuth2Authentication oAuth2Authentication)
+    {   List<Message> m=new ArrayList<>();
+        User u=userService.getUser(oAuth2Authentication.getName());
+
+        for(Message me: messageRepository.findAll()){
+            if(me.getAgent().getId()==u.getId())
+                m.add(me);
+        }
+        return m;
     }
 
-    public List<Message> fromUser(Long id){
+    public List<Message> fromUser(Long id, OAuth2Authentication oAuth2Authentication){
         List<Message> mes=new ArrayList<>();
-        for(Message m: messageRepository.findAll()){
-            if(m.getRegisteredUser().getId()==id)
-                mes.add(m);
+        User u=userService.getUser(oAuth2Authentication.getName());
+        Agent a= agentRepository.findById(u.getId()).get();
+        for(Message m: a.getMessage()){
+            if(m.getRegisteredUser().getId()==id){
+                System.out.println("mes " + m.getText());
+                 mes.add(m);
+            }
+
         }
         return mes;
     }
 
-    public List<RegisteredUser> users(){
+    public List<RegisteredUser> users(OAuth2Authentication oAuth2Authentication){
         List<RegisteredUser> mes=new ArrayList<>();
-        for(Message m: messageRepository.findAll()){
-            if(!mes.contains(m.getRegisteredUser()))
+        User u=userService.getUser(oAuth2Authentication.getName());
+        Agent a= agentRepository.findById(u.getId()).get();
+
+        for(Message m: a.getMessage()){
+            if(!mes.contains(m.getRegisteredUser())) {
                 mes.add(m.getRegisteredUser());
+            }
         }
         return mes;
     }
@@ -44,4 +71,6 @@ public class MessageService {
         messageRepository.save(m);
         return true;
     }
+
+
 }

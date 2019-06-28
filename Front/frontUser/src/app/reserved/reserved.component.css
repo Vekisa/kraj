@@ -13,7 +13,7 @@ h4{
 }
 .star {
   font-size: 1.5rem;
-  color: #5590dd;
+  color: #1e90ff;
 }
 .filled {
   color: #1e90ff;
@@ -48,6 +48,14 @@ ul {
   text-align: center;
   text-transform: uppercase;
   color: #4286f4;
+}
+
+.category{
+
+  font-size: 1.5rem;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fdec00;
 }
 
 .btn-com {
