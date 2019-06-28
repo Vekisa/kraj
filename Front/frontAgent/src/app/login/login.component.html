@@ -37,6 +37,10 @@
                    *ngIf="loginForm.get('password').errors?.pattern && loginForm.get('password').touched">Only letters,
                 numbers and ! ? # * / _
               </div>
+              <div class="alert alert-danger"
+                   *ngIf="loginForm.get('password').errors?.minlength && loginForm.get('password').touched">Password must
+                be at least 10 characters
+              </div>
 
             </div>
             <div class="alert alert-danger" *ngIf="isLoginFailed==true">Wrong username or/and password</div>

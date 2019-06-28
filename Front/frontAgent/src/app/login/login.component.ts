@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {UserLogin} from "../model";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../services/auth.service";
+import {UserLogin} from '../model';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AuthService} from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -23,17 +23,17 @@ export class LoginComponent implements OnInit {
   checkIP = false;
   checkU = false;
 
-  constructor(private formBuilder:FormBuilder,private authService:AuthService) { }
+  constructor(private formBuilder: FormBuilder, private authService: AuthService) { }
 
   ngOnInit() {
 
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_ ]*')]],
-      password: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_!?*#/]*')]]
+      password: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_!?*#/]*'), Validators.minLength(10)]]
     });
   }
 
-  onSubmit(){
+  onSubmit() {
 
     console.log(this.loginForm);
 

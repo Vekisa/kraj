@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {UserLogin} from "../model";
-import {AuthService} from "../services/auth.service";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UserLogin} from '../model';
+import {AuthService} from '../services/auth.service';
 
 
 
@@ -25,22 +25,22 @@ export class LoginComponent implements OnInit {
   checkIP = false;
   checkU = false;
 
-  constructor(private formBuilder:FormBuilder,private authService:AuthService) { }
+  constructor(private formBuilder: FormBuilder, private authService: AuthService) { }
 
   ngOnInit() {
 
-    if(!this.authService.isValid()){
-      console.log('Ulogovan ')
-      window.location.href='';
+    if (!this.authService.isValid()) {
+      console.log('Ulogovan ');
+      window.location.href = '';
     }
 
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_ ]*')]],
-      password: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_!?*#/]*')]]
+      password: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_!?*#/]*'), Validators.minLength(10)]]
     });
   }
 
-  onSubmit(){
+  onSubmit() {
 
     console.log(this.loginForm);
 

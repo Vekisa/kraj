@@ -1,28 +1,65 @@
 <form [formGroup]="newAddressForm" (ngSubmit)="onSubmit()">
   <div class="form-label-group">
     <label for="state">State</label>
-    <input type="text" id="state" class="form-control" [formControlName]="'state'"
+    <input type="text" id="state" ngModel maxlength="30" class="form-control" [formControlName]="'state'"
            required>
+    <div class="alert alert-danger"
+         *ngIf="newAddressForm.get('state').errors?.required && newAddressForm.get('state').touched">State is
+      required!
+    </div>
+    <div class="alert alert-danger"
+         *ngIf="newAddressForm.get('state').errors?.pattern && newAddressForm.get('state').touched">Only letters!
+    </div>
   </div>
   <div class="form-label-group">
     <label for="city">City</label>
-    <input type="text" id="city" class="form-control" [formControlName]="'city'"
+    <input type="text" id="city" ngModel maxlength="30" class="form-control" [formControlName]="'city'"
            required>
+
+    <div class="alert alert-danger"
+         *ngIf="newAddressForm.get('city').errors?.required && newAddressForm.get('city').touched">City is
+      required!
+    </div>
+    <div class="alert alert-danger"
+         *ngIf="newAddressForm.get('city').errors?.pattern && newAddressForm.get('city').touched">Only letters!
+    </div>
   </div>
   <div class="form-label-group">
     <label for="street">Street</label>
-    <input type="text" id="street" class="form-control" [formControlName]="'street'"
+    <input type="text" id="street" ngModel maxlength="30" class="form-control" [formControlName]="'street'"
            required>
+
+    <div class="alert alert-danger"
+         *ngIf="newAddressForm.get('street').errors?.required && newAddressForm.get('street').touched">Street is
+      required!
+    </div>
+    <div class="alert alert-danger"
+         *ngIf="newAddressForm.get('street').errors?.pattern && newAddressForm.get('street').touched">Only letters, numbers and , . - /
+    </div>
   </div>
   <div class="form-label-group">
     <label for="number">Number</label>
-    <input type="number" id="number" class="form-control" [formControlName]="'number'"
+    <input type="number" id="number" ngModel maxlength="4" class="form-control" [formControlName]="'number'"
            required>
+    <div class="alert alert-danger"
+         *ngIf="newAddressForm.get('number').errors?.required && newAddressForm.get('number').touched">Number is
+      required!
+    </div>
+    <div class="alert alert-danger"
+         *ngIf="newAddressForm.get('number').errors?.pattern && newAddressForm.get('number').touched">Only numbers!
+    </div>
   </div>
   <div class="form-label-group">
     <label for="zip">Zip</label>
-    <input type="number" id="zip" class="form-control" [formControlName]="'zip'"
+    <input type="number" id="zip" ngModel maxlength="10" class="form-control" [formControlName]="'zip'"
            required>
+    <div class="alert alert-danger"
+         *ngIf="newAddressForm.get('zip').errors?.required && newAddressForm.get('zip').touched">Number is
+      required!
+    </div>
+    <div class="alert alert-danger"
+         *ngIf="newAddressForm.get('zip').errors?.pattern && newAddressForm.get('zip').touched">Only numbers!
+    </div>
   </div>
   <div class="form-label-group">
     <label for="longitude">Longitude</label>

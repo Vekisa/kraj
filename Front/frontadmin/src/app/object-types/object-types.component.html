@@ -1,11 +1,16 @@
 <form class="centeredForms" [formGroup]="objectTypesForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
     <label for="name">Name</label>
-    <input type="text" class="form-control" id="name" placeholder="Enter name" [formControlName]="'name'">
+    <input type="text"  ngModel maxlength="30"  class="form-control" id="name" placeholder="Enter name" [formControlName]="'name'">
+    <div class="alert alert-danger" *ngIf="objectTypesForm.get('name').errors?.required && objectTypesForm.get('name').touched">Name is required</div>
+    <div class="alert alert-danger" *ngIf="objectTypesForm.get('name').errors?.pattern && objectTypesForm.get('name').touched">Only letters</div>
+    <div class="alert alert-danger" *ngIf="objectTypesForm.get('name').errors?.maxLength && objectTypesForm.get('name').touched">Max length is 30</div>
+
   </div>
   <div class="form-group">
     <label for="description">Description</label>
     <textarea class="form-control rounded-1" id="description" rows="10" placeholder="Enter description" [formControlName]="'description'"></textarea>
+
   </div>
   <button type="submit" class="btn btn-primary">Add</button>
 </form>
