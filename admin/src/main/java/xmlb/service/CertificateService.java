@@ -524,6 +524,10 @@ public class CertificateService {
         return null;
     }
 
+    public boolean validateBySerialNumber(String serialNumber){
+        return checkIfValid(serialNumber);
+    }
+
     private void validateCertificateFromFront(CertificateDTO certificateDTO) {
 
         if (!Pattern.matches(Regex.stringLong, certificateDTO.getCountry())) {
