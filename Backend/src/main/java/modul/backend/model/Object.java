@@ -4,6 +4,7 @@ package modul.backend.model;
 import modul.backend.model.web.ObjectWS;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,9 +75,11 @@ import java.util.List;
 public class Object {
 
     @XmlElement(name = "Name", namespace = "http://megatravell.com/object", required = true)
+    @Size(min = 3, max = 30)
     @Column
     protected String name;
     @XmlElement(name = "Description", namespace = "http://megatravell.com/object", required = true)
+    @Size(max = 250)
     @Column
     protected String description;
     @XmlElement(name = "Category", namespace = "http://megatravell.com/object")

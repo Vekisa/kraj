@@ -2,6 +2,7 @@
 package modul.backend.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
 
 
@@ -54,12 +55,15 @@ import javax.xml.bind.annotation.*;
 public class Adress {
 
     @XmlElement(name = "State", namespace = "http://www.megatravell.com/address", required = true)
+    @Size(min = 3, max = 30)
     @Column
     protected String state;
     @XmlElement(name = "City", namespace = "http://www.megatravell.com/address", required = true)
+    @Size(min = 3, max = 30)
     @Column
     protected String city;
     @XmlElement(name = "Street", namespace = "http://www.megatravell.com/address", required = true)
+    @Size(min = 3, max = 30)
     @Column
     protected String street;
     @XmlElement(name = "Number", namespace = "http://www.megatravell.com/address")
@@ -67,6 +71,7 @@ public class Adress {
     protected int number;
     @XmlElement(name = "ZIP", namespace = "http://www.megatravell.com/address", required = true, defaultValue = "0")
     @Column
+    @Size(max = 6)
     protected String zip;
     @XmlElement(name = "Longitude", namespace = "http://www.megatravell.com/address")
     @Column

@@ -102,12 +102,15 @@ public abstract class User implements UserDetails {
     @Column(name = "id", updatable = false, nullable = false)
     @XmlElement(namespace = "http://www.megatravell.com/user")
     protected long id;
+    @Size(min = 3, max = 30)
     @Column
     @XmlElement(name = "FirstName", namespace = "http://www.megatravell.com/user", required = true)
     protected String firstName;
+    @Size(min = 3, max = 30)
     @Column
     @XmlElement(name = "LastName", namespace = "http://www.megatravell.com/user", required = true)
     protected String lastName;
+    @Size(min = 3, max = 30)
     @Column
     @XmlElement(name = "Email", namespace = "http://www.megatravell.com/user", required = true)
     protected String email;
@@ -116,6 +119,7 @@ public abstract class User implements UserDetails {
     @XmlElement(namespace = "http://www.megatravell.com/user", required = true)
     protected String username;
     @JsonIgnore
+    @Size(min = 10, max = 50)
     @Column
     @XmlElement(name = "Password", namespace = "http://www.megatravell.com/user", required = true)
     protected String password;

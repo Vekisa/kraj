@@ -4,6 +4,7 @@ package modul.backend.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Date;
@@ -54,6 +55,7 @@ import java.util.Date;
 public class Comment {
 
     @XmlElement(name = "Text", namespace = "http://megatravell.com/object", required = true)
+    @Size(max = 250)
     @Column
     protected String text;
     @XmlElement(name = "DateOfPublication", namespace = "http://megatravell.com/object", required = true)
