@@ -170,6 +170,20 @@ public class CertificateController {
         return new ResponseEntity<>(certificateService.findBySerialNumber(serialNumber), HttpStatus.OK);
     }
 
+    //Za AIA
+    @RequestMapping(value = "check/isCertValid", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Proverava sertifikat", httpMethod = "GET", produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = List.class),
+            @ApiResponse(code = 204, message = "No Content."),
+            @ApiResponse(code = 400, message = "Bad Request.")
+    })
+    public ResponseEntity<?> isCertValid(@RequestParam("serialNumber") String serialNumber) {
+        //0logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + serialNumber);
+        return new ResponseEntity<>(certificateService.validateBySerialNumber(serialNumber), HttpStatus.OK);
+    }
+
+
     @RequestMapping(value = "/allRevoke", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Prikaz svih povucenih sertifikata", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
@@ -190,4 +204,8 @@ public class CertificateController {
         //logging.printInfo("IN FUNC: Success");
         return new ResponseEntity<>(listaP, HttpStatus.OK);
     }
+
+
+
+
 }
