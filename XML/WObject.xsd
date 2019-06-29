@@ -73,6 +73,28 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+    <xs:element name="ObjectTypeAllRequest">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="ObjectTypeAllResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="ObjectType"
+                    type="wobject:ObjectType"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ExtraOptionAllRequest">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="ExtraOptionAllResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="ExtraOption"
+                    type="service:ExtraOption"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
     <xs:complexType name="ObjectWS">
         <xs:sequence>
             <xs:element name="id" type="xs:long"/>
@@ -99,7 +121,7 @@
                 </xs:simpleType>
             </xs:element>
             <xs:element ref="address:Adress"/>
-            <xs:element name="ObjectTypeId" type="wobject:ObjectType"/>
+            <xs:element name="ObjectType" type="wobject:ObjectType"/>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="CommentId" type="xs:long"/>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="ExtraOptionId" type="xs:long"/>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="UnitId" type="xs:long"/>

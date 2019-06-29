@@ -11,6 +11,7 @@ import {ProfileComponent} from './profile/profile.component';
 import {AccountComponent} from './account/account.component';
 import { ObjectsComponent } from './objects/objects.component';
 import { ReservedComponent } from './reserved/reserved.component';
+import {AuthGuard} from "../../../front_security/src/app/security/auth.guard";
 
 
 const routes: Routes = [
@@ -25,13 +26,13 @@ const routes: Routes = [
         path: 'search', component: SearchComponent
       },
       {
-        path: 'reservations', component: ReservationsComponent
+        path: 'reservations', component: ReservationsComponent , canActivate:[AuthGuard],data: { roles: ["ROLE_REG"] }
       },
       {
-        path: 'profile', component: ProfileComponent
+        path: 'profile', component: ProfileComponent, canActivate:[AuthGuard],data: { roles: ["ROLE_REG"] }
       },
       {
-        path: 'account', component: AccountComponent
+        path: 'account', component: AccountComponent,canActivate:[AuthGuard],data: { roles: ["ROLE_REG"] }
       },
       {
         path: 'objects/:id', component: ObjectsComponent
@@ -51,7 +52,7 @@ const routes: Routes = [
   },
   {
     path: 'reservations',
-    component: ReservationsComponent
+    component: ReservationsComponent,canActivate:[AuthGuard],data: { roles: ["ROLE_REG"] }
   }
 
 

@@ -17,7 +17,11 @@
         </xs:complexType>
     </xs:element>
     <xs:element name="ReservationAllRequest">
-        <xs:complexType/>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="AgentId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
     </xs:element>
     <xs:element name="ReservationAllResponse">
         <xs:complexType>
@@ -27,45 +31,14 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="ReservationAddRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element maxOccurs="1" name="Reservation" type="service:ReservationWS"/>
-            </xs:sequence>
-        </xs:complexType>
+    <xs:element name="ExtraOptionAllRequest">
+        <xs:complexType mixed="false"/>
     </xs:element>
-    <xs:element name="ReservationAddResponse">
+    <xs:element name="ExtraOptionAllResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="ResponseMessage" type="service:ResponseMessage"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="ReservationUpdateRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element maxOccurs="1" name="Reservation" type="service:ReservationWS"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="ReservationUpdateResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="ResponseMessage" type="service:ResponseMessage"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="ReservationDeleteRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="id" type="xs:long"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="ReservationDeleteResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="ResponseMessage" type="service:ResponseMessage"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="ExtraOption"
+                    type="service:ExtraOption"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

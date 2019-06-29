@@ -9,10 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
 import javax.xml.datatype.XMLGregorianCalendar;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -146,7 +143,7 @@ public abstract class User implements UserDetails {
     @JsonIgnore
     @JoinTable(joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
     @XmlElement(name = "Role", namespace = "http://www.megatravell.com/user")
-    protected List<Role> role;
+    protected Set<Role> role;
 
     @JsonIgnore
     @Override
@@ -177,7 +174,7 @@ public abstract class User implements UserDetails {
     public User() {
     }
 
-    public User(String firstName, String lastName, String email, @Size(max = 15) String username, String password, Adress adress, boolean isEnabled, XMLGregorianCalendar lastPasswordResetDate, boolean isVerified, List<Role> role) {
+    public User(String firstName, String lastName, String email, @Size(max = 15) String username, String password, Adress adress, boolean isEnabled, XMLGregorianCalendar lastPasswordResetDate, boolean isVerified,Set<Role> role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -451,9 +448,9 @@ public abstract class User implements UserDetails {
      * 
      * 
      */
-    public List<Role> getRole() {
+    public Set<Role> getRole() {
         if (role == null) {
-            role = new ArrayList<Role>();
+            role = new HashSet<>();
         }
         return this.role;
     }

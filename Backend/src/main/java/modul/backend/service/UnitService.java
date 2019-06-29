@@ -2,6 +2,7 @@ package modul.backend.service;
 
 import modul.backend.dto.UnitDTO;
 import modul.backend.model.*;
+import modul.backend.model.Object;
 import modul.backend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,9 @@ public class UnitService {
 
     @Autowired
     private CommentRepository commentRepository;
+
+    @Autowired
+    private ObjectRepository objectRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -110,6 +114,7 @@ public class UnitService {
     public Comment createComment(Long id, Comment comment,OAuth2Authentication oAuth2Authentication){
         RegisteredUser user = getRegisteredUser(oAuth2Authentication);
         Optional<Unit> unit = unitRepository.findById(id);
+        Optional<Object> object = objectRepository.findById(id);
         if(!unit.isPresent())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Unit does not exist!");
 
@@ -118,7 +123,7 @@ public class UnitService {
 
         comment.setRegisteredUser(user);
         comment.setDateOfPublication(new Date());
-        comment.setUnit(unit.get());
+        comment.setObject(object.get());
         comment.setApproved(false);
         commentRepository.save(comment);
         return comment;

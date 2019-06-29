@@ -1,6 +1,6 @@
 package modul.backend.service;
 
-import modul.backend.WebSer.Objekat;
+
 import modul.backend.dto.AccommodationTypeDTO;
 import modul.backend.dto.ExtraOptionDTO;
 import modul.backend.dto.ObjectDTO;

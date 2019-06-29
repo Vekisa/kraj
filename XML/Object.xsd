@@ -36,6 +36,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="object:Rating"/>
                 <xs:element ref="object:ObjectType"/>
                 <xs:element name="id" type="xs:long"/>
+                <xs:element ref="user:Agent" maxOccurs="unbounded" minOccurs="0"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -73,7 +74,6 @@
                 <xs:element ref="object:Object"/>
                 <xs:element name="id" type="xs:long"/>
                 <xs:element name="cancellation" type="xs:int"/>
-                <xs:element ref="user:Agent"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -83,6 +83,7 @@
                 <xs:element name="Made" type="xs:date"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="object:Plan"/>
                 <xs:element name="id" type="xs:long"/>
+                <xs:element ref="object:Unit"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -188,6 +189,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="object:Includes"/>
                 <xs:element ref="user:RegisteredUser"/>
                 <xs:element name="id" type="xs:long"/>
+                <xs:element name="cancelled" type="xs:boolean"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
