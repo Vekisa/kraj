@@ -37,4 +37,10 @@ export class ReservationService {
     }));
   }
 
+  getReservation(id: number):Observable<any>{
+    return this.http.get(this.baseReservationURL + "/" + id).pipe(catchError( err => {
+      return throwError(err);
+    }));
+  }
+
 }

@@ -8,15 +8,16 @@
         <th scope="row"> <img src='http://www.hotel-starikrovovi.com/img/galerija/moskva16.jpg' alt='image' class="myImage"></th>
         <td><b>From:</b>&nbsp;{{reservation.start | date : 'medium'}}<br>
             <b>To:</b>&nbsp;{{reservation.end | date : 'medium'}}</td>
-        <td>Otto</td>
-        <td>@mdo</td>
+        <td><b>Unit:</b>&nbsp;{{reservation.unit.object.name}}<br>
+            <b>Price:</b>&nbsp;{{reservation.price}}&nbsp;&euro;
+        </td>
+        <td><b>Confirmed:</b>&nbsp;<p *ngIf="reservation.confirmed">Yes</p><p *ngIf="!reservation.confirmed">No</p>
+        </td>
         <td>
-
-
-            <a  href = "reserved" class="btn btn-primary mb-2 mr-2" role="button">Show</a> 
-            <button type="button"  class="btn active mb-2 mr-2" data-toggle="modal" data-target="#myModal" ngbPopover="Send a message" triggers="mouseenter:mouseleave"><i class="fa fa-envelope"></i></button>
-            <button type="button" class="  btn-danger lg mb-2 mr-2">Cancellation</button>
-         
+            <a class="btn btn-primary mb-2 mr-2" role="button" (click)="showReservation(reservation.id)">Show</a>
+            <button type="button"  class="btn active mb-2 mr-2" data-toggle="modal" data-target="#myModal" ngbPopover="Send a message" triggers="mouseenter:mouseleave" (click)="setId(reservation.unit.id)"><i class="fa fa-envelope"></i></button>
+            <button type="button" class="  btn-danger lg mb-2 mr-2" >Cancellation</button>
+          <!--*ngIf="reservation.possibleCancellationDate.getTime() < currentDate.getTime()"-->
         </td>
       </tr>
       </tbody>
@@ -36,11 +37,11 @@
 
           <!-- Modal body -->
           <div class="modal-body">
-              <form>
+              <form [formGroup]="messageForm">
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Message:</label>
                     <div class="col-sm-10">
-                      <input class="form-control form-control-lg"  placeholder="Message...">
+                      <input class="form-control form-control-lg"  placeholder="Message..." [formControlName]="'text'">
                     </div>
                   </div>
                 </form>
@@ -48,7 +49,7 @@
 
           <!-- Modal footer -->
           <div class="modal-footer">
-              <button type="button" class="btn btn-outline-primary text-right" data-dismiss="modal">Send</button>
+              <button type="button" class="btn btn-outline-primary text-right" data-dismiss="modal" (click)="onSubmit()">Send</button>
             </div>
 
         </div>

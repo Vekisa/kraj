@@ -1,5 +1,6 @@
 package modul.backend.controller;
 import modul.backend.model.Comment;
+import modul.backend.model.Message;
 import modul.backend.model.Plan;
 import modul.backend.service.UnitService;
 import modul.backend.dto.UnitDTO;
@@ -48,6 +49,12 @@ public class UnitController {
     public ResponseEntity<Comment> createComment(@PathVariable(value = "unit_id") Long unitId, @RequestBody Comment comment, OAuth2Authentication oAuth2Authentication) {
 
         return new ResponseEntity<>(unitService.createComment(unitId,comment,oAuth2Authentication),HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/{unit_id}/message", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Message> creatMessage(@PathVariable(value = "unit_id") Long unitId, @RequestBody Message message, OAuth2Authentication oAuth2Authentication) {
+
+        return new ResponseEntity<>(unitService.createMessage(unitId,message,oAuth2Authentication),HttpStatus.OK);
     }
 
 }

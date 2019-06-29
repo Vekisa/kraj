@@ -47,6 +47,14 @@ public class ReservationService {
 
     }
 
+    public Reservation getReservation(Long id){
+        Optional<Reservation> reservation = reservationRepository.findById(id);
+        if(!reservation.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Reservation does not exist!");
+
+        return reservation.get();
+    }
+
     public RegisteredUser getRegisteredUser(String username){
           RegisteredUser user = registeredUserRepository.findByUsername(username).orElseThrow(
                 () -> new UsernameNotFoundException("User Not Found with username or email : " + username));

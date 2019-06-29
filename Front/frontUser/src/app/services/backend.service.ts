@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
+import {Message} from "../../../../frontAgent/src/app/model";
 
 @Injectable({
   providedIn: 'root'
@@ -51,8 +52,13 @@ export class BackendService {
   }
 
   createComment(id: number, comment: any):Observable<any>{
-    console.log("JEBACEMO MU  JOS JENDOM");
     return this.http.put<any>(this.baseUnitURL+"/"+id + "/comment",comment).pipe(catchError(err => {
+      return throwError(err);
+    }));
+  }
+
+  sendMessage(id: number, message: Message):Observable<any>{
+    return this.http.put<any>(this.baseUnitURL+"/"+id + "/message",message).pipe(catchError(err => {
       return throwError(err);
     }));
   }

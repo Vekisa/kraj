@@ -2,10 +2,7 @@ package modul.backend.service;
 
 import modul.backend.dto.UnitDTO;
 import modul.backend.model.*;
-import modul.backend.repository.CommentRepository;
-import modul.backend.repository.RegisteredUserRepository;
-import modul.backend.repository.UnitRepository;
-import modul.backend.repository.UserRepository;
+import modul.backend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -28,6 +25,12 @@ public class UnitService {
 
     @Autowired
     private RegisteredUserRepository registeredUserRepository;
+
+    @Autowired
+    private AgentRepository agentRepository;
+
+    @Autowired
+    private MessageRepository messageRepository;
 
     public UnitDTO findById(Long id){
         Optional<Unit> unit = unitRepository.findById(id);
@@ -81,6 +84,29 @@ public class UnitService {
 
     }
 
+    public Message createMessage(Long id, Message message, OAuth2Authentication oAuth2Authentication){
+        Optional<Unit> unit = unitRepository.findById(id);
+        if(!unit.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unit does not exist");
+        RegisteredUser user = getRegisteredUser(oAuth2Authentication);
+
+        if(!canUserSendMessage(unit.get(),user))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You cannot send message!");
+
+        Optional<Agent> agent = agentRepository.findById(unit.get().getAgent().getId());
+        if(!agent.isPresent())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Something went wrong!");
+
+        message.setRegisteredUser(user);
+        message.setAgent(agent.get());
+        message.setPostingDate(new Date());
+        message.setSeen(false);
+        message.setFromUser(user.getId());
+        messageRepository.save(message);
+
+        return message;
+    }
+
     public Comment createComment(Long id, Comment comment,OAuth2Authentication oAuth2Authentication){
         RegisteredUser user = getRegisteredUser(oAuth2Authentication);
         Optional<Unit> unit = unitRepository.findById(id);
@@ -101,6 +127,14 @@ public class UnitService {
     boolean canUserComment(Unit unit,RegisteredUser user){
         for(Reservation reservation : user.getReservation()){
             if(reservation.getRegisteredUser().getId() == user.getId() && reservation.isConfirmed() && reservation.getEnd().before(new Date()))
+                return true;
+        }
+        return false;
+    }
+
+    boolean canUserSendMessage(Unit unit,RegisteredUser user){
+        for(Reservation reservation : user.getReservation()){
+            if(reservation.getUnit().getId() == unit.getId())
                 return true;
         }
         return false;

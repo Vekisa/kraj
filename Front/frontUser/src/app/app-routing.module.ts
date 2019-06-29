@@ -37,7 +37,7 @@ const routes: Routes = [
         path: 'objects/:id', component: ObjectsComponent
       },
       {
-        path: 'reserved', component: ReservedComponent
+        path: 'reserved/:id', component: ReservedComponent
       }
     ]
   },

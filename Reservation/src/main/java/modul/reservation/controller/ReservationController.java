@@ -33,6 +33,11 @@ public class ReservationController {
         return new ResponseEntity<>(reservationService.save(reservation), HttpStatus.CREATED);
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Reservation> getReservation(@PathVariable(value = "id") Long id){
+        return new ResponseEntity<>(reservationService.getReservation(id), HttpStatus.CREATED);
+    }
+
     @RequestMapping(value = "/getAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Ispis rezervacija", httpMethod = "GET", produces = "application/json")
     @ApiResponses(value = {
