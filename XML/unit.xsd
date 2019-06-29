@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.megatravell.com/unit" xmlns:plan="http://www.megatravell.com/plan"
+    xmlns:service="http://www.megatravell.com/reservation"
+    xmlns:unit="http://www.megatravell.com/unit">
+    <xs:import namespace="http://www.megatravell.com/plan" schemaLocation="plan.xsd"/>
+    <xs:import namespace="http://www.megatravell.com/reservation" schemaLocation="reservation.xsd"/>
+    <xs:element name="UnitRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UnitResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="unit" type="unit:unit"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UnitAllRequest">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="UnitAllResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="unit" type="unit:unit"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UnitAddRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="unit" type="unit:unit"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UnitAddResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ResponseMessage" type="service:ResponseMessage"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UnitDeleteRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UnitDeleteResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ResponseMessage" type="service:ResponseMessage"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UnitUpdateRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="unit" type="unit:unit"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UnitUpdateResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ResponseMessage" type="service:ResponseMessage"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="unit">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="Person" type="xs:int"/>
+            <xs:element name="Beds" type="xs:int"/>
+            <xs:element name="cancellation" type="xs:int"/>
+            <xs:element name="agentId" type="xs:long"/>
+            <xs:element name="objectId" type="xs:long"/>
+            <xs:element name="accomodationTypeId" type="xs:long"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="reservationId" type="xs:long"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="Price_schedule"
+                type="plan:price_schedule"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="image" type="unit:image"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="image">
+        <xs:sequence>
+            <xs:element name="source" type="xs:base64Binary"/>
+            <xs:element name="id" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

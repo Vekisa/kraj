@@ -4,6 +4,7 @@ package modul.oauth.model;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
 
 
@@ -41,6 +42,7 @@ public class Role implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @XmlElement(namespace = "http://www.megatravell.com/user")
     protected long id;
+    @Size(min = 3, max = 30)
     @Column
     @XmlElement(namespace = "http://www.megatravell.com/user", required = true)
     protected String name;

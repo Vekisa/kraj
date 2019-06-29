@@ -47,6 +47,7 @@
             <xs:element name="Start" type="xs:date"/>
             <xs:element name="End" type="xs:date"/>
             <xs:element default="false" name="Confirmed" type="xs:boolean"/>
+            <xs:element name="cancelled" type="xs:boolean"/>
             <xs:element name="PossibleCancellationDate" type="xs:date"/>
             <xs:element name="Price">
                 <xs:simpleType>

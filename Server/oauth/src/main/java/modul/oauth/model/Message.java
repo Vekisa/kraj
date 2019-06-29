@@ -1,12 +1,8 @@
 package modul.oauth.model;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.*;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Date;
 
@@ -63,6 +59,7 @@ public class Message {
     @Column
     @XmlElement(name = "Text", namespace = "http://www.megatravell.com/user", required = true)
     protected String text;
+    @Size(min = 3, max = 250)
     @Column
     @XmlElement(namespace = "http://www.megatravell.com/user", required = true)
     @XmlSchemaType(name = "dateTime")
@@ -80,6 +77,8 @@ public class Message {
     @XmlElement(namespace = "http://www.megatravell.com/user")
     protected long fromUser;
 
+    public Message() {
+    }
 
     /**
      * Gets the value of the text property.

@@ -15,7 +15,6 @@
       <module fileurl="file://$PROJECT_DIR$/Reservation/reservation.iml" filepath="$PROJECT_DIR$/Reservation/reservation.iml" />
       <module fileurl="file://$PROJECT_DIR$/rtng/rtng.iml" filepath="$PROJECT_DIR$/rtng/rtng.iml" />
       <module fileurl="file://$PROJECT_DIR$/search/search.iml" filepath="$PROJECT_DIR$/search/search.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Server/zuul/zuul.iml" filepath="$PROJECT_DIR$/Server/zuul/zuul.iml" />
     </modules>
   </component>
 </project>

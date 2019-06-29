@@ -1,22 +1,19 @@
+
 package modul.oauth.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.*;
+import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
 
 /**
  * <p>Java class for anonymous complex type.
- *
+ * 
  * <p>The following schema fragment specifies the expected content contained within this class.
- *
+ * 
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -30,27 +27,29 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element ref="{http://megatravell.com/object}Reservation" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element ref="{http://megatravell.com/object}Object"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="cancellation" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- *
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-        "person",
-        "beds",
-        "priceSchedule",
-        "accommodationType",
-        "image",
-        "reservation",
-        "object",
-        "id"
+    "person",
+    "beds",
+    "priceSchedule",
+    "accommodationType",
+    "image",
+    "reservation",
+    "object",
+    "id",
+    "cancellation"
 })
-@Entity
 @XmlRootElement(name = "Unit", namespace = "http://megatravell.com/object")
+@Entity
 public class Unit {
 
     @Column
@@ -79,6 +78,12 @@ public class Unit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @XmlElement(namespace = "http://megatravell.com/object")
     protected long id;
+    @XmlElement(namespace = "http://megatravell.com/object")
+    @Column
+    protected int cancellation;
+
+    public Unit() {
+    }
 
     /**
      * Gets the value of the person property.
@@ -249,7 +254,7 @@ public class Unit {
 
     /**
      * Gets the value of the id property.
-     *
+     * 
      */
     public long getId() {
         return id;
@@ -257,10 +262,27 @@ public class Unit {
 
     /**
      * Sets the value of the id property.
-     *
+     * 
      */
     public void setId(long value) {
         this.id = value;
     }
+
+    /**
+     * Gets the value of the cancellation property.
+     * 
+     */
+    public int getCancellation() {
+        return cancellation;
+    }
+
+    /**
+     * Sets the value of the cancellation property.
+     * 
+     */
+    public void setCancellation(int value) {
+        this.cancellation = value;
+    }
+
 
 }

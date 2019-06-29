@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.megatravell.com/plan" xmlns:plan="http://www.megatravell.com/plan"
+    xmlns:service="http://www.megatravell.com/reservation">
+    <xs:import namespace="http://www.megatravell.com/reservation" schemaLocation="reservation.xsd"/>
+    <xs:element name="PriceScheduleRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="PriceScheduleResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Price_schedule" type="plan:price_schedule"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="PriceScheduleAllResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="Price_schedule"
+                    type="plan:price_schedule"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="PriceScheduleAddRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Price_schedule" type="plan:price_schedule"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="PriceScheduleAddResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ResponseMessage" type="service:ResponseMessage"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="PriceScheduleUpdateRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Price_schedule" type="plan:price_schedule"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="PriceScheduleUpdateResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ResponseMessage" type="service:ResponseMessage"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="PlanRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="PlanResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" name="Plan" type="plan:plan"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="PlanUpdateRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" name="Plan" type="plan:plan"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="PlanUpdateResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ResponseMessage" type="service:ResponseMessage"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="plan">
+        <xs:sequence>
+            <xs:element name="FromDate" type="xs:date"/>
+            <xs:element name="ToDate" type="xs:date"/>
+            <xs:element name="Price">
+                <xs:simpleType>
+                    <xs:restriction base="xs:double">
+                        <xs:minInclusive value="0"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Per_person" type="xs:boolean"/>
+            <xs:element name="id" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="price_schedule">
+        <xs:sequence>
+            <xs:element name="Made" type="xs:date"/>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="plan" type="plan:plan"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

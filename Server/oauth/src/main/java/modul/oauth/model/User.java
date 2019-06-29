@@ -9,10 +9,10 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
 import javax.xml.datatype.XMLGregorianCalendar;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -102,12 +102,15 @@ public abstract class User implements UserDetails {
     @Column(name = "id", updatable = false, nullable = false)
     @XmlElement(namespace = "http://www.megatravell.com/user")
     protected long id;
+    @Size(min = 3, max = 30)
     @Column
     @XmlElement(name = "FirstName", namespace = "http://www.megatravell.com/user", required = true)
     protected String firstName;
+    @Size(min = 3, max = 30)
     @Column
     @XmlElement(name = "LastName", namespace = "http://www.megatravell.com/user", required = true)
     protected String lastName;
+    @Size(min = 3, max = 30)
     @Column
     @XmlElement(name = "Email", namespace = "http://www.megatravell.com/user", required = true)
     protected String email;
@@ -116,6 +119,7 @@ public abstract class User implements UserDetails {
     @XmlElement(namespace = "http://www.megatravell.com/user", required = true)
     protected String username;
     @JsonIgnore
+    @Size(min = 10, max = 50)
     @Column
     @XmlElement(name = "Password", namespace = "http://www.megatravell.com/user", required = true)
     protected String password;
@@ -138,11 +142,11 @@ public abstract class User implements UserDetails {
     @OneToOne
     @XmlElement(name = "VerificationToken", namespace = "http://www.megatravell.com/user", required = true)
     protected VerificationToken verificationToken;
-    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JsonIgnore
     @JoinTable(joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
     @XmlElement(name = "Role", namespace = "http://www.megatravell.com/user")
-    protected List<Role> role;
+    protected Set<Role> role;
 
     @JsonIgnore
     @Override
@@ -173,7 +177,7 @@ public abstract class User implements UserDetails {
     public User() {
     }
 
-    public User(String firstName, String lastName, String email, @Size(max = 15) String username, String password, Adress adress, boolean isEnabled, XMLGregorianCalendar lastPasswordResetDate, boolean isVerified, List<Role> role) {
+    public User(String firstName, String lastName, String email, @Size(max = 15) String username, String password, Adress adress, boolean isEnabled, XMLGregorianCalendar lastPasswordResetDate, boolean isVerified,Set<Role> role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -447,9 +451,9 @@ public abstract class User implements UserDetails {
      * 
      * 
      */
-    public List<Role> getRole() {
+    public Set<Role> getRole() {
         if (role == null) {
-            role = new ArrayList<Role>();
+            role = new HashSet<>();
         }
         return this.role;
     }

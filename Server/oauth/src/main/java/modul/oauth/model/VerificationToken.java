@@ -77,7 +77,6 @@ public class VerificationToken {
     public VerificationToken(String token, User user) {
         this.user = user;
         verificationToken = token;
-        this.expiryDate = expirationTime(60*24);
 
     }
 

@@ -11,7 +11,7 @@ import {ProfileComponent} from './profile/profile.component';
 import {AccountComponent} from './account/account.component';
 import { ObjectsComponent } from './objects/objects.component';
 import { ReservedComponent } from './reserved/reserved.component';
-import {AuthGuard} from "../../../front_security/src/app/security/auth.guard";
+import { AuthGuard } from "./security/auth.guard";
 
 
 const routes: Routes = [
