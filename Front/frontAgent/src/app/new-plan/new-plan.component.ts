@@ -140,9 +140,8 @@ export class NewPlanComponent implements OnInit {
     this.brojUListi=i;
     let pom: Plan=new Plan();
     pom=this.plans[i];
-    console.log(pom);
-    this.newPlanForm.controls['fromDate'].setValue(pom.fromDate);
-    this.newPlanForm.controls['toDate'].setValue(pom.toDate);
+    this.newPlanForm.controls['fromDate'].setValue(new Date(pom.fromDate));
+    this.newPlanForm.controls['toDate'].setValue(new Date(pom.toDate));
     this.newPlanForm.controls['price'].setValue(pom.price);
     this.newPlanForm.controls['perPerson'].setValue(false);
     if(pom.perPerson){

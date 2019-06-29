@@ -11,6 +11,8 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 @Service
 public class MessageService {
@@ -49,6 +51,19 @@ public class MessageService {
                  mes.add(m);
             }
 
+        }
+
+        Collections.sort(mes, new Comparator<Message>() {
+            @Override
+            public int compare(Message o1, Message o2) {
+                if (o1.getPostingDate() == null || o2.getPostingDate() == null)
+                    return 0;
+                return o1.getPostingDate().compareTo(o2.getPostingDate());
+            }
+        });
+
+        for(Message m : mes){
+            System.out.println(m.getText() + "   " + m.getPostingDate());
         }
         return mes;
     }

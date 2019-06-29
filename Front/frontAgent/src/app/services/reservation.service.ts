@@ -18,7 +18,7 @@ export class ReservationService {
   }
 
   createReservation(reservation: Reservation): Observable<JwtResponse>{
-    return this.http.post<JwtResponse>(this.reservationURL+"/create", reservation).pipe(catchError(err => {
+    return this.http.post<JwtResponse>(this.reservationURL+"/createReservation", reservation).pipe(catchError(err => {
       return throwError(err);
     }));
   }

@@ -73,10 +73,11 @@ export class NewUnitComponent implements OnInit {
         this.unit.object=object;
       }
     }
-    console.log(this.unit);
+    
     this.unitService.newUnit(this.unit).subscribe(data=>
-      {this.router.navigateByUrl('/home/newPlan/' + data.id);
-        console.log(data)}
+      {console.log(data);
+        this.router.navigateByUrl('/home/newPlan/' + data.id);
+        }
     );
   }
 
