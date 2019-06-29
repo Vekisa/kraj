@@ -27,9 +27,11 @@ export class SignupComponent implements OnInit {
 
     var state = this.authService.isValid();
 
-    if(state==true){
-      this.route.navigate(['']);
-    }
+    this.authService.roles().subscribe(data=>{
+      console.log('Ulogovan ')
+      window.location.href='';
+
+    });
 
     this.signUpForm = this.formBuilder.group({
 

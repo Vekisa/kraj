@@ -30,10 +30,12 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
 
 
-    if(this.authService.isValid()){
+    this.authService.roles().subscribe(data=>{
       console.log('Ulogovan ')
       window.location.href='';
-    }
+
+    });
+
 
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9_ ]*')]],
