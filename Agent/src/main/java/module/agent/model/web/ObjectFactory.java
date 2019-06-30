@@ -1,8 +1,8 @@
 
 package module.agent.model.web;
 
-import module.agent.model.Adress;
-import module.agent.model.ObjectType;
+import module.agent.model.Plan;
+import module.agent.model.PriceSchedule;
 
 import javax.xml.bind.annotation.XmlRegistry;
 
@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRegistry;
 /**
  * This object contains factory methods for each 
  * Java content interface and Java element interface 
- * generated in the test package. 
+ * generated in the newmodel package. 
  * <p>An ObjectFactory allows you to programatically 
  * construct new instances of the Java representation 
  * for XML content. The Java representation of XML 
@@ -26,18 +26,34 @@ public class ObjectFactory {
 
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: test
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: newmodel
      * 
      */
     public ObjectFactory() {
     }
 
     /**
-     * Create an instance of {@link ObjectDeleteResponse }
+     * Create an instance of {@link PriceScheduleAllResponse }
      * 
      */
-    public ObjectDeleteResponse createObjectDeleteResponse() {
-        return new ObjectDeleteResponse();
+    public PriceScheduleAllResponse createPriceScheduleAllResponse() {
+        return new PriceScheduleAllResponse();
+    }
+
+    /**
+     * Create an instance of {@link PriceSchedule }
+     * 
+     */
+    public PriceSchedule createPriceSchedule() {
+        return new PriceSchedule();
+    }
+
+    /**
+     * Create an instance of {@link PriceScheduleAddResponse }
+     * 
+     */
+    public PriceScheduleAddResponse createPriceScheduleAddResponse() {
+        return new PriceScheduleAddResponse();
     }
 
     /**
@@ -49,107 +65,99 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ObjectRequest }
+     * Create an instance of {@link PriceScheduleResponse }
      * 
      */
-    public ObjectRequest createObjectRequest() {
-        return new ObjectRequest();
+    public PriceScheduleResponse createPriceScheduleResponse() {
+        return new PriceScheduleResponse();
     }
 
     /**
-     * Create an instance of {@link ObjectAllRequest }
+     * Create an instance of {@link PlanResponse }
      * 
      */
-    public ObjectAllRequest createObjectAllRequest() {
-        return new ObjectAllRequest();
+    public PlanResponse createPlanResponse() {
+        return new PlanResponse();
     }
 
     /**
-     * Create an instance of {@link ObjectAddRequest }
+     * Create an instance of {@link module.agent.model.Plan }
      * 
      */
-    public ObjectAddRequest createObjectAddRequest() {
-        return new ObjectAddRequest();
+    public Plan createPlan() {
+        return new Plan();
     }
 
     /**
-     * Create an instance of {@link ObjectWS }
+     * Create an instance of {@link PriceScheduleUpdateRequest }
      * 
      */
-    public ObjectWS createObjectWS() {
-        return new ObjectWS();
+    public PriceScheduleUpdateRequest createPriceScheduleUpdateRequest() {
+        return new PriceScheduleUpdateRequest();
     }
 
     /**
-     * Create an instance of {@link ObjectAddResponse }
+     * Create an instance of {@link PriceScheduleAddRequest }
      * 
      */
-    public ObjectAddResponse createObjectAddResponse() {
-        return new ObjectAddResponse();
+    public PriceScheduleAddRequest createPriceScheduleAddRequest() {
+        return new PriceScheduleAddRequest();
     }
 
     /**
-     * Create an instance of {@link ObjectAllResponse }
+     * Create an instance of {@link PlanUpdateResponse }
      * 
      */
-    public ObjectAllResponse createObjectAllResponse() {
-        return new ObjectAllResponse();
+    public PlanUpdateResponse createPlanUpdateResponse() {
+        return new PlanUpdateResponse();
     }
 
     /**
-     * Create an instance of {@link ObjectDeleteRequest }
+     * Create an instance of {@link PriceScheduleUpdateResponse }
      * 
      */
-    public ObjectDeleteRequest createObjectDeleteRequest() {
-        return new ObjectDeleteRequest();
+    public PriceScheduleUpdateResponse createPriceScheduleUpdateResponse() {
+        return new PriceScheduleUpdateResponse();
     }
 
     /**
-     * Create an instance of {@link ObjectUpdateRequest }
+     * Create an instance of {@link PlanRequest }
      * 
      */
-    public ObjectUpdateRequest createObjectUpdateRequest() {
-        return new ObjectUpdateRequest();
+    public PlanRequest createPlanRequest() {
+        return new PlanRequest();
     }
 
     /**
-     * Create an instance of {@link ObjectResponse }
+     * Create an instance of {@link PriceScheduleRequest }
      * 
      */
-    public ObjectResponse createObjectResponse() {
-        return new ObjectResponse();
+    public PriceScheduleRequest createPriceScheduleRequest() {
+        return new PriceScheduleRequest();
     }
 
     /**
-     * Create an instance of {@link ObjectUpdateResponse }
+     * Create an instance of {@link PlanUpdateRequest }
      * 
      */
-    public ObjectUpdateResponse createObjectUpdateResponse() {
-        return new ObjectUpdateResponse();
+    public PlanUpdateRequest createPlanUpdateRequest() {
+        return new PlanUpdateRequest();
     }
 
     /**
-     * Create an instance of {@link ObjectType }
+     * Create an instance of {@link ExtraOptionAllResponse }
      * 
      */
-    public ObjectType createObjectType() {
-        return new ObjectType();
+    public ExtraOptionAllResponse createExtraOptionAllResponse() {
+        return new ExtraOptionAllResponse();
     }
 
     /**
-     * Create an instance of {@link ReservationAddRequest }
+     * Create an instance of {@link module.agent.model.ExtraOption }
      * 
      */
-    public ReservationAddRequest createReservationAddRequest() {
-        return new ReservationAddRequest();
-    }
-
-    /**
-     * Create an instance of {@link ReservationWS }
-     * 
-     */
-    public ReservationWS createReservationWS() {
-        return new ReservationWS();
+    public ExtraOption createExtraOption() {
+        return new ExtraOption();
     }
 
     /**
@@ -161,19 +169,19 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ReservationWS }
+     * 
+     */
+    public ReservationWS createReservationWS() {
+        return new ReservationWS();
+    }
+
+    /**
      * Create an instance of {@link ReservationAllRequest }
      * 
      */
     public ReservationAllRequest createReservationAllRequest() {
         return new ReservationAllRequest();
-    }
-
-    /**
-     * Create an instance of {@link ReservationUpdateRequest }
-     * 
-     */
-    public ReservationUpdateRequest createReservationUpdateRequest() {
-        return new ReservationUpdateRequest();
     }
 
     /**
@@ -185,27 +193,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ReservationUpdateResponse }
+     * Create an instance of {@link ExtraOptionAllRequest }
      * 
      */
-    public ReservationUpdateResponse createReservationUpdateResponse() {
-        return new ReservationUpdateResponse();
-    }
-
-    /**
-     * Create an instance of {@link ReservationDeleteResponse }
-     * 
-     */
-    public ReservationDeleteResponse createReservationDeleteResponse() {
-        return new ReservationDeleteResponse();
-    }
-
-    /**
-     * Create an instance of {@link ReservationDeleteRequest }
-     * 
-     */
-    public ReservationDeleteRequest createReservationDeleteRequest() {
-        return new ReservationDeleteRequest();
+    public ExtraOptionAllRequest createExtraOptionAllRequest() {
+        return new ExtraOptionAllRequest();
     }
 
     /**
@@ -217,35 +209,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ReservationAddResponse }
-     * 
-     */
-    public ReservationAddResponse createReservationAddResponse() {
-        return new ReservationAddResponse();
-    }
-
-    /**
-     * Create an instance of {@link ExtraOption }
-     * 
-     */
-    public ExtraOption createExtraOption() {
-        return new ExtraOption();
-    }
-
-    /**
      * Create an instance of {@link IncludesWS }
      * 
      */
     public IncludesWS createIncludesWS() {
         return new IncludesWS();
-    }
-
-    /**
-     * Create an instance of {@link module.agent.model.Adress }
-     * 
-     */
-    public Adress createAdress() {
-        return new Adress();
     }
 
 }

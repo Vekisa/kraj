@@ -23,7 +23,7 @@ export class UnitService {
   }
 
   updateUnit(ps: PriceSchedule, id:number): Observable<Unit> {
-    console.log("uslo update");
+    console.log("uslo update "  + id);
     return this.http.put<Unit>(this.unitURL + "/update_unit/" + id, ps).pipe(catchError(err => {
       return throwError(err);
     }));

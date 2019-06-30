@@ -55,9 +55,9 @@ public class UnitController {
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<Unit> updateUnit(@RequestBody PriceSchedule priceSchedule, @PathVariable Long id){
+    public ResponseEntity<Unit> updateUnit(@RequestBody PriceSchedule priceSchedule, @PathVariable Long id, OAuth2Authentication oAuth2Authentication){
         System.out.println("Uslo update ");
-        return new ResponseEntity<>(unitService.update(id, priceSchedule), HttpStatus.OK);
+        return new ResponseEntity<>(unitService.update(id, priceSchedule, oAuth2Authentication), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/find_unit/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -70,7 +70,7 @@ public class UnitController {
     public ResponseEntity<Unit> findUnit(@PathVariable Long id, OAuth2Authentication oAuth){
         System.out.println("Uslo pretraga " + id);
 
-        return new ResponseEntity<Unit>(unitService.findById(id, oAuth).get(), HttpStatus.OK);
+        return new ResponseEntity<Unit>(unitService.findById(id, oAuth), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

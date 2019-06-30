@@ -33,9 +33,9 @@ public class ObjectController {
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<Object> createObject(@RequestBody Object object){
+    public ResponseEntity<Object> createObject(@RequestBody Object object, OAuth2Authentication oAuth2Authentication){
         System.out.println("Uslo object    " );
-        return new ResponseEntity<>(objectService.create(object), HttpStatus.CREATED);
+        return new ResponseEntity<>(objectService.create(object, oAuth2Authentication), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -45,9 +45,9 @@ public class ObjectController {
             @ApiResponse(code = 204, message = "No Content."),
             @ApiResponse(code = 400, message = "Bad Request.")
     })
-    public ResponseEntity<List<Object>> getAll(){
+    public ResponseEntity<List<Object>> getAll(OAuth2Authentication oAuth2Authentication){
         System.out.println("Uslo object getALl");
-        return new ResponseEntity<>(objectService.getAll(), HttpStatus.OK);
+        return new ResponseEntity<>(objectService.getAll(oAuth2Authentication), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/create_new_address", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)

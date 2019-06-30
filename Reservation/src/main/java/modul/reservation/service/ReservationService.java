@@ -1,10 +1,7 @@
 package modul.reservation.service;
 
 import modul.reservation.model.*;
-import modul.reservation.repository.RegisteredUserRepository;
-import modul.reservation.repository.ReservationRepository;
-import modul.reservation.repository.UnitRepository;
-import modul.reservation.repository.UserRepository;
+import modul.reservation.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -35,13 +32,17 @@ public class ReservationService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private AgentRepository agentRepository;
+
     public Reservation saveAgent(Reservation reservation, OAuth2Authentication oAuth2Authentication) {
 
         User user=userService.getUser(oAuth2Authentication.getName());
-        if (!checkReservation(reservation) && user.getId()!=reservation.getUnit().getAgent().getId()) {
+        Agent a=agentRepository.findById(user.getId()).get();
+        if (!checkReservation(reservation) && !reservation.getUnit().getObject().getAgent().contains(a)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unit is not available!");
         }
-
+        reservation.setCancelled(false);
         reservation.setPossibleCancellationDate(new Date(reservation.getStart().getTime()-(reservation.getUnit().getCancellation()*24*60*60*1000)));
         reservation.setPrice(calculatePrice(reservation));
         reservation.setConfirmed(false);
@@ -55,6 +56,7 @@ public class ReservationService {
         }
         RegisteredUser registeredUser=getRegisteredUser(oAuth2Authentication.getName());
         reservation.setRegisteredUser(registeredUser);
+        reservation.setCancelled(false);
         reservation.setPossibleCancellationDate(new Date(reservation.getStart().getTime()-(reservation.getUnit().getCancellation()*24*60*60*1000)));
         reservation.setPrice(calculatePrice(reservation));
         reservation.setConfirmed(false);
@@ -104,10 +106,10 @@ public class ReservationService {
 
     public Reservation confirme (Reservation reservation, Long id, OAuth2Authentication oAuth2Authentication){
         User u=userService.getUser(oAuth2Authentication.getName());
-
+        Agent a= agentRepository.findById(u.getId()).get();
         Optional<Reservation> pom = reservationRepository.findById(id);
         if (pom.isPresent()) {
-            if(u.getId()==pom.get().getUnit().getAgent().getId()) {
+            if(pom.get().getUnit().getObject().getAgent().contains(a)) {
                 pom.get().setConfirmed(true);
                 reservationRepository.save(pom.get());
                 return pom.get();
@@ -122,9 +124,10 @@ public class ReservationService {
 
     public List<Reservation> findByUnit (Long id, OAuth2Authentication oAuth2Authentication){
         User u = userService.getUser(oAuth2Authentication.getName());
+        Agent a= agentRepository.findById(u.getId()).get();
         List<Reservation> pom = new ArrayList<>();
         for (Reservation r : reservationRepository.findAllByUnitId(id)) {
-            if (u.getId() == r.getUnit().getAgent().getId()) {
+            if (r.getUnit().getObject().getAgent().contains(a)) {
                 pom.add(r);
             }
         }
@@ -133,9 +136,10 @@ public class ReservationService {
 
     public List<Reservation> findAll (OAuth2Authentication oAuth2Authentication){
         Optional<User> u = userRepository.findByUsername(oAuth2Authentication.getName());
+        Agent a= agentRepository.findById(u.get().getId()).get();
         List<Reservation> pom = new ArrayList<>();
         for (Reservation r : reservationRepository.findAll()) {
-            if (u.get().getId() == r.getUnit().getAgent().getId()) {
+            if (r.getUnit().getObject().getAgent().contains(a)) {
                 pom.add(r);
             }
         }
@@ -146,7 +150,7 @@ public class ReservationService {
         if(reservation.getEnd().before(reservation.getStart())){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Start date must be before end date!");
         }
-        List<Reservation> lista = reservationRepository.findAllByUnitId(reservation.getId());
+        List<Reservation> lista = reservationRepository.findAllByUnitId(reservation.getUnit().getId());
         System.out.println(" lista  " + lista.size());
         for (Reservation r : lista) {
             System.out.println("r " + r.getStart() + "   " + r.getEnd());

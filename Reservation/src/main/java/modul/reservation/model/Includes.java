@@ -1,8 +1,6 @@
 
 package modul.reservation.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 
@@ -50,8 +48,6 @@ public class Includes {
     @XmlElement(namespace = "http://megatravell.com/object")
     @Column
     protected int quantity;
-
-    @JsonIgnore
     @XmlElement(name = "Reservation", namespace = "http://megatravell.com/object", required = true)
     @ManyToOne
     protected Reservation reservation;

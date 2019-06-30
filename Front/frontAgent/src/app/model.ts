@@ -8,7 +8,6 @@ export class Unit {
   priceSchedule: PriceSchedule[]=[];
   reservation: Reservation[]=[];
   accommodationType: string;
-  agent: RegisteredUser;
   constructor() {
   }
 

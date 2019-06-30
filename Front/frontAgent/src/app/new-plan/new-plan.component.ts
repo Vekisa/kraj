@@ -56,6 +56,8 @@ export class NewPlanComponent implements OnInit {
       this.unitService.findById(data['id']).subscribe(data=>{
         this.unit=data;
         console.log(data);
+
+        console.log("ID je "+this.unit.id);
       })
     });
     this.fS=1;

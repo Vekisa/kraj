@@ -46,8 +46,7 @@ import java.util.List;
     "reservation",
     "object",
     "id",
-    "cancellation",
-    "agent"
+    "cancellation"
 })
 @XmlRootElement(name = "Unit", namespace = "http://megatravell.com/object")
 @Entity
@@ -82,9 +81,9 @@ public class Unit {
     @XmlElement(namespace = "http://megatravell.com/object")
     @Column
     protected int cancellation;
-    @XmlElement(name = "Agent", namespace = "http://www.megatravell.com/user", required = true)
-    @ManyToOne
-    protected Agent agent;
+
+    public Unit() {
+    }
 
     /**
      * Gets the value of the person property.
@@ -285,28 +284,5 @@ public class Unit {
         this.cancellation = value;
     }
 
-    /**
-     * Gets the value of the agent property.
-     *
-     * @return
-     *     possible object is
-     *     {@link Agent }
-     *
-     */
-    public Agent getAgent() {
-        return agent;
-    }
-
-    /**
-     * Sets the value of the agent property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Agent }
-     *
-     */
-    public void setAgent(Agent value) {
-        this.agent = value;
-    }
 
 }

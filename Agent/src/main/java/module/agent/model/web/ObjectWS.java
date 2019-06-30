@@ -1,10 +1,9 @@
 
 package module.agent.model.web;
 
-
 import module.agent.model.Adress;
-import module.agent.model.Object;
 import module.agent.model.ObjectType;
+import module.agent.model.Object;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -104,6 +103,7 @@ public class ObjectWS {
         this.id=object.getId();
         this.adress=object.getAdress();
         this.category=object.getCategory();
+        this.name = object.getName();
         this.description=object.getDescription();
         this.objectTypeId=object.getObjectType();
     }

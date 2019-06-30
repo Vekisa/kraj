@@ -2,6 +2,7 @@
 package module.agent.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
 
 
@@ -50,10 +51,13 @@ import javax.xml.bind.annotation.*;
 @Table
 public class AccommodationType {
 
+
     @XmlElement(name = "Name", namespace = "http://megatravell.com/object", required = true)
+    @Size(min = 3, max = 30)
     @Column
     protected String name;
     @XmlElement(name = "Description", namespace = "http://megatravell.com/object", required = true)
+    @Size(max = 250)
     @Column
     protected String description;
 

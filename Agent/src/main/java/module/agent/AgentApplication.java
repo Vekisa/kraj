@@ -1,14 +1,8 @@
 package module.agent;
 
-import module.agent.model.Adress;
-import module.agent.model.ObjectType;
-import module.agent.model.web.*;
-import module.agent.services.ObjectClient;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 @EnableEurekaClient
@@ -17,9 +11,9 @@ public class AgentApplication {
     public static void main(String[] args) {
         SpringApplication.run(AgentApplication.class, args);
     }
-
-    @Bean
-    CommandLineRunner lookup(ObjectClient objectClient) {
+/*
+   @Bean
+   CommandLineRunner lookup(ObjectClient objectClient) {
         return args -> {
             System.out.println("--- Get by Id ---");
             ObjectResponse getObject =objectClient.getObject(2);
@@ -92,6 +86,6 @@ public class AgentApplication {
 
 
     }
-
+*/
 
 }

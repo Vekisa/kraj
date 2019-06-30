@@ -28,7 +28,6 @@ import java.util.List;
  *         &lt;element ref="{http://megatravell.com/object}Object"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="cancellation" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element ref="{http://www.megatravell.com/user}Agent"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -47,8 +46,7 @@ import java.util.List;
     "reservation",
     "object",
     "id",
-    "cancellation",
-    "agent"
+    "cancellation"
 })
 @XmlRootElement(name = "Unit", namespace = "http://megatravell.com/object")
 @Entity
@@ -83,9 +81,9 @@ public class Unit {
     @XmlElement(namespace = "http://megatravell.com/object")
     @Column
     protected int cancellation;
-    @XmlElement(name = "Agent", namespace = "http://www.megatravell.com/user", required = true)
-    @ManyToOne
-    protected User agent;
+
+    public Unit() {
+    }
 
     /**
      * Gets the value of the person property.
@@ -256,7 +254,7 @@ public class Unit {
 
     /**
      * Gets the value of the id property.
-     *
+     * 
      */
     public long getId() {
         return id;
@@ -264,7 +262,7 @@ public class Unit {
 
     /**
      * Sets the value of the id property.
-     *
+     * 
      */
     public void setId(long value) {
         this.id = value;
@@ -272,7 +270,7 @@ public class Unit {
 
     /**
      * Gets the value of the cancellation property.
-     *
+     * 
      */
     public int getCancellation() {
         return cancellation;
@@ -280,37 +278,11 @@ public class Unit {
 
     /**
      * Sets the value of the cancellation property.
-     *
+     * 
      */
     public void setCancellation(int value) {
         this.cancellation = value;
     }
 
-    /**
-     * Gets the value of the agent property.
-     *
-     * @return
-     *     possible object is
-     *     {@link Agent }
-     *
-     */
-    public User getAgent() {
-        return agent;
-    }
 
-    /**
-     * Sets the value of the agent property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Agent }
-     *     
-     */
-    public void setAgent(User value) {
-        this.agent = value;
-    }
-
-    public void setPriceSchedule(List<PriceSchedule> priceSchedule) {
-        this.priceSchedule=priceSchedule;
-    }
 }

@@ -2,6 +2,7 @@
 package modul.reservation.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
 
 
@@ -50,10 +51,12 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "ObjectType", namespace = "http://megatravell.com/object")
 public class ObjectType {
 
+    @Size(min = 3, max = 30)
     @Column
     @XmlElement(name = "Name", namespace = "http://megatravell.com/object", required = true)
     protected String name;
     @XmlElement(name = "Description", namespace = "http://megatravell.com/object", required = true)
+    @Size(max = 250)
     @Column
     protected String description;
     @XmlElement(namespace = "http://megatravell.com/object")
