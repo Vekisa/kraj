@@ -48,7 +48,7 @@ import java.util.List;
     "id",
     "cancellation"
 })
-@XmlRootElement(name = "Unit", namespace = "http://megatravell.com/object")
+@XmlRootElement(name = "UnitWS", namespace = "http://megatravell.com/object")
 @Entity
 public class Unit {
 

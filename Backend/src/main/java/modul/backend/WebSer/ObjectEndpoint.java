@@ -1,5 +1,6 @@
 package modul.backend.WebSer;
 
+import modul.backend.model.AccommodationType;
 import modul.backend.model.Object;
 import modul.backend.model.web.*;
 import org.springframework.beans.BeanUtils;
@@ -117,6 +118,18 @@ public class ObjectEndpoint {
 
         return response;
     }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "ObjectTypeAllRequest")
+    @ResponsePayload
+    public ObjectTypeAllResponse allObjectType(@RequestPayload ObjectTypeAllRequest request) {
+        ObjectTypeAllResponse response = new ObjectTypeAllResponse();
+
+        response.getObjectType().addAll(objectWebService.getAllObjectTypes());
+
+        return response;
+    }
+
+
 
 
 

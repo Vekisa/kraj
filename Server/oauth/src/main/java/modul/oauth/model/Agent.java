@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -66,6 +67,11 @@ public class Agent
     protected Set<Object> object;
 
     public Agent() {
+    }
+
+    public Agent(String firstName, String lastName, String email, @Size(max = 15) String username, String password, Adress adress, boolean isEnabled, XMLGregorianCalendar lastPasswordResetDate, boolean isVerified, Set<Role> role, @Size(min = 3, max = 30) String bussinesRegistrationNumber) {
+        super(firstName, lastName, email, username, password, adress, isEnabled, lastPasswordResetDate, isVerified, role);
+        this.bussinesRegistrationNumber = bussinesRegistrationNumber;
     }
 
     /**

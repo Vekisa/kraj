@@ -109,7 +109,7 @@ public class UserServiceImpl implements UserDetailsService {
                 .orElseThrow(() -> new RuntimeException("Role can't be found!"));
 
         RegisteredUser registeredUser = new RegisteredUser(
-                signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getEmail(),signUpRequest.getUsername(),passwordHash,null,false,null, false, new ArrayList<Role>());
+                signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getEmail(),signUpRequest.getUsername(),passwordHash,null,false,null, false, new HashSet<Role>());
 
         registeredUser.getRole().add(role);
         //role.getUsers().add(registeredUser);
@@ -138,7 +138,7 @@ public class UserServiceImpl implements UserDetailsService {
                 .orElseThrow(() -> new RuntimeException("Role can't be found!"));
 
         Agent agent = new Agent(agentDto.getFirstName(),agentDto.getLastName(),
-                agentDto.getEmail(),agentDto.getUsername(),passwordHash,null,false,null,false,new ArrayList<Role>(),agentDto.getBussinesRegistrationNumber());
+                agentDto.getEmail(),agentDto.getUsername(),passwordHash,null,false,null,false,new HashSet<Role>(),agentDto.getBussinesRegistrationNumber());
 
         agent.getRole().add(role_agent);
         agent.getRole().add(role_reg);

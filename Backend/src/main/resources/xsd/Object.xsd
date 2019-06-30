@@ -36,6 +36,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="object:Rating"/>
                 <xs:element ref="object:ObjectType"/>
                 <xs:element name="id" type="xs:long"/>
+                <xs:element ref="user:Agent" maxOccurs="unbounded" minOccurs="0"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -82,6 +83,7 @@
                 <xs:element name="Made" type="xs:date"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="object:Plan"/>
                 <xs:element name="id" type="xs:long"/>
+                <xs:element ref="object:Unit"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -187,6 +189,7 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="object:Includes"/>
                 <xs:element ref="user:RegisteredUser"/>
                 <xs:element name="id" type="xs:long"/>
+                <xs:element name="cancelled" type="xs:boolean"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -211,8 +214,8 @@
                 <xs:element name="DateOfPublication" type="xs:dateTime"/>
                 <xs:element default="false" name="approved" type="xs:boolean"/>
                 <xs:element ref="user:RegisteredUser"/>
-                <xs:element ref="object:Unit"/>
                 <xs:element name="id" type="xs:long"/>
+                <xs:element ref="object:Object"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -230,20 +233,6 @@
                 <xs:element ref="object:Object"/>
                 <xs:element ref="user:RegisteredUser"/>
                 <xs:element name="id" type="xs:long"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="ReservationRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="id" type="xs:long"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="ReservationResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="object:Reservation"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

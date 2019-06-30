@@ -4,10 +4,11 @@ package modul.backend.service;
 import modul.backend.dto.AccommodationTypeDTO;
 import modul.backend.dto.ExtraOptionDTO;
 import modul.backend.dto.ObjectDTO;
-import modul.backend.model.AccommodationType;
+import modul.backend.model.*;
 import modul.backend.model.Object;
-import modul.backend.model.Unit;
+import modul.backend.repository.ExtraOptionRepository;
 import modul.backend.repository.ObjectRepository;
+import modul.backend.repository.ObjectTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,9 @@ public class ObjectService {
 
     @Autowired
     private ObjectRepository objectRepository;
+
+    @Autowired
+    private ObjectTypeRepository objectTypeRepository;
 
     public ObjectDTO findById(Long id){
         Optional<Object> object = objectRepository.findById(id);
@@ -44,6 +48,13 @@ public class ObjectService {
 
         return DTOList.extraOptions(object.get().getExtraOption());
     }
+
+
+    public  List<ObjectType> getObjectTypes(){
+
+        return objectTypeRepository.findAll();
+    }
+
 
     public  List<AccommodationTypeDTO> getAccommodationTypes(Long id){
         Optional<Object> object = objectRepository.findById(id);

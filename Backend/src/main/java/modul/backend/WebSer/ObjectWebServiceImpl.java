@@ -1,8 +1,15 @@
 package modul.backend.WebSer;
 
+import com.netflix.discovery.converters.Auto;
+import modul.backend.model.AccommodationType;
+import modul.backend.model.ExtraOption;
 import modul.backend.model.Object;
 
+import modul.backend.model.ObjectType;
 import modul.backend.repository.ObjectRepository;
+import modul.backend.service.AccommodationTypeService;
+import modul.backend.service.ExtraOptionService;
+import modul.backend.service.ObjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +23,9 @@ public class ObjectWebServiceImpl implements ObjectWebService {
 
     @Autowired
     ObjectRepository objectRepository;
+
+    @Autowired
+    ObjectService objectService;
 
     @Override
     public List<Object> getAllObjects() {
@@ -61,5 +71,10 @@ public class ObjectWebServiceImpl implements ObjectWebService {
         }
 
         return true;
+    }
+
+    @Override
+    public List<ObjectType> getAllObjectTypes() {
+        return objectService.getObjectTypes();
     }
 }

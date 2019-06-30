@@ -33,7 +33,7 @@ import java.util.List;
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
- *         &lt;element ref="{http://megatravell.com/object}Unit"/>
+ *         &lt;element ref="{http://megatravell.com/object}UnitWS"/>
  *         &lt;element ref="{http://megatravell.com/object}Includes" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element ref="{http://www.megatravell.com/user}RegisteredUser"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
@@ -82,7 +82,7 @@ public class Reservation {
     @XmlElement(name = "Price", namespace = "http://megatravell.com/object")
     @Column
     protected double price;
-    @XmlElement(name = "Unit", namespace = "http://megatravell.com/object", required = true)
+    @XmlElement(name = "UnitWS", namespace = "http://megatravell.com/object", required = true)
     @ManyToOne
     protected Unit unit;
     @XmlElement(name = "Includes", namespace = "http://megatravell.com/object")

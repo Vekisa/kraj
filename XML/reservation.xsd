@@ -57,9 +57,9 @@
                 </xs:simpleType>
             </xs:element>
             <xs:element name="id" type="xs:long"/>
-            <xs:element name="ObjectId" type="xs:long"/>
+            <xs:element name="unitId" type="xs:long"/>
             <xs:element name="RegisteredUserId" type="xs:long"/>
-            <xs:element maxOccurs="unbounded" name="IncludesId" type="xs:long"/>
+            <xs:element maxOccurs="unbounded" name="Includes" type="service:IncludesWS"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="IncludesWS">

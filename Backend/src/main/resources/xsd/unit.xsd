@@ -77,7 +77,6 @@
             <xs:element name="Person" type="xs:int"/>
             <xs:element name="Beds" type="xs:int"/>
             <xs:element name="cancellation" type="xs:int"/>
-            <xs:element name="agentId" type="xs:long"/>
             <xs:element name="objectId" type="xs:long"/>
             <xs:element name="accomodationTypeId" type="xs:long"/>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="reservationId" type="xs:long"/>

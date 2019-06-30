@@ -2,9 +2,7 @@ package modul.backend.WebSer;
 
 import modul.backend.model.Reservation;
 import modul.backend.model.Unit;
-import modul.backend.model.web.ReservationRequest;
-import modul.backend.model.web.ReservationResponse;
-import modul.backend.model.web.ReservationWS;
+import modul.backend.model.web.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -27,14 +25,40 @@ public class ReservationEndpoint {
     @ResponsePayload
     public ReservationResponse getReservation(@RequestPayload ReservationRequest request) {
         ReservationResponse response = new ReservationResponse();
-        ReservationWS rese = new ReservationWS();
-        BeanUtils.copyProperties(reservationImplementation.getReservationById(request.getId()),rese);
-        response.setReservation(rese);
+        response.setReservation(reservationImplementation.getReservationById(request.getId()));
 
         System.out.println("DESAVA SEE "+ request.getId());
 
         return response;
     }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "ReservationAllRequest")
+    @ResponsePayload
+    public ReservationAllResponse getAllReservations(@RequestPayload ReservationAllRequest request) {
+        ReservationAllResponse response = new ReservationAllResponse();
+
+        reservationImplementation.getAllReservationsWSAgent(request.getAgentId());
+        response.getReservation().addAll(reservationImplementation.getAllReservationsWSAgent(request.getAgentId()));
+
+        System.out.println("DESAVA SEE preuzimenje svih rezervacija "+ request.getAgentId());
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "ExtraOptionAllRequest")
+    @ResponsePayload
+    public ExtraOptionAllResponse getAllReservations() {
+        ExtraOptionAllResponse response = new ExtraOptionAllResponse();
+
+        response.getExtraOption().addAll(reservationImplementation.getAllExtraOptions());
+
+        System.out.println("DESAVA SEE preuzimenje svih dodatnih usluga ");
+
+        return response;
+    }
+
+
+
 
 
 

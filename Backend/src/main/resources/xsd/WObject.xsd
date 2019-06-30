@@ -84,17 +84,6 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="ExtraOptionAllRequest">
-        <xs:complexType/>
-    </xs:element>
-    <xs:element name="ExtraOptionAllResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="ExtraOption"
-                    type="service:ExtraOption"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
     <xs:complexType name="ObjectWS">
         <xs:sequence>
             <xs:element name="id" type="xs:long"/>

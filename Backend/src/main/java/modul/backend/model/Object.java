@@ -45,7 +45,7 @@ import java.util.List;
  *         &lt;element ref="{http://www.megatravell.com/address}Adress"/>
  *         &lt;element ref="{http://megatravell.com/object}Comment" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element ref="{http://megatravell.com/object}ExtraOption" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element ref="{http://megatravell.com/object}Unit" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element ref="{http://megatravell.com/object}UnitWS" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element ref="{http://megatravell.com/object}Rating" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element ref="{http://megatravell.com/object}ObjectType"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
@@ -98,7 +98,7 @@ public class Object {
     @XmlElement(name = "ExtraOption", namespace = "http://megatravell.com/object")
     protected List<ExtraOption> extraOption;
     @OneToMany(mappedBy = "object")
-    @XmlElement(name = "Unit", namespace = "http://megatravell.com/object")
+    @XmlElement(name = "UnitWS", namespace = "http://megatravell.com/object")
     protected List<Unit> unit;
     @OneToMany(mappedBy = "object")
     @XmlElement(name = "Rating", namespace = "http://megatravell.com/object")

@@ -82,6 +82,7 @@
                             </xs:simpleType>
                         </xs:element>
                         <xs:element maxOccurs="unbounded" minOccurs="0" ref="user:Message"/>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="object:Object"/>
                     </xs:sequence>
                 </xs:extension>
             </xs:complexContent>
