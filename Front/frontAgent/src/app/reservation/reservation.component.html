@@ -18,7 +18,8 @@
     <td>{{calDateC(res.possibleCancellationDate)}}</td>
     <td *ngIf="res.confirmed==true">Confirmed</td>
     <td *ngIf="res.confirmed==false"><button (click)="confirm(i)">Confirme</button></td>
-    <td *ngIf="calDateC(res.possibleCancellationDate)>0"><button (click)="cancelR(i)" >Cancel reservation</button></td>
+    <td *ngIf="calDateC(res.possibleCancellationDate)>0 && res.cancelled==false"><button (click)="cancelR(i)" >Cancel reservation</button></td>
+    <td *ngIf="res.cancelled==true">Cancelled</td>
   </tr>
   </tbody>
 

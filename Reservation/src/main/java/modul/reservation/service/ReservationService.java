@@ -1,10 +1,7 @@
 package modul.reservation.service;
 
 import modul.reservation.model.*;
-import modul.reservation.repository.RegisteredUserRepository;
-import modul.reservation.repository.ReservationRepository;
-import modul.reservation.repository.UnitRepository;
-import modul.reservation.repository.UserRepository;
+import modul.reservation.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -113,7 +110,8 @@ public class ReservationService {
         Optional<Reservation> pom = reservationRepository.findById(id);
         if (pom.isPresent()) {
             if(pom.get().getUnit().getObject().getAgent().contains(a)) {
-                pom.get().setConfirmed(true);
+                pom.get().setConfirmed(reservation.isConfirmed());
+                pom.get().setCancelled(reservation.isCancelled());
                 reservationRepository.save(pom.get());
                 return pom.get();
             }else{
@@ -153,8 +151,12 @@ public class ReservationService {
         if(reservation.getEnd().before(reservation.getStart())){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Start date must be before end date!");
         }
-        List<Reservation> lista = reservationRepository.findAllByUnitId(reservation.getUnit().getId());
-        System.out.println(" lista  " + lista.size());
+        List<Reservation> res = reservationRepository.findAllByUnitId(reservation.getUnit().getId());
+        List<Reservation> lista=new ArrayList<>();
+        for(Reservation r: res){
+            if(!r.isCancelled())
+                lista.add(r);
+        }
         for (Reservation r : lista) {
             System.out.println("r " + r.getStart() + "   " + r.getEnd());
             if ((r.getStart().before(reservation.getStart()) && reservation.getStart().before(r.getEnd()))

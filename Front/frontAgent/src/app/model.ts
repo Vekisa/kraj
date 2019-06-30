@@ -98,6 +98,7 @@ export class Reservation{
   price: number;
   unit: Unit;
   registeredUser: RegisteredUser;
+  cancelled: boolean;
 
   constructor() {
 

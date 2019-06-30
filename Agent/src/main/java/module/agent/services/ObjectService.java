@@ -1,9 +1,8 @@
 package module.agent.services;
 
-import module.agent.model.Agent;
+import module.agent.model.*;
 import module.agent.model.Object;
-import module.agent.model.Unit;
-import module.agent.model.User;
+import module.agent.model.web.ObjectAddResponse;
 import module.agent.model.web.ObjectWS;
 import module.agent.repository.AgentRepository;
 import module.agent.repository.ObjectRepository;
@@ -34,7 +33,9 @@ public class ObjectService {
         User u= userService.getUser(oAuth2Authentication.getName());
         Agent a= agentRepository.findById(u.getId()).get();
         object.getAgent().add(a);
-        System.out.println(objectClient.addObject(new ObjectWS(object)));
+        object.setObjectType(new ObjectType());
+        ObjectAddResponse objectAddResponse=objectClient.addObject(new ObjectWS(object));
+        System.out.println("object " + objectAddResponse.getResponseMessage());
         return objectRepository.save(object);
     }
 

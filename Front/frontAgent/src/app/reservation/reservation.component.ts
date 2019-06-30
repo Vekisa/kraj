@@ -29,7 +29,9 @@ export class ReservationComponent implements OnInit {
   }
 
   cancelR(i: number){
-    this.reservationService.cancelReservations(this.reservations[i].id);
+    let res: Reservation=this.reservations[i];
+    res.cancelled=true;
+    this.reservationService.updateReservation(res).subscribe(data=>console.log(data));
   }
 
   calDateC(canD: Date){
