@@ -11,8 +11,6 @@ import org.springframework.ws.transport.http.MessageDispatcherServlet;
 import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
 import org.springframework.xml.xsd.SimpleXsdSchema;
 import org.springframework.xml.xsd.XsdSchema;
-import org.springframework.xml.xsd.XsdSchemaCollection;
-import org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection;
 
 @EnableWs
 @Configuration
@@ -25,63 +23,63 @@ public class ConfigWebService extends WsConfigurerAdapter {
         servlet.setTransformWsdlLocations(true);
         return new ServletRegistrationBean(servlet, "/soapws/*");
     }
-
     @Bean(name = "reservation")
-    public DefaultWsdl11Definition defaultWsdl11DefinitionReservation(XsdSchemaCollection reservationSchema) {
+    public DefaultWsdl11Definition defaultWsdl11DefinitionReservation(XsdSchema reservationSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("ReservationPort");
         wsdl11Definition.setLocationUri("/soapws");
         wsdl11Definition.setTargetNamespace("http://www.megatravell.com/service");
-        wsdl11Definition.setSchemaCollection(reservationSchema);
+        wsdl11Definition.setSchema(reservationSchema);
         return wsdl11Definition;
     }
     @Bean
-    public XsdSchemaCollection reservationSchema() {
-        return new CommonsXsdSchemaCollection(new ClassPathResource("xsd/reservation.xsd"));
+    public XsdSchema reservationSchema() {
+        return new SimpleXsdSchema(new ClassPathResource("xsd/reservation.xsd"));
 
     }
 
     @Bean(name = "wobject")
-    public DefaultWsdl11Definition defaultWsdl11DefinitionObject(XsdSchemaCollection objectSchema) {
+    public DefaultWsdl11Definition defaultWsdl11DefinitionObject(XsdSchema objectSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("ObjectPort");
         wsdl11Definition.setLocationUri("/soapws");
         wsdl11Definition.setTargetNamespace("http://www.megatravell.com/wobject");
-        wsdl11Definition.setSchemaCollection(objectSchema);
+        wsdl11Definition.setSchema(objectSchema);
         return wsdl11Definition;
     }
     @Bean
-    public XsdSchemaCollection objectSchema() {
-        return new CommonsXsdSchemaCollection(new ClassPathResource("xsd/wobject.xsd"));
+    public XsdSchema objectSchema() {
+        return new SimpleXsdSchema(new ClassPathResource("xsd/wobject.xsd"));
     }
-//
+
+
     @Bean(name = "unit")
-    public DefaultWsdl11Definition defaultWsdl11DefinitionUnit(XsdSchemaCollection unitSchema) {
+    public DefaultWsdl11Definition defaultWsdl11DefinitionUnit(XsdSchema unitSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("UnitPort");
         wsdl11Definition.setLocationUri("/soapws");
         wsdl11Definition.setTargetNamespace("http://www.megatravell.com/unit");
-        wsdl11Definition.setSchemaCollection(unitSchema);
+        wsdl11Definition.setSchema(unitSchema);
         return wsdl11Definition;
     }
     @Bean
-    public XsdSchemaCollection unitSchema() {
-        return new CommonsXsdSchemaCollection(new ClassPathResource("xsd/unit.xsd"));
+    public XsdSchema unitSchema() {
+        return new SimpleXsdSchema(new ClassPathResource("xsd/unit.xsd"));
 
     }
 
     @Bean(name = "message")
-    public DefaultWsdl11Definition defaultWsdl11DefinitionMessage(XsdSchemaCollection messageSchema) {
+    public DefaultWsdl11Definition defaultWsdl11DefinitionMessage(XsdSchema messageSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("MessagePort");
         wsdl11Definition.setLocationUri("/soapws");
         wsdl11Definition.setTargetNamespace("http://www.megatravell.com/message");
-        wsdl11Definition.setSchemaCollection(messageSchema);
+        wsdl11Definition.setSchema(messageSchema);
         return wsdl11Definition;
     }
     @Bean
-    public XsdSchemaCollection messageSchema() {
-        return new CommonsXsdSchemaCollection(new ClassPathResource("xsd/message.xsd"));
+    public XsdSchema messageSchema() {
+        return new SimpleXsdSchema(new ClassPathResource("xsd/message.xsd"));
 
     }
 

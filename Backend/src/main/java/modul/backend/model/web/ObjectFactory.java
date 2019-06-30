@@ -1,8 +1,8 @@
 
 package modul.backend.model.web;
 
-import modul.backend.model.ExtraOption;
-import modul.backend.model.Plan;
+import modul.backend.model.*;
+
 
 import javax.xml.bind.annotation.XmlRegistry;
 
@@ -33,6 +33,155 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link MessageAddResponse }
+     *
+     */
+    public MessageAddResponse createMessageAddResponse() {
+        return new MessageAddResponse();
+    }
+
+    /**
+     * Create an instance of {@link MessageAllResponse }
+     *
+     */
+    public MessageAllResponse createMessageAllResponse() {
+        return new MessageAllResponse();
+    }
+
+    /**
+     * Create an instance of {@link Message }
+     *
+     */
+    public Message createMessage() {
+        return new Message();
+    }
+
+    /**
+     * Create an instance of {@link MessageAddRequest }
+     *
+     */
+    public MessageAddRequest createMessageAddRequest() {
+        return new MessageAddRequest();
+    }
+
+    /**
+     * Create an instance of {@link MessageAllRequest }
+     *
+     */
+    public MessageAllRequest createMessageAllRequest() {
+        return new MessageAllRequest();
+    }
+
+    /**
+     * Create an instance of {@link ExtraOptionAllResponse }
+     *
+     */
+
+    /**
+     * Create an instance of {@link UnitRequest }
+     * 
+     */
+    public UnitRequest createUnitRequest() {
+        return new UnitRequest();
+    }
+
+    /**
+     * Create an instance of {@link UnitResponse }
+     * 
+     */
+    public UnitResponse createUnitResponse() {
+        return new UnitResponse();
+    }
+
+    /**
+     * Create an instance of {@link Unit }
+     * 
+     */
+    public Unit createUnit() {
+        return new Unit();
+    }
+
+    /**
+     * Create an instance of {@link UnitUpdateRequest }
+     * 
+     */
+    public UnitUpdateRequest createUnitUpdateRequest() {
+        return new UnitUpdateRequest();
+    }
+
+    /**
+     * Create an instance of {@link UnitUpdateResponse }
+     * 
+     */
+    public UnitUpdateResponse createUnitUpdateResponse() {
+        return new UnitUpdateResponse();
+    }
+
+    /**
+     * Create an instance of {@link ResponseMessage }
+     * 
+     */
+    public ResponseMessage createResponseMessage() {
+        return new ResponseMessage();
+    }
+
+    /**
+     * Create an instance of {@link UnitAllRequest }
+     * 
+     */
+    public UnitAllRequest createUnitAllRequest() {
+        return new UnitAllRequest();
+    }
+
+    /**
+     * Create an instance of {@link UnitDeleteRequest }
+     * 
+     */
+    public UnitDeleteRequest createUnitDeleteRequest() {
+        return new UnitDeleteRequest();
+    }
+
+    /**
+     * Create an instance of {@link UnitDeleteResponse }
+     * 
+     */
+    public UnitDeleteResponse createUnitDeleteResponse() {
+        return new UnitDeleteResponse();
+    }
+
+    /**
+     * Create an instance of {@link UnitAllResponse }
+     * 
+     */
+    public UnitAllResponse createUnitAllResponse() {
+        return new UnitAllResponse();
+    }
+
+    /**
+     * Create an instance of {@link UnitAddRequest }
+     * 
+     */
+    public UnitAddRequest createUnitAddRequest() {
+        return new UnitAddRequest();
+    }
+
+    /**
+     * Create an instance of {@link UnitAddResponse }
+     * 
+     */
+    public UnitAddResponse createUnitAddResponse() {
+        return new UnitAddResponse();
+    }
+
+    /**
+     * Create an instance of {@link Image }
+     * 
+     */
+    public Image createImage() {
+        return new Image();
+    }
+
+    /**
      * Create an instance of {@link PriceScheduleAllResponse }
      * 
      */
@@ -41,7 +190,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link PriceSchedule }
+     * Create an instance of {@link modul.backend.model.PriceSchedule }
      * 
      */
     public PriceSchedule createPriceSchedule() {
@@ -54,14 +203,6 @@ public class ObjectFactory {
      */
     public PriceScheduleAddResponse createPriceScheduleAddResponse() {
         return new PriceScheduleAddResponse();
-    }
-
-    /**
-     * Create an instance of {@link ResponseMessage }
-     * 
-     */
-    public ResponseMessage createResponseMessage() {
-        return new ResponseMessage();
     }
 
     /**
@@ -81,7 +222,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link modul.backend.model.Plan }
+     * Create an instance of {@link Plan }
      * 
      */
     public Plan createPlan() {
