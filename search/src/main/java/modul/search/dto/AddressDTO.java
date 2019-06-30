@@ -1,12 +1,7 @@
 package modul.search.dto;
 
 
-
-
 import modul.search.model.Adress;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
 
 public class AddressDTO {
 

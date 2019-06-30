@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {SearchService} from "../services/search.service";
 import {BackendService} from "../services/backend.service";
-import {Unit} from "../../../../frontAgent/src/app/model";
+import {Unit} from "../../../../frontUser/src/app/model";
 import {Router} from "@angular/router";
+import {RatingService} from "../services/rating.service";
+import {Rtng} from "../model";
 
 @Component({
   selector: 'app-search',
@@ -23,8 +25,11 @@ export class SearchComponent implements OnInit {
   pom2 = [];
   searchForm: FormGroup;
   units: Unit[];
+  unitsPom : Unit[];
+  ids: number[];
+  list : Rtng[];
 
-  constructor(private formBuilder: FormBuilder, private searchService:SearchService, private backendService: BackendService, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private searchService:SearchService, private backendService: BackendService, private router: Router, private ratingService: RatingService) { }
 
   ngOnInit() {
     this.pom1 = [];
@@ -40,8 +45,6 @@ export class SearchComponent implements OnInit {
     });
 
     this.backendService.getAllExtraOptions().subscribe(data =>{
-      console.log("preuzeo2");
-      console.log(data);
       this.extraOptions = data;
       this.extraOptions.forEach(value=>{
         this.pom2.push({item_id: value.id, item_text: value.name});
@@ -99,12 +102,31 @@ export class SearchComponent implements OnInit {
   }
 
   onSubmit(){
+    this.ids = [];
     console.log(this.searchForm.value.accTypes);
     this.searchService.search(this.searchForm.value.city,this.searchForm.value.checkInDate, this.searchForm.value.checkOutDate, this.searchForm.value.guests,this.searchForm.value.accTypes,
       this.searchForm.value.category,this.searchForm.value.distance,this.searchForm.value.additionalTypes).subscribe( data =>{
       console.log("DATA: ");
       console.log(data);
-      this.units = data;
+      this.unitsPom = data;
+
+      this.unitsPom.forEach(value =>{
+        this.ids.push(value.object.id);
+      });
+
+      /*this.ratingService.getRatings(this.ids).subscribe(data =>{
+        this.list = data;
+        this.list.forEach(rtng =>{
+          this.unitsPom.forEach(unit =>{
+            if(unit.object.id = rtng.id){
+              unit.rating = rtng.mark;
+            }
+          })
+        });
+        this.units = this.unitsPom;
+      });*/
+
+      this.units = this.unitsPom;
     });
   }
 

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-           targetNamespace="http://www.megatravell.com/user"
-           xmlns:address="http://www.megatravell.com/address" xmlns:user="http://www.megatravell.com/user"
-           xmlns:object="http://megatravell.com/object">
+    targetNamespace="http://www.megatravell.com/user"
+    xmlns:address="http://www.megatravell.com/address" xmlns:user="http://www.megatravell.com/user"
+    xmlns:object="http://megatravell.com/object">
 
     <xs:import namespace="http://www.megatravell.com/address" schemaLocation="Adress.xsd"/>
     <xs:import namespace="http://megatravell.com/object" schemaLocation="Object.xsd"/>
     <xs:complexType abstract="true" name="User">
         <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
             <xs:element name="FirstName">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
@@ -41,6 +42,11 @@
                 </xs:simpleType>
             </xs:element>
             <xs:element ref="address:Adress"/>
+            <xs:element name="isEnabled" type="xs:boolean"/>
+            <xs:element name="lastPasswordResetDate" type="xs:date"/>
+            <xs:element name="isVerified" type="xs:boolean"/>
+            <xs:element ref="user:VerificationToken"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="user:Role"/>
         </xs:sequence>
     </xs:complexType>
     <xs:element name="Message">
@@ -56,6 +62,8 @@
                 <xs:element form="qualified" name="postingDate" type="xs:dateTime"/>
                 <xs:element ref="user:Agent"/>
                 <xs:element ref="user:RegisteredUser"/>
+                <xs:element name="seen" type="xs:boolean"/>
+                <xs:element name="from" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -82,7 +90,6 @@
             <xs:complexContent>
                 <xs:extension base="user:User">
                     <xs:sequence>
-                        <xs:element default="true" name="Aktivan" type="xs:boolean"/>
                         <xs:element maxOccurs="unbounded" minOccurs="0" ref="object:Comment"/>
                         <xs:element maxOccurs="unbounded" minOccurs="0" ref="object:Reservation"/>
                         <xs:element maxOccurs="unbounded" minOccurs="0" ref="user:Message"/>
@@ -90,6 +97,23 @@
                     </xs:sequence>
                 </xs:extension>
             </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="VerificationToken">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element name="verificationToken" type="xs:string"/>
+                <xs:element name="expiryDate" type="xs:date"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Role">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element name="name" type="xs:string"/>
+            </xs:sequence>
         </xs:complexType>
     </xs:element>
 </xs:schema>

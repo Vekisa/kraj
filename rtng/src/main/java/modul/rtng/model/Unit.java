@@ -1,10 +1,10 @@
 
 package modul.rtng.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,22 +19,15 @@ import java.util.List;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="Adults" type="{http://www.w3.org/2001/XMLSchema}positiveInteger"/>
- *         &lt;element name="Children">
- *           &lt;simpleType>
- *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}int">
- *               &lt;minInclusive value="0"/>
- *             &lt;/restriction>
- *           &lt;/simpleType>
- *         &lt;/element>
- *         &lt;element name="Beds" type="{http://www.w3.org/2001/XMLSchema}positiveInteger"/>
- *         &lt;element name="Size" type="{http://www.w3.org/2001/XMLSchema}decimal"/>
- *         &lt;element name="Smoking" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="Person" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="Beds" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element ref="{http://megatravell.com/object}Price_schedule" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element ref="{http://megatravell.com/object}AccommodationType"/>
  *         &lt;element ref="{http://megatravell.com/object}Image" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element ref="{http://megatravell.com/object}Reservation" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element ref="{http://megatravell.com/object}Object"/>
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="cancellation" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -45,168 +38,83 @@ import java.util.List;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "adults",
-    "children",
+    "person",
     "beds",
-    "size",
-    "smoking",
     "priceSchedule",
     "accommodationType",
     "image",
     "reservation",
-    "object"
+    "object",
+    "id",
+    "cancellation"
 })
 @XmlRootElement(name = "Unit", namespace = "http://megatravell.com/object")
 @Entity
-@Table(name = "unit")
 public class Unit {
 
-    public Long getId() {
-        return id;
-    }
-
+    @Column
+    @XmlElement(name = "Person", namespace = "http://megatravell.com/object")
+    protected int person;
+    @Column
+    @XmlElement(name = "Beds", namespace = "http://megatravell.com/object")
+    protected int beds;
+    @OneToMany
+    @XmlElement(name = "Price_schedule", namespace = "http://megatravell.com/object")
+    protected List<PriceSchedule> priceSchedule;
+    @ManyToOne
+    @XmlElement(name = "AccommodationType", namespace = "http://megatravell.com/object", required = true)
+    protected AccommodationType accommodationType;
+    @OneToMany
+    @XmlElement(name = "Image", namespace = "http://megatravell.com/object")
+    protected List<Image> image;
+    @JsonIgnore
+    @OneToMany
+    @XmlElement(name = "Reservation", namespace = "http://megatravell.com/object")
+    protected List<Reservation> reservation;
+    @ManyToOne
+    @XmlElement(name = "Object", namespace = "http://megatravell.com/object", required = true)
+    protected Object object;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @XmlElement(name = "Adults", namespace = "http://megatravell.com/object", required = true)
-    @XmlSchemaType(name = "positiveInteger")
+    @XmlElement(namespace = "http://megatravell.com/object")
+    protected long id;
+    @XmlElement(namespace = "http://megatravell.com/object")
     @Column
-    protected BigInteger adults;
-    @XmlElement(name = "Children", namespace = "http://megatravell.com/object")
-    @Column
-    protected int children;
-    @XmlElement(name = "Beds", namespace = "http://megatravell.com/object", required = true)
-    @XmlSchemaType(name = "positiveInteger")
-    @Column
-    protected BigInteger beds;
-    @XmlElement(name = "Size", namespace = "http://megatravell.com/object", required = true)
-    @Column
-    protected BigDecimal size;
-    @XmlElement(name = "Smoking", namespace = "http://megatravell.com/object")
-    @Column
-    protected boolean smoking;
-    @XmlElement(name = "Price_schedule", namespace = "http://megatravell.com/object")
-    @OneToMany
-    protected List<PriceSchedule> priceSchedule;
-    @XmlElement(name = "AccommodationType", namespace = "http://megatravell.com/object", required = true)
-    @ManyToOne
-    protected AccommodationType accommodationType;
-    @XmlElement(name = "Image", namespace = "http://megatravell.com/object")
-    @OneToMany
-    protected List<Image> image;
-    @XmlElement(name = "Reservation", namespace = "http://megatravell.com/object")
-    @OneToMany
-    protected List<Reservation> reservation;
-    @XmlElement(name = "Object", namespace = "http://megatravell.com/object", required = true)
-    @ManyToOne
-    protected Object object;
+    protected int cancellation;
 
     public Unit() {
     }
 
     /**
-     * Gets the value of the adults property.
-     *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
+     * Gets the value of the person property.
      *
      */
-    public BigInteger getAdults() {
-        return adults;
+    public int getPerson() {
+        return person;
     }
 
     /**
-     * Sets the value of the adults property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
+     * Sets the value of the person property.
      *
      */
-    public void setAdults(BigInteger value) {
-        this.adults = value;
-    }
-
-    /**
-     * Gets the value of the children property.
-     *
-     */
-    public int getChildren() {
-        return children;
-    }
-
-    /**
-     * Sets the value of the children property.
-     *
-     */
-    public void setChildren(int value) {
-        this.children = value;
+    public void setPerson(int value) {
+        this.person = value;
     }
 
     /**
      * Gets the value of the beds property.
      *
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *
      */
-    public BigInteger getBeds() {
+    public int getBeds() {
         return beds;
     }
 
     /**
      * Sets the value of the beds property.
      *
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *
      */
-    public void setBeds(BigInteger value) {
+    public void setBeds(int value) {
         this.beds = value;
-    }
-
-    /**
-     * Gets the value of the size property.
-     *
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *
-     */
-    public BigDecimal getSize() {
-        return size;
-    }
-
-    /**
-     * Sets the value of the size property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *
-     */
-    public void setSize(BigDecimal value) {
-        this.size = value;
-    }
-
-    /**
-     * Gets the value of the smoking property.
-     *
-     */
-    public boolean isSmoking() {
-        return smoking;
-    }
-
-    /**
-     * Sets the value of the smoking property.
-     *
-     */
-    public void setSmoking(boolean value) {
-        this.smoking = value;
     }
 
     /**
@@ -344,7 +252,37 @@ public class Unit {
         this.object = value;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    /**
+     * Gets the value of the id property.
+     * 
+     */
+    public long getId() {
+        return id;
     }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     */
+    public void setId(long value) {
+        this.id = value;
+    }
+
+    /**
+     * Gets the value of the cancellation property.
+     * 
+     */
+    public int getCancellation() {
+        return cancellation;
+    }
+
+    /**
+     * Sets the value of the cancellation property.
+     * 
+     */
+    public void setCancellation(int value) {
+        this.cancellation = value;
+    }
+
+
 }

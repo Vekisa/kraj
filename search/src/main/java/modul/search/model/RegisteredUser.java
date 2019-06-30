@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.*;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -69,7 +70,7 @@ public class RegisteredUser
     public RegisteredUser() {
     }
 
-    public RegisteredUser(String firstName, String lastName, String email, @Size(max = 15) String username, String password, Adress adress, boolean isEnabled, XMLGregorianCalendar lastPasswordResetDate, boolean isVerified, List<Role> role) {
+    public RegisteredUser(String firstName, String lastName, String email, @Size(max = 15) String username, String password, Adress adress, boolean isEnabled, XMLGregorianCalendar lastPasswordResetDate, boolean isVerified, Set<Role> role) {
         super(firstName, lastName, email, username, password, adress, isEnabled, lastPasswordResetDate, isVerified, role);
     }
 

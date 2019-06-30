@@ -23,7 +23,7 @@ public class GatewayConfiguration extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(final HttpSecurity http) throws Exception {
         http.authorizeRequests().
-                antMatchers("/uua/**","/backend/**","/search/**").
+                antMatchers("/uua/**","/backend/**","/search/**","/rating/**").
                 permitAll().anyRequest().
                 authenticated();
     }

@@ -7,8 +7,6 @@ import modul.search.model.Image;
 import modul.search.model.Object;
 import modul.search.model.Unit;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.List;
 
 public class UnitDTO {

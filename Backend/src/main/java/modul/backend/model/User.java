@@ -116,7 +116,7 @@ public abstract class User implements UserDetails {
     @XmlElement(namespace = "http://www.megatravell.com/user", required = true)
     protected String username;
     @JsonIgnore
-    @Size(min = 10, max = 150)
+
     @Column
     @XmlElement(name = "Password", namespace = "http://www.megatravell.com/user", required = true)
     protected String password;

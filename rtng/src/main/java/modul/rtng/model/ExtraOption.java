@@ -2,6 +2,7 @@
 package modul.rtng.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
 
 
@@ -37,6 +38,7 @@ import javax.xml.bind.annotation.*;
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -49,26 +51,29 @@ import javax.xml.bind.annotation.*;
 @XmlType(name = "", propOrder = {
     "name",
     "description",
-    "price"
+    "price",
+    "id"
 })
 @XmlRootElement(name = "ExtraOption", namespace = "http://megatravell.com/object")
 @Entity
-@Table(name = "extraOption")
+@Table
 public class ExtraOption {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @XmlElement(name = "Name", namespace = "http://megatravell.com/object", required = true)
+    @Size(min = 3, max = 30)
     @Column
     protected String name;
     @XmlElement(name = "Description", namespace = "http://megatravell.com/object", required = true)
+    @Size(min = 3, max = 250)
     @Column
     protected String description;
     @XmlElement(name = "Price", namespace = "http://megatravell.com/object")
     @Column
     protected double price;
+    @XmlElement(namespace = "http://megatravell.com/object")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected long id;
 
     public ExtraOption(){}
     /**
@@ -135,11 +140,20 @@ public class ExtraOption {
         this.price = value;
     }
 
-    public Long getId() {
+    /**
+     * Gets the value of the id property.
+     * 
+     */
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    /**
+     * Sets the value of the id property.
+     * 
+     */
+    public void setId(long value) {
+        this.id = value;
     }
+
 }

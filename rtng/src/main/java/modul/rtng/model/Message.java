@@ -1,16 +1,17 @@
-
 package modul.rtng.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Date;
 
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -26,52 +27,66 @@ import java.util.Date;
  *         &lt;element name="postingDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" form="qualified"/>
  *         &lt;element ref="{http://www.megatravell.com/user}Agent"/>
  *         &lt;element ref="{http://www.megatravell.com/user}RegisteredUser"/>
+ *         &lt;element name="seen" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="fromUser" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "text",
-    "postingDate",
-    "agent",
-    "registeredUser"
+        "text",
+        "postingDate",
+        "agent",
+        "registeredUser",
+        "seen",
+        "fromUser",
+        "id"
 })
-@XmlRootElement(name = "Message", namespace = "http://www.megatravell.com/user")
 @Entity
-@Table(name = "message")
+@XmlRootElement(name = "Message", namespace = "http://www.megatravell.com/user")
 public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @XmlElement(name = "Text", namespace = "http://www.megatravell.com/user", required = true)
+    @XmlElement(namespace = "http://www.megatravell.com/user")
+    protected long id;
     @Column
+    @XmlElement(name = "Text", namespace = "http://www.megatravell.com/user", required = true)
     protected String text;
+    @Size(min = 3, max = 250)
+    @Column
     @XmlElement(namespace = "http://www.megatravell.com/user", required = true)
     @XmlSchemaType(name = "dateTime")
-    @Column
     protected Date postingDate;
+    @ManyToOne
     @XmlElement(name = "Agent", namespace = "http://www.megatravell.com/user", required = true)
-    @ManyToOne
     protected Agent agent;
-    @XmlElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user", required = true)
     @ManyToOne
+    @XmlElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user", required = true)
     protected RegisteredUser registeredUser;
+    @Column
+    @XmlElement(namespace = "http://www.megatravell.com/user")
+    protected boolean seen;
+    @Column
+    @XmlElement(namespace = "http://www.megatravell.com/user")
+    protected long fromUser;
 
-    public Message(){}
+    public Message() {
+    }
+
     /**
      * Gets the value of the text property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getText() {
         return text;
@@ -79,11 +94,11 @@ public class Message {
 
     /**
      * Sets the value of the text property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setText(String value) {
         this.text = value;
@@ -91,11 +106,11 @@ public class Message {
 
     /**
      * Gets the value of the postingDate property.
-     * 
+     *
      * @return
      *     possible object is
-     *     {@link Date }
-     *     
+     *     {@link XMLGregorianCalendar }
+     *
      */
     public Date getPostingDate() {
         return postingDate;
@@ -103,11 +118,11 @@ public class Message {
 
     /**
      * Sets the value of the postingDate property.
-     * 
+     *
      * @param value
      *     allowed object is
-     *     {@link Date }
-     *     
+     *     {@link XMLGregorianCalendar }
+     *
      */
     public void setPostingDate(Date value) {
         this.postingDate = value;
@@ -115,11 +130,11 @@ public class Message {
 
     /**
      * Gets the value of the agent property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Agent }
-     *     
+     *
      */
     public Agent getAgent() {
         return agent;
@@ -127,11 +142,11 @@ public class Message {
 
     /**
      * Sets the value of the agent property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Agent }
-     *     
+     *
      */
     public void setAgent(Agent value) {
         this.agent = value;
@@ -139,11 +154,11 @@ public class Message {
 
     /**
      * Gets the value of the registeredUser property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link RegisteredUser }
-     *     
+     *
      */
     public RegisteredUser getRegisteredUser() {
         return registeredUser;
@@ -151,21 +166,62 @@ public class Message {
 
     /**
      * Sets the value of the registeredUser property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link RegisteredUser }
-     *     
+     *
      */
     public void setRegisteredUser(RegisteredUser value) {
         this.registeredUser = value;
     }
 
-    public Long getId() {
+    /**
+     * Gets the value of the seen property.
+     *
+     */
+    public boolean isSeen() {
+        return seen;
+    }
+
+    /**
+     * Sets the value of the seen property.
+     *
+     */
+    public void setSeen(boolean value) {
+        this.seen = value;
+    }
+
+    /**
+     * Gets the value of the fromUser property.
+     *
+     */
+    public long getFromUser() {
+        return fromUser;
+    }
+
+    /**
+     * Sets the value of the fromUser property.
+     *
+     */
+    public void setFromUser(long value) {
+        this.fromUser = value;
+    }
+
+    /**
+     * Gets the value of the id property.
+     *
+     */
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    /**
+     * Sets the value of the id property.
+     *
+     */
+    public void setId(long value) {
+        this.id = value;
     }
+
 }

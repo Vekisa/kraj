@@ -1,7 +1,10 @@
 package modul.reservation.service;
 
 import modul.reservation.model.*;
-import modul.reservation.repository.*;
+import modul.reservation.repository.RegisteredUserRepository;
+import modul.reservation.repository.ReservationRepository;
+import modul.reservation.repository.UnitRepository;
+import modul.reservation.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

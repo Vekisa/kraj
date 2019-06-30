@@ -9,19 +9,17 @@
                 <xs:element name="State" type="xs:string"/>
                 <xs:element name="City" type="xs:string"/>
                 <xs:element name="Street" type="xs:string"/>
-                <xs:element name="Number" type="xs:positiveInteger"/>
+                <xs:element name="Number" type="xs:int"/>
                 <xs:element default="0" name="ZIP">
                     <xs:simpleType>
-                        <xs:restriction base="xs:int">
-                            <xs:maxInclusive value="99999"/>
-                            <xs:totalDigits value="5"/>
-                            <xs:minInclusive value="00000"/>
+                        <xs:restriction base="xs:string">
                             <xs:pattern value="[\-+]?[0-9]+"/>
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
-                <xs:element name="Longitude" type="xs:decimal"/>
-                <xs:element name="Latitude" type="xs:decimal"/>
+                <xs:element name="Longitude" type="xs:double"/>
+                <xs:element name="Latitude" type="xs:double"/>
+                <xs:element name="id" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

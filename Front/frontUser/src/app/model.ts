@@ -5,7 +5,7 @@ class Image{
   constructor(){}
 }
 
-class Comment{
+export class Comment{
   id: number;
   text : string;
   dateOfPublication: Date;
@@ -19,7 +19,7 @@ class Comment{
 }
 
 
-class ObjectForDropDown{
+export class ObjectForDropDown{
   item_id : number;
   item_text : string;
 
@@ -47,7 +47,7 @@ export class Plan{
   }
 }
 
-class ExtraOption{
+export class ExtraOption{
   id: number;
   name: string;
   description: string;
@@ -58,7 +58,7 @@ class ExtraOption{
   }
 }
 
-class Unit {
+export class Unit {
   id: number;
   person: number;
   beds: number;
@@ -68,8 +68,9 @@ class Unit {
   reservation: string[];
   accommodationType: AccommodationType;
   cancellation: number;
+  rating : number;
 
-  constructor(id: number, person: number, beds: number, object :Object, image: Image[], accommodationType : AccommodationType,cancellation: number, priceSchedule : PriceSchedule[]) {
+  constructor(id: number, person: number, beds: number, object :Object, image: Image[], accommodationType : AccommodationType,cancellation: number, priceSchedule : PriceSchedule[], rating: number) {
     this.id = id;
     this.beds = beds;
     this.person = person;
@@ -78,9 +79,10 @@ class Unit {
     this.accommodationType = accommodationType;
     this.cancellation = cancellation;
     this.priceSchedule = priceSchedule;
+    this.rating = rating;
   }
 }
-class Includes{
+export class Includes{
   id: number;
   quantity: number;
   reservation: Reservation;
@@ -93,7 +95,7 @@ class Includes{
   }
 }
 
-class Reservation{
+export class Reservation{
   id: number;
   start: Date;
   end:Date;
@@ -117,7 +119,7 @@ class Reservation{
 
 }
 
-class AccommodationType{
+export class AccommodationType{
   id: number;
   name: string;
   description: string;
@@ -129,7 +131,7 @@ class AccommodationType{
   }
 }
 
-class Adress {
+export class Adress {
   id:number;
   state: string;
   city: string;
@@ -151,20 +153,21 @@ class Adress {
   }
 }
 
-class Object {
+export class Object {
   id: number;
   name: string;
   description: string;
   cancellation: number;
   category: number;
+  rating : number;
 
-
-  constructor(id: number, name: string, description: string, cancellation: number, category: number){
+  constructor(id: number, name: string, description: string, cancellation: number, category: number, rating: number){
     this.id = id;
     this.name = name;
     this.description = description;
     this.cancellation = cancellation;
     this.category = category;
+    this.rating = rating;
   }
 }
 
@@ -217,7 +220,7 @@ export class Agent {
   }
 
 }
-class PriceSchedule{
+export class PriceSchedule{
   id: number;
   made: Date;
   plan: Plan[];
@@ -225,7 +228,7 @@ class PriceSchedule{
   constructor(){}
 }
 
-class Type{
+export class Type{
   id: number;
   name: string;
   description: string;
@@ -242,6 +245,17 @@ export class NewPass {
   constructor(oldPass: string, newPass: string) {
     this.oldPass = oldPass;
     this.newPass = newPass;
+  }
+
+}
+
+ export class Rtng{
+  id : number;
+  mark : number;
+
+  constructor(id: number, mark:number) {
+       this.id = id;
+       this.mark = mark;
   }
 
 }

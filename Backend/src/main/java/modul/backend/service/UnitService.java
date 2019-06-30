@@ -89,27 +89,26 @@ public class UnitService {
     }
 
     public Message createMessage(Long id, Message message, OAuth2Authentication oAuth2Authentication){
-//        Optional<Unit> unit = unitRepository.findById(id);
-//        if(!unit.isPresent())
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "UnitWS does not exist");
-//        RegisteredUser user = getRegisteredUser(oAuth2Authentication);
-//
-//        if(!canUserSendMessage(unit.get(),user))
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You cannot send message!");
-//
-//        Optional<Agent> agent = agentRepository.findById(unit.get().getAgent().getId());
-//        if(!agent.isPresent())
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Something went wrong!");
-//
-//        message.setRegisteredUser(user);
-//        message.setAgent(agent.get());
-//        message.setPostingDate(new Date());
-//        message.setSeen(false);
-//        message.setFromUser(user.getId());
-//        messageRepository.save(message);
-//
-//        return message;
-        return null;
+        Optional<Unit> unit = unitRepository.findById(id);
+        if(!unit.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unit does not exist");
+        RegisteredUser user = getRegisteredUser(oAuth2Authentication);
+
+        if(!canUserSendMessage(unit.get(),user))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You cannot send message!");
+
+        Optional<Agent> agent = agentRepository.findById(unit.get().getObject().getAgent().get(0).getId());
+        if(!agent.isPresent())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Something went wrong!");
+
+        message.setRegisteredUser(user);
+        message.setAgent(agent.get());
+        message.setPostingDate(new Date());
+        message.setSeen(false);
+        message.setFromUser(user.getId());
+        messageRepository.save(message);
+
+        return message;
     }
 
     public Comment createComment(Long id, Comment comment,OAuth2Authentication oAuth2Authentication){
@@ -117,7 +116,7 @@ public class UnitService {
         Optional<Unit> unit = unitRepository.findById(id);
         Optional<Object> object = objectRepository.findById(id);
         if(!unit.isPresent())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"UnitWS does not exist!");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Unit does not exist!");
 
         if(!canUserComment(unit.get(),user))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User cannor comment this unit!");

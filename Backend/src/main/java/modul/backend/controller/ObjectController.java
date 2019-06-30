@@ -43,4 +43,10 @@ public class ObjectController {
 
         return new ResponseEntity<>(objectService.getAccommodationTypes(id), HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/{id_user}/{id_object}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> getAccommodationTypes(@PathVariable(value="id_user") Long idUser, @PathVariable(value="id_object") Long idObject) {
+
+        return new ResponseEntity<>(objectService.canUserRate(idUser,idObject), HttpStatus.OK);
+    }
 }

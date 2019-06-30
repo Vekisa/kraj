@@ -19,9 +19,9 @@ import java.util.List;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="Year" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="Made" type="{http://www.w3.org/2001/XMLSchema}date"/>
  *         &lt;element ref="{http://megatravell.com/object}Plan" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -32,47 +32,28 @@ import java.util.List;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "year",
     "made",
-    "plan"
+    "plan",
+    "id"
 })
-@XmlRootElement(name = "Price_schedule", namespace = "http://megatravell.com/object")
 @Entity
 @Table(name = "priceSchedule")
+@XmlRootElement(name = "Price_schedule", namespace = "http://megatravell.com/object")
 public class PriceSchedule {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @XmlElement(name = "Year", namespace = "http://megatravell.com/object")
     @Column
-    protected int year;
     @XmlElement(name = "Made", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
-    @Column
     protected Date made;
-    @XmlElement(name = "Plan", namespace = "http://megatravell.com/object")
     @OneToMany
+    @XmlElement(name = "Plan", namespace = "http://megatravell.com/object")
     protected List<Plan> plan;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @XmlElement(namespace = "http://megatravell.com/object")
+    protected long id;
 
     public PriceSchedule() {
-    }
-
-    /**
-     * Gets the value of the year property.
-     * 
-     */
-    public int getYear() {
-        return year;
-    }
-
-    /**
-     * Sets the value of the year property.
-     * 
-     */
-    public void setYear(int value) {
-        this.year = value;
     }
 
     /**
@@ -128,11 +109,20 @@ public class PriceSchedule {
         return this.plan;
     }
 
-    public Long getId() {
+    /**
+     * Gets the value of the id property.
+     * 
+     */
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    /**
+     * Sets the value of the id property.
+     * 
+     */
+    public void setId(long value) {
+        this.id = value;
     }
+
 }

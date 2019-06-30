@@ -21,7 +21,6 @@
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
-                <xs:element name="Cancellation" type="xs:positiveInteger"/>
                 <xs:element name="Category">
                     <xs:simpleType>
                         <xs:restriction base="xs:int">
@@ -31,13 +30,12 @@
                     </xs:simpleType>
                 </xs:element>
                 <xs:element ref="address:Adress"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="object:Image"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="object:Comment"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="object:ExtraOption"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="object:Unit"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="object:Rating"/>
                 <xs:element ref="object:ObjectType"/>
-                <xs:element ref="user:Agent" maxOccurs="unbounded" minOccurs="0"/>
+                <xs:element name="id" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -59,45 +57,38 @@
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
+                <xs:element name="id" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:element name="Unit">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="Adults" type="xs:positiveInteger"/>
-                <xs:element name="Children">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:int">
-                            <xs:minInclusive value="0"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:element>
+                <xs:element name="Person" type="xs:positiveInteger"/>
                 <xs:element name="Beds" type="xs:positiveInteger"/>
-                <xs:element name="Size" type="xs:decimal"/>
-                <xs:element name="Smoking" type="xs:boolean"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="object:Price_schedule"/>
                 <xs:element ref="object:AccommodationType"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="object:Image"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="object:Reservation"/>
                 <xs:element ref="object:Object"/>
+                <xs:element name="id" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:element name="Price_schedule">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="Year" type="xs:int"/>
                 <xs:element name="Made" type="xs:date"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="object:Plan"/>
+                <xs:element name="id" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:element name="Plan">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="From" type="xs:date"/>
-                <xs:element name="To" type="xs:date"/>
+                <xs:element name="FromDate" type="xs:date"/>
+                <xs:element name="ToDate" type="xs:date"/>
                 <xs:element name="Price">
                     <xs:simpleType>
                         <xs:restriction base="xs:double">
@@ -105,8 +96,8 @@
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
-                <xs:element name="Month" type="xs:int"/>
                 <xs:element name="Per_person" type="xs:boolean"/>
+                <xs:element name="id" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -128,6 +119,7 @@
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
+                <xs:element name="id" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -156,6 +148,7 @@
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
+                <xs:element name="id" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -171,6 +164,7 @@
                 </xs:element>
                 <xs:element ref="object:Reservation"/>
                 <xs:element ref="object:ExtraOption"/>
+                <xs:element name="id" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -191,6 +185,7 @@
                 <xs:element ref="object:Unit"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="object:Includes"/>
                 <xs:element ref="user:RegisteredUser"/>
+                <xs:element name="id" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -198,6 +193,7 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="source" type="xs:base64Binary"/>
+                <xs:element name="id" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -213,8 +209,9 @@
                 </xs:element>
                 <xs:element name="DateOfPublication" type="xs:dateTime"/>
                 <xs:element default="false" name="approved" type="xs:boolean"/>
-                <xs:element ref="object:Object"/>
                 <xs:element ref="user:RegisteredUser"/>
+                <xs:element ref="object:Unit"/>
+                <xs:element name="id" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -231,6 +228,7 @@
                 </xs:element>
                 <xs:element ref="object:Object"/>
                 <xs:element ref="user:RegisteredUser"/>
+                <xs:element name="id" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

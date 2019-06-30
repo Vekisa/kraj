@@ -30,27 +30,59 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ExtraOption }
+     * Create an instance of {@link Role }
      * 
      */
-    public ExtraOption createExtraOption() {
-        return new ExtraOption();
+    public Role createRole() {
+        return new Role();
     }
 
     /**
-     * Create an instance of {@link Includes }
+     * Create an instance of {@link Agent }
      * 
      */
-    public Includes createIncludes() {
-        return new Includes();
+    public Agent createAgent() {
+        return new Agent();
     }
 
     /**
-     * Create an instance of {@link Reservation }
+     * Create an instance of {@link Adress }
      * 
      */
-    public Reservation createReservation() {
-        return new Reservation();
+    public Adress createAdress() {
+        return new Adress();
+    }
+
+    /**
+     * Create an instance of {@link VerificationToken }
+     * 
+     */
+    public VerificationToken createVerificationToken() {
+        return new VerificationToken();
+    }
+
+    /**
+     * Create an instance of {@link Message }
+     * 
+     */
+    public Message createMessage() {
+        return new Message();
+    }
+
+    /**
+     * Create an instance of {@link RegisteredUser }
+     * 
+     */
+    public RegisteredUser createRegisteredUser() {
+        return new RegisteredUser();
+    }
+
+    /**
+     * Create an instance of {@link Comment }
+     * 
+     */
+    public Comment createComment() {
+        return new Comment();
     }
 
     /**
@@ -94,51 +126,35 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Reservation }
+     * 
+     */
+    public Reservation createReservation() {
+        return new Reservation();
+    }
+
+    /**
+     * Create an instance of {@link Includes }
+     * 
+     */
+    public Includes createIncludes() {
+        return new Includes();
+    }
+
+    /**
+     * Create an instance of {@link ExtraOption }
+     * 
+     */
+    public ExtraOption createExtraOption() {
+        return new ExtraOption();
+    }
+
+    /**
      * Create an instance of {@link Object }
      * 
      */
     public Object createObject() {
         return new Object();
-    }
-
-    /**
-     * Create an instance of {@link Adress }
-     * 
-     */
-    public Adress createAdress() {
-        return new Adress();
-    }
-
-    /**
-     * Create an instance of {@link Comment }
-     * 
-     */
-    public Comment createComment() {
-        return new Comment();
-    }
-
-    /**
-     * Create an instance of {@link RegisteredUser }
-     * 
-     */
-    public RegisteredUser createRegisteredUser() {
-        return new RegisteredUser();
-    }
-
-    /**
-     * Create an instance of {@link Message }
-     * 
-     */
-    public Message createMessage() {
-        return new Message();
-    }
-
-    /**
-     * Create an instance of {@link Agent }
-     * 
-     */
-    public Agent createAgent() {
-        return new Agent();
     }
 
     /**

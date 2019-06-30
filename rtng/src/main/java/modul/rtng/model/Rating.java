@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.*;
  *         &lt;/element>
  *         &lt;element ref="{http://megatravell.com/object}Object"/>
  *         &lt;element ref="{http://www.megatravell.com/user}RegisteredUser"/>
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,26 +38,28 @@ import javax.xml.bind.annotation.*;
 @XmlType(name = "", propOrder = {
     "mark",
     "object",
-    "registeredUser"
+    "registeredUser",
+    "id"
 })
-@XmlRootElement(name = "Rating", namespace = "http://megatravell.com/object")
 @Entity
 @Table(name = "rating")
+@XmlRootElement(name = "Rating", namespace = "http://megatravell.com/object")
 public class Rating {
+
+    @Column
+    @XmlElement(namespace = "http://megatravell.com/object")
+    protected int mark;
+    @ManyToOne
+    @XmlElement(name = "Object", namespace = "http://megatravell.com/object", required = true)
+    protected Object object;
+    @ManyToOne
+    @XmlElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user", required = true)
+    protected RegisteredUser registeredUser;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @XmlElement(namespace = "http://megatravell.com/object")
-    @Column
-    protected int mark;
-    @XmlElement(name = "Object", namespace = "http://megatravell.com/object", required = true)
-    @ManyToOne
-    protected Object object;
-    @XmlElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user", required = true)
-    @ManyToOne
-    protected RegisteredUser registeredUser;
+    protected long id;
 
     public Rating() {
     }
@@ -125,11 +128,20 @@ public class Rating {
         this.registeredUser = value;
     }
 
-    public Long getId() {
+    /**
+     * Gets the value of the id property.
+     * 
+     */
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    /**
+     * Sets the value of the id property.
+     * 
+     */
+    public void setId(long value) {
+        this.id = value;
     }
+
 }

@@ -1,6 +1,7 @@
 package modul.search.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Date;
@@ -58,6 +59,7 @@ public class Message {
     @Column
     @XmlElement(name = "Text", namespace = "http://www.megatravell.com/user", required = true)
     protected String text;
+    @Size(min = 3, max = 250)
     @Column
     @XmlElement(namespace = "http://www.megatravell.com/user", required = true)
     @XmlSchemaType(name = "dateTime")
@@ -75,6 +77,8 @@ public class Message {
     @XmlElement(namespace = "http://www.megatravell.com/user")
     protected long fromUser;
 
+    public Message() {
+    }
 
     /**
      * Gets the value of the text property.

@@ -1,13 +1,17 @@
 
 package modul.rtng.model;
 
-import javax.persistence.Column;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -20,7 +24,6 @@ import java.util.List;
  *   &lt;complexContent>
  *     &lt;extension base="{http://www.megatravell.com/user}User">
  *       &lt;sequence>
- *         &lt;element name="Aktivan" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element ref="{http://megatravell.com/object}Comment" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element ref="{http://megatravell.com/object}Reservation" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element ref="{http://www.megatravell.com/user}Message" maxOccurs="unbounded" minOccurs="0"/>
@@ -35,52 +38,40 @@ import java.util.List;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "aktivan",
     "comment",
     "reservation",
     "message",
     "rating"
 })
-@XmlRootElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user")
 @Entity
 @Table
+@XmlRootElement(name = "RegisteredUser", namespace = "http://www.megatravell.com/user")
 public class RegisteredUser
     extends User
 {
 
-    @XmlElement(name = "Aktivan", namespace = "http://www.megatravell.com/user", defaultValue = "true")
-    @Column
-    protected boolean aktivan;
     @XmlElement(name = "Comment", namespace = "http://megatravell.com/object")
+    @JsonIgnore
     @OneToMany(mappedBy = "registeredUser")
     protected List<Comment> comment;
+    @JsonIgnore
+    @OneToMany(mappedBy = "registeredUser")
     @XmlElement(name = "Reservation", namespace = "http://megatravell.com/object")
-    @OneToMany(mappedBy = "registeredUser", orphanRemoval=true)
     protected List<Reservation> reservation;
+    @JsonIgnore
+    @OneToMany(mappedBy = "registeredUser")
     @XmlElement(name = "Message", namespace = "http://www.megatravell.com/user")
-    @OneToMany(mappedBy = "registeredUser")
     protected List<Message> message;
-    @XmlElement(name = "Rating", namespace = "http://megatravell.com/object")
+    @JsonIgnore
     @OneToMany(mappedBy = "registeredUser")
+    @XmlElement(name = "Rating", namespace = "http://megatravell.com/object")
     protected List<Rating> rating;
 
     public RegisteredUser() {
     }
 
-    /**
-     * Gets the value of the aktivan property.
-     * 
-     */
-    public boolean isAktivan() {
-        return aktivan;
-    }
-
-    /**
-     * Sets the value of the aktivan property.
-     * 
-     */
-    public void setAktivan(boolean value) {
-        this.aktivan = value;
+    public RegisteredUser(String firstName, String lastName, String email, @Size(max = 15) String username, String password, Adress adress, boolean isEnabled, XMLGregorianCalendar lastPasswordResetDate, boolean isVerified, Set<Role> role) {
+        super(firstName, lastName, email, username, password, adress, isEnabled, lastPasswordResetDate, isVerified, role);
     }
 
     /**

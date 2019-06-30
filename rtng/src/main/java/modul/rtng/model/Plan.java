@@ -3,6 +3,7 @@ package modul.rtng.model;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Date;
 
 
@@ -16,8 +17,8 @@ import java.util.Date;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="From" type="{http://www.w3.org/2001/XMLSchema}date"/>
- *         &lt;element name="To" type="{http://www.w3.org/2001/XMLSchema}date"/>
+ *         &lt;element name="FromDate" type="{http://www.w3.org/2001/XMLSchema}date"/>
+ *         &lt;element name="ToDate" type="{http://www.w3.org/2001/XMLSchema}date"/>
  *         &lt;element name="Price">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}double">
@@ -25,8 +26,8 @@ import java.util.Date;
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
- *         &lt;element name="Month" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="Per_person" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,93 +38,91 @@ import java.util.Date;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "price",
-    "month",
     "fromDate",
     "toDate",
-    "perPerson"
+    "price",
+    "perPerson",
+    "id"
 })
-@XmlRootElement(name = "Plan", namespace = "http://megatravell.com/object")
+
 @Entity
 @Table(name = "plan")
+@XmlRootElement(name = "Plan", namespace = "http://megatravell.com/object")
 public class Plan {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @Column
     @XmlElement(name = "FromDate", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
-    @Column
     protected Date fromDate;
+    @Column
     @XmlElement(name = "ToDate", namespace = "http://megatravell.com/object", required = true)
     @XmlSchemaType(name = "date")
-    @Column
     protected Date toDate;
+    @Column
     @XmlElement(name = "Price", namespace = "http://megatravell.com/object")
+    protected double price;
     @Column
-    protected Double price;
-    @XmlElement(name = "Month", namespace = "http://megatravell.com/object")
-    @Column
-    protected Integer month;
     @XmlElement(name = "Per_person", namespace = "http://megatravell.com/object")
-    @Column
-    protected Boolean perPerson;
+    protected boolean perPerson;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @XmlElement(namespace = "http://megatravell.com/object")
+    protected long id;
 
     public Plan() {
     }
 
     /**
-     * Gets the value of the from property.
-     *
+     * Gets the value of the fromDate property.
+     * 
      * @return
      *     possible object is
-     *     {@link Date }
-     *
+     *     {@link XMLGregorianCalendar }
+     *     
      */
-    public Date getFrom() {
+    public Date getFromDate() {
         return fromDate;
     }
 
     /**
-     * Sets the value of the from property.
-     *
+     * Sets the value of the fromDate property.
+     * 
      * @param value
      *     allowed object is
-     *     {@link Date }
-     *
+     *     {@link XMLGregorianCalendar }
+     *     
      */
-    public void setFrom(Date value) {
+    public void setFromDate(Date value) {
         this.fromDate = value;
     }
 
     /**
-     * Gets the value of the to property.
-     *
+     * Gets the value of the toDate property.
+     * 
      * @return
      *     possible object is
-     *     {@link Date }
-     *
+     *     {@link XMLGregorianCalendar }
+     *     
      */
-    public Date getTo() {
+    public Date getToDate() {
         return toDate;
     }
 
     /**
-     * Sets the value of the to property.
-     *
+     * Sets the value of the toDate property.
+     * 
      * @param value
      *     allowed object is
-     *     {@link Date }
-     *
+     *     {@link XMLGregorianCalendar }
+     *     
      */
-    public void setTo(Date value) {
+    public void setToDate(Date value) {
         this.toDate = value;
     }
 
     /**
      * Gets the value of the price property.
-     *
+     * 
      */
     public double getPrice() {
         return price;
@@ -131,31 +130,15 @@ public class Plan {
 
     /**
      * Sets the value of the price property.
-     *
+     * 
      */
     public void setPrice(double value) {
         this.price = value;
     }
 
     /**
-     * Gets the value of the month property.
-     *
-     */
-    public int getMonth() {
-        return month;
-    }
-
-    /**
-     * Sets the value of the month property.
-     *
-     */
-    public void setMonth(int value) {
-        this.month = value;
-    }
-
-    /**
      * Gets the value of the perPerson property.
-     *
+     * 
      */
     public boolean isPerPerson() {
         return perPerson;
@@ -163,17 +146,26 @@ public class Plan {
 
     /**
      * Sets the value of the perPerson property.
-     *
+     * 
      */
     public void setPerPerson(boolean value) {
         this.perPerson = value;
     }
 
-    public Long getId() {
+    /**
+     * Gets the value of the id property.
+     * 
+     */
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    /**
+     * Sets the value of the id property.
+     * 
+     */
+    public void setId(long value) {
+        this.id = value;
     }
+
 }

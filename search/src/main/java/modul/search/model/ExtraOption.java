@@ -2,6 +2,7 @@
 package modul.search.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
 
 
@@ -59,9 +60,11 @@ import javax.xml.bind.annotation.*;
 public class ExtraOption {
 
     @XmlElement(name = "Name", namespace = "http://megatravell.com/object", required = true)
+    @Size(min = 3, max = 30)
     @Column
     protected String name;
     @XmlElement(name = "Description", namespace = "http://megatravell.com/object", required = true)
+    @Size(min = 3, max = 250)
     @Column
     protected String description;
     @XmlElement(name = "Price", namespace = "http://megatravell.com/object")

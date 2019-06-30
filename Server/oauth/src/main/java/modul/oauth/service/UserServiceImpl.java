@@ -90,7 +90,6 @@ public class UserServiceImpl implements UserDetailsService {
         return user;
     }
 
-
     public RegisteredUser addUser(SignUpRequest signUpRequest){
 
         String passwordHash = "";

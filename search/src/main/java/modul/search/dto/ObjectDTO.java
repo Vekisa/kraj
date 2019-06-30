@@ -1,7 +1,6 @@
 package modul.search.dto;
 
 
-
 import modul.search.model.Adress;
 import modul.search.model.Object;
 
