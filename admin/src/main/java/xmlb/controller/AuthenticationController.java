@@ -69,6 +69,12 @@ public class AuthenticationController {
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, HttpServletRequest hr) {
         logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + loginRequest.getUsername() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: " + loginRequest.getUsername());
         String ip = userDetails.getClientIP();
+        
+        if (!Pattern.matches(Regex.username, loginRequest.getUsername()) || !Pattern.matches(Regex.password, loginRequest.getPassword())) {
+            logging.printError("IN FUNC: Bad parameters");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad parameters");
+        }
+        
         if (loginService.isBlockedIP(ip)) {
             logging.printError("IN FUNC: Ip is blocked");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ip is blocked");
@@ -77,11 +83,6 @@ public class AuthenticationController {
         if (loginService.isBlockedUser(loginRequest.getUsername())) {
             logging.printError("IN FUNC: User is blocked");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User is blocked");
-        }
-
-        if (!Pattern.matches(Regex.username, loginRequest.getUsername()) || !Pattern.matches(Regex.password, loginRequest.getPassword())) {
-            logging.printError("IN FUNC: Bad parameters");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad parameters");
         }
 
         Authentication authentication = authenticationManager.authenticate(
