@@ -49,8 +49,6 @@ public class CertificateController {
     })
     public ResponseEntity<List<CertificateDTO>> search(@PathVariable(value = "alias") String alias, @PathVariable(value = "leafs") Boolean leafs, @PathVariable(value = "root") Boolean root,
                                                        HttpServletRequest hr) {
-        // logging.printInfo("ENDPOINT: " + hr.getRequestURL() + " USER: " + userService.getCurrentUser() + " IP ADDRESS: " + hr.getRemoteAddr() + " PARAMETERS: "
-        //      + alias + ", " + leafs + ", " + root);
         return new ResponseEntity<>(certificateService.search(alias, leafs, root), HttpStatus.OK);
     }
 
